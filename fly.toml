@@ -1,0 +1,53 @@
+# fly.toml file generated for cs5500-s23-starterbot on 2023-04-15T03:46:52Z
+
+app = "cs5500-s23-starterbot"
+kill_signal = "SIGINT"
+kill_timeout = 5
+primary_region = "sea"
+processes = []
+
+[build]
+  builder = "paketobuildpacks/builder-jammy-full"
+
+[build.args]
+  BP_JVM_VERSION=17
+  BP_INCLUDE_FILES="zagent/honey-javaagent.jar"
+  BP_OPENTELEMETRY_ENABLED="true"
+  BPE_JAVA_TOOL_OPTIONS="-Xss256K -XX:ReservedCodeCacheSize=64M -XX:MaxMetaspaceSize=64M -javaagent:zagent/honey-javaagent.jar"
+
+[deploy]
+  strategy = "canary"
+
+[env]
+  BPL_JVM_THREAD_COUNT = 50
+  JAVA_TOOL_OPTIONS = "-Xss256K -XX:ReservedCodeCacheSize=64M -XX:MaxMetaspaceSize=64M -javaagent:zagent/honey-javaagent.jar"
+  OTEL_SERVICE_NAME="cs5500-s23-starterbot"
+  HONEYCOMB_METRICS_DATASET="production"
+  OTEL_JAVAAGENT_ENABLED="true"
+  OTEL_METRICS_EXPORTER="otlp"
+  OTEL_EXPOTER_OTLP_ENDPOINT="api.honeycomb.io:443"
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 6
+    timeout = "2s"
