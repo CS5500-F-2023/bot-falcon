@@ -1,6 +1,6 @@
 # fly.toml file generated for cs5500-s23-starterbot on 2023-04-15T03:46:52Z
 
-app = "cs5500-s23-starterbot"
+app = "cs5500-f23-falcon"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "sea"
