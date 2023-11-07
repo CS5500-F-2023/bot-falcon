@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.command;
 
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
+import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import javax.annotation.Nonnull;
@@ -23,6 +24,8 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
     @Inject PokemonController pokemonController;
 
     @Inject PokedexController pokedexController;
+
+    @Inject TrainerController trainerController;
 
     @Inject
     public SpawnCommand() {
@@ -56,15 +59,22 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder =
                 messageCreateBuilder.addActionRow(
-                        Button.primary(getName() + ":catch", "Catch"),
-                        Button.danger(getName() + ":letgo", "Let go"));
+                        Button.primary(
+                                getName() + ":catch:" + pokemon.getId().toString(), "Catch"));
         messageCreateBuilder = messageCreateBuilder.addEmbeds(embedBuilder.build());
         event.reply(messageCreateBuilder.build()).queue();
     }
 
     @Override
     public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onButtonInteraction'");
+        // Must mean the user clicked Catch
+        String trainerDiscordId = event.getMember().getId();
+        String pokemonID = event.getButton().getId().split(":")[2];
+        trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
+        event.reply(
+                        String.format(
+                                "Player %s caught Pokemon %s",
+                                trainerDiscordId, event.getButton().getId()))
+                .queue();
     }
 }
