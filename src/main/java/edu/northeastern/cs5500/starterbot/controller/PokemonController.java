@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.bson.types.ObjectId;
 
 @Singleton
 public class PokemonController {
@@ -77,5 +78,9 @@ public class PokemonController {
         int[] myNumbers = {1, 4, 7, 19};
         int randomIndex = (new Random()).nextInt(myNumbers.length);
         return spawnPokemon(myNumbers[randomIndex]);
+    }
+
+    public Pokemon getPokemonById(String pokemonID) {
+        return pokemonRepository.get(new ObjectId(pokemonID));
     }
 }
