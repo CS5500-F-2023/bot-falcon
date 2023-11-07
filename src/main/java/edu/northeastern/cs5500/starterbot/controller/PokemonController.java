@@ -7,7 +7,9 @@ import java.util.Objects;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class PokemonController {
 
     GenericRepository<Pokemon> pokemonRepository;

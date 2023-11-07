@@ -6,7 +6,9 @@ import edu.northeastern.cs5500.starterbot.model.PokemonType;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class PokedexController {
 
     @Inject
