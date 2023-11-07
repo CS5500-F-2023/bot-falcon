@@ -7,8 +7,10 @@ import org.bson.types.ObjectId;
 public interface GenericRepository<T> {
     public T get(@Nonnull ObjectId id);
 
+    @Nonnull
     public T add(@Nonnull T item);
 
+    @Nonnull
     public T update(@Nonnull T item);
 
     public void delete(@Nonnull ObjectId id);
