@@ -2,6 +2,8 @@ package edu.northeastern.cs5500.starterbot.repository;
 
 import dagger.Module;
 import dagger.Provides;
+import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.model.UserPreference;
 
 @Module
@@ -11,6 +13,18 @@ public class RepositoryModule {
     @Provides
     public GenericRepository<UserPreference> provideUserPreferencesRepository(
             InMemoryRepository<UserPreference> repository) {
+        return repository;
+    }
+
+    @Provides
+    public GenericRepository<Pokemon> providePokemonRepository(
+            InMemoryRepository<Pokemon> repository) {
+        return repository;
+    }
+
+    @Provides
+    public GenericRepository<Trainer> provideTrainerRepository(
+            InMemoryRepository<Trainer> repository) {
         return repository;
     }
 
