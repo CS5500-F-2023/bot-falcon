@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for cs5500-f23-falcon on 2023-10-14T22:26:55Z
+# fly.toml app configuration file generated for cs5500-f23-falcon-bot on 2023-11-13T23:20:53Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "cs5500-f23-falcon"
+app = "cs5500-f23-falcon-bot"
 primary_region = "sea"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
