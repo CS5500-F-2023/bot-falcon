@@ -51,8 +51,12 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         PokemonSpecies species =
                 pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
 
+        String trainerDiscordId = event.getMember().getId();
+        System.out.println("Trainer discord Id at getCommandData: " + trainerDiscordId);
+
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(String.format("A wild %s appear!", species.getName()));
+        embedBuilder.setDescription("It costs 5 coins to catch [Pokémon Name]. What will you do?");
         embedBuilder.addField("Level", Integer.toString(pokemon.getLevel()), false);
         embedBuilder.setThumbnail(species.getImageUrl());
 
@@ -60,26 +64,61 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         messageCreateBuilder =
                 messageCreateBuilder.addActionRow(
                         Button.primary(
-                                getName() + ":catch:" + pokemon.getId().toString(), "Catch"));
+                                getName()
+                                        + ":catch:"
+                                        + pokemon.getId().toString()
+                                        + ":"
+                                        + trainerDiscordId,
+                                "Catch"),
+                        Button.secondary(
+                                getName()
+                                        + ":letgo:"
+                                        + pokemon.getId().toString()
+                                        + ":"
+                                        + trainerDiscordId,
+                                "Let Go"));
         messageCreateBuilder = messageCreateBuilder.addEmbeds(embedBuilder.build());
         event.reply(messageCreateBuilder.build()).queue();
     }
 
     @Override
     public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) {
-        // Must mean the user clicked Catch
+        String[] buttonIdParts = event.getButton().getId().split(":");
+        String action = buttonIdParts[1]; // "catch" or "letgo"
+        String pokemonID = buttonIdParts[2];
+        String initiateTrainerDiscordId = buttonIdParts[3];
         String trainerDiscordId = event.getMember().getId();
-        String pokemonID = event.getButton().getId().split(":")[2];
-        trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
-
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         PokemonSpecies species =
                 pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
 
-        event.reply(
-                        String.format(
-                                "Player <@%s> caught Pokemon %s",
-                                trainerDiscordId, species.getName()))
-                .queue();
+        System.out.println(
+                "initiateTrainerDiscordId in button action: " + initiateTrainerDiscordId);
+        System.out.println("trainerDiscordId in button action: " + trainerDiscordId);
+
+        // Handle the button interaction
+        if (action.equals("catch") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
+            // Handle the 'Catch' action
+            trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
+            event.reply(
+                            String.format(
+                                    "<@%s>, you caught a %s !",
+                                    trainerDiscordId, species.getName()))
+                    .queue();
+        } else if (action.equals("letgo") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
+            // Handle the 'Let Go' action
+            // TODO: avoid click multiple times
+            event.reply(
+                            String.format(
+                                    "<@%s>, you decide to let %s go!",
+                                    trainerDiscordId, species.getName()))
+                    .queue();
+        } else {
+            event.reply(
+                            String.format(
+                                    "Sorry <@%s>, you are not authorized to perform this action.",
+                                    trainerDiscordId))
+                    .queue();
+        }
     }
 }
