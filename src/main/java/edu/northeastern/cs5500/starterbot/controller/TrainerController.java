@@ -29,7 +29,6 @@ public class TrainerController {
         }
         Trainer trainer = Trainer.builder().discordUserId(discordMemberId).build();
 
-        // trainer.setDiscordUserId(discordMemberId);
         return trainerRepository.add(trainer);
     }
 

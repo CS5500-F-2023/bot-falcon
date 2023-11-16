@@ -18,7 +18,7 @@ public class Trainer implements Model {
     // e.g. event.getUser().getId()
     String discordUserId;
 
-    @Nonnull @Nonnegative Integer balance;
+    @Builder.Default @Nonnull @Nonnegative Integer balance = 10;
 
     @Builder.Default List<ObjectId> pokemonInventory = new ArrayList<>();
 }
