@@ -2,9 +2,13 @@ package edu.northeastern.cs5500.starterbot.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import lombok.Builder;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
+@Builder
 @Data
 public class Trainer implements Model {
     // Model ID e.g. for MongoDB
@@ -14,5 +18,7 @@ public class Trainer implements Model {
     // e.g. event.getUser().getId()
     String discordUserId;
 
-    List<ObjectId> pokemonInventory = new ArrayList<>();
+    @Builder.Default @Nonnull @Nonnegative Integer balance = 10;
+
+    @Builder.Default List<ObjectId> pokemonInventory = new ArrayList<>();
 }

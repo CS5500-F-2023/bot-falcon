@@ -1,6 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
-import com.mongodb.lang.NonNull;
+import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,20 +10,20 @@ import org.bson.types.ObjectId;
 @Data
 @AllArgsConstructor
 public class Pokemon implements Model {
-    @NonNull @Builder.Default ObjectId id = new ObjectId();
+    @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
-    @NonNull Integer pokedexNumber;
+    @Nonnull Integer pokedexNumber;
 
-    @NonNull @Builder.Default Integer level = 5;
+    @Nonnull @Builder.Default Integer level = 5;
 
-    @NonNull
-    // NonNegative
+    @Nonnull
+    // Nonnegative, Nonnull from javax or mongodb????
     Integer currentHp;
 
-    @NonNull Integer hp;
-    @NonNull Integer attack;
-    @NonNull Integer defense;
-    @NonNull Integer specialAttack;
-    @NonNull Integer specialDefense;
-    @NonNull Integer speed;
+    @Nonnull Integer hp;
+    @Nonnull Integer attack;
+    @Nonnull Integer defense;
+    @Nonnull Integer specialAttack;
+    @Nonnull Integer specialDefense;
+    @Nonnull Integer speed;
 }

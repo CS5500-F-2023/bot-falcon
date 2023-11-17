@@ -3,12 +3,14 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
+import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -52,7 +54,6 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                 pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
 
         String trainerDiscordId = event.getMember().getId();
-        System.out.println("Trainer discord Id at getCommandData: " + trainerDiscordId);
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(String.format("A wild %s appear!", species.getName()));
@@ -89,30 +90,41 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         String initiateTrainerDiscordId = buttonIdParts[3];
         String trainerDiscordId = event.getMember().getId();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
+        MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
         PokemonSpecies species =
                 pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
-
-        System.out.println(
-                "initiateTrainerDiscordId in button action: " + initiateTrainerDiscordId);
-        System.out.println("trainerDiscordId in button action: " + trainerDiscordId);
 
         // Handle the button interaction
         if (action.equals("catch") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
             // Handle the 'Catch' action
-            trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
-            event.reply(
-                            String.format(
-                                    "<@%s>, you caught a %s !",
-                                    trainerDiscordId, species.getName()))
-                    .queue();
+            try {
+                trainerController.decreaseTrainerBalance(trainerDiscordId, 5);
+                trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
+                event.reply(
+                                String.format(
+                                        "<@%s>, you caught a %s !",
+                                        trainerDiscordId, species.getName()))
+                        .queue();
+                event.getMessage()
+                        .editMessageEmbeds(messageEmbed)
+                        .setComponents()
+                        .queue(); // disable button
+            } catch (InsufficientBalanceException e) {
+                event.reply(
+                                String.format(
+                                        "<@%s>, you don't have enough coins to catch the %s!",
+                                        trainerDiscordId, species.getName()))
+                        .queue();
+                event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();
+            }
         } else if (action.equals("letgo") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
             // Handle the 'Let Go' action
-            // TODO: avoid click multiple times
             event.reply(
                             String.format(
                                     "<@%s>, you decide to let %s go!",
                                     trainerDiscordId, species.getName()))
                     .queue();
+            event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();
         } else {
             event.reply(
                             String.format(
