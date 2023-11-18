@@ -60,6 +60,13 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(StatusCommand.NAME)
+    public SlashCommandHandler provideStatusCommand(StatusCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(DropdownCommand.NAME)
     public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
         return dropdownCommand;
