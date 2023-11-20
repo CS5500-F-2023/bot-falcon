@@ -57,7 +57,9 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(String.format("A wild %s appear!", species.getName()));
-        embedBuilder.setDescription(String.format("It costs 5 coins to catch %s. What will you do?", species.getName()));
+        embedBuilder.setDescription(
+                String.format(
+                        "It costs 5 coins to catch %s. What will you do?", species.getName()));
         embedBuilder.addField("Level", Integer.toString(pokemon.getLevel()), false);
         embedBuilder.setThumbnail(species.getImageUrl());
 
