@@ -77,7 +77,7 @@ public class TrainerController {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
         // get stats
         Integer currBal = trainer.getBalance();
-        List<ObjectId> pokemonInventory = trainer.getPokemonInventory();
+        List<ObjectId> pokemonInventory = getTrainerPokemonInventory(discordMemberId);
 
         StringBuilder sb = new StringBuilder();
         for (ObjectId pokemonId : pokemonInventory) {
@@ -95,5 +95,10 @@ public class TrainerController {
         trainerStats.put("PokemonInventory", pokeNames);
 
         return trainerStats;
+    }
+
+    private List<ObjectId> getTrainerPokemonInventory(String discordMemberId) {
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        return trainer.getPokemonInventory();
     }
 }
