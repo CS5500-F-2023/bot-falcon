@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class TrainerControllerTest {
-
-    private static final String USER_ID_1 = "23h5ikoqaehokljhaoe";
 
     private TrainerController getTrainerController() {
         TrainerController trainerController = new TrainerController(new InMemoryRepository<>());
@@ -47,5 +46,15 @@ class TrainerControllerTest {
         assertThrows(
                 InsufficientBalanceException.class,
                 () -> trainerController.decreaseTrainerBalance(trainer.getDiscordUserId(), 15));
+    }
+
+    @Test
+    void testGetTrainerStatsDefault() {
+        TrainerController trainerController = getTrainerController();
+        trainerController.trainerRepository.add(trainer);
+        String discordId = trainer.getDiscordUserId();
+        Map<String, String> res = trainerController.getTrainerStats(discordId);
+        assertThat(Integer.parseInt(res.get("Balance"))).isEqualTo(10);
+        assertThat(Integer.parseInt(res.get("PokemonNumbers"))).isEqualTo(0);
     }
 }
