@@ -78,7 +78,11 @@ public class TrainerController {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         // get stats
         Integer currBal = trainer.getBalance();
+<<<<<<< HEAD
         List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
+=======
+        List<ObjectId> pokemonInventory = getTrainerPokemonInventory(discordMemberId);
+>>>>>>> main
 
         StringBuilder trainerStatsBuilder = new StringBuilder();
         for (Pokemon pokemon : pokemonInventory) {
@@ -96,6 +100,7 @@ public class TrainerController {
         return trainerStats;
     }
 
+<<<<<<< HEAD
     public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
         List<Pokemon> pokemonInventory = new ArrayList<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
@@ -126,5 +131,10 @@ public class TrainerController {
         statusbBuilder.append("Speed: ").append(pokemon.getSpeed());
 
         return statusbBuilder.toString();
+=======
+    private List<ObjectId> getTrainerPokemonInventory(String discordMemberId) {
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        return trainer.getPokemonInventory();
+>>>>>>> main
     }
 }
