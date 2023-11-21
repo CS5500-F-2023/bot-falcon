@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -100,5 +101,10 @@ public class TrainerController {
     private List<ObjectId> getTrainerPokemonInventory(String discordMemberId) {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         return trainer.getPokemonInventory();
+    }
+
+    public void updateLastCheckinDate(String discordMemberId, LocalDate curCheckinDate) {
+        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        trainer.setLastCheckIn(curCheckinDate);
     }
 }
