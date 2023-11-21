@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
@@ -78,11 +79,7 @@ public class TrainerController {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         // get stats
         Integer currBal = trainer.getBalance();
-<<<<<<< HEAD
         List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
-=======
-        List<ObjectId> pokemonInventory = getTrainerPokemonInventory(discordMemberId);
->>>>>>> main
 
         StringBuilder trainerStatsBuilder = new StringBuilder();
         for (Pokemon pokemon : pokemonInventory) {
@@ -100,7 +97,6 @@ public class TrainerController {
         return trainerStats;
     }
 
-<<<<<<< HEAD
     public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
         List<Pokemon> pokemonInventory = new ArrayList<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
@@ -113,28 +109,12 @@ public class TrainerController {
         return pokemonInventory;
     }
 
-    public String buildPokemonStats(String discordMemberId, String pokemonIdString) {
-        // TODO how to make sure the pokemon is unique, and belong to user
-        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdString);
-        PokemonSpecies species =
-                pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
-
-        StringBuilder statusbBuilder = new StringBuilder();
-
-        statusbBuilder.append("Species: ").append(species.getName()).append("\n");
-        statusbBuilder.append("Level: ").append(pokemon.getLevel()).append("\n");
-        statusbBuilder.append("Hp: ").append(pokemon.getHp()).append("\n");
-        statusbBuilder.append("Attack: ").append(pokemon.getAttack()).append("\n");
-        statusbBuilder.append("Defense: ").append(pokemon.getDefense()).append("\n");
-        statusbBuilder.append("Special Attack: ").append(pokemon.getSpecialAttack()).append("\n");
-        statusbBuilder.append("Special Defense: ").append(pokemon.getSpecialDefense()).append("\n");
-        statusbBuilder.append("Speed: ").append(pokemon.getSpeed());
-
-        return statusbBuilder.toString();
-=======
-    private List<ObjectId> getTrainerPokemonInventory(String discordMemberId) {
-        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        return trainer.getPokemonInventory();
->>>>>>> main
+    public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
+            throws InvalidInventoryIndexException {
+        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
+        if (pokemonInventory.isEmpty() || index < 0 || index > pokemonInventory.size()) {
+            throw new InvalidInventoryIndexException("Invalid index");
+        }
+        return pokemonInventory.get(index);
     }
 }
