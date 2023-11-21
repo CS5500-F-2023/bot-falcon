@@ -83,4 +83,25 @@ public class PokemonController {
     public Pokemon getPokemonById(String pokemonID) {
         return pokemonRepository.get(new ObjectId(pokemonID));
     }
+
+    /**
+     * Builds a string representation of the Pokemon's stats based on its ID.
+     *
+     * @param pokemonIdString The ID of the Pokemon.
+     * @return A string containing the Pokemon's stats.
+     */
+    public String buildPokemonStats(String pokemonIdString) {
+        Pokemon pokemon = getPokemonById(pokemonIdString);
+
+        // Build the formatted string with the Pokemon's stats
+        return String.format(
+                "Level: %d\nHp: %d\nAttack: %d\nDefense: %d\nSpecial Attack: %d\nSpecial Defense: %d\nSpeed: %d",
+                pokemon.getLevel(),
+                pokemon.getHp(),
+                pokemon.getAttack(),
+                pokemon.getDefense(),
+                pokemon.getSpecialAttack(),
+                pokemon.getSpecialDefense(),
+                pokemon.getSpeed());
+    }
 }
