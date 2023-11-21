@@ -74,8 +74,8 @@ public class CommandModule {
 
     @Provides
     @IntoMap
-    @StringKey(PokemonCommand.NAME)
-    public ButtonHandler providePokemonCommandClickHandler(PokemonCommand command) {
+    @StringKey(MyCommand.NAME)
+    public SlashCommandHandler provideMyCommand(MyCommand command) {
         return command;
     }
 
