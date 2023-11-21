@@ -23,6 +23,17 @@ public enum PokemonType {
         return types;
     }
 
+    public static String getTypeString(PokemonType[] types) {
+        StringBuilder typeBuilder = new StringBuilder();
+        for (int i = 0; i < types.length; i++) {
+            typeBuilder.append(types[i].emoji).append(types[i].name);
+            if (i < types.length - 1) {
+                typeBuilder.append(", "); // handle multi type
+            }
+        }
+        return typeBuilder.toString();
+    }
+
     public static MoveEffectiveness getEffectiveness(PokemonType attackType, PokemonType[] types) {
         // TODO(zqy): implement dual-type Pokemon
         PokemonType defendType = types[0];
