@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -74,26 +75,56 @@ public class TrainerController {
      */
     public Map<String, String> getTrainerStats(String discordMemberId) {
         Map<String, String> trainerStats = new HashMap<>();
-        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         // get stats
         Integer currBal = trainer.getBalance();
-        List<ObjectId> pokemonInventory = trainer.getPokemonInventory();
+        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
 
-        StringBuilder sb = new StringBuilder();
-        for (ObjectId pokemonId : pokemonInventory) {
-            String pokeId = pokemonId.toString();
-            Pokemon pokemon = pokemonController.getPokemonById(pokeId);
+        StringBuilder trainerStatsBuilder = new StringBuilder();
+        for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
                     pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
             String pokeName = species.getName();
-            sb.append(pokeName).append(", ");
+            trainerStatsBuilder.append(pokeName).append(", ");
         }
-        String pokeNames = sb.toString().replaceAll(", $", "");
+        String pokeNames = trainerStatsBuilder.toString().replaceAll(", $", "");
 
         trainerStats.put("Balance", Integer.toString(currBal));
         trainerStats.put("PokemonNumbers", Integer.toString(pokemonInventory.size()));
         trainerStats.put("PokemonInventory", pokeNames);
 
         return trainerStats;
+    }
+
+    public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
+        List<Pokemon> pokemonInventory = new ArrayList<>();
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        List<ObjectId> pokemonIds = trainer.getPokemonInventory();
+        for (ObjectId pokemonId : pokemonIds) {
+            String pokeId = pokemonId.toString();
+            Pokemon pokemon = pokemonController.getPokemonById(pokeId);
+            pokemonInventory.add(pokemon);
+        }
+        return pokemonInventory;
+    }
+
+    public String buildPokemonStats(String discordMemberId, String pokemonIdString) {
+        // TODO how to make sure the pokemon is unique, and belong to user
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdString);
+        PokemonSpecies species =
+                pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+
+        StringBuilder statusbBuilder = new StringBuilder();
+
+        statusbBuilder.append("Species: ").append(species.getName()).append("\n");
+        statusbBuilder.append("Level: ").append(pokemon.getLevel()).append("\n");
+        statusbBuilder.append("Hp: ").append(pokemon.getHp()).append("\n");
+        statusbBuilder.append("Attack: ").append(pokemon.getAttack()).append("\n");
+        statusbBuilder.append("Defense: ").append(pokemon.getDefense()).append("\n");
+        statusbBuilder.append("Special Attack: ").append(pokemon.getSpecialAttack()).append("\n");
+        statusbBuilder.append("Special Defense: ").append(pokemon.getSpecialDefense()).append("\n");
+        statusbBuilder.append("Speed: ").append(pokemon.getSpeed());
+
+        return statusbBuilder.toString();
     }
 }
