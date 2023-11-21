@@ -71,11 +71,7 @@ public class PokemonCommand implements SlashCommandHandler, ButtonHandler {
                     pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
             pokemonButtons.add(
                     Button.primary(
-                            getName()
-                            + ":"
-                            + pokemon.getId().toString()
-                            + ":"
-                            + trainerDiscordId,
+                            getName() + ":" + pokemon.getId().toString() + ":" + trainerDiscordId,
                             species.getName()));
             if (pokemonButtons.size() == 3) {
                 messageCreateBuilder = messageCreateBuilder.addActionRow(pokemonButtons);
@@ -96,9 +92,9 @@ public class PokemonCommand implements SlashCommandHandler, ButtonHandler {
         String initiateTrainerDiscordId = buttonIdParts[2];
         String trainerDiscordId = event.getMember().getId();
 
-
         if (trainerDiscordId.equals(initiateTrainerDiscordId)) {
-            String pokemonDetails = trainerController.buildPokemonStats(trainerDiscordId, pokemonId);
+            String pokemonDetails =
+                    trainerController.buildPokemonStats(trainerDiscordId, pokemonId);
             event.reply(pokemonDetails).queue();
         } else {
             event.reply(
