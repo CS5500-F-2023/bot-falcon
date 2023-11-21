@@ -20,7 +20,8 @@ public class Trainer implements Model {
     String discordUserId;
 
     @Builder.Default @Nonnull
-    LocalDate lastCheckIn = LocalDate.now().minusDays(1); // This allows new user to user /daily
+    LocalDate lastCheckIn =
+            LocalDate.now().minusDays(1); // This allows new user to user /daily once
 
     @Builder.Default @Nonnull @Nonnegative Integer balance = 10;
 

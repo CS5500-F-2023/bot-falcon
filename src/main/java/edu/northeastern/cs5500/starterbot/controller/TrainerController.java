@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
@@ -103,8 +104,28 @@ public class TrainerController {
         return trainer.getPokemonInventory();
     }
 
-    public void updateLastCheckinDate(String discordMemberId, LocalDate curCheckinDate) {
+    /**
+     * Return the updated balance of the trainer after adding the daily reward coins
+     *
+     * @param discordMemberId Discord member ID of the specific trainer as String
+     * @param amount Amount to be added to the balance of the specific balance as Integer
+     * @param curDate Current date as LocalDate
+     * @return The update balance as Integer
+     * @throws InvalidCheckinDayException if the cur date is not strictly greater than previous
+     *     checkin date
+     */
+    public Integer addDailyRewardsToTrainer(
+            String discordMemberId, Integer amount, LocalDate curDate)
+            throws InvalidCheckinDayException {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
-        trainer.setLastCheckIn(curCheckinDate);
+        if (curDate.isAfter(trainer.getLastCheckIn())) {
+            trainer.setBalance(trainer.getBalance() + amount);
+            trainer.setLastCheckIn(curDate);
+            trainerRepository.update(trainer); // now in memory so automatically update
+            return trainer.getBalance();
+        } else {
+            throw new InvalidCheckinDayException(
+                    "Current checkin date must be after prev checkin date");
+        }
     }
 }
