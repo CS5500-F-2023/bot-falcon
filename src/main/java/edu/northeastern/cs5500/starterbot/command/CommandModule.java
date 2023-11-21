@@ -60,6 +60,20 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(ShopCommand.NAME)
+    public SlashCommandHandler provideShopCommand(ShopCommand shopCommand) {
+        return shopCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(ShopCommand.NAME)
+    public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
+        return shopCommand;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(DropdownCommand.NAME)
     public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
         return dropdownCommand;

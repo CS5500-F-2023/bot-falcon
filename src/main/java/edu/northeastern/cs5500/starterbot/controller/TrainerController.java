@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.Collection;
@@ -53,6 +54,16 @@ public class TrainerController {
             trainer.setBalance(newBal);
         } else {
             throw new InsufficientBalanceException("Insufficient balance");
+        }
+        trainerRepository.update(trainer); // now in memory so automatically update
+    }
+
+    public void addTrainerFood(String discordMemberId, FoodType food) {
+        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        if (!trainer.getFoodInventory().containsKey(food)) {
+            trainer.getFoodInventory().put(food, 1);
+        } else {
+            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
         }
         trainerRepository.update(trainer); // now in memory so automatically update
     }
