@@ -2,11 +2,14 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -76,21 +79,19 @@ public class TrainerController {
      */
     public Map<String, String> getTrainerStats(String discordMemberId) {
         Map<String, String> trainerStats = new HashMap<>();
-        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         // get stats
         Integer currBal = trainer.getBalance();
-        List<ObjectId> pokemonInventory = getTrainerPokemonInventory(discordMemberId);
+        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
 
-        StringBuilder sb = new StringBuilder();
-        for (ObjectId pokemonId : pokemonInventory) {
-            String pokeId = pokemonId.toString();
-            Pokemon pokemon = pokemonController.getPokemonById(pokeId);
+        StringBuilder trainerStatsBuilder = new StringBuilder();
+        for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
                     pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
             String pokeName = species.getName();
-            sb.append(pokeName).append(", ");
+            trainerStatsBuilder.append(pokeName).append(", ");
         }
-        String pokeNames = sb.toString().replaceAll(", $", "");
+        String pokeNames = trainerStatsBuilder.toString().replaceAll(", $", "");
 
         trainerStats.put("Balance", Integer.toString(currBal));
         trainerStats.put("PokemonNumbers", Integer.toString(pokemonInventory.size()));
@@ -99,9 +100,25 @@ public class TrainerController {
         return trainerStats;
     }
 
-    private List<ObjectId> getTrainerPokemonInventory(String discordMemberId) {
+    public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
+        List<Pokemon> pokemonInventory = new ArrayList<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        return trainer.getPokemonInventory();
+        List<ObjectId> pokemonIds = trainer.getPokemonInventory();
+        for (ObjectId pokemonId : pokemonIds) {
+            String pokeId = pokemonId.toString();
+            Pokemon pokemon = pokemonController.getPokemonById(pokeId);
+            pokemonInventory.add(pokemon);
+        }
+        return pokemonInventory;
+    }
+
+    public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
+            throws InvalidInventoryIndexException {
+        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
+        if (pokemonInventory.isEmpty() || index < 0 || index > pokemonInventory.size()) {
+            throw new InvalidInventoryIndexException("Invalid index");
+        }
+        return pokemonInventory.get(index);
     }
 
     /**
