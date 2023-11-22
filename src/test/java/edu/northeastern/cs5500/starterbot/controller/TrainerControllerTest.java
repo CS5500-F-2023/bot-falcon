@@ -4,8 +4,10 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import java.time.LocalDate;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -56,5 +58,19 @@ class TrainerControllerTest {
         Map<String, String> res = trainerController.getTrainerStats(discordId);
         assertThat(Integer.parseInt(res.get("Balance"))).isEqualTo(10);
         assertThat(Integer.parseInt(res.get("PokemonNumbers"))).isEqualTo(0);
+    }
+
+    @Test
+    void testAddDailyRewardsToTrainer() throws InvalidCheckinDayException {
+        TrainerController trainerController = getTrainerController();
+        trainerController.trainerRepository.add(trainer);
+        String discordId = trainer.getDiscordUserId();
+        LocalDate today = LocalDate.now();
+        assertThat(trainerController.addDailyRewardsToTrainer(discordId, 10, today)).isEqualTo(20);
+        assertThrows(
+                InvalidCheckinDayException.class,
+                () ->
+                        trainerController.addDailyRewardsToTrainer(
+                                trainer.getDiscordUserId(), 30, today));
     }
 }

@@ -60,6 +60,13 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(DailyCommand.NAME)
+    public SlashCommandHandler provideDailyCommand(DailyCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(StatusCommand.NAME)
     public SlashCommandHandler provideStatusCommand(StatusCommand command) {
         return command;
