@@ -5,15 +5,12 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
-import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -82,36 +79,26 @@ public class TrainerController {
     }
 
     /**
-     * Return a trainer's status, including pokemon collection, balance
+     * Builds the trainer statistics for a given Discord member ID.
      *
-     * @param discordMemberId
-     * @return trainer stats
+     * @param discordMemberId the Discord member ID of the trainer
+     * @return a formatted string containing the trainer statistics
      */
-    public Map<String, String> getTrainerStats(String discordMemberId) {
-        Map<String, String> trainerStats = new HashMap<>();
+    public String buildTrainerStats(String discordMemberId) {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        // get stats
-        Integer currBal = trainer.getBalance();
-        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
-
-        StringBuilder trainerStatsBuilder = new StringBuilder();
-        for (Pokemon pokemon : pokemonInventory) {
-            PokemonSpecies species =
-                    pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
-            String pokeName = species.getName();
-            trainerStatsBuilder.append(pokeName).append(", ");
-        }
-        String pokeNames = trainerStatsBuilder.toString().replaceAll(", $", "");
-
-        trainerStats.put("Balance", Integer.toString(currBal));
-        trainerStats.put("PokemonNumbers", Integer.toString(pokemonInventory.size()));
-        trainerStats.put("PokemonInventory", pokeNames);
-
-        return trainerStats;
+        return String.format(
+                "```Balance: %d\nPokemon Numbers: %d\nBerry Stock: 🫐\n```",
+                trainer.getBalance(), trainer.getPokemonInventory().size());
     }
 
+    /**
+     * Retrieves the Pokemon inventory of a trainer identified by their Discord member ID.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @return the list of Pokemon in the trainer's inventory
+     */
     public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
-        List<Pokemon> pokemonInventory = new ArrayList<>();
+        List<Pokemon> pokemonInventory = new ArrayList<>(); // TODO, consider potential duplicates
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         List<ObjectId> pokemonIds = trainer.getPokemonInventory();
         for (ObjectId pokemonId : pokemonIds) {
@@ -122,13 +109,22 @@ public class TrainerController {
         return pokemonInventory;
     }
 
+    /**
+     * Retrieves a Pokemon from the trainer's inventory based on the specified index.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @param index the index of the Pokemon in the inventory
+     * @return the Pokemon at the specified index
+     * @throws InvalidInventoryIndexException if the index is invalid or the inventory is empty
+     */
     public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
             throws InvalidInventoryIndexException {
         List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
-        if (pokemonInventory.isEmpty() || index < 0 || index > pokemonInventory.size()) {
+        if (pokemonInventory.isEmpty() || index < 0 || index >= pokemonInventory.size()) {
             throw new InvalidInventoryIndexException("Invalid index");
+        } else {
+            return pokemonInventory.get(index);
         }
-        return pokemonInventory.get(index);
     }
 
     /**

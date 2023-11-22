@@ -51,7 +51,11 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         log.info("event: /spawn");
         Pokemon pokemon = pokemonController.spawnRandonPokemon();
         PokemonSpecies species =
-                pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+        String pokemonDetails = pokemonController.buildPokemonStats(pokemon.getId().toString());
+        String pokemonSpeciesDetail =
+                pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
 
         String trainerDiscordId = event.getMember().getId();
 
@@ -60,7 +64,10 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         embedBuilder.setDescription(
                 String.format(
                         "It costs 5 coins to catch %s. What will you do?", species.getName()));
-        embedBuilder.addField("Level", Integer.toString(pokemon.getLevel()), false);
+        embedBuilder.addField(
+                String.format("----\n🔎 Learn more about %s!\n----", species.getName()),
+                String.format("```%s\n%s\n```", pokemonSpeciesDetail, pokemonDetails),
+                false);
         embedBuilder.setThumbnail(species.getImageUrl());
 
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
@@ -94,7 +101,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
         PokemonSpecies species =
-                pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
 
         // Handle the button interaction
         if (action.equals("catch") && trainerDiscordId.equals(initiateTrainerDiscordId)) {

@@ -65,16 +65,6 @@ class TrainerControllerTest {
     }
 
     @Test
-    void testGetTrainerStatsDefault() {
-        TrainerController trainerController = getTrainerController();
-        trainerController.trainerRepository.add(trainer);
-        String discordId = trainer.getDiscordUserId();
-        Map<String, String> res = trainerController.getTrainerStats(discordId);
-        assertThat(Integer.parseInt(res.get("Balance"))).isEqualTo(10);
-        assertThat(Integer.parseInt(res.get("PokemonNumbers"))).isEqualTo(0);
-    }
-
-    @Test
     void testAddDailyRewardsToTrainer() throws InvalidCheckinDayException {
         TrainerController trainerController = getTrainerController();
         trainerController.trainerRepository.add(trainer);

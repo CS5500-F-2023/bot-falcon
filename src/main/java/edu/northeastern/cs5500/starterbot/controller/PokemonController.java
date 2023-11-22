@@ -2,7 +2,10 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.Pokemon.PokemonBuilder;
+import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import javax.annotation.Nonnull;
@@ -14,6 +17,8 @@ import org.bson.types.ObjectId;
 public class PokemonController {
 
     GenericRepository<Pokemon> pokemonRepository;
+
+    @Inject PokemonDataService pokemonDataService;
 
     @Inject
     PokemonController(GenericRepository<Pokemon> pokemonRepository) {
@@ -30,56 +35,37 @@ public class PokemonController {
     Pokemon spawnPokemon(int pokedexNumber) {
         PokemonBuilder builder = Pokemon.builder();
         builder.pokedexNumber(pokedexNumber);
-        switch (pokedexNumber) {
-            case 1: // Bulbasaur
-                builder.currentHp(19);
-                builder.hp(19);
-                builder.attack(9);
-                builder.defense(9);
-                builder.specialAttack(11);
-                builder.specialDefense(11);
-                builder.speed(9);
-                break;
-            case 4: // Charmander
-                builder.currentHp(18);
-                builder.hp(18);
-                builder.attack(18);
-                builder.defense(10);
-                builder.specialAttack(9);
-                builder.specialDefense(11);
-                builder.speed(11);
-                break;
-            case 7: // Squirtle
-                builder.currentHp(19);
-                builder.hp(19);
-                builder.attack(9);
-                builder.defense(11);
-                builder.specialAttack(10);
-                builder.specialDefense(11);
-                builder.speed(9);
-                break;
-            case 19: // Rattata
-                builder.currentHp(18);
-                builder.hp(18);
-                builder.attack(10);
-                builder.defense(8);
-                builder.specialAttack(7);
-                builder.specialDefense(8);
-                builder.speed(12);
-                break;
-            default:
-                throw new IllegalStateException();
+        List<PokemonData> pokemonDataList = pokemonDataService.getPokemonDataList();
+        for (PokemonData data : pokemonDataList) {
+            builder.currentHp(data.getHp());
+            builder.hp(data.getHp());
+            builder.attack(data.getAttack());
+            builder.defense(data.getDefense());
+            builder.specialAttack(data.getSpAttack());
+            builder.specialDefense(data.getSpDefense());
+            builder.speed(data.getSpeed());
         }
         return Objects.requireNonNull(
                 pokemonRepository.add(Objects.requireNonNull(builder.build())));
     }
 
+    /**
+     * Spawns a random Pokemon.
+     *
+     * @return The spawned Pokemon.
+     */
     public Pokemon spawnRandonPokemon() {
-        int[] myNumbers = {1, 4, 7, 19};
+        int[] myNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // TODO update for actual resource
         int randomIndex = (new Random()).nextInt(myNumbers.length);
         return spawnPokemon(myNumbers[randomIndex]);
     }
 
+    /**
+     * Retrieves a Pokemon object by its ID.
+     *
+     * @param pokemonID the ID of the Pokemon to retrieve
+     * @return the Pokemon object with the specified ID, or null if not found
+     */
     public Pokemon getPokemonById(String pokemonID) {
         return pokemonRepository.get(new ObjectId(pokemonID));
     }

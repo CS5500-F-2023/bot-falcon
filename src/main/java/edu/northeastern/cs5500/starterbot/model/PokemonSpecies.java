@@ -1,19 +1,21 @@
 package edu.northeastern.cs5500.starterbot.model;
 
-import com.mongodb.lang.NonNull;
+import javax.annotation.Nonnull;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
 public class PokemonSpecies { // Not implementing Model
-    @NonNull final Integer pokedexNumber;
+    @Nonnull final Integer pokedexNumber; // number
 
-    @NonNull final String imageUrl;
+    @Nonnull final String imageUrl; // spriteURL
 
-    @NonNull final String name;
+    @Nonnull final String name; // speciesNames, "en"
 
-    @NonNull final PokemonType[] types;
+    @Nonnull final String[] speciesTypes; // types
+
+    @Nonnull final PokemonType[] types; // TODO - to be removed, keep it just in case
 
     MoveEffectiveness getEffectiveness(PokemonType attackType) {
         return PokemonType.getEffectiveness(attackType, types);

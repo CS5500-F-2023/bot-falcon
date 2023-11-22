@@ -3,7 +3,6 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
-import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 @Slf4j
 public class StatusCommand implements SlashCommandHandler {
@@ -47,22 +45,13 @@ public class StatusCommand implements SlashCommandHandler {
 
         String trainerDiscordId = event.getMember().getId();
 
-        Map<String, String> trainerStats = trainerController.getTrainerStats(trainerDiscordId);
-        String trainerBalance = trainerStats.get("Balance");
-        String trainerPokemonNumbers = trainerStats.get("PokemonNumbers");
-        String trainerPokemonInventory = trainerStats.get("PokemonInventory");
-
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Your Stats");
+        embedBuilder.addField(
+                "💡hint: use `/pokemon` to view your pokemon inventory!",
+                trainerController.buildTrainerStats(trainerDiscordId),
+                false);
 
-        embedBuilder.addField("Balance", trainerBalance, true);
-        embedBuilder.addField("Total Pokemon", trainerPokemonNumbers, true);
-        if (!trainerPokemonNumbers.equals("0")) {
-            embedBuilder.addField("Inventory Members", trainerPokemonInventory, false);
-        }
-
-        MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-        messageCreateBuilder.addEmbeds(embedBuilder.build());
-        event.reply(messageCreateBuilder.build()).queue();
+        event.replyEmbeds(embedBuilder.build()).queue();
     }
 }

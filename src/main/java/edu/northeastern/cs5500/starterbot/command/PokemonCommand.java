@@ -51,30 +51,33 @@ public class PokemonCommand implements SlashCommandHandler {
         List<Pokemon> pokemonInventory =
                 trainerController.getTrainerPokemonInventory(trainerDiscordId);
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Your Pokemon Inventory");
-        embedBuilder.setDescription("use `/my` command to view pokemon stats at your choice!");
         if (pokemonInventory.isEmpty()) {
-            embedBuilder.addField("Oops....no Pokemon Found", "", false);
+            event.reply("Oops....no Pokemon Found").queue();
         } else {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Your Pokemon Inventory");
+
             StringBuilder pokemonList = new StringBuilder();
             int columns = 3;
             pokemonList.append("```");
             for (int i = 0; i < pokemonInventory.size(); i++) {
                 Pokemon pokemon = pokemonInventory.get(i);
                 PokemonSpecies species =
-                        pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
                 pokemonList.append(
                         String.format(
-                                "%-20s",
+                                "%-15s",
                                 "🔘 " + Integer.toString(i + 1) + ". " + species.getName()));
                 if ((i + 1) % columns == 0 || i == pokemonInventory.size() - 1) {
                     pokemonList.append("\n");
                 }
             }
             pokemonList.append("```");
-            embedBuilder.addField("", pokemonList.toString(), false);
+            embedBuilder.addField(
+                    "💡hint: use `/my` command to view pokemon stats at your choice!",
+                    pokemonList.toString(),
+                    false);
+            event.replyEmbeds(embedBuilder.build()).queue();
         }
-        event.replyEmbeds(embedBuilder.build()).queue();
     }
 }
