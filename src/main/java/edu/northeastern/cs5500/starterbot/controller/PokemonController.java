@@ -49,12 +49,23 @@ public class PokemonController {
                 pokemonRepository.add(Objects.requireNonNull(builder.build())));
     }
 
+    /**
+     * Spawns a random Pokemon.
+     *
+     * @return The spawned Pokemon.
+     */
     public Pokemon spawnRandonPokemon() {
         int[] myNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // TODO update for actual resource
         int randomIndex = (new Random()).nextInt(myNumbers.length);
         return spawnPokemon(myNumbers[randomIndex]);
     }
 
+    /**
+     * Retrieves a Pokemon object by its ID.
+     *
+     * @param pokemonID the ID of the Pokemon to retrieve
+     * @return the Pokemon object with the specified ID, or null if not found
+     */
     public Pokemon getPokemonById(String pokemonID) {
         return pokemonRepository.get(new ObjectId(pokemonID));
     }
