@@ -47,4 +47,9 @@ public abstract class ServiceModule { // NOSONAR
         }
         return null;
     }
+
+    @Provides
+    static PokemonDataService providPokemonDataService() {
+        return new PokemonDataService();
+    }
 }

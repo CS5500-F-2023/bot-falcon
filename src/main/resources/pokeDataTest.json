@@ -1,0 +1,577 @@
+[
+    {
+        "name": "bulbasaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギダネ",
+            "roomaji": "Fushigidane",
+            "ko": "이상해씨",
+            "zh-Hant": "妙蛙種子",
+            "fr": "Bulbizarre",
+            "de": "Bisasam",
+            "es": "Bulbasaur",
+            "it": "Bulbasaur",
+            "en": "Bulbasaur",
+            "ja": "フシギダネ",
+            "zh-Hans": "妙蛙种子"
+        },
+        "formNames": {},
+        "number": 1,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+        "hp": 45,
+        "attack": 49,
+        "defense": 49,
+        "spAttack": 65,
+        "spDefense": 65,
+        "speed": 45,
+        "id": "1",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "ivysaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギソウ",
+            "roomaji": "Fushigisou",
+            "ko": "이상해풀",
+            "zh-Hant": "妙蛙草",
+            "fr": "Herbizarre",
+            "de": "Bisaknosp",
+            "es": "Ivysaur",
+            "it": "Ivysaur",
+            "en": "Ivysaur",
+            "ja": "フシギソウ",
+            "zh-Hans": "妙蛙草"
+        },
+        "formNames": {},
+        "number": 2,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/2.png",
+        "hp": 60,
+        "attack": 62,
+        "defense": 63,
+        "spAttack": 80,
+        "spDefense": 80,
+        "speed": 60,
+        "id": "2",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "venusaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギバナ",
+            "roomaji": "Fushigibana",
+            "ko": "이상해꽃",
+            "zh-Hant": "妙蛙花",
+            "fr": "Florizarre",
+            "de": "Bisaflor",
+            "es": "Venusaur",
+            "it": "Venusaur",
+            "en": "Venusaur",
+            "ja": "フシギバナ",
+            "zh-Hans": "妙蛙花"
+        },
+        "formNames": {},
+        "number": 3,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/3.png",
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "spAttack": 100,
+        "spDefense": 100,
+        "speed": 80,
+        "id": "3",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "venusaur-mega",
+        "speciesNames": {
+            "ja-Hrkt": "フシギバナ",
+            "roomaji": "Fushigibana",
+            "ko": "이상해꽃",
+            "zh-Hant": "妙蛙花",
+            "fr": "Florizarre",
+            "de": "Bisaflor",
+            "es": "Venusaur",
+            "it": "Venusaur",
+            "en": "Venusaur",
+            "ja": "フシギバナ",
+            "zh-Hans": "妙蛙花"
+        },
+        "formNames": {
+            "ja-Hrkt": "メガフシギバナ",
+            "ko": "메가이상해꽃",
+            "zh-Hant": "超級妙蛙花",
+            "fr": "Méga-Florizarre",
+            "de": "Mega-Form",
+            "es": "Mega-Venusaur",
+            "it": "MegaVenusaur",
+            "en": "Mega Venusaur",
+            "ja": "メガフシギバナ",
+            "zh-Hans": "超级妙蛙花"
+        },
+        "number": 3,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10033.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10033.png",
+        "hp": 80,
+        "attack": 100,
+        "defense": 123,
+        "spAttack": 122,
+        "spDefense": 120,
+        "speed": 80,
+        "id": "10033",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "venusaur-gmax",
+        "speciesNames": {
+            "ja-Hrkt": "フシギバナ",
+            "roomaji": "Fushigibana",
+            "ko": "이상해꽃",
+            "zh-Hant": "妙蛙花",
+            "fr": "Florizarre",
+            "de": "Bisaflor",
+            "es": "Venusaur",
+            "it": "Venusaur",
+            "en": "Venusaur",
+            "ja": "フシギバナ",
+            "zh-Hans": "妙蛙花"
+        },
+        "formNames": {
+            "fr": "Forme Gigamax",
+            "de": "Gigadynamax-Form",
+            "en": "Gigantamax Form"
+        },
+        "number": 3,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10195.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10195.png",
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "spAttack": 100,
+        "spDefense": 100,
+        "speed": 80,
+        "id": "10195",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "charmander",
+        "speciesNames": {
+            "ja-Hrkt": "ヒトカゲ",
+            "roomaji": "Hitokage",
+            "ko": "파이리",
+            "zh-Hant": "小火龍",
+            "fr": "Salamèche",
+            "de": "Glumanda",
+            "es": "Charmander",
+            "it": "Charmander",
+            "en": "Charmander",
+            "ja": "ヒトカゲ",
+            "zh-Hans": "小火龙"
+        },
+        "formNames": {},
+        "number": 4,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png",
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "spAttack": 60,
+        "spDefense": 50,
+        "speed": 65,
+        "id": "4",
+        "types": [
+            "fire"
+        ]
+    },
+    {
+        "name": "charmeleon",
+        "speciesNames": {
+            "ja-Hrkt": "リザード",
+            "roomaji": "Lizardo",
+            "ko": "리자드",
+            "zh-Hant": "火恐龍",
+            "fr": "Reptincel",
+            "de": "Glutexo",
+            "es": "Charmeleon",
+            "it": "Charmeleon",
+            "en": "Charmeleon",
+            "ja": "リザード",
+            "zh-Hans": "火恐龙"
+        },
+        "formNames": {},
+        "number": 5,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/5.png",
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "spAttack": 80,
+        "spDefense": 65,
+        "speed": 80,
+        "id": "5",
+        "types": [
+            "fire"
+        ]
+    },
+    {
+        "name": "charizard",
+        "speciesNames": {
+            "ja-Hrkt": "リザードン",
+            "roomaji": "Lizardon",
+            "ko": "리자몽",
+            "zh-Hant": "噴火龍",
+            "fr": "Dracaufeu",
+            "de": "Glurak",
+            "es": "Charizard",
+            "it": "Charizard",
+            "en": "Charizard",
+            "ja": "リザードン",
+            "zh-Hans": "喷火龙"
+        },
+        "formNames": {},
+        "number": 6,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6.png",
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "spAttack": 109,
+        "spDefense": 85,
+        "speed": 100,
+        "id": "6",
+        "types": [
+            "fire",
+            "flying"
+        ]
+    },
+    {
+        "name": "charizard-mega-x",
+        "speciesNames": {
+            "ja-Hrkt": "リザードン",
+            "roomaji": "Lizardon",
+            "ko": "리자몽",
+            "zh-Hant": "噴火龍",
+            "fr": "Dracaufeu",
+            "de": "Glurak",
+            "es": "Charizard",
+            "it": "Charizard",
+            "en": "Charizard",
+            "ja": "リザードン",
+            "zh-Hans": "喷火龙"
+        },
+        "formNames": {
+            "ja-Hrkt": "メガリザードンＸ",
+            "ko": "메가리자몽X",
+            "zh-Hant": "超級噴火龍Ｘ",
+            "fr": "Méga-Dracaufeu X",
+            "de": "Mega-Form",
+            "es": "Mega-Charizard X",
+            "it": "MegaCharizard X",
+            "en": "Mega Charizard X",
+            "ja": "メガリザードンＸ",
+            "zh-Hans": "超级喷火龙Ｘ"
+        },
+        "number": 6,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10034.png",
+        "hp": 78,
+        "attack": 130,
+        "defense": 111,
+        "spAttack": 130,
+        "spDefense": 85,
+        "speed": 100,
+        "id": "10034",
+        "types": [
+            "fire",
+            "dragon"
+        ]
+    },
+    {
+        "name": "charizard-mega-y",
+        "speciesNames": {
+            "ja-Hrkt": "リザードン",
+            "roomaji": "Lizardon",
+            "ko": "리자몽",
+            "zh-Hant": "噴火龍",
+            "fr": "Dracaufeu",
+            "de": "Glurak",
+            "es": "Charizard",
+            "it": "Charizard",
+            "en": "Charizard",
+            "ja": "リザードン",
+            "zh-Hans": "喷火龙"
+        },
+        "formNames": {
+            "ja-Hrkt": "メガリザードンＹ",
+            "ko": "메가리자몽Y",
+            "zh-Hant": "超級噴火龍Ｙ",
+            "fr": "Méga-Dracaufeu Y",
+            "de": "Mega-Form",
+            "es": "Mega-Charizard Y",
+            "it": "MegaCharizard Y",
+            "en": "Mega Charizard Y",
+            "ja": "メガリザードンＹ",
+            "zh-Hans": "超级喷火龙Ｙ"
+        },
+        "number": 6,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10035.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6-mega-y.png",
+        "hp": 78,
+        "attack": 104,
+        "defense": 78,
+        "spAttack": 159,
+        "spDefense": 115,
+        "speed": 100,
+        "id": "10035",
+        "types": [
+            "fire",
+            "flying"
+        ]
+    },
+    {
+        "name": "charizard-gmax",
+        "speciesNames": {
+            "ja-Hrkt": "リザードン",
+            "roomaji": "Lizardon",
+            "ko": "리자몽",
+            "zh-Hant": "噴火龍",
+            "fr": "Dracaufeu",
+            "de": "Glurak",
+            "es": "Charizard",
+            "it": "Charizard",
+            "en": "Charizard",
+            "ja": "リザードン",
+            "zh-Hans": "喷火龙"
+        },
+        "formNames": {
+            "fr": "Forme Gigamax",
+            "de": "Gigadynamax-Form",
+            "en": "Gigantamax Form"
+        },
+        "number": 6,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10196.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10196.png",
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "spAttack": 109,
+        "spDefense": 85,
+        "speed": 100,
+        "id": "10196",
+        "types": [
+            "fire",
+            "flying"
+        ]
+    },
+    {
+        "name": "squirtle",
+        "speciesNames": {
+            "ja-Hrkt": "ゼニガメ",
+            "roomaji": "Zenigame",
+            "ko": "꼬부기",
+            "zh-Hant": "傑尼龜",
+            "fr": "Carapuce",
+            "de": "Schiggy",
+            "es": "Squirtle",
+            "it": "Squirtle",
+            "en": "Squirtle",
+            "ja": "ゼニガメ",
+            "zh-Hans": "杰尼龟"
+        },
+        "formNames": {},
+        "number": 7,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/7.png",
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "spAttack": 50,
+        "spDefense": 64,
+        "speed": 43,
+        "id": "7",
+        "types": [
+            "water"
+        ]
+    },
+    {
+        "name": "wartortle",
+        "speciesNames": {
+            "ja-Hrkt": "カメール",
+            "roomaji": "Kameil",
+            "ko": "어니부기",
+            "zh-Hant": "卡咪龜",
+            "fr": "Carabaffe",
+            "de": "Schillok",
+            "es": "Wartortle",
+            "it": "Wartortle",
+            "en": "Wartortle",
+            "ja": "カメール",
+            "zh-Hans": "卡咪龟"
+        },
+        "formNames": {},
+        "number": 8,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/8.png",
+        "hp": 59,
+        "attack": 63,
+        "defense": 80,
+        "spAttack": 65,
+        "spDefense": 80,
+        "speed": 58,
+        "id": "8",
+        "types": [
+            "water"
+        ]
+    },
+    {
+        "name": "blastoise",
+        "speciesNames": {
+            "ja-Hrkt": "カメックス",
+            "roomaji": "Kamex",
+            "ko": "거북왕",
+            "zh-Hant": "水箭龜",
+            "fr": "Tortank",
+            "de": "Turtok",
+            "es": "Blastoise",
+            "it": "Blastoise",
+            "en": "Blastoise",
+            "ja": "カメックス",
+            "zh-Hans": "水箭龟"
+        },
+        "formNames": {},
+        "number": 9,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/9.png",
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "spAttack": 85,
+        "spDefense": 105,
+        "speed": 78,
+        "id": "9",
+        "types": [
+            "water"
+        ]
+    },
+    {
+        "name": "blastoise-mega",
+        "speciesNames": {
+            "ja-Hrkt": "カメックス",
+            "roomaji": "Kamex",
+            "ko": "거북왕",
+            "zh-Hant": "水箭龜",
+            "fr": "Tortank",
+            "de": "Turtok",
+            "es": "Blastoise",
+            "it": "Blastoise",
+            "en": "Blastoise",
+            "ja": "カメックス",
+            "zh-Hans": "水箭龟"
+        },
+        "formNames": {
+            "ja-Hrkt": "メガカメックス",
+            "ko": "메가거북왕",
+            "zh-Hant": "超級水箭龜",
+            "fr": "Méga-Tortank",
+            "de": "Mega-Form",
+            "es": "Mega-Blastoise",
+            "it": "MegaBlastoise",
+            "en": "Mega Blastoise",
+            "ja": "メガカメックス",
+            "zh-Hans": "超级水箭龟"
+        },
+        "number": 9,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10036.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10036.png",
+        "hp": 79,
+        "attack": 103,
+        "defense": 120,
+        "spAttack": 135,
+        "spDefense": 115,
+        "speed": 78,
+        "id": "10036",
+        "types": [
+            "water"
+        ]
+    },
+    {
+        "name": "blastoise-gmax",
+        "speciesNames": {
+            "ja-Hrkt": "カメックス",
+            "roomaji": "Kamex",
+            "ko": "거북왕",
+            "zh-Hant": "水箭龜",
+            "fr": "Tortank",
+            "de": "Turtok",
+            "es": "Blastoise",
+            "it": "Blastoise",
+            "en": "Blastoise",
+            "ja": "カメックス",
+            "zh-Hans": "水箭龟"
+        },
+        "formNames": {
+            "fr": "Forme Gigamax",
+            "de": "Gigadynamax-Form",
+            "en": "Gigantamax Form"
+        },
+        "number": 9,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10197.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10197.png",
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "spAttack": 85,
+        "spDefense": 105,
+        "speed": 78,
+        "id": "10197",
+        "types": [
+            "water"
+        ]
+    },
+    {
+        "name": "caterpie",
+        "speciesNames": {
+            "ja-Hrkt": "キャタピー",
+            "roomaji": "Caterpie",
+            "ko": "캐터피",
+            "zh-Hant": "綠毛蟲",
+            "fr": "Chenipan",
+            "de": "Raupy",
+            "es": "Caterpie",
+            "it": "Caterpie",
+            "en": "Caterpie",
+            "ja": "キャタピー",
+            "zh-Hans": "绿毛虫"
+        },
+        "formNames": {},
+        "number": 10,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10.png",
+        "hp": 45,
+        "attack": 30,
+        "defense": 35,
+        "spAttack": 20,
+        "spDefense": 20,
+        "speed": 45,
+        "id": "10",
+        "types": [
+            "bug"
+        ]
+    }
+]
