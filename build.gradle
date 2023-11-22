@@ -135,7 +135,7 @@ spotless {
     }
     json {
         target '**/*.json'
-        targetExclude 'build/**'
+        targetExclude 'build/**', '.devcontainer/**'
         gson()
     }
     java {
