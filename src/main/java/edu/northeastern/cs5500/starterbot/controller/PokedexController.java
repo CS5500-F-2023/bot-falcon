@@ -7,7 +7,6 @@ import edu.northeastern.cs5500.starterbot.model.PokemonType;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -43,40 +42,6 @@ public class PokedexController {
                 builder.types(PokemonType.getSingleTypeArray(PokemonType.NORMAL)); // placeholder
                 break;
             }
-        }
-        return Objects.requireNonNull(builder.build());
-    }
-
-    @Nonnull
-    public PokemonSpecies getePokemonSpeciesByNumber(int pokedexNumber) {
-        // Normally load data from json, etc.
-        // Here is the quick and dirty solution
-        PokemonSpeciesBuilder builder = PokemonSpecies.builder();
-        builder.pokedexNumber(pokedexNumber);
-
-        switch (pokedexNumber) {
-            case 1: // Bulbasaur
-                builder.name("Bulbasaur");
-                builder.types(PokemonType.getSingleTypeArray(PokemonType.GRASS));
-                builder.imageUrl("https://placehold.co/256x256/green/white.png?text=Bulbasaur");
-                break;
-            case 4: // Charmander
-                builder.name("Charmander");
-                builder.types(PokemonType.getSingleTypeArray(PokemonType.FIRE));
-                builder.imageUrl("https://placehold.co/256x256/red/white.png?text=Charmander");
-                break;
-            case 7: // Squirtle
-                builder.name("Squirtle");
-                builder.types(PokemonType.getSingleTypeArray(PokemonType.WATER));
-                builder.imageUrl("https://placehold.co/256x256/blue/white.png?text=Squirtle");
-                break;
-            case 19: // Rattata
-                builder.name("Rattata");
-                builder.types(PokemonType.getSingleTypeArray(PokemonType.NORMAL));
-                builder.imageUrl("https://placehold.co/256x256/grey/white.png?text=Rattata");
-                break;
-            default:
-                throw new IllegalStateException();
         }
         return Objects.requireNonNull(builder.build());
     }
