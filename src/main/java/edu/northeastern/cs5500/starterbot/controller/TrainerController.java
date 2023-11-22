@@ -86,7 +86,7 @@ public class TrainerController {
         StringBuilder trainerStatsBuilder = new StringBuilder();
         for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
-                    pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
             String pokeName = species.getName();
             trainerStatsBuilder.append(pokeName).append(", ");
         }
@@ -99,8 +99,27 @@ public class TrainerController {
         return trainerStats;
     }
 
+    /**
+     * Builds the trainer statistics for a given Discord member ID.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @return a formatted string containing the trainer statistics
+     */
+    public String buildTrainerStats(String discordMemberId) {
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        return String.format(
+                "```Balance: %d\nPokemon Numbers: %d\nBerry Stock: 🫐\n```",
+                trainer.getBalance(), trainer.getPokemonInventory().size());
+    }
+
+    /**
+     * Retrieves the Pokemon inventory of a trainer identified by their Discord member ID.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @return the list of Pokemon in the trainer's inventory
+     */
     public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
-        List<Pokemon> pokemonInventory = new ArrayList<>();
+        List<Pokemon> pokemonInventory = new ArrayList<>(); // TODO, consider potential duplicates
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         List<ObjectId> pokemonIds = trainer.getPokemonInventory();
         for (ObjectId pokemonId : pokemonIds) {
@@ -111,13 +130,22 @@ public class TrainerController {
         return pokemonInventory;
     }
 
+    /**
+     * Retrieves a Pokemon from the trainer's inventory based on the specified index.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @param index the index of the Pokemon in the inventory
+     * @return the Pokemon at the specified index
+     * @throws InvalidInventoryIndexException if the index is invalid or the inventory is empty
+     */
     public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
             throws InvalidInventoryIndexException {
         List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
-        if (pokemonInventory.isEmpty() || index < 0 || index > pokemonInventory.size()) {
+        if (pokemonInventory.isEmpty() || index < 0 || index >= pokemonInventory.size()) {
             throw new InvalidInventoryIndexException("Invalid index");
+        } else {
+            return pokemonInventory.get(index);
         }
-        return pokemonInventory.get(index);
     }
 
     /**
