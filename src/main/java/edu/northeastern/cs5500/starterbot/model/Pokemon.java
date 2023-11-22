@@ -12,18 +12,15 @@ import org.bson.types.ObjectId;
 public class Pokemon implements Model {
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
-    @Nonnull Integer pokedexNumber;
+    @Nonnull Integer pokedexNumber; // number
 
     @Nonnull @Builder.Default Integer level = 5;
 
-    @Nonnull
-    // Nonnegative, Nonnull from javax or mongodb????
-    Integer currentHp;
-
+    @Nonnull Integer currentHp; // default: hp
     @Nonnull Integer hp;
     @Nonnull Integer attack;
     @Nonnull Integer defense;
-    @Nonnull Integer specialAttack;
-    @Nonnull Integer specialDefense;
+    @Nonnull Integer specialAttack; // spAttack
+    @Nonnull Integer specialDefense; // spDefense
     @Nonnull Integer speed;
 }
