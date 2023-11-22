@@ -60,20 +60,6 @@ public class CommandModule {
 
     @Provides
     @IntoMap
-    @StringKey(ShopCommand.NAME)
-    public SlashCommandHandler provideShopCommand(ShopCommand shopCommand) {
-        return shopCommand;
-    }
-
-    @Provides
-    @IntoMap
-    @StringKey(ShopCommand.NAME)
-    public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
-        return shopCommand;
-    }
-
-    @Provides
-    @IntoMap
     @StringKey(DropdownCommand.NAME)
     public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
         return dropdownCommand;
@@ -84,5 +70,47 @@ public class CommandModule {
     @StringKey(DropdownCommand.NAME)
     public StringSelectHandler provideDropdownCommandMenuHandler(DropdownCommand dropdownCommand) {
         return dropdownCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(DailyCommand.NAME)
+    public SlashCommandHandler provideDailyCommand(DailyCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(StatusCommand.NAME)
+    public SlashCommandHandler provideStatusCommand(StatusCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(PokemonCommand.NAME)
+    public SlashCommandHandler providePokemonCommand(PokemonCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(MyCommand.NAME)
+    public SlashCommandHandler provideMyCommand(MyCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(ShopCommand.NAME)
+    public SlashCommandHandler provideShopCommand(ShopCommand shopCommand) {
+        return shopCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(ShopCommand.NAME)
+    public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
+        return shopCommand;
     }
 }

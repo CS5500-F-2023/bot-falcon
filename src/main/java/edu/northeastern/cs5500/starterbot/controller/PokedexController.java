@@ -50,4 +50,16 @@ public class PokedexController {
         }
         return Objects.requireNonNull(builder.build());
     }
+
+    /**
+     * Builds a string representation of the Pokemon Species's details based on its pokedex number.
+     *
+     * @param pokedexNumber The index of the pokemon species.
+     * @return A string containing pokemon species and types.
+     */
+    public String buildSpeciesDetails(int pokedexNumber) {
+        PokemonSpecies species = this.getePokemonSpeciesByNumber(pokedexNumber);
+        String typeString = PokemonType.getTypeString(species.getTypes());
+        return String.format("Species: %s\nTypes: %s\n", species.getName(), typeString);
+    }
 }
