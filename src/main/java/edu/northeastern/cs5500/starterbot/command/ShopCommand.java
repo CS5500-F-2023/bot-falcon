@@ -19,15 +19,13 @@ import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 public class ShopCommand implements SlashCommandHandler, StringSelectHandler {
 
     static final String NAME = "shop";
+    StringSelectMenu menu;
 
-    @Inject
-    PokemonController pokemonController;
+    @Inject PokemonController pokemonController;
 
-    @Inject
-    PokedexController pokedexController;
+    @Inject PokedexController pokedexController;
 
-    @Inject
-    TrainerController trainerController;
+    @Inject TrainerController trainerController;
 
     @Inject
     public ShopCommand() {
@@ -52,69 +50,67 @@ public class ShopCommand implements SlashCommandHandler, StringSelectHandler {
 
         String trainerDiscordId = event.getMember().getId();
         // Dropdown
-        StringSelectMenu menu = StringSelectMenu.create("shop")
-                .setPlaceholder("Choose the food type") // shows the placeholder
-                // indicating what this
-                // menu is for
-                .addOption("Mystery Berry: 5 coins", "MYSTERYBERRY:" + trainerDiscordId)
-                .addOption("Berry: 10 coins", "BERRY:" + trainerDiscordId)
-                .addOption("Gold Berry: 30 coins", "GOLDBERRY:" + trainerDiscordId)
-                .build();
+        menu =
+                StringSelectMenu.create("shop")
+                        .setPlaceholder("Choose the food type") // shows the placeholder
+                        // indicating what this
+                        // menu is for
+                        .addOption("🍭 Mystery Berry: 5 coins", "Mystery Berry:" + trainerDiscordId)
+                        .addOption("🫐 Berry: 10 coins", "Berry:" + trainerDiscordId)
+                        .addOption("🌟 Gold Berry: 30 coins", "Gold Berry:" + trainerDiscordId)
+                        .build();
 
-        event.reply("Welcome to the Berry Shop! Choose the type of food you want to buy.")
+        event.reply("🛍️ Welcome to the Berry Shop! Choose the type of food you want to buy.")
                 .setEphemeral(true)
                 .addActionRow(menu)
-                // .addActionRow(
-                // Button.success(getName() + ":buy:" + trainerDiscordId, "Buy"),
-                // Button.danger(getName() + ":cancel:" + trainerDiscordId, "Cancel"))
                 .queue();
     }
 
     @Override
     public void onStringSelectInteraction(@Nonnull StringSelectInteractionEvent event) {
         final String response = event.getInteraction().getValues().get(0);
-        System.out.println(response);
+
         String[] fields = response.split(":");
-        System.out.println(fields);
         String selectedFoodTypeResponse = fields[0];
-        System.out.println(selectedFoodTypeResponse);
         String initiateTrainerDiscordId = fields[1];
-        System.out.println(initiateTrainerDiscordId);
         String trainerDiscordId = event.getMember().getId();
-        FoodType selectedFoodType;
+        FoodType selectedFoodType = FoodType.MYSTERYBERRY;
         Objects.requireNonNull(response);
 
-        if (response.equals("MYSTERYBERRY")) {
+        if (selectedFoodTypeResponse.equals("Mystery Berry")) {
             selectedFoodType = FoodType.MYSTERYBERRY;
-        } else if (response.equals("BERRY")) {
+        } else if (selectedFoodTypeResponse.equals("Berry")) {
             selectedFoodType = FoodType.BERRY;
-        } else {
+        } else if (selectedFoodTypeResponse.equals("Gold Berry")) {
             selectedFoodType = FoodType.GOLDBERRY;
         }
+
         if (trainerDiscordId.equals(initiateTrainerDiscordId)) {
             try {
+
                 trainerController.decreaseTrainerBalance(
                         trainerDiscordId, selectedFoodType.getPrice());
                 trainerController.addTrainerFood(trainerDiscordId, selectedFoodType);
                 event.reply(
-                        String.format(
-                                "<@%s>, you bought a %s !",
-                                trainerDiscordId, selectedFoodTypeResponse))
+                                String.format(
+                                        "<@%s>, you bought a %s !",
+                                        trainerDiscordId, selectedFoodTypeResponse))
                         .queue();
             } catch (InsufficientBalanceException e) {
                 event.reply(
-                        String.format(
-                                "<@%s>, you don't have enough coins to buy the %s!",
-                                trainerDiscordId, selectedFoodTypeResponse))
+                                String.format(
+                                        "<@%s>, you don't have enough coins to buy the %s!",
+                                        trainerDiscordId, selectedFoodTypeResponse))
                         .queue();
             }
         } else {
             event.reply(
-                    String.format(
-                            "Sorry <@%s>, you are not authorized to perform this action.",
-                            trainerDiscordId))
+                            String.format(
+                                    "Sorry <@%s>, you are not authorized to perform this action.",
+                                    trainerDiscordId))
                     .queue();
         }
+
         event.reply(response).queue();
     }
 }

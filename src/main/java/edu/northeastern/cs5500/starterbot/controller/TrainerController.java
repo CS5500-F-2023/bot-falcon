@@ -65,6 +65,6 @@ public class TrainerController {
         } else {
             trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
         }
-        trainerRepository.update(trainer); // now in memory so automatically update
+        trainerRepository.update(trainer);
     }
 }
