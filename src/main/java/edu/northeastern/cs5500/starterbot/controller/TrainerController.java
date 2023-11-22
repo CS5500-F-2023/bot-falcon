@@ -1,9 +1,9 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
-import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
@@ -24,11 +24,9 @@ import org.bson.types.ObjectId;
 public class TrainerController {
     GenericRepository<Trainer> trainerRepository;
 
-    @Inject
-    PokemonController pokemonController;
+    @Inject PokemonController pokemonController;
 
-    @Inject
-    PokedexController pokedexController;
+    @Inject PokedexController pokedexController;
 
     @Inject
     TrainerController(GenericRepository<Trainer> trainerRepository) {
@@ -98,7 +96,8 @@ public class TrainerController {
 
         StringBuilder trainerStatsBuilder = new StringBuilder();
         for (Pokemon pokemon : pokemonInventory) {
-            PokemonSpecies species = pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
+            PokemonSpecies species =
+                    pokedexController.getePokemonSpeciesByNumber(pokemon.getPokedexNumber());
             String pokeName = species.getName();
             trainerStatsBuilder.append(pokeName).append(", ");
         }
@@ -136,13 +135,11 @@ public class TrainerController {
      * Return the updated balance of the trainer after adding the daily reward coins
      *
      * @param discordMemberId Discord member ID of the specific trainer as String
-     * @param amount          Amount to be added to the balance of the specific
-     *                        balance as Integer
-     * @param curDate         Current date as LocalDate
+     * @param amount Amount to be added to the balance of the specific balance as Integer
+     * @param curDate Current date as LocalDate
      * @return The update balance as Integer
-     * @throws InvalidCheckinDayException if the cur date is not strictly greater
-     *                                    than previous
-     *                                    checkin date
+     * @throws InvalidCheckinDayException if the cur date is not strictly greater than previous
+     *     checkin date
      */
     public Integer addDailyRewardsToTrainer(
             String discordMemberId, Integer amount, LocalDate curDate)

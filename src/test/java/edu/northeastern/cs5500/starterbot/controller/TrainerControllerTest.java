@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
-import java.util.HashMap;
-import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
-import edu.northeastern.cs5500.starterbot.model.Trainer;
-import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -23,10 +21,11 @@ class TrainerControllerTest {
         return trainerController; // Empty repo
     }
 
-    private Trainer trainer = Trainer.builder()
-            .discordUserId("testDiscordUserId")
-            .balance(10) // set the initial balance
-            .build();
+    private Trainer trainer =
+            Trainer.builder()
+                    .discordUserId("testDiscordUserId")
+                    .balance(10) // set the initial balance
+                    .build();
 
     @Test
     void testIncreaseTrainerBalance() {
@@ -84,7 +83,8 @@ class TrainerControllerTest {
         assertThat(trainerController.addDailyRewardsToTrainer(discordId, 10, today)).isEqualTo(20);
         assertThrows(
                 InvalidCheckinDayException.class,
-                () -> trainerController.addDailyRewardsToTrainer(
-                        trainer.getDiscordUserId(), 30, today));
+                () ->
+                        trainerController.addDailyRewardsToTrainer(
+                                trainer.getDiscordUserId(), 30, today));
     }
 }
