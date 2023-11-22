@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 /** This class represents a service for retrieving Pokemon data. */
 public class PokemonDataService {
-    //TODO update to real resource file
+    // TODO update to real resource file
     private static final String POKEMON_DATA_FILE_NAME = "src/main/resources/pokeDataTest.json";
 
     private List<PokemonData> pokemonDataList;
