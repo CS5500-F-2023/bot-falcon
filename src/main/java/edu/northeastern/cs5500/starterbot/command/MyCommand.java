@@ -5,9 +5,11 @@ import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -47,25 +49,35 @@ public class MyCommand implements SlashCommandHandler {
     @Override
     public void onSlashCommandInteraction(@Nonnull SlashCommandInteractionEvent event) {
         log.info("event: /my");
-        String trainerDiscordId = event.getUser().getId();
         try {
+            String trainerDiscordId = event.getUser().getId();
             Integer pokemonInventoryIndex = event.getOption("pokemon").getAsInt() - 1;
-
             Pokemon pokemon =
                     trainerController.getPokemonFromInventory(
                             trainerDiscordId, pokemonInventoryIndex);
-            String pokemonIdString = pokemon.getId().toString();
-            String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
-            String speciesDetails =
-                    pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
+            PokemonSpecies species =
+                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
 
-            StringBuilder pokeStatsBuilder = new StringBuilder();
-            pokeStatsBuilder.append("```");
-            pokeStatsBuilder.append(speciesDetails);
-            pokeStatsBuilder.append(pokemonDetails).append("```");
-            event.reply(pokeStatsBuilder.toString()).queue();
+            String pokeProfile = buildPokemonProfile(trainerDiscordId, pokemon);
+
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setThumbnail(species.getImageUrl());
+            embedBuilder.addField("Your Pokemon Detail", pokeProfile, false);
+            event.replyEmbeds(embedBuilder.build()).queue();
         } catch (InvalidInventoryIndexException e) {
-            event.reply("Please enter a valid number.").queue();
+            event.reply("Oops...the pokemon does not exist, try again").queue();
         }
+    }
+
+    private String buildPokemonProfile(String trainerDiscordId, Pokemon pokemon) {
+        String pokemonIdString = pokemon.getId().toString();
+        String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
+        String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
+
+        StringBuilder pokeStatsBuilder = new StringBuilder();
+        pokeStatsBuilder.append("```");
+        pokeStatsBuilder.append(speciesDetails);
+        pokeStatsBuilder.append(pokemonDetails).append("```");
+        return pokeStatsBuilder.toString();
     }
 }
