@@ -67,6 +67,20 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(PokemonCommand.NAME)
+    public SlashCommandHandler providePokemonCommand(PokemonCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(MyCommand.NAME)
+    public SlashCommandHandler provideMyCommand(MyCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(DropdownCommand.NAME)
     public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
         return dropdownCommand;
