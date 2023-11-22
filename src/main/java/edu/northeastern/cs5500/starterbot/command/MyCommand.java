@@ -38,11 +38,11 @@ public class MyCommand implements SlashCommandHandler {
     @Override
     @Nonnull
     public CommandData getCommandData() {
-        return Commands.slash(getName(), "Get your pokemon's stats by typing the number!")
+        return Commands.slash(getName(), "Get your pokemon's stats by typing its number!")
                 .addOption(
                         OptionType.INTEGER,
                         "pokemon",
-                        "The bot will reply to your command with the pokemon stats",
+                        "The bot will reply with the pokemon stats",
                         true);
     }
 
@@ -69,15 +69,18 @@ public class MyCommand implements SlashCommandHandler {
         }
     }
 
+    /**
+     * Build the pokemon profile with the pokemon id
+     *
+     * @param trainerDiscordId the trainer's discord id
+     * @param pokemon the pokemon
+     * @return the pokemon profile
+     */
     private String buildPokemonProfile(String trainerDiscordId, Pokemon pokemon) {
         String pokemonIdString = pokemon.getId().toString();
         String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
         String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
 
-        StringBuilder pokeStatsBuilder = new StringBuilder();
-        pokeStatsBuilder.append("```");
-        pokeStatsBuilder.append(speciesDetails);
-        pokeStatsBuilder.append(pokemonDetails).append("```");
-        return pokeStatsBuilder.toString();
+        return String.format("```%s%s```", speciesDetails, pokemonDetails);
     }
 }

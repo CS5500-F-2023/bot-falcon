@@ -51,11 +51,12 @@ public class PokemonCommand implements SlashCommandHandler {
         List<Pokemon> pokemonInventory =
                 trainerController.getTrainerPokemonInventory(trainerDiscordId);
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Your Pokemon Inventory");
         if (pokemonInventory.isEmpty()) {
-            embedBuilder.setDescription("Oops....no Pokemon Found");
+            event.reply("Oops....no Pokemon Found").queue();
         } else {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Your Pokemon Inventory");
+
             StringBuilder pokemonList = new StringBuilder();
             int columns = 3;
             pokemonList.append("```");
@@ -76,7 +77,7 @@ public class PokemonCommand implements SlashCommandHandler {
                     "💡hint: use `/my` command to view pokemon stats at your choice!",
                     pokemonList.toString(),
                     false);
+            event.replyEmbeds(embedBuilder.build()).queue();
         }
-        event.replyEmbeds(embedBuilder.build()).queue();
     }
 }

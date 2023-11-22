@@ -5,15 +5,12 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
-import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -79,35 +76,6 @@ public class TrainerController {
             trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
         }
         trainerRepository.update(trainer);
-    }
-
-    /**
-     * Return a trainer's status, including pokemon collection, balance
-     *
-     * @param discordMemberId
-     * @return trainer stats
-     */
-    public Map<String, String> getTrainerStats(String discordMemberId) {
-        Map<String, String> trainerStats = new HashMap<>();
-        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        // get stats
-        Integer currBal = trainer.getBalance();
-        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
-
-        StringBuilder trainerStatsBuilder = new StringBuilder();
-        for (Pokemon pokemon : pokemonInventory) {
-            PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
-            String pokeName = species.getName();
-            trainerStatsBuilder.append(pokeName).append(", ");
-        }
-        String pokeNames = trainerStatsBuilder.toString().replaceAll(", $", "");
-
-        trainerStats.put("Balance", Integer.toString(currBal));
-        trainerStats.put("PokemonNumbers", Integer.toString(pokemonInventory.size()));
-        trainerStats.put("PokemonInventory", pokeNames);
-
-        return trainerStats;
     }
 
     /**
