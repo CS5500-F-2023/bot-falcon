@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
@@ -68,6 +69,16 @@ public class TrainerController {
             throw new InsufficientBalanceException("Insufficient balance");
         }
         trainerRepository.update(trainer); // now in memory so automatically update
+    }
+
+    public void addTrainerFood(String discordMemberId, FoodType food) {
+        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        if (!trainer.getFoodInventory().containsKey(food)) {
+            trainer.getFoodInventory().put(food, 1);
+        } else {
+            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
+        }
+        trainerRepository.update(trainer);
     }
 
     /**

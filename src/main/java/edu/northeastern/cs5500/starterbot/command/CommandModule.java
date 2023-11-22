@@ -60,6 +60,20 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(DropdownCommand.NAME)
+    public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
+        return dropdownCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(DropdownCommand.NAME)
+    public StringSelectHandler provideDropdownCommandMenuHandler(DropdownCommand dropdownCommand) {
+        return dropdownCommand;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(DailyCommand.NAME)
     public SlashCommandHandler provideDailyCommand(DailyCommand command) {
         return command;
@@ -88,15 +102,15 @@ public class CommandModule {
 
     @Provides
     @IntoMap
-    @StringKey(DropdownCommand.NAME)
-    public SlashCommandHandler provideDropdownCommand(DropdownCommand dropdownCommand) {
-        return dropdownCommand;
+    @StringKey(ShopCommand.NAME)
+    public SlashCommandHandler provideShopCommand(ShopCommand shopCommand) {
+        return shopCommand;
     }
 
     @Provides
     @IntoMap
-    @StringKey(DropdownCommand.NAME)
-    public StringSelectHandler provideDropdownCommandMenuHandler(DropdownCommand dropdownCommand) {
-        return dropdownCommand;
+    @StringKey(ShopCommand.NAME)
+    public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
+        return shopCommand;
     }
 }
