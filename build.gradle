@@ -69,6 +69,9 @@ dependencies {
 
     // opentelemetry tracing
     implementation 'io.honeycomb:honeycomb-opentelemetry-sdk:_'
+
+    // gson for parsing json
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 application {
@@ -129,6 +132,11 @@ spotless {
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
+    }
+    json {
+        target '**/*.json'
+        targetExclude 'build/**'
+        gson()
     }
     java {
         targetExclude 'build/**'
