@@ -7,8 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /** This class represents a service for retrieving Pokemon data. */
+@Singleton
 public class PokemonDataService {
     // TODO update to real resource file
     private static final String POKEMON_DATA_FILE_NAME = "src/main/resources/pokeDataTest.json";
