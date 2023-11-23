@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
@@ -65,6 +66,18 @@ class TrainerControllerTest {
     }
 
     @Test
+    void testRemoveTrainerFood() throws InsufficientFoodException {
+        TrainerController trainerController = getTrainerController();
+        trainerController.trainerRepository.add(trainer);
+        trainer.getFoodInventory().put(FoodType.MYSTERYBERRY, 1);
+        trainerController.removeTrainerFood(trainer.getDiscordUserId(), FoodType.MYSTERYBERRY);
+        Map<FoodType, Integer> expectedInventory = new HashMap<>();
+        expectedInventory.put(FoodType.MYSTERYBERRY, 0);
+
+        assertEquals(expectedInventory, trainer.getFoodInventory());
+    }
+
+    @Test
     void testAddDailyRewardsToTrainer() throws InvalidCheckinDayException {
         TrainerController trainerController = getTrainerController();
         trainerController.trainerRepository.add(trainer);
@@ -76,5 +89,21 @@ class TrainerControllerTest {
                 () ->
                         trainerController.addDailyRewardsToTrainer(
                                 trainer.getDiscordUserId(), 30, today));
+    }
+
+    @Test
+    void testGetTrainerFoodInventory() {
+        TrainerController trainerController = getTrainerController();
+        trainerController.trainerRepository.add(trainer);
+        trainer.getFoodInventory().put(FoodType.GOLDBERRY, 2);
+
+        Map<FoodType, Integer> expectedInventory = new HashMap<>();
+        expectedInventory.put(FoodType.MYSTERYBERRY, 0);
+        expectedInventory.put(FoodType.BERRY, 0);
+        expectedInventory.put(FoodType.GOLDBERRY, 2);
+
+        assertEquals(
+                expectedInventory,
+                trainerController.getTrainerFoodInventory(trainer.getDiscordUserId()));
     }
 }

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.Pokemon.PokemonBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
@@ -15,6 +16,10 @@ import org.bson.types.ObjectId;
 
 @Singleton
 public class PokemonController {
+
+    static final Integer MYSTERYBERRY_LEVEL_UPDATE = 5;
+    static final Integer BERRY_LEVEL_UPDATE = 10;
+    static final Integer GOLDBERRY_LEVEL_UPDATE = 30;
 
     GenericRepository<Pokemon> pokemonRepository;
 
@@ -89,5 +94,19 @@ public class PokemonController {
                 pokemon.getSpecialAttack(),
                 pokemon.getSpecialDefense(),
                 pokemon.getSpeed());
+    }
+
+    public void increasePokemonLevelByFood(Pokemon pokemon, FoodType food) {
+        Integer currentLevel = pokemon.getLevel();
+        if (food.equals(FoodType.MYSTERYBERRY)) {
+            pokemon.setLevel(currentLevel + MYSTERYBERRY_LEVEL_UPDATE);
+        }
+        if (food.equals(FoodType.BERRY)) {
+            pokemon.setLevel(currentLevel + BERRY_LEVEL_UPDATE);
+        }
+        if (food.equals(FoodType.GOLDBERRY)) {
+            pokemon.setLevel(currentLevel + GOLDBERRY_LEVEL_UPDATE);
+        }
+        pokemonRepository.update(pokemon);
     }
 }

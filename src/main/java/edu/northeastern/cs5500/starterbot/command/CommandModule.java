@@ -113,4 +113,18 @@ public class CommandModule {
     public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
         return shopCommand;
     }
+
+    @Provides
+    @IntoMap
+    @StringKey(FeedCommand.NAME)
+    public SlashCommandHandler provideFeedCommand(FeedCommand feedCommand) {
+        return feedCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(FeedCommand.NAME)
+    public ButtonHandler provideFeedCommandClickHandler(FeedCommand feedCommand) {
+        return feedCommand;
+    }
 }

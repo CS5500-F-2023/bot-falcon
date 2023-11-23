@@ -199,6 +199,11 @@
 			<attribute name="gradle.buildServer" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/vscode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar" sourcepath="/home/vscode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/982a90132e942f302e6fe79d6e78c4bc2e998569/gson-2.10.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/home/vscode/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/2.0.6/78c57967fe87a823697fe6cf0f5b394b0aa18337/slf4j-simple-2.0.6.jar" sourcepath="/home/vscode/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/2.0.6/a5ce031305fa96f4fefbab96321dca939b4e04ed/slf4j-simple-2.0.6-sources.jar">
 		<attributes>
 			<attribute name="gradle.buildServer" value="true"/>
@@ -280,11 +285,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/vscode/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.48.v20220622/3953122cd495f64ff72831e889a5a661631f580/websocket-common-9.4.48.v20220622.jar" sourcepath="/home/vscode/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.48.v20220622/dd06db21eea93ead4dbc738723c4cf4cb7689437/websocket-common-9.4.48.v20220622-sources.jar">
-		<attributes>
-			<attribute name="gradle.buildServer" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/vscode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.9.0/8a1167e089096758b49f9b34066ef98b2f4b37aa/gson-2.9.0.jar" sourcepath="/home/vscode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.9.0/83f964c0d36cda6b05269fdd43abd0f553a17c84/gson-2.9.0-sources.jar">
 		<attributes>
 			<attribute name="gradle.buildServer" value="true"/>
 		</attributes>
