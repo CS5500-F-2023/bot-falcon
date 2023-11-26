@@ -113,4 +113,19 @@ public class CommandModule {
     public StringSelectHandler provideShopCommandMenuHandler(ShopCommand shopCommand) {
         return shopCommand;
     }
+
+    @Provides
+    @IntoMap
+    @StringKey(BattleCommand.NAME)
+    public SlashCommandHandler provideBattleCommand(BattleCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(BattleCommand.NAME)
+    public StringSelectHandler provideBattleCommandMenuHandler(BattleCommand command) {
+        return command;
+    }
+
 }
