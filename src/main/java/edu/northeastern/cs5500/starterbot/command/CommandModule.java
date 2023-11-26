@@ -127,5 +127,4 @@ public class CommandModule {
     public StringSelectHandler provideBattleCommandMenuHandler(BattleCommand command) {
         return command;
     }
-
 }
