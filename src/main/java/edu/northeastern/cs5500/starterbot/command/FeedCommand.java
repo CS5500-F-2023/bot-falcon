@@ -70,27 +70,14 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                         EmbedBuilder embedBuilder = new EmbedBuilder();
                         embedBuilder.setThumbnail(species.getImageUrl());
                         embedBuilder.setTitle("Choose the berry to level up your Pokemon!");
-
-                        // embedBuilder.addField(
-                        // "Your Selected Pokemon's Current Level:",
-                        // "Level: " + pokemon.getLevel().toString(),
-                        // false);
-                        // embedBuilder.setDescription(String.format("Here is your food inventory"));
                         embedBuilder.setDescription(
                                         String.format(
                                                         "Your Selected Pokemon's Current Level: %s",
                                                         pokemon.getLevel().toString()));
                         embedBuilder.addField(
-                                        "----\n🎒 Below is your food inventory!\n----",
+                                        "------------------------------------\n🎒 Below is your food inventory!",
                                         "💡Not enough berries? Type /shop to buy more berries!",
                                         false);
-                        // event.replyEmbeds(embedBuilder.build()).queue();
-
-                        // EmbedBuilder embedBuilderFood = new EmbedBuilder();
-                        // embedBuilderFood.setTitle(String.format("Choose the berry to level up your
-                        // Pokemon!"));
-                        // embedBuilderFood.setDescription(String.format("Here is your food
-                        // inventory"));
 
                         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
                         messageCreateBuilder = messageCreateBuilder.addActionRow(
