@@ -23,8 +23,6 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
     static final String NAME = "battle";
 
-    static final String NOT_NOW = "maybe-next-time";
-
     @Inject PokemonController pokemonController;
 
     @Inject PokedexController pokedexController;
@@ -88,15 +86,12 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                 "Hint: Select \"Maybe next time\" from the list if you change your mind");
 
         // Build dropdown Menu
-        StringSelectMenu.Builder menuBuilder = StringSelectMenu.create("menu:" + trainerDiscordId);
-        menuBuilder.setMinValues(1); // Max number of option a user can select
-        menuBuilder.setMaxValues(1); // Min number of option a user can select
+        StringSelectMenu.Builder menuBuilder = StringSelectMenu.create(NAME);
         menuBuilder.setPlaceholder("Choose your Pokémon");
-        menuBuilder.addOption("Maybe next time", NOT_NOW + ":" + trainerDiscordId);
+        menuBuilder.addOption("Maybe next time", "maybe-next-time" + ":" + trainerDiscordId);
 
         // Adding Pokemon options to the menu
-        for (int i = 0; i < pokemonInventory.size(); i++) {
-            Pokemon pokemon = pokemonInventory.get(i);
+        for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
             menuBuilder.addOption(
@@ -116,8 +111,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         final String response = event.getInteraction().getValues().get(0);
         String[] fields = response.split(":");
         String trPokemonID = fields[0];
+        log.error("!!! onStringSelectInteraction: " + "trPokemonID: " + trPokemonID);
         String initiatorDiscordId = fields[1];
         String trDiscordId = event.getMember().getId();
+        log.error("!!! onStringSelectInteraction: " + "trDiscordId: " + initiatorDiscordId);
 
         // If user who clicks list is Not the same as who initiated the list
         if (!trDiscordId.equals(initiatorDiscordId)) {
@@ -126,7 +123,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         }
 
         // If user chooses not to battle for now
-        if (trPokemonID.equals(NOT_NOW)) {
+        if (trPokemonID.equals("maybe-next-time")) {
+            trainerController.increaseTrainerBalance(trDiscordId, 5);
             event.reply(String.format("<@%s>, you decide not to battle.", trDiscordId)).queue();
             return;
         }
@@ -137,7 +135,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         Integer trPokedex = trPokemon.getPokedexNumber();
         PokemonSpecies trPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
         String trPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(trPokedex);
-        String trPokeInfoStr = pokemonController.buildPokemonStats(trPokedex.toString());
+        log.error("!!! trPokedex.toString(): " + trPokedex.toString());
+        String trPokeInfoStr = pokemonController.buildPokemonStats(trPokemonID);
         String trPokeName = trPokeSpecies.getName();
 
         // Set up the Embedded Message for Trainer Pokémon
@@ -154,7 +153,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         Integer npcPokedex = npcPokemon.getPokedexNumber();
         PokemonSpecies npcPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
         String npcPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(npcPokedex);
-        String npcPokeInfoStr = pokemonController.buildPokemonStats(npcPokedex.toString());
+        String npcPokeInfoStr = pokemonController.buildPokemonStats(npcPokemon.getId().toString());
         String npcPokeName = npcPokeSpecies.getName();
 
         // Set up the Embedded Message for NPC Pokémon
@@ -169,7 +168,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         // Send the battle set up message (which Pokémon battles with which Pokémon)
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
-        event.reply(messageCreateBuilder.build()).queue();
+        // event.reply(messageCreateBuilder.build()).queue();
 
         // Send subsequent message (round update and battle results)
         event.reply(messageCreateBuilder.build())
