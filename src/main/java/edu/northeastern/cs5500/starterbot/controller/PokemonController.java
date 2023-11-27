@@ -90,4 +90,13 @@ public class PokemonController {
                 pokemon.getSpecialDefense(),
                 pokemon.getSpeed());
     }
+
+    public void increasePokemonExp(String pokemonID, Integer expGained) {
+        Pokemon pokemon = getPokemonById(pokemonID);
+        // TODO: zqy: Impl the exp feature and level up logic
+        // pokemon.setExperience(pokemon.getCurrentExp + expGained)
+        if (!pokemon.equals(null)) {
+            pokemonRepository.update(pokemon);
+        }
+    }
 }

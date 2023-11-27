@@ -1,9 +1,12 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.controller.BattleController;
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.model.BattleRecord;
+import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import java.util.List;
@@ -28,6 +31,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
     @Inject PokedexController pokedexController;
 
     @Inject TrainerController trainerController;
+
+    @Inject BattleController battleController;
 
     @Inject
     public BattleCommand() {
@@ -135,7 +140,6 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         Integer trPokedex = trPokemon.getPokedexNumber();
         PokemonSpecies trPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
         String trPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(trPokedex);
-        log.error("!!! trPokedex.toString(): " + trPokedex.toString());
         String trPokeInfoStr = pokemonController.buildPokemonStats(trPokemonID);
         String trPokeName = trPokeSpecies.getName();
 
@@ -148,8 +152,11 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                 false);
         embedBuilder1.setThumbnail(trPokeSpecies.getImageUrl());
 
-        // The bot will pick a random pokemon, being the NPC Pokémon
-        Pokemon npcPokemon = pokemonController.spawnRandonPokemon();
+        // Set up the battle
+        NPCBattle battle = battleController.setUpNewBattle(trPokemon);
+
+        // The NPC Pokémon is accessible by calling battle.getNpcPokemon()
+        Pokemon npcPokemon = battle.getNpcPokemon();
         Integer npcPokedex = npcPokemon.getPokedexNumber();
         PokemonSpecies npcPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
         String npcPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(npcPokedex);
@@ -165,19 +172,49 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                 false);
         embedBuilder2.setThumbnail(npcPokeSpecies.getImageUrl());
 
-        // Send the battle set up message (which Pokémon battles with which Pokémon)
+        // Start battle and get the battle record
+        BattleRecord record = battleController.runBattle(trDiscordId, battle);
+        log.error("!!! runBattle: ");
+
+        // Build up and send the battle related messages (which Pokémon battles with which Pokémon)
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
-        // event.reply(messageCreateBuilder.build()).queue();
-
-        // Send subsequent message (round update and battle results)
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
-                            interactionHook.sendMessage("Round message 1").queue();
-                            interactionHook.sendMessage("Round message 2").queue();
-                            interactionHook.sendMessage("Round message 3").queue();
-                            interactionHook.sendMessage("Battle result message").queue();
+                            // Send round info
+                            for (String roundInfo : record.getBattleRounds()) {
+                                interactionHook.sendMessage(roundInfo).queue();
+                            }
+                            // Send result info
+                            Integer coinsGained = record.getCoinsGained();
+                            Integer expGained = record.getExpGained();
+                            Integer newBalance =
+                                    trainerController
+                                            .getTrainerForMemberId(trDiscordId)
+                                            .getBalance();
+                            if (record.isTrainerWins()) {
+                                interactionHook
+                                        .sendMessage(
+                                                String.format(
+                                                        "🏆 Victory <@%s>!\nYour %s wins! It gains %d experience points.\nYou earn %d coins. Your current balance is %d.",
+                                                        trDiscordId,
+                                                        trPokeName,
+                                                        expGained,
+                                                        coinsGained,
+                                                        newBalance))
+                                        .queue();
+                            } else {
+                                interactionHook
+                                        .sendMessage(
+                                                String.format(
+                                                        "💔 Tough luck <@%s>!\nYour %s loses, but it still gains %d experience points.\nIt costs you 5 coins to battle so your current balance is %d.",
+                                                        trDiscordId,
+                                                        trPokeName,
+                                                        expGained,
+                                                        newBalance))
+                                        .queue();
+                            }
                         });
     }
 }

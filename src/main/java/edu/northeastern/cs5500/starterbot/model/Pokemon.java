@@ -16,6 +16,8 @@ public class Pokemon implements Model {
 
     @Nonnull @Builder.Default Integer level = 5;
 
+    // TODO: zqy: add the EXP field
+
     @Nonnull Integer currentHp; // default: hp
     @Nonnull Integer hp;
     @Nonnull Integer attack;
