@@ -25,6 +25,7 @@ public enum PokemonType {
     ICE("Ice", "❄️"),
     DRAGON("Dragon", "🐉");
 
+    // Define the Pokemon type advantage system
     private static EnumMap<PokemonType, ArrayList<PokemonType>> typeAdvantageMap =
             new EnumMap<>(PokemonType.class);
 
@@ -68,12 +69,14 @@ public enum PokemonType {
         return this.emoji;
     }
 
+    // TODO: zqy: to delete, leave it for now just in case
     public static PokemonType[] getSingleTypeArray(PokemonType type) {
         PokemonType[] types = new PokemonType[1];
         types[0] = type;
         return types;
     }
 
+    // TODO: zqy: to delete, leave it for now just in case
     public static String getTypeString(PokemonType[] types) {
         StringBuilder typeBuilder = new StringBuilder();
         for (int i = 0; i < types.length; i++) {
@@ -86,12 +89,11 @@ public enum PokemonType {
     }
 
     public static double getMoveMultiplier(PokemonType attackType, PokemonType defenseType) {
-        if (typeAdvantageMap.get(attackType).contains(defenseType)) {
-            return HAVE_TYPE_ADVANTAGE;
-        } else if (typeAdvantageMap.get(defenseType).contains(attackType)) {
-            return HAVE_TYPE_DISADVANTAGE;
-        } else {
-            return NO_TYPE_ADVANTAGE;
-        }
+        boolean attackAdvantage = typeAdvantageMap.get(attackType).contains(defenseType);
+        boolean defenseAdvantage = typeAdvantageMap.get(defenseType).contains(attackType);
+        if (attackAdvantage && defenseAdvantage) return NO_TYPE_ADVANTAGE;
+        else if (attackAdvantage) return HAVE_TYPE_ADVANTAGE;
+        else if (defenseAdvantage) return HAVE_TYPE_DISADVANTAGE;
+        else return NO_TYPE_ADVANTAGE;
     }
 }

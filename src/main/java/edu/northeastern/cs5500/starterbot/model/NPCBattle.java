@@ -8,10 +8,11 @@ import lombok.Data;
 @Data
 public class NPCBattle {
 
-    private static final int DAMAGE_FLOOR = 5;
+    private static final int DAMAGE_FLOOR = 8;
     private static final int BASE_LEVEL = 5;
     private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double NO_TYPE_ADVANTAGE_MULTIPLIER = 1.0;
+    private static final double DEFENSE_MULTIPLIER = 0.65;
 
     Pokemon trPokemon;
     Pokemon npcPokemon;
@@ -47,6 +48,7 @@ public class NPCBattle {
             int baseDamage = getBaseDamage(attackPokemon, defensePokemon, isPhysicalMove);
             double multiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
             int finalDamage = (int) (baseDamage * multiplier * 2.0); // TODO: zqy: 2.0 is hard coded
+            finalDamage += new Random().nextInt(5) - 3; // TODO: zqy: hard coded
             int newHP = defensePokemon.getCurrentHp() - finalDamage;
             defensePokemon.setCurrentHp(newHP < 0 ? 0 : newHP);
 
@@ -76,14 +78,18 @@ public class NPCBattle {
     }
 
     private Pokemon getFirstAttacker() {
-        return trPokemon.getSpeed() >= npcPokemon.getSpeed() ? trPokemon : npcPokemon;
+        if (new Random().nextBoolean()) return trPokemon;
+        else return npcPokemon;
+        // alternative: determine first attacker by speed
+        // return trPokemon.getSpeed() >= npcPokemon.getSpeed() ? trPokemon : npcPokemon;
     }
 
-    private static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean isPhysicalMove) {
+    protected static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean isPhysicalMove) {
         double attack = isPhysicalMove ? attacker.getAttack() : attacker.getSpecialAttack();
         attack *= 1.0 + LEVEL_MULTIPLIER_BASE * (attacker.getLevel() - BASE_LEVEL);
         double defense = isPhysicalMove ? defender.getDefense() : defender.getSpecialDefense();
         defense *= 1.0 + LEVEL_MULTIPLIER_BASE * (defender.getLevel() - BASE_LEVEL);
+        defense *= DEFENSE_MULTIPLIER; // so that attack is generally more effective
         return (attack - defense < DAMAGE_FLOOR) ? DAMAGE_FLOOR : (int) (attack - defense);
     }
 

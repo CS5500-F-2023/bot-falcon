@@ -11,9 +11,17 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 public class Pokemon implements Model {
 
+    // Level up constants
     private static final Integer DEFAULT_LEVEL = 5;
     private static final Integer DEFAULT_XP = 10;
     private static final Integer LEVEL_UP_THRESHOLD = 100;
+
+    // Weights for calculating Pokemon's strengths
+    private static final double LEVEL_WEIGHT = 1.5;
+    private static final double HP_WEIGHT = 2.0;
+    private static final double ATTACK_DEFENSE_WEIGHT = 1.5;
+    private static final double SPECIAL_WEIGHT = 1.5;
+    private static final double SPEED_WEIGHT = 2.0;
 
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
@@ -31,13 +39,6 @@ public class Pokemon implements Model {
     @Nonnull Integer specialDefense; // spDefense
     @Nonnull Integer speed;
 
-    // Weights for different stats
-    private static final double LEVEL_WEIGHT = 1.5;
-    private static final double HP_WEIGHT = 2.0;
-    private static final double ATTACK_DEFENSE_WEIGHT = 1.5;
-    private static final double SPECIAL_WEIGHT = 1.5;
-    private static final double SPEED_WEIGHT = 2.0;
-
     /**
      * Calculates the relative strength of two Pokémon.
      *
@@ -46,21 +47,23 @@ public class Pokemon implements Model {
      * @return The ratio of the player's Pokémon strength to the NPC's Pokémon strength
      */
     public static double getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
-        double trStrength =
-                LEVEL_WEIGHT * trPokemon.level
-                        + HP_WEIGHT * trPokemon.currentHp / (double) trPokemon.hp
-                        + ATTACK_DEFENSE_WEIGHT * (trPokemon.attack + trPokemon.defense)
-                        + SPECIAL_WEIGHT * (trPokemon.specialAttack + trPokemon.specialDefense)
-                        + SPEED_WEIGHT * trPokemon.speed;
+        double trStrength = getStrength(trPokemon);
+        double npcStrength = getStrength(npcPokemon);
+        return Math.round(100.0 * trStrength / npcStrength) / 100.0;
+    }
 
-        double npcStrength =
-                LEVEL_WEIGHT * npcPokemon.level
-                        + HP_WEIGHT * npcPokemon.currentHp / (double) npcPokemon.hp
-                        + ATTACK_DEFENSE_WEIGHT * (npcPokemon.attack + npcPokemon.defense)
-                        + SPECIAL_WEIGHT * (npcPokemon.specialAttack + npcPokemon.specialDefense)
-                        + SPEED_WEIGHT * npcPokemon.speed;
-
-        return Math.round(100 * trStrength / npcStrength) / 100.0;
+    /**
+     * Helper function to get a Pokemon's strength
+     *
+     * @param pokemon
+     * @return
+     */
+    private static double getStrength(Pokemon pokemon) {
+        return LEVEL_WEIGHT * pokemon.level
+                + HP_WEIGHT * pokemon.hp
+                + ATTACK_DEFENSE_WEIGHT * (pokemon.attack + pokemon.defense)
+                + SPECIAL_WEIGHT * (pokemon.specialAttack + pokemon.specialDefense)
+                + SPEED_WEIGHT * pokemon.speed;
     }
 
     /**
@@ -90,6 +93,6 @@ public class Pokemon implements Model {
     }
 
     public boolean canLevelUpWithAddedXP(int addedXP) {
-        return this.exPoints + addedXP > LEVEL_UP_THRESHOLD;
+        return this.exPoints + addedXP >= LEVEL_UP_THRESHOLD;
     }
 }

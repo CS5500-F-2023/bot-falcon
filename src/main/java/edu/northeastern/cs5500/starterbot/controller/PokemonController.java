@@ -61,11 +61,10 @@ public class PokemonController {
     }
 
     /**
-     * Spawns a NPC Pokemon for a battle. This method generates a random NPC Pokemon and adjusts its
-     * level to match the level of the trainer's Pokemon. It aims to ensure that the relative
-     * strength of the NPC Pokemon compared to the trainer's Pokemon falls within a specific range
-     * (0.8 to 1.2) to maintain a balanced battle. If no such NPC Pokemon is found within a maximum
-     * number of attempts, it returns the closest match.
+     * Spawns a NPC Pokemon for battle, matching the trainer's Pokemon level. The method ensures the
+     * NPC Pokemon's relative strength is within 0.8 to 1.2 times that of the trainer's Pokemon. It
+     * also avoids selecting an NPC Pokemon of the same species as the trainer's. If no ideal match
+     * is found within the strength range, the closest match is returned.
      *
      * @param trPokemon The trainer's Pokemon in the battle
      * @return A NPC Pokemon adjusted to a suitable level for the battle
@@ -75,7 +74,10 @@ public class PokemonController {
         Pokemon closestNpcPokemon = this.spawnRandonPokemon();
         double closestDistance = 10000.0;
         while (maxAttempt > 0) {
+            maxAttempt--;
             Pokemon npcPokemon = this.spawnRandonPokemon();
+            // Ideally we want to battle with a different species
+            if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
             npcPokemon.setLevel(trPokemon.getLevel());
             double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
             if (relStrength < 0.8 || relStrength > 1.2) return npcPokemon;
@@ -83,7 +85,6 @@ public class PokemonController {
                 closestDistance = Math.abs(relStrength - 1.0);
                 closestNpcPokemon = npcPokemon;
             }
-            maxAttempt--;
         }
         return closestNpcPokemon;
     }

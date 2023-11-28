@@ -10,6 +10,9 @@ import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -183,18 +186,33 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                         + formatLevelUpMsg(trPokeName, trPokemon, battleRecord.getCanLevelUp())
                         + formatBalanceMsg(trDiscordId, battleRecord);
 
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
+                            scheduler.schedule(
+                                    () ->
+                                            interactionHook
+                                                    .sendMessage("🥊 The battle begins! 🥊")
+                                                    .queue(),
+                                    3,
+                                    TimeUnit.SECONDS);
+
                             // Send round info
                             for (String roundInfo : battleRecord.getBattleRounds()) {
-                                interactionHook.sendMessage(roundInfo).queue();
+                                scheduler.schedule(
+                                        () -> interactionHook.sendMessage(roundInfo).queue(),
+                                        4,
+                                        TimeUnit.SECONDS);
                             }
 
                             // Send result info
-                            interactionHook.sendMessage(resultMessage).queue();
+                            scheduler.schedule(
+                                    () -> interactionHook.sendMessage(resultMessage).queue(),
+                                    8,
+                                    TimeUnit.SECONDS);
                         });
     }
 
@@ -214,7 +232,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
     private String formatLevelUpMsg(String trPokeName, Pokemon trPokemon, boolean levelUp) {
         if (levelUp) {
             return String.format(
-                    "\n... and Hooray, your %s has leveled up to Level %d. Current XP: %d\n",
+                    "\n... and hooray, your %s has leveled up to Level %d. Current XP: %d\n",
                     trPokeName, trPokemon.getLevel(), trPokemon.getExPoints());
         } else {
             return " Current XP: " + trPokemon.getExPoints() + "\n";
