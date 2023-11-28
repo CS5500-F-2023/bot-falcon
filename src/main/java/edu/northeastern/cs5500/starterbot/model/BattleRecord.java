@@ -23,15 +23,28 @@ public class BattleRecord {
     private static final Integer CAP_EXP_FOR_LOSER = 20;
 
     @Builder.Default boolean trainerWins = false;
+    @Builder.Default boolean canLevelUp = false;
     @Builder.Default @Nonnegative Integer coinsGained = 0; // for trainer
     @Builder.Default @Nonnegative Integer expGained = 0; // for pokemon
 
     @Builder.Default List<String> battleRounds = new ArrayList<>();
 
+    /**
+     * Document each round's info as a string.
+     *
+     * @param msg each round's info as a string
+     */
     public void addBattleRoundInfo(String msg) {
         this.battleRounds.add(msg);
     }
 
+    /**
+     * Update the battle stats (coins gained, XP gained, etc.) after the battle ends.
+     *
+     * @param trPokemon The trainer's Pokemon
+     * @param npcPokemon The NPC Pokemon
+     * @param trainerWins Whether the trainer wins in the battle
+     */
     public void updateFinalResult(Pokemon trPokemon, Pokemon npcPokemon, boolean trainerWins) {
         // Update winner
         this.trainerWins = trainerWins;
@@ -42,6 +55,11 @@ public class BattleRecord {
         // Update coin and experience
         this.updateCoins(trainerWins, relativeStrength);
         this.updateExperience(trainerWins, relativeStrength);
+        this.updateCanLevelUp(trPokemon, expGained);
+    }
+
+    public boolean getCanLevelUp() {
+        return this.canLevelUp;
     }
 
     private void updateCoins(boolean trainerWins, double relStrength) {
@@ -62,5 +80,9 @@ public class BattleRecord {
             if (expGained < FLOOR_EXP_FOR_LOSER) expGained = FLOOR_EXP_FOR_LOSER;
             if (expGained > CAP_EXP_FOR_LOSER) expGained = CAP_EXP_FOR_LOSER;
         }
+    }
+
+    private void updateCanLevelUp(Pokemon trPokemon, Integer xpGained) {
+        this.canLevelUp = trPokemon.canLevelUpWithAddedXP(xpGained);
     }
 }

@@ -90,12 +90,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder.setDescription(
                 "Hint: Select \"Maybe next time\" from the list if you change your mind");
 
-        // Build dropdown Menu
+        // Build the dropdown menu
         StringSelectMenu.Builder menuBuilder = StringSelectMenu.create(NAME);
         menuBuilder.setPlaceholder("Choose your Pokémon");
         menuBuilder.addOption("Maybe next time", "maybe-next-time" + ":" + trainerDiscordId);
-
-        // Adding Pokemon options to the menu
         for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
@@ -103,7 +101,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                     species.getName(), pokemon.getId().toString() + ":" + trainerDiscordId);
         }
 
-        // Reply with both the embedded message and menu list
+        // Send the embedded message with menu list
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.setEmbeds(embedBuilder.build());
         messageCreateBuilder.setActionRow(menuBuilder.build());
@@ -173,48 +171,65 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder2.setThumbnail(npcPokeSpecies.getImageUrl());
 
         // Start battle and get the battle record
-        BattleRecord record = battleController.runBattle(trDiscordId, battle);
+        BattleRecord battleRecord = battleController.runBattle(trDiscordId, battle);
         log.error("!!! runBattle: ");
 
-        // Build up and send the battle related messages (which Pokémon battles with which Pokémon)
+        // Build up and send the battle rounds and result messages
+        final String resultMessage =
+                (battleRecord.isTrainerWins()
+                                ? String.format("🏆 Victory <@%s>!\n", trDiscordId)
+                                : String.format("💔 Tough luck <@%s>!\n", trDiscordId))
+                        + formatPokemonXpMsg(trPokeName, battleRecord)
+                        + formatLevelUpMsg(trPokeName, trPokemon, battleRecord.getCanLevelUp())
+                        + formatBalanceMsg(trDiscordId, battleRecord);
+
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
                             // Send round info
-                            for (String roundInfo : record.getBattleRounds()) {
+                            for (String roundInfo : battleRecord.getBattleRounds()) {
                                 interactionHook.sendMessage(roundInfo).queue();
                             }
+
                             // Send result info
-                            Integer coinsGained = record.getCoinsGained();
-                            Integer expGained = record.getExpGained();
-                            Integer newBalance =
-                                    trainerController
-                                            .getTrainerForMemberId(trDiscordId)
-                                            .getBalance();
-                            if (record.isTrainerWins()) {
-                                interactionHook
-                                        .sendMessage(
-                                                String.format(
-                                                        "🏆 Victory <@%s>!\nYour %s wins! It gains %d experience points.\nYou earn %d coins. Your current balance is %d.",
-                                                        trDiscordId,
-                                                        trPokeName,
-                                                        expGained,
-                                                        coinsGained,
-                                                        newBalance))
-                                        .queue();
-                            } else {
-                                interactionHook
-                                        .sendMessage(
-                                                String.format(
-                                                        "💔 Tough luck <@%s>!\nYour %s loses, but it still gains %d experience points.\nIt costs you 5 coins to battle so your current balance is %d.",
-                                                        trDiscordId,
-                                                        trPokeName,
-                                                        expGained,
-                                                        newBalance))
-                                        .queue();
-                            }
+                            interactionHook.sendMessage(resultMessage).queue();
                         });
+    }
+
+    private String formatPokemonXpMsg(String trPokeName, BattleRecord battleRecord) {
+        String pokemonXpMsg = "";
+        if (battleRecord.isTrainerWins()) {
+            return String.format(
+                    "Your %s wins! It gains %d experience points.",
+                    trPokeName, battleRecord.getExpGained());
+        } else {
+            return String.format(
+                    "Your %s loses, but it still gains %d experience points.",
+                    trPokeName, battleRecord.getExpGained());
+        }
+    }
+
+    private String formatLevelUpMsg(String trPokeName, Pokemon trPokemon, boolean levelUp) {
+        if (levelUp) {
+            return String.format(
+                    "\n... and Hooray, your %s has leveled up to Level %d. Current XP: %d\n",
+                    trPokeName, trPokemon.getLevel(), trPokemon.getExPoints());
+        } else {
+            return " Current XP: " + trPokemon.getExPoints() + "\n";
+        }
+    }
+
+    private String formatBalanceMsg(String trDiscordId, BattleRecord battleRecord) {
+        Integer newBalance = trainerController.getTrainerForMemberId(trDiscordId).getBalance();
+        if (battleRecord.isTrainerWins()) {
+            return String.format(
+                    "You earn %d coins. Your current balance is %d.",
+                    battleRecord.getCoinsGained(), newBalance);
+        } else {
+            return String.format(
+                    "It costs you 5 coins to battle so your current balance is %d.", newBalance);
+        }
     }
 }

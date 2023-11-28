@@ -18,10 +18,6 @@ public class PokemonSpecies { // Not implementing Model
 
     @Nonnull final PokemonType[] types; // TODO - to be removed, keep it just in case
 
-    // MoveEffectiveness getEffectiveness(PokemonType attackType) {
-    //     return PokemonType.getEffectiveness(attackType, types);
-    // }
-
     public PokemonType getRandomType() { // Use in battle
         int idx;
         if (speciesTypes.length == 1) idx = 0;

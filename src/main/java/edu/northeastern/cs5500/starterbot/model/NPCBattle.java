@@ -11,6 +11,7 @@ public class NPCBattle {
     private static final int DAMAGE_FLOOR = 5;
     private static final int BASE_LEVEL = 5;
     private static final double LEVEL_MULTIPLIER_BASE = 0.1;
+    private static final double NO_TYPE_ADVANTAGE_MULTIPLIER = 1.0;
 
     Pokemon trPokemon;
     Pokemon npcPokemon;
@@ -45,7 +46,7 @@ public class NPCBattle {
             // Calculate damage and update HP
             int baseDamage = getBaseDamage(attackPokemon, defensePokemon, isPhysicalMove);
             double multiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
-            int finalDamage = (int) (baseDamage * multiplier);
+            int finalDamage = (int) (baseDamage * multiplier * 2.0); // TODO: zqy: 2.0 is hard coded
             int newHP = defensePokemon.getCurrentHp() - finalDamage;
             defensePokemon.setCurrentHp(newHP < 0 ? 0 : newHP);
 
@@ -75,11 +76,6 @@ public class NPCBattle {
     }
 
     private Pokemon getFirstAttacker() {
-        // Idea 1: If following the random logic
-        // Random random = new Random();
-        // return random.nextBoolean() ? trPokemon : npcPokemon;
-
-        // Idea 2: If following the speed logic
         return trPokemon.getSpeed() >= npcPokemon.getSpeed() ? trPokemon : npcPokemon;
     }
 
@@ -101,8 +97,8 @@ public class NPCBattle {
             int curHp) {
         String attackTypeStr = isPhysicalMove ? " physical attack" : "special attack";
         String effectiveness;
-        if (multiplier > 1.0) effectiveness = "super effective";
-        else if (multiplier < 1.0) effectiveness = "not very effective";
+        if (multiplier > NO_TYPE_ADVANTAGE_MULTIPLIER) effectiveness = "super effective";
+        else if (multiplier < NO_TYPE_ADVANTAGE_MULTIPLIER) effectiveness = "not very effective";
         else effectiveness = "effective";
         String msg =
                 String.format(

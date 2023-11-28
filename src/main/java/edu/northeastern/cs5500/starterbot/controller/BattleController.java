@@ -24,8 +24,10 @@ public class BattleController {
     }
 
     public NPCBattle setUpNewBattle(Pokemon trPokemon) {
+        // Get the NPC Pokémon
+        Pokemon npcPokemon = pokemonController.spawnNpcPokemonForBattle(trPokemon);
+
         // Get necessary information to set up a battle
-        Pokemon npcPokemon = pokemonController.spawnRandonPokemon();
         PokemonSpecies trPokeSpecies =
                 pokedexController.getPokemonSpeciesByPokedex(trPokemon.getPokedexNumber());
         PokemonSpecies npcPokeSpecies =
@@ -41,19 +43,16 @@ public class BattleController {
     }
 
     public BattleRecord runBattle(String trDiscordMemberId, NPCBattle battle) {
-        // System.out.println("!!! start battle");
         battle.startBattle();
-        // System.out.println("!!! finish battle");
-        BattleRecord record = battle.getBattleRecord();
+        BattleRecord battleRecord = battle.getBattleRecord();
 
         // Update trianer's coins
-        Integer coinsGained = record.getCoinsGained();
+        Integer coinsGained = battleRecord.getCoinsGained();
         trainerController.increaseTrainerBalance(trDiscordMemberId, coinsGained);
 
-        // Update trainer pokemon's exp
-        Integer expGained = record.getExpGained();
+        // Update trainer Pokémon's xp and level up info if applicable
+        Integer expGained = battleRecord.getExpGained();
         pokemonController.increasePokemonExp(battle.getTrPokemon().getId().toString(), expGained);
-
-        return record;
+        return battleRecord;
     }
 }

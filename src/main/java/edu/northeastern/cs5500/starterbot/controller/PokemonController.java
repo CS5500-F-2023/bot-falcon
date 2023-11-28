@@ -26,7 +26,7 @@ public class PokemonController {
     }
 
     /**
-     * Create a new Pokemon of the specified number and add it to the repo
+     * Create a new Pokemon of the specified number and add it to the repo.
      *
      * @param pokedexNumber the number of the Pokemon to spawn
      * @return a new Pokemon with a unique ID
@@ -52,12 +52,40 @@ public class PokemonController {
     /**
      * Spawns a random Pokemon.
      *
-     * @return The spawned Pokemon.
+     * @return The spawned Pokemon
      */
     public Pokemon spawnRandonPokemon() {
         int[] myNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // TODO update for actual resource
         int randomIndex = (new Random()).nextInt(myNumbers.length);
         return spawnPokemon(myNumbers[randomIndex]);
+    }
+
+    /**
+     * Spawns a NPC Pokemon for a battle. This method generates a random NPC Pokemon and adjusts its
+     * level to match the level of the trainer's Pokemon. It aims to ensure that the relative
+     * strength of the NPC Pokemon compared to the trainer's Pokemon falls within a specific range
+     * (0.8 to 1.2) to maintain a balanced battle. If no such NPC Pokemon is found within a maximum
+     * number of attempts, it returns the closest match.
+     *
+     * @param trPokemon The trainer's Pokemon in the battle
+     * @return A NPC Pokemon adjusted to a suitable level for the battle
+     */
+    public Pokemon spawnNpcPokemonForBattle(Pokemon trPokemon) {
+        int maxAttempt = 100;
+        Pokemon closestNpcPokemon = this.spawnRandonPokemon();
+        double closestDistance = 10000.0;
+        while (maxAttempt > 0) {
+            Pokemon npcPokemon = this.spawnRandonPokemon();
+            npcPokemon.setLevel(trPokemon.getLevel());
+            double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+            if (relStrength < 0.8 || relStrength > 1.2) return npcPokemon;
+            if (Math.abs(relStrength - 1.0) < closestDistance) {
+                closestDistance = Math.abs(relStrength - 1.0);
+                closestNpcPokemon = npcPokemon;
+            }
+            maxAttempt--;
+        }
+        return closestNpcPokemon;
     }
 
     /**
@@ -73,8 +101,8 @@ public class PokemonController {
     /**
      * Builds a string representation of the Pokemon's stats based on its ID.
      *
-     * @param pokemonIdString The ID of the Pokemon.
-     * @return A string containing the Pokemon's stats.
+     * @param pokemonIdString The ID of the Pokemon
+     * @return A string containing the Pokemon's stats
      */
     public String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
@@ -91,12 +119,17 @@ public class PokemonController {
                 pokemon.getSpeed());
     }
 
-    public void increasePokemonExp(String pokemonID, Integer expGained) {
-        Pokemon pokemon = getPokemonById(pokemonID);
-        // TODO: zqy: Impl the exp feature and level up logic
-        // pokemon.setExperience(pokemon.getCurrentExp + expGained)
-        if (!pokemon.equals(null)) {
-            pokemonRepository.update(pokemon);
-        }
+    /**
+     * Increases the experience points of a specified Pokemon and updates its level if necessary.
+     *
+     * @param pokemonIdStr The unique identifier of the Pokemon as a string
+     * @param expGained The amount of experience points to be added to the Pokemon
+     * @return true if the Pokemon levels up as a result of the added EX points, otherwise false
+     */
+    public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
+        Pokemon pokemon = getPokemonById(pokemonIdStr);
+        boolean levelUp = pokemon.setExPoints(pokemon.getExPoints() + expGained);
+        pokemonRepository.update(pokemon);
+        return levelUp;
     }
 }
