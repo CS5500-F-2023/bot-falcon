@@ -6,44 +6,31 @@ import org.junit.jupiter.api.Test;
 
 class PokemonTypeTest {
 
+    private static final double HAVE_TYPE_ADVANTAGE = 1.5;
+    private static final double HAVE_TYPE_DISADVANTAGE = 0.7;
+    private static final double NO_TYPE_ADVANTAGE = 1.0;
+
     @Test
-    void testDoubleEffective() {
-        PokemonType[] defenderTypes = new PokemonType[1];
-        defenderTypes[0] = PokemonType.GRASS;
-        assertThat(PokemonType.getEffectiveness(PokemonType.FIRE, defenderTypes))
-                .isEqualTo(MoveEffectiveness.DOUBLE_EFFECT);
+    void testGetMoveMultiplier1() { // Normal
+        PokemonType attackType = PokemonType.NORMAL;
+        PokemonType defenseType = PokemonType.BUG;
+        double moveMultiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
+        assertThat(moveMultiplier).isEqualTo(NO_TYPE_ADVANTAGE);
     }
 
     @Test
-    void testHalfEffective() {
-        PokemonType[] defenderTypes = new PokemonType[1];
-        defenderTypes[0] = PokemonType.WATER;
-        assertThat(PokemonType.getEffectiveness(PokemonType.FIRE, defenderTypes))
-                .isEqualTo(MoveEffectiveness.HALF_EFFECT);
+    void testGetMoveMultiplier2() { // Have advantage
+        PokemonType attackType = PokemonType.FIRE;
+        PokemonType defenseType = PokemonType.BUG;
+        double moveMultiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
+        assertThat(moveMultiplier).isEqualTo(HAVE_TYPE_ADVANTAGE);
     }
 
     @Test
-    void testFullEffective() {
-        PokemonType[] defenderTypes = new PokemonType[1];
-        defenderTypes[0] = PokemonType.FIRE;
-        assertThat(PokemonType.getEffectiveness(PokemonType.FIRE, defenderTypes))
-                .isEqualTo(MoveEffectiveness.HALF_EFFECT);
+    void testGetMoveMultiplier3() { // Have disadvantage
+        PokemonType attackType = PokemonType.FIRE;
+        PokemonType defenseType = PokemonType.WATER;
+        double moveMultiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
+        assertThat(moveMultiplier).isEqualTo(HAVE_TYPE_DISADVANTAGE);
     }
-
-    @Test
-    void testFullEffective2() {
-        PokemonType[] defenderTypes = new PokemonType[1];
-        defenderTypes[0] = PokemonType.NORMAL;
-        assertThat(PokemonType.getEffectiveness(PokemonType.FIRE, defenderTypes))
-                .isEqualTo(MoveEffectiveness.FULL_EFFECT);
-    }
-
-    // @Test
-    // void testDoubleTyping() {
-    //     PokemonType[] defenderTypes = new PokemonType[2];
-    //     defenderTypes[0] = PokemonType.FIRE;
-    //     defenderTypes[1] = PokemonType.GRASS;
-    //     assertThat(PokemonType.getEffectiveness(PokemonType.NORMAL, defenderTypes))
-    //             .isEqualTo(MoveEffectiveness.FULL_EFFECT);
-    // }
 }

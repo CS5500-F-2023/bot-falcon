@@ -1,12 +1,60 @@
 package edu.northeastern.cs5500.starterbot.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
 import javax.annotation.Nonnull;
 
 public enum PokemonType {
     FIRE("Fire", "🔥"),
     WATER("Water", "💧"),
     GRASS("Grass", "🌿"),
-    NORMAL("Normal", "😐");
+    NORMAL("Normal", "😐"),
+    FIGHTING("Fighting", "🥊"),
+    FLYING("Flying", "🕊️"),
+    ROCK("Rock", "🪨"),
+    BUG("Bug", "🐛"),
+    ELECTRIC("Electric", "⚡"),
+    GROUND("Ground", "🌍"),
+    POISON("Poison", "☠️"),
+    PSYCHIC("Psychic", "🔮"),
+    GHOST("Ghost", "👻"),
+    DARK("Dark", "🌑"),
+    FAIRY("Fairy", "🧚"),
+    STEEL("Steel", "🛡️"),
+    ICE("Ice", "❄️"),
+    DRAGON("Dragon", "🐉");
+
+    // Define the Pokemon type advantage system
+    private static EnumMap<PokemonType, ArrayList<PokemonType>> typeAdvantageMap =
+            new EnumMap<>(PokemonType.class);
+
+    static {
+        typeAdvantageMap.put(FIRE, new ArrayList<>(Arrays.asList(GRASS, BUG, STEEL, ICE, FAIRY)));
+        typeAdvantageMap.put(WATER, new ArrayList<>(Arrays.asList(FIRE, GROUND, ROCK)));
+        typeAdvantageMap.put(GRASS, new ArrayList<>(Arrays.asList(WATER, GROUND, ROCK)));
+        typeAdvantageMap.put(NORMAL, new ArrayList<>()); // Normal isn't strong against any type
+        typeAdvantageMap.put(FLYING, new ArrayList<>(Arrays.asList(FIGHTING, BUG, GRASS)));
+        typeAdvantageMap.put(ROCK, new ArrayList<>(Arrays.asList(FIRE, ICE, FLYING, BUG)));
+        typeAdvantageMap.put(BUG, new ArrayList<>(Arrays.asList(GRASS, PSYCHIC, DARK)));
+        typeAdvantageMap.put(ELECTRIC, new ArrayList<>(Arrays.asList(WATER, FLYING)));
+        typeAdvantageMap.put(POISON, new ArrayList<>(Arrays.asList(GRASS, FAIRY)));
+        typeAdvantageMap.put(PSYCHIC, new ArrayList<>(Arrays.asList(FIGHTING, POISON)));
+        typeAdvantageMap.put(GHOST, new ArrayList<>(Arrays.asList(PSYCHIC, GHOST)));
+        typeAdvantageMap.put(DARK, new ArrayList<>(Arrays.asList(PSYCHIC, GHOST)));
+        typeAdvantageMap.put(FAIRY, new ArrayList<>(Arrays.asList(FIGHTING, DRAGON, DARK)));
+        typeAdvantageMap.put(STEEL, new ArrayList<>(Arrays.asList(ICE, ROCK, FAIRY)));
+        typeAdvantageMap.put(ICE, new ArrayList<>(Arrays.asList(GRASS, GROUND, FLYING, DRAGON)));
+        typeAdvantageMap.put(DRAGON, new ArrayList<>(Arrays.asList(DRAGON)));
+        typeAdvantageMap.put(
+                FIGHTING, new ArrayList<>(Arrays.asList(NORMAL, ROCK, STEEL, ICE, DARK)));
+        typeAdvantageMap.put(
+                GROUND, new ArrayList<>(Arrays.asList(FIRE, ELECTRIC, POISON, ROCK, STEEL)));
+    }
+
+    private static final double HAVE_TYPE_ADVANTAGE = 1.5;
+    private static final double HAVE_TYPE_DISADVANTAGE = 0.7;
+    private static final double NO_TYPE_ADVANTAGE = 1.0;
 
     @Nonnull String name;
 
@@ -17,12 +65,18 @@ public enum PokemonType {
         this.emoji = emoji;
     }
 
+    public String getEmoji() {
+        return this.emoji;
+    }
+
+    // TODO: zqy: to delete, leave it for now just in case
     public static PokemonType[] getSingleTypeArray(PokemonType type) {
         PokemonType[] types = new PokemonType[1];
         types[0] = type;
         return types;
     }
 
+    // TODO: zqy: to delete, leave it for now just in case
     public static String getTypeString(PokemonType[] types) {
         StringBuilder typeBuilder = new StringBuilder();
         for (int i = 0; i < types.length; i++) {
@@ -34,49 +88,12 @@ public enum PokemonType {
         return typeBuilder.toString();
     }
 
-    public static MoveEffectiveness getEffectiveness(PokemonType attackType, PokemonType[] types) {
-        // TODO(zqy): implement dual-type Pokemon
-        PokemonType defendType = types[0];
-        switch (defendType) {
-            case NORMAL:
-                return MoveEffectiveness.FULL_EFFECT;
-            case FIRE:
-                switch (attackType) {
-                    case FIRE:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case WATER:
-                        return MoveEffectiveness.DOUBLE_EFFECT;
-                    case GRASS:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case NORMAL:
-                        return MoveEffectiveness.FULL_EFFECT;
-                }
-                break;
-            case WATER:
-                switch (attackType) {
-                    case FIRE:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case WATER:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case GRASS:
-                        return MoveEffectiveness.DOUBLE_EFFECT;
-                    case NORMAL:
-                        return MoveEffectiveness.FULL_EFFECT;
-                }
-                break;
-            case GRASS:
-                switch (attackType) {
-                    case FIRE:
-                        return MoveEffectiveness.DOUBLE_EFFECT;
-                    case WATER:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case GRASS:
-                        return MoveEffectiveness.HALF_EFFECT;
-                    case NORMAL:
-                        return MoveEffectiveness.FULL_EFFECT;
-                }
-                break;
-        }
-        throw new IllegalStateException();
+    public static double getMoveMultiplier(PokemonType attackType, PokemonType defenseType) {
+        boolean attackAdvantage = typeAdvantageMap.get(attackType).contains(defenseType);
+        boolean defenseAdvantage = typeAdvantageMap.get(defenseType).contains(attackType);
+        if (attackAdvantage && defenseAdvantage) return NO_TYPE_ADVANTAGE;
+        else if (attackAdvantage) return HAVE_TYPE_ADVANTAGE;
+        else if (defenseAdvantage) return HAVE_TYPE_DISADVANTAGE;
+        else return NO_TYPE_ADVANTAGE;
     }
 }
