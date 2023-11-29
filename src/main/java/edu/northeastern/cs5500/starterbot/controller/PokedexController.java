@@ -22,8 +22,7 @@ public class PokedexController {
     }
 
     /**
-     * Retrieves the Pokemon species information based on the given Pokedex number from Pokemon
-     * data.
+     * Retrieves the Pokemon species info based on the given Pokedex number from Pokemon data.
      *
      * @param pokedexNumber The Pokedex number of the Pokemon species.
      * @return The Pokemon species information.

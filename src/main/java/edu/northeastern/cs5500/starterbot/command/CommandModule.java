@@ -116,6 +116,20 @@ public class CommandModule {
 
     @Provides
     @IntoMap
+    @StringKey(BattleCommand.NAME)
+    public SlashCommandHandler provideBattleCommand(BattleCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(BattleCommand.NAME)
+    public StringSelectHandler provideBattleCommandMenuHandler(BattleCommand command) {
+        return command;
+    }
+
+    @Provides
+    @IntoMap
     @StringKey(FeedCommand.NAME)
     public SlashCommandHandler provideFeedCommand(FeedCommand feedCommand) {
         return feedCommand;
