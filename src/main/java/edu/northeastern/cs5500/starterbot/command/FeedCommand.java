@@ -67,11 +67,11 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
-            embedBuilder.setTitle("Choose the berry to level up your Pokemon!");
+            embedBuilder.setTitle("Choose the berry to your Pokemon's Exp!");
             embedBuilder.setDescription(
                     String.format(
-                            "Your Selected Pokemon's Current Level: %s",
-                            pokemon.getLevel().toString()));
+                            "Your Selected Pokemon's Info:\n Current Level: %s\n Current Exp: %s",
+                            pokemon.getLevel().toString(), pokemon.getExPoints().toString()));
             embedBuilder.addField(
                     "------------------------------------\n🎒 Below is your food inventory!",
                     "💡Not enough berries? Type /shop to buy more berries!",
@@ -143,11 +143,14 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         if (trainerDiscordId.equals(initiateTrainerDiscordId)) {
             try {
                 trainerController.removeTrainerFood(trainerDiscordId, selectedFoodType);
-                pokemonController.increasePokemonLevelByFood(pokemon, selectedFoodType);
+                pokemonController.increasePokemonExpByFood(pokemonID, selectedFoodType);
                 event.reply(
                                 String.format(
-                                        "<@%s>, you leveled up your %s !",
-                                        trainerDiscordId, species.getName()))
+                                        "<@%s>, your %s gain %d experience points! Current XP: %d",
+                                        trainerDiscordId,
+                                        species.getName(),
+                                        selectedFoodType.getExp(),
+                                        pokemon.getExPoints()))
                         .queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
@@ -156,7 +159,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
             } catch (InsufficientFoodException e) {
                 event.reply(
                                 String.format(
-                                        "<@%s>, you don't have enough %s to level up your %s!",
+                                        "<@%s>, you don't have enough %s to increase your %s Ex",
                                         trainerDiscordId, action, species.getName()))
                         .queue();
                 event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();

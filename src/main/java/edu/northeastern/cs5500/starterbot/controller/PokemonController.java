@@ -17,14 +17,9 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
-    static final Integer MYSTERYBERRY_LEVEL_UPDATE = 5;
-    static final Integer BERRY_LEVEL_UPDATE = 10;
-    static final Integer GOLDBERRY_LEVEL_UPDATE = 30;
-
     GenericRepository<Pokemon> pokemonRepository;
 
-    @Inject
-    PokemonDataService pokemonDataService;
+    @Inject PokemonDataService pokemonDataService;
 
     @Inject
     PokemonController(GenericRepository<Pokemon> pokemonRepository) {
@@ -61,18 +56,15 @@ public class PokemonController {
      * @return The spawned Pokemon
      */
     public Pokemon spawnRandonPokemon() {
-        int[] myNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // TODO update for actual resource
+        int[] myNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // TODO update for actual resource
         int randomIndex = (new Random()).nextInt(myNumbers.length);
         return spawnPokemon(myNumbers[randomIndex]);
     }
 
     /**
-     * Spawns a NPC Pokemon for battle, matching the trainer's Pokemon level. The
-     * method ensures the
-     * NPC Pokemon's relative strength is within 0.8 to 1.2 times that of the
-     * trainer's Pokemon. It
-     * also avoids selecting an NPC Pokemon of the same species as the trainer's. If
-     * no ideal match
+     * Spawns a NPC Pokemon for battle, matching the trainer's Pokemon level. The method ensures the
+     * NPC Pokemon's relative strength is within 0.8 to 1.2 times that of the trainer's Pokemon. It
+     * also avoids selecting an NPC Pokemon of the same species as the trainer's. If no ideal match
      * is found within the strength range, the closest match is returned.
      *
      * @param trPokemon The trainer's Pokemon in the battle
@@ -86,12 +78,10 @@ public class PokemonController {
             maxAttempt--;
             Pokemon npcPokemon = this.spawnRandonPokemon();
             // Ideally we want to battle with a different species
-            if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber()))
-                continue;
+            if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
             npcPokemon.setLevel(trPokemon.getLevel());
             double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
-            if (relStrength < 0.8 || relStrength > 1.2)
-                return npcPokemon;
+            if (relStrength < 0.8 || relStrength > 1.2) return npcPokemon;
             if (Math.abs(relStrength - 1.0) < closestDistance) {
                 closestDistance = Math.abs(relStrength - 1.0);
                 closestNpcPokemon = npcPokemon;
@@ -132,14 +122,11 @@ public class PokemonController {
     }
 
     /**
-     * Increases the experience points of a specified Pokemon and updates its level
-     * if necessary.
+     * Increases the experience points of a specified Pokemon and updates its level if necessary.
      *
      * @param pokemonIdStr The unique identifier of the Pokemon as a string
-     * @param expGained    The amount of experience points to be added to the
-     *                     Pokemon
-     * @return true if the Pokemon levels up as a result of the added EX points,
-     *         otherwise false
+     * @param expGained The amount of experience points to be added to the Pokemon
+     * @return true if the Pokemon levels up as a result of the added EX points, otherwise false
      */
     public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
         Pokemon pokemon = getPokemonById(pokemonIdStr);
@@ -148,17 +135,7 @@ public class PokemonController {
         return levelUp;
     }
 
-    public void increasePokemonLevelByFood(Pokemon pokemon, FoodType food) {
-        Integer currentLevel = pokemon.getLevel();
-        if (food.equals(FoodType.MYSTERYBERRY)) {
-            pokemon.setLevel(currentLevel + MYSTERYBERRY_LEVEL_UPDATE);
-        }
-        if (food.equals(FoodType.BERRY)) {
-            pokemon.setLevel(currentLevel + BERRY_LEVEL_UPDATE);
-        }
-        if (food.equals(FoodType.GOLDBERRY)) {
-            pokemon.setLevel(currentLevel + GOLDBERRY_LEVEL_UPDATE);
-        }
-        pokemonRepository.update(pokemon);
+    public void increasePokemonExpByFood(String pokemonIdStr, FoodType food) {
+        increasePokemonExp(pokemonIdStr, food.getExp());
     }
 }

@@ -176,8 +176,7 @@ public class TrainerController {
      * @return the list of Pokemon in the trainer's inventory
      */
     public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
-        Map<FoodType, Integer> foodInventory =
-                new HashMap<>(); // TODO, consider potential duplicates
+        Map<FoodType, Integer> foodInventory = new HashMap<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         Map<FoodType, Integer> food = trainer.getFoodInventory();
         if (!food.containsKey(FoodType.MYSTERYBERRY)) {
