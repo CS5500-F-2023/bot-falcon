@@ -127,4 +127,18 @@ public class CommandModule {
     public StringSelectHandler provideBattleCommandMenuHandler(BattleCommand command) {
         return command;
     }
+
+    @Provides
+    @IntoMap
+    @StringKey(FeedCommand.NAME)
+    public SlashCommandHandler provideFeedCommand(FeedCommand feedCommand) {
+        return feedCommand;
+    }
+
+    @Provides
+    @IntoMap
+    @StringKey(FeedCommand.NAME)
+    public ButtonHandler provideFeedCommandClickHandler(FeedCommand feedCommand) {
+        return feedCommand;
+    }
 }

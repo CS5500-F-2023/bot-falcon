@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
@@ -10,7 +11,9 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -19,6 +22,9 @@ import org.bson.types.ObjectId;
 
 @Singleton
 public class TrainerController {
+
+    static final Integer MIN_FOOD_AMOUNT_REQUIRED = 1;
+
     GenericRepository<Trainer> trainerRepository;
 
     @Inject PokemonController pokemonController;
@@ -74,6 +80,17 @@ public class TrainerController {
             trainer.getFoodInventory().put(food, 1);
         } else {
             trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
+        }
+        trainerRepository.update(trainer);
+    }
+
+    public void removeTrainerFood(String discordMemberId, FoodType food)
+            throws InsufficientFoodException {
+        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        if (trainer.getFoodInventory().get(food) >= MIN_FOOD_AMOUNT_REQUIRED) {
+            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
+        } else {
+            throw new InsufficientFoodException("Insufficient balance");
         }
         trainerRepository.update(trainer);
     }
@@ -150,5 +167,31 @@ public class TrainerController {
             throw new InvalidCheckinDayException(
                     "Current checkin date must be after prev checkin date");
         }
+    }
+
+    /**
+     * Retrieves the Food inventory of a trainer identified by their Discord member ID.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @return the list of Pokemon in the trainer's inventory
+     */
+    public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
+        Map<FoodType, Integer> foodInventory = new HashMap<>();
+        Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        Map<FoodType, Integer> food = trainer.getFoodInventory();
+        if (!food.containsKey(FoodType.MYSTERYBERRY)) {
+            food.put(FoodType.MYSTERYBERRY, 0);
+        }
+        if (!food.containsKey(FoodType.BERRY)) {
+            food.put(FoodType.BERRY, 0);
+        }
+        if (!food.containsKey(FoodType.GOLDBERRY)) {
+            food.put(FoodType.GOLDBERRY, 0);
+        }
+        foodInventory.put(FoodType.MYSTERYBERRY, food.get(FoodType.MYSTERYBERRY));
+        foodInventory.put(FoodType.BERRY, food.get(FoodType.BERRY));
+        foodInventory.put(FoodType.GOLDBERRY, food.get(FoodType.GOLDBERRY));
+
+        return foodInventory;
     }
 }

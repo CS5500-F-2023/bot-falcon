@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.Pokemon.PokemonBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
@@ -132,5 +133,9 @@ public class PokemonController {
         boolean levelUp = pokemon.setExPoints(pokemon.getExPoints() + expGained);
         pokemonRepository.update(pokemon);
         return levelUp;
+    }
+
+    public void increasePokemonExpByFood(String pokemonIdStr, FoodType food) {
+        increasePokemonExp(pokemonIdStr, food.getExp());
     }
 }
