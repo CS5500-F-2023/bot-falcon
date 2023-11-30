@@ -53,15 +53,12 @@ public class ShopCommand implements SlashCommandHandler, StringSelectHandler {
         menu =
                 StringSelectMenu.create("shop")
                         .setPlaceholder("Choose the food type") // shows the placeholder
-                        // indicating what this
-                        // menu is for
                         .addOption("🍭 Mystery Berry: 5 coins", "Mystery Berry:" + trainerDiscordId)
                         .addOption("🫐 Berry: 10 coins", "Berry:" + trainerDiscordId)
                         .addOption("🌟 Gold Berry: 30 coins", "Gold Berry:" + trainerDiscordId)
                         .build();
 
         event.reply("🛍️ Welcome to the Berry Shop! Choose the type of food you want to buy.")
-                .setEphemeral(true)
                 .addActionRow(menu)
                 .queue();
     }
@@ -110,7 +107,5 @@ public class ShopCommand implements SlashCommandHandler, StringSelectHandler {
                                     trainerDiscordId))
                     .queue();
         }
-
-        event.reply(response).queue();
     }
 }
