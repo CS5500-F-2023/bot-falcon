@@ -21,9 +21,14 @@ public class PokemonController {
 
     @Inject PokemonDataService pokemonDataService;
 
+    List<PokemonData> pokemonDataList;
+    private static final Integer TOTAL_POKEMON = 1292;
+
     @Inject
-    PokemonController(GenericRepository<Pokemon> pokemonRepository) {
+    PokemonController(
+            GenericRepository<Pokemon> pokemonRepository, PokemonDataService pokemonDataService) {
         this.pokemonRepository = pokemonRepository;
+        this.pokemonDataService = pokemonDataService;
     }
 
     /**
@@ -34,18 +39,18 @@ public class PokemonController {
      */
     @Nonnull
     Pokemon spawnPokemon(int pokedexNumber) {
+        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
         PokemonBuilder builder = Pokemon.builder();
         builder.pokedexNumber(pokedexNumber);
-        List<PokemonData> pokemonDataList = pokemonDataService.getPokemonDataList();
-        for (PokemonData data : pokemonDataList) {
-            builder.currentHp(data.getHp());
-            builder.hp(data.getHp());
-            builder.attack(data.getAttack());
-            builder.defense(data.getDefense());
-            builder.specialAttack(data.getSpAttack());
-            builder.specialDefense(data.getSpDefense());
-            builder.speed(data.getSpeed());
-        }
+
+        PokemonData data = this.pokemonDataList.get(pokedexNumber);
+        builder.currentHp(data.getHp());
+        builder.hp(data.getHp());
+        builder.attack(data.getAttack());
+        builder.defense(data.getDefense());
+        builder.specialAttack(data.getSpAttack());
+        builder.specialDefense(data.getSpDefense());
+        builder.speed(data.getSpeed());
         return Objects.requireNonNull(
                 pokemonRepository.add(Objects.requireNonNull(builder.build())));
     }
@@ -56,9 +61,8 @@ public class PokemonController {
      * @return The spawned Pokemon
      */
     public Pokemon spawnRandonPokemon() {
-        int[] myNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // TODO update for actual resource
-        int randomIndex = (new Random()).nextInt(myNumbers.length);
-        return spawnPokemon(myNumbers[randomIndex]);
+        int randomIndex = (new Random()).nextInt(TOTAL_POKEMON);
+        return spawnPokemon(randomIndex);
     }
 
     /**
@@ -111,8 +115,9 @@ public class PokemonController {
 
         // Build the formatted string with the Pokemon's stats
         return String.format(
-                "Level: %d\nHp: %d\nAttack: %d\nDefense: %d\nSpecial Attack: %d\nSpecial Defense: %d\nSpeed: %d",
+                "Level: %d\nXP: %d\nHp: %d\nAttack: %d\nDefense: %d\nSpecial Attack: %d\nSpecial Defense: %d\nSpeed: %d",
                 pokemon.getLevel(),
+                pokemon.getExPoints(),
                 pokemon.getHp(),
                 pokemon.getAttack(),
                 pokemon.getDefense(),
