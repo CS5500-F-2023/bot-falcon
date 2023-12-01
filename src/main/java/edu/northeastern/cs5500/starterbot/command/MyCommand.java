@@ -62,7 +62,7 @@ public class MyCommand implements SlashCommandHandler {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
             embedBuilder.addField(
-                    "Your Pokemon Detail\n💡hint: use `/feed` command to feed your pokemon at your choice!",
+                    "Your Pokemon Detail\n💡hint: use `/feed` command to feed your pokemon!",
                     pokeProfile,
                     false);
             event.replyEmbeds(embedBuilder.build()).queue();
