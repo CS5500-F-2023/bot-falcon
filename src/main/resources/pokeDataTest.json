@@ -561,7 +561,7 @@
         },
         "formNames": {},
         "number": 10,
-        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        "spriteURL": "",
         "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10.png",
         "hp": 45,
         "attack": 30,
