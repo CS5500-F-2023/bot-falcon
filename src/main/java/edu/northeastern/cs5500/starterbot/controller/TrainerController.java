@@ -89,11 +89,11 @@ public class TrainerController {
     public void removeTrainerFood(String discordMemberId, FoodType food)
             throws InsufficientFoodException {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
-        if (trainer.getFoodInventory().get(food) >= MIN_FOOD_AMOUNT_REQUIRED) {
-            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
-        } else {
-            throw new InsufficientFoodException("Insufficient balance");
+        Integer foodAmount = trainer.getFoodInventory().get(food);
+        if (foodAmount == null || foodAmount <= 0) {
+            throw new InsufficientFoodException("Not enough food to remove");
         }
+        trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
         trainerRepository.update(trainer);
     }
 
