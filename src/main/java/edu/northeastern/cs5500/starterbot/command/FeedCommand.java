@@ -78,41 +78,10 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     false);
 
             MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-            messageCreateBuilder =
-                    messageCreateBuilder.addActionRow(
-                            Button.primary(
-                                    getName()
-                                            + ":mysteryberry:"
-                                            + pokemon.getId().toString()
-                                            + ":"
-                                            + trainerDiscordId,
-                                    "🍭Mystery Berry🍭     "
-                                            + trainerController
-                                                    .getTrainerFoodInventory(trainerDiscordId)
-                                                    .get(FoodType.MYSTERYBERRY)
-                                                    .toString()),
-                            Button.primary(
-                                    getName()
-                                            + ":berry:"
-                                            + pokemon.getId().toString()
-                                            + ":"
-                                            + trainerDiscordId,
-                                    "🫐Berry🫐     "
-                                            + trainerController
-                                                    .getTrainerFoodInventory(trainerDiscordId)
-                                                    .get(FoodType.BERRY)
-                                                    .toString()),
-                            Button.primary(
-                                    getName()
-                                            + ":goldberry:"
-                                            + pokemon.getId().toString()
-                                            + ":"
-                                            + trainerDiscordId,
-                                    "🌟Gold Berry🌟     "
-                                            + trainerController
-                                                    .getTrainerFoodInventory(trainerDiscordId)
-                                                    .get(FoodType.GOLDBERRY)
-                                                    .toString()));
+            for (FoodType foodType : FoodType.values()) {
+                messageCreateBuilder.addActionRow(
+                        createFoodTypeButton(foodType, pokemon, trainerDiscordId));
+            }
             messageCreateBuilder = messageCreateBuilder.addEmbeds(embedBuilder.build());
             event.reply(messageCreateBuilder.build()).queue();
         } catch (InvalidInventoryIndexException e) {
@@ -120,10 +89,30 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         }
     }
 
+    private Button createFoodTypeButton(
+            FoodType foodType, Pokemon pokemon, String trainerDiscordId) {
+        return Button.primary(
+                getName()
+                        + ":"
+                        + foodType.getName()
+                        + ":"
+                        + pokemon.getId().toString()
+                        + ":"
+                        + trainerDiscordId,
+                foodType.getEmoji()
+                        + " "
+                        + foodType.getName()
+                        + ": "
+                        + trainerController
+                                .getTrainerFoodInventory(trainerDiscordId)
+                                .get(foodType)
+                                .toString());
+    }
+
     @Override
     public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) {
         String[] buttonIdParts = event.getButton().getId().split(":");
-        String action = buttonIdParts[1]; // "mystery berry" or "berry" or "gold berry"
+        String selectedFoodTypeResponse = buttonIdParts[1];
         String pokemonID = buttonIdParts[2];
         String initiateTrainerDiscordId = buttonIdParts[3];
         String trainerDiscordId = event.getMember().getId();
@@ -131,13 +120,13 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
-        FoodType selectedFoodType = FoodType.MYSTERYBERRY;
-        if (action.equals("mysteryberry")) {
-            selectedFoodType = FoodType.MYSTERYBERRY;
-        } else if (action.equals("berry")) {
-            selectedFoodType = FoodType.BERRY;
-        } else if (action.equals("goldberry")) {
-            selectedFoodType = FoodType.GOLDBERRY;
+        FoodType selectedFoodType = null;
+
+        for (FoodType foodType : FoodType.values()) {
+            if (selectedFoodTypeResponse.equalsIgnoreCase(foodType.getName())) {
+                selectedFoodType = foodType;
+                break;
+            }
         }
         // Handle the button interaction
         if (trainerDiscordId.equals(initiateTrainerDiscordId)) {
@@ -159,8 +148,10 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
             } catch (InsufficientFoodException e) {
                 event.reply(
                                 String.format(
-                                        "<@%s>, you don't have enough %s to increase your %s Ex",
-                                        trainerDiscordId, action, species.getName()))
+                                        "<@%s>, you don't have enough %s to increase your %s XP",
+                                        trainerDiscordId,
+                                        selectedFoodTypeResponse,
+                                        species.getName()))
                         .queue();
                 event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();
             }

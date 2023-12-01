@@ -87,11 +87,11 @@ public class TrainerController {
     public void removeTrainerFood(String discordMemberId, FoodType food)
             throws InsufficientFoodException {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
-        if (trainer.getFoodInventory().get(food) >= MIN_FOOD_AMOUNT_REQUIRED) {
-            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
-        } else {
-            throw new InsufficientFoodException("Insufficient balance");
+        Integer foodAmount = trainer.getFoodInventory().get(food);
+        if (foodAmount == null || foodAmount <= 0) {
+            throw new InsufficientFoodException("Not enough food to remove");
         }
+        trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
         trainerRepository.update(trainer);
     }
 
@@ -197,20 +197,13 @@ public class TrainerController {
     public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
         Map<FoodType, Integer> foodInventory = new HashMap<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        Map<FoodType, Integer> food = trainer.getFoodInventory();
-        if (!food.containsKey(FoodType.MYSTERYBERRY)) {
-            food.put(FoodType.MYSTERYBERRY, 0);
-        }
-        if (!food.containsKey(FoodType.BERRY)) {
-            food.put(FoodType.BERRY, 0);
-        }
-        if (!food.containsKey(FoodType.GOLDBERRY)) {
-            food.put(FoodType.GOLDBERRY, 0);
-        }
-        foodInventory.put(FoodType.MYSTERYBERRY, food.get(FoodType.MYSTERYBERRY));
-        foodInventory.put(FoodType.BERRY, food.get(FoodType.BERRY));
-        foodInventory.put(FoodType.GOLDBERRY, food.get(FoodType.GOLDBERRY));
 
+        Map<FoodType, Integer> food = trainer.getFoodInventory();
+
+        for (FoodType type : FoodType.values()) {
+            int count = food.getOrDefault(type, 0);
+            foodInventory.put(type, count);
+        }
         return foodInventory;
     }
 }
