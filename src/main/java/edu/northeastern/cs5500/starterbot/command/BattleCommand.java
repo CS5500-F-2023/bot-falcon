@@ -211,7 +211,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                             // Send result info
                             scheduler.schedule(
                                     () -> interactionHook.sendMessage(resultMessage).queue(),
-                                    8,
+                                    4,
                                     TimeUnit.SECONDS);
                         });
     }

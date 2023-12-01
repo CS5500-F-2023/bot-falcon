@@ -23,6 +23,8 @@ public class Pokemon implements Model {
     private static final double SPECIAL_WEIGHT = 1.5;
     private static final double SPEED_WEIGHT = 2.0;
 
+    private static final Integer TOTAL_HEALTH_BARS = 15;
+
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
     @Nonnull Integer pokedexNumber;
@@ -94,5 +96,15 @@ public class Pokemon implements Model {
 
     public boolean canLevelUpWithAddedXP(int addedXP) {
         return this.exPoints + addedXP >= LEVEL_UP_THRESHOLD;
+    }
+
+    /**
+     * Represents the ratio of the current HP to the maximum HP as a bar string.
+     *
+     * @return The string representation of a bar
+     */
+    public String generateHealthBar() {
+        int filledBars = (int) Math.ceil(TOTAL_HEALTH_BARS * (this.currentHp * 1.0 / this.hp));
+        return "█".repeat(filledBars) + "░".repeat(TOTAL_HEALTH_BARS - filledBars);
     }
 }
