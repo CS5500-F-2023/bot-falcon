@@ -43,7 +43,7 @@ public class BattleController {
     }
 
     public BattleRecord runBattle(String trDiscordMemberId, NPCBattle battle) {
-        battle.startBattle();
+        battle.runBattle();
         BattleRecord battleRecord = battle.getBattleRecord();
 
         // Update trianer's coins

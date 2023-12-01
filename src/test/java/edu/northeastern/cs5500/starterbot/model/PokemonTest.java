@@ -74,4 +74,19 @@ class PokemonTest {
         assertThat(Pokemon.getRelStrength(bulbasaur, charmander)).isEqualTo(relativeStr1);
         assertThat(Pokemon.getRelStrength(charmander, bulbasaur)).isEqualTo(relativeStr2);
     }
+
+    @Test
+    void testGenerateHealthBar() {
+        String str = "█".repeat(15);
+        assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
+        bulbasaur.setCurrentHp(13);
+        str = "█".repeat(5) + "░".repeat(10);
+        assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
+        bulbasaur.setCurrentHp(1);
+        str = "█".repeat(1) + "░".repeat(14);
+        assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
+        bulbasaur.setCurrentHp(0);
+        str = "░".repeat(15);
+        assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
+    }
 }
