@@ -1,5 +1,8 @@
 package edu.northeastern.cs5500.starterbot.model;
 
+import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import lombok.Builder;
 import lombok.Data;
@@ -11,16 +14,28 @@ public class NPCBattle {
     private static final int DAMAGE_FLOOR = 8;
     private static final int BASE_LEVEL = 5;
     private static final int FIXED_WIDTH = 30;
+    private static final int COST_PER_BATTLE = -5;
     private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double EFFECTIVE_THRESHOLD = 1.0;
     private static final double DEFENSE_MULTIPLIER = 0.65;
+    private static final String BOARD_LINE = "----------------------------\n";
 
+    String trDiscordId;
+    Trainer trainer;
     Pokemon trPokemon;
     Pokemon npcPokemon;
     PokemonSpecies trPokeSpecies;
     PokemonSpecies npcPokeSpecies;
-    @Builder.Default boolean gameOver = Boolean.FALSE;
-    @Builder.Default BattleRecord battleRecord = BattleRecord.builder().build();
+
+    // Result related
+    @Builder.Default boolean gameOver = false;
+    @Builder.Default boolean trainerWins = false;
+    @Builder.Default int coinsEarned = COST_PER_BATTLE;
+    @Builder.Default int xpGained = 0;
+    @Builder.Default String resultMessage = "";
+
+    // Round related
+    @Builder.Default List<String> battleRounds = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
@@ -165,5 +180,111 @@ public class NPCBattle {
                 npcPokemon.generateHealthBar(),
                 npcPokemon.getCurrentHp(),
                 npcPokemon.getHp());
+    }
+
+    // Sample:
+    // 🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟
+    //
+    // 🎉 A splendid triumph, @ToastedAvo🥑! Pikachu shines in glory!
+    //
+    // 🔥 Pikachu's Rewards 🔥
+    // ----------------------------
+    //    XP Spark 🌟     : +40
+    //    Current XP 🏆   :  50
+    //    LEVEL UP 🚀 LV  :  6
+    //
+    // 💰 Trainer's Bounty 💰
+    // ----------------------------
+    //    Coins Earned 🪙 : +20
+    //    New Balance 💸  :  185
+    //
+    // 🌈 Celebrate this victory! The journey to greatness continues, @ToastedAvo🥑 and Pikachu!
+    //
+    private String buildVictoryMessage(boolean leveledUp) throws InvalidBattleStatusException {
+        if (!gameOver) {
+            throw new InvalidBattleStatusException("Build defeat message after game overs.");
+        }
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟\n\n");
+        builder.append("🎉 A splendid triumph, <@").append(trDiscordId).append(">! ");
+        builder.append(trPokeSpecies.getName()).append(" shines in glory!\n\n");
+
+        builder.append("🔥 Pikachu's Rewards 🔥\n");
+        builder.append(BOARD_LINE);
+        builder.append("   XP Spark 🌟     : +").append(xpGained).append("\n");
+        builder.append("   Current XP 🏆   :  ").append(trPokemon.getExPoints()).append("\n");
+
+        if (leveledUp) {
+            builder.append("   LEVEL UP 🚀 LV  :  ");
+            builder.append(trPokemon.getLevel()).append("!\n");
+        }
+        builder.append("\n");
+
+        builder.append("💰 Trainer's Bounty 💰\n");
+        builder.append(BOARD_LINE);
+        builder.append("   Coins Earned 🪙 : +").append(coinsEarned).append("\n");
+        builder.append("   New Balance 💸  :  ").append(trainer.getBalance()).append("\n\n");
+
+        builder.append("🌈 Celebrate this victory! The journey to greatness continues, <@")
+                .append(trDiscordId)
+                .append("> and ")
+                .append(trPokeSpecies.getName())
+                .append("!\n");
+
+        return builder.toString();
+    }
+
+    //
+    // 💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥
+    //
+    // 💔 Tough luck, @ToastedAvo🥑. Pikachu bravely faced the challenge!
+    //
+    // 🔥 Pikachu's Gains 🔥
+    // ----------------------------
+    //    XP Earned 🌟    : +15
+    //    Current XP 🏆   :  65
+    //    LEVEL UP 🚀 LV  :  6
+    //
+    // 💸 Trainer's Expense 💸
+    // ----------------------------
+    //    Battle Cost 🪙  : -5
+    //    New Balance 💰  :  180
+    //
+    // 🌟 Every battle is a lesson. @ToastedAvo🥑 and Pikachu, your next victory awaits!
+    //
+    private String buildDefeatMessage(boolean leveledUp) throws InvalidBattleStatusException {
+        if (!gameOver) {
+            throw new InvalidBattleStatusException("Build defeat message after game overs.");
+        }
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥\n\n");
+        builder.append("💔 Tough luck, <@").append(trDiscordId).append(">. ");
+        builder.append(trPokeSpecies.getName()).append(" bravely faced the challenge!\n\n");
+
+        builder.append("🔥 Pikachu's Gains 🔥\n");
+        builder.append(BOARD_LINE);
+        builder.append("   XP Earned 🌟    : +").append(xpGained).append("\n");
+        builder.append("   Current XP 🏆   :  ").append(trPokemon.getExPoints()).append("\n");
+
+        if (leveledUp) {
+            builder.append("   LEVEL UP 🚀 LV  :  ");
+            builder.append(trPokemon.getLevel()).append("!\n");
+        }
+        builder.append("\n");
+
+        builder.append("💸 Trainer's Expense 💸\n");
+        builder.append(BOARD_LINE);
+        builder.append("   Battle Cost 🪙  : -").append(-1 * coinsEarned).append("\n");
+        builder.append("   New Balance 💰  :  ").append(trainer.getBalance()).append("\n\n");
+
+        builder.append("🌟 Every battle is a lesson. <@")
+                .append(trDiscordId)
+                .append("> and ")
+                .append(trPokeSpecies.getName())
+                .append(", your next victory awaits!\n");
+
+        return builder.toString();
     }
 }
