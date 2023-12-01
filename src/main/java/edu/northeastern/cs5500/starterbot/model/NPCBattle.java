@@ -11,14 +11,29 @@ import lombok.Data;
 @Data
 public class NPCBattle {
 
+    private static final int COST_PER_BATTLE = -5;
+
     private static final int DAMAGE_FLOOR = 8;
     private static final int BASE_LEVEL = 5;
     private static final int FIXED_WIDTH = 30;
-    private static final int COST_PER_BATTLE = -5;
     private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double EFFECTIVE_THRESHOLD = 1.0;
-    private static final double DEFENSE_MULTIPLIER = 0.65;
+    private static final double ATTACK_MULTIPLIER = 1.2;
+    private static final double DEFENSE_MULTIPLIER = 0.7;
+
     private static final String BOARD_LINE = "----------------------------\n";
+
+    private static final Integer BASE_COINS_FOR_WINNER = 20;
+    private static final Integer FLOOR_COINS_FOR_WINNER = 7;
+    private static final Integer CAP_COINS_FOR_WINNER = 60;
+
+    private static final Integer BASE_EXP_FOR_WINNER = 40;
+    private static final Integer FLOOR_EXP_FOR_WINNER = 5;
+    private static final Integer CAP_EXP_FOR_WINNER = 80;
+
+    private static final Integer BASE_EXP_FOR_LOSER = 10;
+    private static final Integer FLOOR_EXP_FOR_LOSER = 5;
+    private static final Integer CAP_EXP_FOR_LOSER = 20;
 
     String trDiscordId;
     Trainer trainer;
@@ -35,7 +50,7 @@ public class NPCBattle {
     @Builder.Default String resultMessage = "";
 
     // Round related
-    @Builder.Default List<String> battleRounds = new ArrayList<>();
+    @Builder.Default List<String> roundMessages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
@@ -64,29 +79,26 @@ public class NPCBattle {
             // Calculate damage and update HP
             int damage = getBaseDamage(attackPokemon, defensePokemon, physical);
             double multiplier = PokemonType.getMoveMultiplier(aType, dType);
-            damage = (int) (damage * multiplier * 2.0); // TODO: zqy: 2.0 is hard coded
-            damage += new Random().nextInt(5) - 3; // TODO: zqy: hard coded
+            damage = (int) (damage * multiplier);
+            damage += new Random().nextInt(5) - 3; // Random factor
             int newHP = defensePokemon.getCurrentHp() - damage;
             defensePokemon.setCurrentHp(newHP < 0 ? 0 : newHP);
 
             // Generate round message
-            boolean isBot = attackerIsBot(attackPokemon);
-            String msg =
-                    "```"
-                            + formatAttackMsg(isBot, physical, aSpecies.getName(), aType.getEmoji())
-                            + formatDamageMsg(
-                                    isBot, dSpecies.getName(), dType.getEmoji(), damage, multiplier)
-                            + formatBarMsg()
-                            + "```";
-            this.battleRecord.addBattleRoundInfo(msg);
+            boolean isBot = attackPokemon.equals(npcPokemon);
+            String s = formatRoundMsg(isBot, physical, aType, dType, multiplier, damage);
+            this.roundMessages.add(s);
 
             // Check if the game ends; if so, update final result
-            if (trPokemon.getCurrentHp() <= 0) {
-                this.updateFinalResult(false);
+            if (trPokemon.getCurrentHp() <= 0 || npcPokemon.getCurrentHp() <= 0) {
                 gameOver = true;
-            } else if (npcPokemon.getCurrentHp() <= 0) {
-                this.updateFinalResult(true);
-                gameOver = true;
+                if (npcPokemon.getCurrentHp() <= 0) trainerWins = true;
+                try {
+                    setCoinsEarned();
+                    setXpGained();
+                } catch (InvalidBattleStatusException e) {
+                    resultMessage = "Error: " + e.getMessage();
+                }
             } else { // Swith attacker and defenser
                 Pokemon temp = attackPokemon;
                 attackPokemon = defensePokemon;
@@ -105,20 +117,75 @@ public class NPCBattle {
     protected static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean isPhysicalMove) {
         double attack = isPhysicalMove ? attacker.getAttack() : attacker.getSpecialAttack();
         attack *= 1.0 + LEVEL_MULTIPLIER_BASE * (attacker.getLevel() - BASE_LEVEL);
+        attack *= ATTACK_MULTIPLIER;
         double defense = isPhysicalMove ? defender.getDefense() : defender.getSpecialDefense();
         defense *= 1.0 + LEVEL_MULTIPLIER_BASE * (defender.getLevel() - BASE_LEVEL);
         defense *= DEFENSE_MULTIPLIER; // so that attack is generally more effective
         return (attack - defense < DAMAGE_FLOOR) ? DAMAGE_FLOOR : (int) (attack - defense);
     }
 
-    /** Helper function updating the result when the battle ends. */
-    private void updateFinalResult(boolean trainerWins) {
-        this.battleRecord.updateFinalResult(trPokemon, npcPokemon, trainerWins);
+    /** Helper function to calculate and update the coins earned after the battle ends. */
+    private void setCoinsEarned() throws InvalidBattleStatusException {
+        if (!gameOver) {
+            throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
+        }
+        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        if (trainerWins) {
+            coinsEarned = (int) (BASE_COINS_FOR_WINNER / relStrength);
+            if (coinsEarned < FLOOR_COINS_FOR_WINNER) coinsEarned = FLOOR_COINS_FOR_WINNER;
+            if (coinsEarned > CAP_COINS_FOR_WINNER) coinsEarned = CAP_COINS_FOR_WINNER;
+        } else {
+            coinsEarned = COST_PER_BATTLE;
+        }
     }
 
-    /** Helper function determining if the attacking Pokemon is NPC Pokemon. */
-    private boolean attackerIsBot(Pokemon attacker) {
-        return attacker.equals(npcPokemon);
+    /** Helper function to calculate and update the coins earned after the battle ends. */
+    private void setXpGained() throws InvalidBattleStatusException {
+        if (!gameOver) {
+            throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
+        }
+        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        if (trainerWins) {
+            xpGained = (int) (BASE_EXP_FOR_WINNER / relStrength);
+            if (xpGained < FLOOR_EXP_FOR_WINNER) xpGained = FLOOR_EXP_FOR_WINNER;
+            if (xpGained > CAP_EXP_FOR_WINNER) xpGained = CAP_EXP_FOR_WINNER;
+        } else {
+            xpGained = (int) (BASE_EXP_FOR_LOSER / relStrength);
+            if (xpGained < FLOOR_EXP_FOR_LOSER) xpGained = FLOOR_EXP_FOR_LOSER;
+            if (xpGained > CAP_EXP_FOR_LOSER) xpGained = CAP_EXP_FOR_LOSER;
+        }
+    }
+
+    /** ------------------------ Below are message formatters ------------------------ */
+
+    /**
+     * Helper function to build the battle round meddage
+     *
+     * @param isBot if attacking Pokemon is NPC Pokemon
+     * @param physical if the move is a Physical Attack (or a Special Attack)
+     * @param aType PokemonType for the attacking Pokemon
+     * @param dType PokemonType for the defending Pokemon
+     * @param multiplier multifilier due to PokemonTypes as double
+     * @param damage final damage as int
+     * @return a formmmated string
+     */
+    private String formatRoundMsg(
+            boolean isBot,
+            boolean physical,
+            PokemonType aType,
+            PokemonType dType,
+            double multiplier,
+            int damage) {
+        PokemonSpecies aSpecies = isBot ? npcPokeSpecies : trPokeSpecies;
+        PokemonSpecies dSpecies = isBot ? trPokeSpecies : npcPokeSpecies;
+        StringBuilder builder = new StringBuilder();
+        builder.append("```");
+        builder.append(formatAttackMsg(isBot, physical, aSpecies.getName(), aType.getEmoji()));
+        builder.append(
+                formatDamageMsg(isBot, dSpecies.getName(), dType.getEmoji(), damage, multiplier));
+        builder.append(formatBarMsg());
+        builder.append("```");
+        return builder.toString();
     }
 
     /** Sample: "🥊 Your Pikachu 🏙️ used Special Attack ✨" */
@@ -232,10 +299,10 @@ public class NPCBattle {
                 .append(trPokeSpecies.getName())
                 .append("!\n");
 
-        return builder.toString();
+        return "```" + builder.toString() + "```";
     }
 
-    //
+    // Sample:
     // 💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥
     //
     // 💔 Tough luck, @ToastedAvo🥑. Pikachu bravely faced the challenge!
@@ -285,6 +352,6 @@ public class NPCBattle {
                 .append(trPokeSpecies.getName())
                 .append(", your next victory awaits!\n");
 
-        return builder.toString();
+        return "```" + builder.toString() + "```";
     }
 }
