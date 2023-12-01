@@ -59,11 +59,14 @@ public class MyCommand implements SlashCommandHandler {
                     pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
 
             String pokeProfile = buildPokemonProfile(trainerDiscordId, pokemon);
-
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
-            embedBuilder.addField("Your Pokemon Detail", pokeProfile, false);
+            embedBuilder.addField(
+                    "Your Pokemon Detail\n💡hint: use `/feed` command to feed your pokemon!",
+                    pokeProfile,
+                    false);
             event.replyEmbeds(embedBuilder.build()).queue();
+
         } catch (InvalidInventoryIndexException e) {
             event.reply("Oops...the pokemon does not exist, try again").queue();
         }
@@ -81,6 +84,6 @@ public class MyCommand implements SlashCommandHandler {
         String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
         String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
 
-        return String.format("```%s%s```", speciesDetails, pokemonDetails);
+        return String.format("```%s\n%s```", speciesDetails, pokemonDetails);
     }
 }

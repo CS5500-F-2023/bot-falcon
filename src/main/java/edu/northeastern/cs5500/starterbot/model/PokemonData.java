@@ -22,4 +22,15 @@ public class PokemonData {
     Integer speed;
     String id;
     String[] types;
+
+    public boolean hasNullFields() {
+        return number == null
+                || speciesNames.get("en") == null
+                || spriteURL == null
+                || types == null;
+    }
+
+    public boolean hasEmptyFields() {
+        return speciesNames.get("en").isEmpty() || spriteURL.isEmpty() || types.length == 0;
+    }
 }

@@ -6,14 +6,14 @@ import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /** This class represents a service for retrieving Pokemon data. */
 @Singleton
 public class PokemonDataService {
-    // TODO update to real resource file
-    private static final String POKEMON_DATA_FILE_NAME = "src/main/resources/pokeDataTest.json";
+    private static String POKEMON_DATA_FILE_NAME = "src/main/resources/pokemon.json";
 
     private List<PokemonData> pokemonDataList;
 
@@ -21,6 +21,10 @@ public class PokemonDataService {
     @Inject
     public PokemonDataService() {
         loadPokemonData();
+    }
+
+    public PokemonDataService(String path) {
+        loadPokemonDataWithPath(path);
     }
 
     /** Loads the Pokemon data from a JSON file. */
@@ -35,12 +39,27 @@ public class PokemonDataService {
         }
     }
 
+    private void loadPokemonDataWithPath(String p) {
+        try {
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(p);
+            pokemonDataList =
+                    gson.fromJson(reader, new TypeToken<List<PokemonData>>() {}.getType());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Returns the list of Pokemon data.
      *
      * @return the list of Pokemon data
      */
     public List<PokemonData> getPokemonDataList() {
-        return pokemonDataList;
+        return pokemonDataList.stream()
+                .filter(
+                        pokemonData ->
+                                !pokemonData.hasNullFields() && !pokemonData.hasEmptyFields())
+                .collect(Collectors.toList());
     }
 }

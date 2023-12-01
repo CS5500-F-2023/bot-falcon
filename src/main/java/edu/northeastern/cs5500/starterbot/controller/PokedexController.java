@@ -15,10 +15,11 @@ public class PokedexController {
 
     @Inject PokemonDataService pokemonDataService;
 
+    List<PokemonData> pokemonDataList;
+
     @Inject
-    PokedexController() {
-        // No args as we are not saving anythin
-        // empty and defined for Dragger
+    PokedexController(PokemonDataService pokemonDataService) {
+        this.pokemonDataService = pokemonDataService;
     }
 
     /**
@@ -26,22 +27,19 @@ public class PokedexController {
      *
      * @param pokedexNumber The Pokedex number of the Pokemon species.
      * @return The Pokemon species information.
+     * @throws FieldNotValidException
      */
     public PokemonSpecies getPokemonSpeciesByPokedex(int pokedexNumber) {
+        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
         PokemonSpeciesBuilder builder = PokemonSpecies.builder();
         builder.pokedexNumber(pokedexNumber);
-        List<PokemonData> pokemonDatas = pokemonDataService.getPokemonDataList();
 
         // find pokedex in the pokemon data list
-        for (PokemonData data : pokemonDatas) {
-            if (data.getNumber().equals(pokedexNumber)) {
-                builder.name(data.getSpeciesNames().get("en"));
-                builder.imageUrl(data.getSpriteURL());
-                builder.speciesTypes(data.getTypes());
-                builder.types(PokemonType.getSingleTypeArray(PokemonType.NORMAL)); // placeholder
-                break;
-            }
-        }
+        PokemonData data = this.pokemonDataList.get(pokedexNumber);
+        builder.name(data.getSpeciesNames().get("en"));
+        builder.imageUrl(data.getSpriteURL());
+        builder.speciesTypes(data.getTypes());
+        builder.types(PokemonType.getSingleTypeArray(PokemonType.NORMAL)); // placeholder
         return Objects.requireNonNull(builder.build());
     }
 

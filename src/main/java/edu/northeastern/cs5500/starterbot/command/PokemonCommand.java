@@ -74,7 +74,7 @@ public class PokemonCommand implements SlashCommandHandler {
             }
             pokemonList.append("```");
             embedBuilder.addField(
-                    "💡hint: use `/my` command to view pokemon stats at your choice!",
+                    "💡hint: use `/my` command to view pokemon stats at your choice!\n💡hint: use `/feed` command to feed your pokemon!",
                     pokemonList.toString(),
                     false);
             event.replyEmbeds(embedBuilder.build()).queue();

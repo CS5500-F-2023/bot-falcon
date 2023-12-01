@@ -103,9 +103,28 @@ public class TrainerController {
      */
     public String buildTrainerStats(String discordMemberId) {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
+        Map<FoodType, Integer> food = getTrainerFoodInventory(discordMemberId);
+        String foodDetail = buildTrainerBerryStockDetail(food);
         return String.format(
-                "```Balance: %d\nPokemon Numbers: %d\nBerry Stock: 🫐\n```",
-                trainer.getBalance(), trainer.getPokemonInventory().size());
+                "```Balance: %d\nPokemon Numbers: %d\n%s\n```",
+                trainer.getBalance(), trainer.getPokemonInventory().size(), foodDetail);
+    }
+
+    /**
+     * Builds a string representation of the trainer's berry stock details.
+     *
+     * @param food a map containing the quantity of each food type
+     * @return a string representation of the trainer's berry stock details
+     */
+    private String buildTrainerBerryStockDetail(Map<FoodType, Integer> food) {
+        return String.format(
+                "%s: %d\n%s: %d\n%s: %d",
+                FoodType.GOLDBERRY.name(),
+                food.get(FoodType.GOLDBERRY),
+                FoodType.BERRY.name(),
+                food.get(FoodType.BERRY),
+                FoodType.MYSTERYBERRY.name(),
+                food.get(FoodType.MYSTERYBERRY));
     }
 
     /**
