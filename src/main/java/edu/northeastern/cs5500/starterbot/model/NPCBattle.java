@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 @Builder
-@Data
 public class NPCBattle {
 
     private static final int COST_PER_BATTLE = -5;
@@ -35,22 +34,27 @@ public class NPCBattle {
     private static final Integer FLOOR_EXP_FOR_LOSER = 5;
     private static final Integer CAP_EXP_FOR_LOSER = 20;
 
-    String trDiscordId;
+    // Accessible to controllers later
+    @Getter String trDiscordId;
+    @Getter String trPokemonIdStr;
+
+    // Any change to the below will be in memory
     Trainer trainer;
     Pokemon trPokemon;
-    Pokemon npcPokemon;
+    @Getter Pokemon npcPokemon;
     PokemonSpecies trPokeSpecies;
     PokemonSpecies npcPokeSpecies;
 
     // Result related
-    @Builder.Default boolean gameOver = false;
-    @Builder.Default boolean trainerWins = false;
-    @Builder.Default int coinsEarned = COST_PER_BATTLE;
-    @Builder.Default int xpGained = 0;
-    @Builder.Default String resultMessage = "";
+    @Builder.Default @Getter boolean gameOver = false;
+    @Builder.Default @Getter boolean trainerWins = false;
+    @Builder.Default @Getter int coinsEarned = COST_PER_BATTLE;
+    @Builder.Default @Getter int xpGained = 0;
 
-    // Round related
-    @Builder.Default List<String> roundMessages = new ArrayList<>();
+    // Messages
+    @Builder.Default @Getter String beginMessage = "";
+    @Builder.Default @Getter String resultMessage = "";
+    @Builder.Default @Getter List<String> roundMessages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
@@ -93,9 +97,15 @@ public class NPCBattle {
             if (trPokemon.getCurrentHp() <= 0 || npcPokemon.getCurrentHp() <= 0) {
                 gameOver = true;
                 if (npcPokemon.getCurrentHp() <= 0) trainerWins = true;
-                try {
+                try { // Note: change to Trainer and Trainer Pokemon are in memory to format message
                     setCoinsEarned();
+                    trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
+                    boolean leveledUp = trPokemon.setExPoints(trPokemon.getCurrentHp() + xpGained);
+                    resultMessage =
+                            trainerWins
+                                    ? buildVictoryMessage(leveledUp)
+                                    : buildDefeatMessage(leveledUp);
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
