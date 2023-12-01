@@ -27,9 +27,11 @@ public class TrainerController {
 
     GenericRepository<Trainer> trainerRepository;
 
-    @Inject PokemonController pokemonController;
+    @Inject
+    PokemonController pokemonController;
 
-    @Inject PokedexController pokedexController;
+    @Inject
+    PokedexController pokedexController;
 
     @Inject
     TrainerController(GenericRepository<Trainer> trainerRepository) {
@@ -109,7 +111,8 @@ public class TrainerController {
     }
 
     /**
-     * Retrieves the Pokemon inventory of a trainer identified by their Discord member ID.
+     * Retrieves the Pokemon inventory of a trainer identified by their Discord
+     * member ID.
      *
      * @param discordMemberId the Discord member ID of the trainer
      * @return the list of Pokemon in the trainer's inventory
@@ -127,12 +130,14 @@ public class TrainerController {
     }
 
     /**
-     * Retrieves a Pokemon from the trainer's inventory based on the specified index.
+     * Retrieves a Pokemon from the trainer's inventory based on the specified
+     * index.
      *
      * @param discordMemberId the Discord member ID of the trainer
-     * @param index the index of the Pokemon in the inventory
+     * @param index           the index of the Pokemon in the inventory
      * @return the Pokemon at the specified index
-     * @throws InvalidInventoryIndexException if the index is invalid or the inventory is empty
+     * @throws InvalidInventoryIndexException if the index is invalid or the
+     *                                        inventory is empty
      */
     public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
             throws InvalidInventoryIndexException {
@@ -148,11 +153,13 @@ public class TrainerController {
      * Return the updated balance of the trainer after adding the daily reward coins
      *
      * @param discordMemberId Discord member ID of the specific trainer as String
-     * @param amount Amount to be added to the balance of the specific balance as Integer
-     * @param curDate Current date as LocalDate
+     * @param amount          Amount to be added to the balance of the specific
+     *                        balance as Integer
+     * @param curDate         Current date as LocalDate
      * @return The update balance as Integer
-     * @throws InvalidCheckinDayException if the cur date is not strictly greater than previous
-     *     checkin date
+     * @throws InvalidCheckinDayException if the cur date is not strictly greater
+     *                                    than previous
+     *                                    checkin date
      */
     public Integer addDailyRewardsToTrainer(
             String discordMemberId, Integer amount, LocalDate curDate)
@@ -170,7 +177,8 @@ public class TrainerController {
     }
 
     /**
-     * Retrieves the Food inventory of a trainer identified by their Discord member ID.
+     * Retrieves the Food inventory of a trainer identified by their Discord member
+     * ID.
      *
      * @param discordMemberId the Discord member ID of the trainer
      * @return the list of Pokemon in the trainer's inventory
@@ -178,20 +186,13 @@ public class TrainerController {
     public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
         Map<FoodType, Integer> foodInventory = new HashMap<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        Map<FoodType, Integer> food = trainer.getFoodInventory();
-        if (!food.containsKey(FoodType.MYSTERYBERRY)) {
-            food.put(FoodType.MYSTERYBERRY, 0);
-        }
-        if (!food.containsKey(FoodType.BERRY)) {
-            food.put(FoodType.BERRY, 0);
-        }
-        if (!food.containsKey(FoodType.GOLDBERRY)) {
-            food.put(FoodType.GOLDBERRY, 0);
-        }
-        foodInventory.put(FoodType.MYSTERYBERRY, food.get(FoodType.MYSTERYBERRY));
-        foodInventory.put(FoodType.BERRY, food.get(FoodType.BERRY));
-        foodInventory.put(FoodType.GOLDBERRY, food.get(FoodType.GOLDBERRY));
 
+        Map<FoodType, Integer> food = trainer.getFoodInventory();
+
+        for (FoodType type : FoodType.values()) {
+            int count = food.getOrDefault(type, 0);
+            foodInventory.put(type, count);
+        }
         return foodInventory;
     }
 }
