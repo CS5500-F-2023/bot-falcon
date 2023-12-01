@@ -10,6 +10,7 @@ public class NPCBattle {
 
     private static final int DAMAGE_FLOOR = 8;
     private static final int BASE_LEVEL = 5;
+    private static final int FIXED_WIDTH = 30;
     private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double EFFECTIVE_THRESHOLD = 1.0;
     private static final double DEFENSE_MULTIPLIER = 0.65;
@@ -147,12 +148,14 @@ public class NPCBattle {
     // ----------------------------------------------
     private String formatBarMsg() {
         int nameLen =
-                7 + Math.max(trPokeSpecies.getName().length(), npcPokeSpecies.getName().length());
-        String borderLine = "-".repeat(29 + nameLen) + "\n";
+                Math.max(
+                        ("Your " + trPokeSpecies.getName()).length(),
+                        ("Bot's " + npcPokeSpecies.getName()).length());
+        String borderLine = "-".repeat(FIXED_WIDTH + nameLen) + "\n";
         return String.format(
                 borderLine
-                        + ("%-" + nameLen + "s| HP: %s %3d/%-3d\n")
-                        + ("%-" + nameLen + "s| HP: %s %3d/%-3d\n")
+                        + ("%-" + nameLen + "s | HP: %s %3d/%-3d\n")
+                        + ("%-" + nameLen + "s | HP: %s %3d/%-3d\n")
                         + borderLine,
                 String.format("Your %s", trPokeSpecies.getName()),
                 trPokemon.generateHealthBar(),
