@@ -34,16 +34,16 @@ public class PokemonController {
     /**
      * Create a new Pokemon of the specified number and add it to the repo.
      *
-     * @param pokedexNumber the number of the Pokemon to spawn
+     * @param listIndex the number of the Pokemon to spawn
      * @return a new Pokemon with a unique ID
      */
     @Nonnull
-    Pokemon spawnPokemon(int pokedexNumber) {
+    Pokemon spawnPokemon(int listIndex) {
         this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
         PokemonBuilder builder = Pokemon.builder();
-        builder.pokedexNumber(pokedexNumber);
+        PokemonData data = this.pokemonDataList.get(listIndex);
 
-        PokemonData data = this.pokemonDataList.get(pokedexNumber);
+        builder.pokedexNumber(data.getNumber());
         builder.currentHp(data.getHp());
         builder.hp(data.getHp());
         builder.attack(data.getAttack());
