@@ -300,7 +300,7 @@ public class NPCBattle {
 
         if (leveledUp) {
             builder.append("   LEVEL UP to  🚀 :  ");
-            builder.append(trPokemon.getLevel()).append("!\n");
+            builder.append(trPokemon.getLevel()).append("\n");
         }
         builder.append("\n");
 
@@ -349,7 +349,7 @@ public class NPCBattle {
 
         if (leveledUp) {
             builder.append("   LEVEL UP to  🚀 :  ");
-            builder.append(trPokemon.getLevel()).append("!\n");
+            builder.append(trPokemon.getLevel()).append("\n");
         }
         builder.append("\n");
 
