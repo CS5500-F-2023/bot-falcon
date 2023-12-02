@@ -25,6 +25,8 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
     static final String NAME = "feed";
+    private static final Integer LEVEL_UP_THRESHOLD = 100;
+    private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -74,7 +76,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                             pokemon.getLevel().toString(), pokemon.getExPoints().toString()));
             embedBuilder.addField(
                     "------------------------------------\n🎒 Below is your food inventory!",
-                    "💡Not enough berries? Type /shop to buy more berries!",
+                    "💡Not enough berries? Type `/shop` to buy more berries!",
                     false);
 
             MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
@@ -132,14 +134,39 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         if (trainerDiscordId.equals(initiateTrainerDiscordId)) {
             try {
                 trainerController.removeTrainerFood(trainerDiscordId, selectedFoodType);
+                int levelBefore = pokemon.getLevel();
                 pokemonController.increasePokemonExpByFood(pokemonID, selectedFoodType);
+                int newXP = pokemon.getExPoints();
+                int levelAfter = pokemon.getLevel();
+
+                String levelUpMessage = "";
+                if (levelAfter > levelBefore) {
+                    levelUpMessage =
+                            String.format(
+                                    "🎉 Woo-hoo, your %s is leveled up to %d!",
+                                    species.getName(), levelAfter);
+                } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
+                    int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
+                    levelUpMessage =
+                            String.format(
+                                    "💪 Almost there! your %s only need %d more XP to level up!!",
+                                    species.getName(), xpRequiredNextLevel);
+                }
+
+                String xpProgressBar = generateXPProgressBar(newXP, LEVEL_UP_THRESHOLD);
+
                 event.reply(
                                 String.format(
-                                        "<@%s>, your %s gain %d experience points! Current XP: %d",
-                                        trainerDiscordId,
+                                        "%s Yummy! Your %s gained %d experience points!\n"
+                                                + "---------------------------------------------\n"
+                                                + "Current Level: %d\nCurrent XP: %s\n"
+                                                + "---------------------------------------------\n%s",
+                                        selectedFoodType.getEmoji(),
                                         species.getName(),
                                         selectedFoodType.getExp(),
-                                        pokemon.getExPoints()))
+                                        levelAfter,
+                                        xpProgressBar,
+                                        levelUpMessage))
                         .queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
@@ -166,5 +193,21 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     .setComponents()
                     .queue(); // disable button
         }
+    }
+
+    private String generateXPProgressBar(int currentXP, int maxXP) {
+        int progressBarLength = 10;
+        int progress = (int) Math.ceil(((double) currentXP / maxXP) * progressBarLength);
+        int remaining = progressBarLength - progress;
+
+        StringBuilder progressBar = new StringBuilder();
+        for (int i = 0; i < progress; i++) {
+            progressBar.append("█");
+        }
+        for (int i = 0; i < remaining; i++) {
+            progressBar.append("░");
+        }
+
+        return String.format("%s  %d/%d", progressBar.toString(), currentXP, maxXP);
     }
 }
