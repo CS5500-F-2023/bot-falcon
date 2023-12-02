@@ -5,7 +5,6 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
-import edu.northeastern.cs5500.starterbot.model.BattleRecord;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -154,7 +153,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder1.setThumbnail(trPokeSpecies.getImageUrl());
 
         // Set up the battle
-        NPCBattle battle = battleController.setUpNewBattle(trPokemon);
+        NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
 
         // The NPC Pokémon is accessible by calling battle.getNpcPokemon()
         Pokemon npcPokemon = battle.getNpcPokemon();
@@ -174,18 +173,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder2.setThumbnail(npcPokeSpecies.getImageUrl());
 
         // Start battle and get the battle record
-        BattleRecord battleRecord = battleController.runBattle(trDiscordId, battle);
+        battleController.runBattle(battle);
         log.error("!!! runBattle: ");
 
         // Build up and send the battle rounds and result messages
-        final String resultMessage =
-                (battleRecord.isTrainerWins()
-                                ? String.format("🏆 Victory <@%s>!\n", trDiscordId)
-                                : String.format("💔 Tough luck <@%s>!\n", trDiscordId))
-                        + formatPokemonXpMsg(trPokeName, battleRecord)
-                        + formatLevelUpMsg(trPokeName, trPokemon, battleRecord.getCanLevelUp())
-                        + formatBalanceMsg(trDiscordId, battleRecord);
-
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
@@ -195,59 +186,27 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                             scheduler.schedule(
                                     () ->
                                             interactionHook
-                                                    .sendMessage("🥊 The battle begins! 🥊")
+                                                    .sendMessage(battle.getStartMessage())
                                                     .queue(),
                                     3,
                                     TimeUnit.SECONDS);
 
                             // Send round info
-                            for (String roundInfo : battleRecord.getBattleRounds()) {
+                            for (String roundMsg : battle.getRoundMessages()) {
                                 scheduler.schedule(
-                                        () -> interactionHook.sendMessage(roundInfo).queue(),
-                                        4,
+                                        () -> interactionHook.sendMessage(roundMsg).queue(),
+                                        5,
                                         TimeUnit.SECONDS);
                             }
 
                             // Send result info
                             scheduler.schedule(
-                                    () -> interactionHook.sendMessage(resultMessage).queue(),
-                                    4,
+                                    () ->
+                                            interactionHook
+                                                    .sendMessage(battle.getResultMessage())
+                                                    .queue(),
+                                    5,
                                     TimeUnit.SECONDS);
                         });
-    }
-
-    private String formatPokemonXpMsg(String trPokeName, BattleRecord battleRecord) {
-        String pokemonXpMsg = "";
-        if (battleRecord.isTrainerWins()) {
-            return String.format(
-                    "Your %s wins! It gains %d experience points.",
-                    trPokeName, battleRecord.getExpGained());
-        } else {
-            return String.format(
-                    "Your %s loses, but it still gains %d experience points.",
-                    trPokeName, battleRecord.getExpGained());
-        }
-    }
-
-    private String formatLevelUpMsg(String trPokeName, Pokemon trPokemon, boolean levelUp) {
-        if (levelUp) {
-            return String.format(
-                    "\n... and hooray, your %s has leveled up to Level %d. Current XP: %d\n",
-                    trPokeName, trPokemon.getLevel(), trPokemon.getExPoints());
-        } else {
-            return " Current XP: " + trPokemon.getExPoints() + "\n";
-        }
-    }
-
-    private String formatBalanceMsg(String trDiscordId, BattleRecord battleRecord) {
-        Integer newBalance = trainerController.getTrainerForMemberId(trDiscordId).getBalance();
-        if (battleRecord.isTrainerWins()) {
-            return String.format(
-                    "You earn %d coins. Your current balance is %d.",
-                    battleRecord.getCoinsGained(), newBalance);
-        } else {
-            return String.format(
-                    "It costs you 5 coins to battle so your current balance is %d.", newBalance);
-        }
     }
 }

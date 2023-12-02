@@ -33,17 +33,17 @@ public class NPCBattleTest {
     @Test
     void testGetBaseDamage1() { // Physical move with level multiplier
         bulbasaur.setLevel(7);
-        double attack = bulbasaur.getAttack() * (1.0 + 0.2);
-        double defense = charmander.getDefense() * (1.0) * 0.65;
+        double attack = bulbasaur.getAttack() * (1.0 + 0.2) * 1.2;
+        double defense = charmander.getDefense() * (1.0) * 0.7;
         int damage = (int) (attack - defense);
         assertThat(NPCBattle.getBaseDamage(bulbasaur, charmander, true)).isEqualTo(damage);
     }
 
     @Test
     void testGetBaseDamage2() { // Special attack with level multiplier
-        double attack = bulbasaur.getSpecialAttack() * (1.0);
+        double attack = bulbasaur.getSpecialAttack() * (1.0) * 1.2;
         charmander.setLevel(7);
-        double defense = charmander.getSpecialDefense() * (1.0 + 0.2) * 0.65;
+        double defense = charmander.getSpecialDefense() * (1.0 + 0.2) * 0.7;
         int damage = (int) (attack - defense);
         assertThat(NPCBattle.getBaseDamage(bulbasaur, charmander, false)).isEqualTo(damage);
     }

@@ -1,10 +1,10 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
-import edu.northeastern.cs5500.starterbot.model.BattleRecord;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle.NPCBattleBuilder;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
+import edu.northeastern.cs5500.starterbot.model.Trainer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -23,36 +23,35 @@ public class BattleController {
         // empty and defined for Dragger
     }
 
-    public NPCBattle setUpNewBattle(Pokemon trPokemon) {
-        // Get the NPC Pokémon
+    public NPCBattle setUpNewBattle(String trDiscordMemberId, String trPokemonIdStr) {
+        // Get Pokémons
+        Pokemon trPokemon = pokemonController.getPokemonById(trPokemonIdStr);
         Pokemon npcPokemon = pokemonController.spawnNpcPokemonForBattle(trPokemon);
 
         // Get necessary information to set up a battle
-        PokemonSpecies trPokeSpecies =
-                pokedexController.getPokemonSpeciesByPokedex(trPokemon.getPokedexNumber());
-        PokemonSpecies npcPokeSpecies =
-                pokedexController.getPokemonSpeciesByPokedex(npcPokemon.getPokedexNumber());
+        int trPokedex = trPokemon.getPokedexNumber();
+        int npcPokedex = npcPokemon.getPokedexNumber();
+        Trainer trainer = trainerController.getTrainerForMemberId(trDiscordMemberId);
+        PokemonSpecies trSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
+        PokemonSpecies npcSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
 
         // Set up a battle
         NPCBattleBuilder builder = NPCBattle.builder();
+        builder.trDiscordId(trDiscordMemberId);
+        builder.trPokemonIdStr(trPokemonIdStr);
+        builder.trainer(trainer);
         builder.trPokemon(trPokemon);
-        builder.trPokeSpecies(trPokeSpecies);
+        builder.trPokeSpecies(trSpecies);
         builder.npcPokemon(npcPokemon);
-        builder.npcPokeSpecies(npcPokeSpecies);
+        builder.npcPokeSpecies(npcSpecies);
         return builder.build();
     }
 
-    public BattleRecord runBattle(String trDiscordMemberId, NPCBattle battle) {
+    public void runBattle(NPCBattle battle) {
         battle.runBattle();
-        BattleRecord battleRecord = battle.getBattleRecord();
 
-        // Update trianer's coins
-        Integer coinsGained = battleRecord.getCoinsGained();
-        trainerController.increaseTrainerBalance(trDiscordMemberId, coinsGained);
-
-        // Update trainer Pokémon's xp and level up info if applicable
-        Integer expGained = battleRecord.getExpGained();
-        pokemonController.increasePokemonExp(battle.getTrPokemon().getId().toString(), expGained);
-        return battleRecord;
+        // Update trianer and pokemon in the database
+        trainerController.trainerRepository.update(battle.getTrainer());
+        pokemonController.pokemonRepository.update(battle.getTrPokemon());
     }
 }
