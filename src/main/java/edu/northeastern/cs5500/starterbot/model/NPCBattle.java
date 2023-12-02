@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -53,7 +54,7 @@ public class NPCBattle {
 
     // Messages
     @Builder.Default @Getter String beginMessage = "";
-    @Builder.Default @Getter String resultMessage = "";
+    @Builder.Default @Getter @Nonnull String resultMessage = "";
     @Builder.Default @Getter List<String> roundMessages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
@@ -262,20 +263,20 @@ public class NPCBattle {
     // Sample:
     // 🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟
     //
-    // 🎉 A splendid triumph, @ToastedAvo🥑! Pikachu shines in glory!
+    // 🎉 A splendid triumph, your Pikachu shines in glory!
     //
     // 🔥 Pikachu's Rewards 🔥
     // ----------------------------
-    //    XP Spark 🌟     : +40
-    //    Current XP 🏆   :  50
-    //    LEVEL UP 🚀 LV  :  6
+    //    XP Spark     🌟 : +40
+    //    Current XP   🏆 :  50
+    //    LEVEL UP to  🚀 :  6
     //
     // 💰 Trainer's Bounty 💰
     // ----------------------------
     //    Coins Earned 🪙 : +20
-    //    New Balance 💸  :  185
+    //    New Balance  💸 :  185
     //
-    // 🌈 Celebrate this victory! The journey to greatness continues, @ToastedAvo🥑 and Pikachu!
+    // 🌈 Celebrate this victory! The journey to greatness continues!
     //
     private String buildVictoryMessage(boolean leveledUp) throws InvalidBattleStatusException {
         if (!gameOver) {
@@ -284,16 +285,16 @@ public class NPCBattle {
         StringBuilder builder = new StringBuilder();
 
         builder.append("🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟\n\n");
-        builder.append("🎉 A splendid triumph, <@").append(trDiscordId).append(">! ");
+        builder.append("🎉 A splendid triumph, your ");
         builder.append(trPokeSpecies.getName()).append(" shines in glory!\n\n");
 
-        builder.append("🔥 Pikachu's Rewards 🔥\n");
+        builder.append("🔥 ").append(trPokeSpecies.getName()).append("'s Rewards 🔥\n");
         builder.append(BOARD_LINE);
-        builder.append("   XP Spark 🌟     : +").append(xpGained).append("\n");
-        builder.append("   Current XP 🏆   :  ").append(trPokemon.getExPoints()).append("\n");
+        builder.append("   XP Spark     🌟 : +").append(xpGained).append("\n");
+        builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
         if (leveledUp) {
-            builder.append("   LEVEL UP 🚀 LV  :  ");
+            builder.append("   LEVEL UP to  🚀 :  ");
             builder.append(trPokemon.getLevel()).append("!\n");
         }
         builder.append("\n");
@@ -301,13 +302,9 @@ public class NPCBattle {
         builder.append("💰 Trainer's Bounty 💰\n");
         builder.append(BOARD_LINE);
         builder.append("   Coins Earned 🪙 : +").append(coinsEarned).append("\n");
-        builder.append("   New Balance 💸  :  ").append(trainer.getBalance()).append("\n\n");
+        builder.append("   New Balance  💸 :  ").append(trainer.getBalance()).append("\n\n");
 
-        builder.append("🌈 Celebrate this victory! The journey to greatness continues, <@")
-                .append(trDiscordId)
-                .append("> and ")
-                .append(trPokeSpecies.getName())
-                .append("!\n");
+        builder.append("🌈 Celebrate this victory. The journey to greatness continues!\n");
 
         return "```" + builder.toString() + "```";
     }
@@ -315,20 +312,20 @@ public class NPCBattle {
     // Sample:
     // 💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥
     //
-    // 💔 Tough luck, @ToastedAvo🥑. Pikachu bravely faced the challenge!
+    // 💔 Tough luck, your Pikachu bravely faced the challenge!
     //
     // 🔥 Pikachu's Gains 🔥
     // ----------------------------
-    //    XP Earned 🌟    : +15
-    //    Current XP 🏆   :  65
-    //    LEVEL UP 🚀 LV  :  6
+    //    XP Earned    🌟 : +15
+    //    Current XP   🏆 :  65
+    //    LEVEL UP to  🚀 :  6
     //
     // 💸 Trainer's Expense 💸
     // ----------------------------
-    //    Battle Cost 🪙  : -5
-    //    New Balance 💰  :  180
+    //    Battle Cost  🪙 : -5
+    //    New Balance  💰 :  180
     //
-    // 🌟 Every battle is a lesson. @ToastedAvo🥑 and Pikachu, your next victory awaits!
+    // 🌟 Every battle is a lesson. Your next victory awaits!
     //
     private String buildDefeatMessage(boolean leveledUp) throws InvalidBattleStatusException {
         if (!gameOver) {
@@ -337,16 +334,16 @@ public class NPCBattle {
         StringBuilder builder = new StringBuilder();
 
         builder.append("💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥\n\n");
-        builder.append("💔 Tough luck, <@").append(trDiscordId).append(">. ");
+        builder.append("💔 Tough luck, your ");
         builder.append(trPokeSpecies.getName()).append(" bravely faced the challenge!\n\n");
 
-        builder.append("🔥 Pikachu's Gains 🔥\n");
+        builder.append("🔥 ").append(trPokeSpecies.getName()).append("'s Gains 🔥\n");
         builder.append(BOARD_LINE);
-        builder.append("   XP Earned 🌟    : +").append(xpGained).append("\n");
-        builder.append("   Current XP 🏆   :  ").append(trPokemon.getExPoints()).append("\n");
+        builder.append("   XP Earned    🌟 : +").append(xpGained).append("\n");
+        builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
         if (leveledUp) {
-            builder.append("   LEVEL UP 🚀 LV  :  ");
+            builder.append("   LEVEL UP to  🚀 :  ");
             builder.append(trPokemon.getLevel()).append("!\n");
         }
         builder.append("\n");
@@ -356,11 +353,7 @@ public class NPCBattle {
         builder.append("   Battle Cost 🪙  : -").append(-1 * coinsEarned).append("\n");
         builder.append("   New Balance 💰  :  ").append(trainer.getBalance()).append("\n\n");
 
-        builder.append("🌟 Every battle is a lesson. <@")
-                .append(trDiscordId)
-                .append("> and ")
-                .append(trPokeSpecies.getName())
-                .append(", your next victory awaits!\n");
+        builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");
 
         return "```" + builder.toString() + "```";
     }

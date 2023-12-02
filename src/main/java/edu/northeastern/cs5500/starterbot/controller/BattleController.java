@@ -60,7 +60,7 @@ public class BattleController {
             try {
                 trainerController.decreaseTrainerBalance(discordMemberId, -1 * coinsEarned);
             } catch (InsufficientBalanceException e) {
-                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
