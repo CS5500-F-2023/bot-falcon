@@ -23,6 +23,11 @@ public class PokemonData {
     String id;
     String[] types;
 
+    /**
+     * Checks if the PokemonData object has any null fields when loading data.
+     *
+     * @return true if any of the required fields are null, false otherwise.
+     */
     public boolean hasNullFields() {
         return number == null
                 || speciesNames.get("en") == null
@@ -30,7 +35,26 @@ public class PokemonData {
                 || types == null;
     }
 
+    /**
+     * Checks if the PokemonData object has any empty fields when loading data.
+     *
+     * @return true if any of the required fields are empty, false otherwise.
+     */
     public boolean hasEmptyFields() {
         return speciesNames.get("en").isEmpty() || spriteURL.isEmpty() || types.length == 0;
+    }
+
+    /**
+     * Checks if the PokemonData object has any null stats when loading data.
+     *
+     * @return true if any of the stats fields are null, false otherwise.
+     */
+    public boolean hasNullStats() {
+        return hp == null
+                || attack == null
+                || defense == null
+                || spAttack == null
+                || spDefense == null
+                || speed == null;
     }
 }
