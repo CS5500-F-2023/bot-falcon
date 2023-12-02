@@ -23,7 +23,8 @@ public class PokemonDataService {
         loadPokemonData();
     }
 
-    public PokemonDataService(String path) {
+    /** For testing purpose */
+    protected PokemonDataService(String path) {
         loadPokemonDataWithPath(path);
     }
 
@@ -39,6 +40,7 @@ public class PokemonDataService {
         }
     }
 
+    /** For testing purpose */
     private void loadPokemonDataWithPath(String p) {
         try {
             Gson gson = new Gson();
@@ -51,7 +53,7 @@ public class PokemonDataService {
     }
 
     /**
-     * Returns the list of Pokemon data.
+     * Returns the list of valid Pokemon data.
      *
      * @return the list of Pokemon data
      */
@@ -59,7 +61,9 @@ public class PokemonDataService {
         return pokemonDataList.stream()
                 .filter(
                         pokemonData ->
-                                !pokemonData.hasNullFields() && !pokemonData.hasEmptyFields())
+                                !pokemonData.hasNullFields()
+                                        && !pokemonData.hasEmptyFields()
+                                        && !pokemonData.hasNullStats())
                 .collect(Collectors.toList());
     }
 }

@@ -22,36 +22,41 @@ public class PokedexController {
         this.pokemonDataService = pokemonDataService;
     }
 
+    // TODO (h): the getPokemonSpeciesByPokedex is not accurate, should be getPokemonSpeciesByIndex
     /**
      * Retrieves the Pokemon species info based on the given Pokedex number from Pokemon data.
      *
-     * @param pokedexNumber The Pokedex number of the Pokemon species.
+     * @param listIndex The index of the data list.
      * @return The Pokemon species information.
-     * @throws FieldNotValidException
      */
-    public PokemonSpecies getPokemonSpeciesByPokedex(int pokedexNumber) {
+    public PokemonSpecies getPokemonSpeciesByPokedex(int listIndex) {
         this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
         PokemonSpeciesBuilder builder = PokemonSpecies.builder();
-        builder.pokedexNumber(pokedexNumber);
 
-        // find pokedex in the pokemon data list
-        PokemonData data = this.pokemonDataList.get(pokedexNumber);
+        // find pokemon in the pokemon data list base on list index
+        PokemonData data = this.pokemonDataList.get(listIndex);
+        // build pokedex base on actual pokedex from the Number field
+        builder.pokedexNumber(data.getNumber());
         builder.name(data.getSpeciesNames().get("en"));
         builder.imageUrl(data.getSpriteURL());
         builder.speciesTypes(data.getTypes());
-        builder.types(PokemonType.getSingleTypeArray(PokemonType.NORMAL)); // placeholder
+        builder.types(
+                PokemonType.getSingleTypeArray(
+                        PokemonType.NORMAL)); // TODO placeholder leftover from demo code
         return Objects.requireNonNull(builder.build());
     }
 
     /**
      * Builds a string representation of the Pokemon Species's details based on its pokedex number.
      *
-     * @param pokedexNumber The index of the pokemon species.
+     * @param listIndex The index of the pokemon species.
      * @return A string containing pokemon species and types.
      */
-    public String buildSpeciesDetails(int pokedexNumber) {
-        PokemonSpecies species = this.getPokemonSpeciesByPokedex(pokedexNumber);
+    public String buildSpeciesDetails(int listIndex) {
+        PokemonSpecies species = this.getPokemonSpeciesByPokedex(listIndex);
         String typeString = String.join(", ", species.getSpeciesTypes());
-        return String.format("Species: %s\nTypes: %s\n", species.getName(), typeString);
+        return String.format(
+                "Species: %s\nTypes: %s\nPokedex: %d\n",
+                species.getName(), typeString, species.getPokedexNumber());
     }
 }

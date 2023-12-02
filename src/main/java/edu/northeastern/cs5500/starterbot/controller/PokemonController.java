@@ -22,7 +22,6 @@ public class PokemonController {
     @Inject PokemonDataService pokemonDataService;
 
     List<PokemonData> pokemonDataList;
-    private static final Integer TOTAL_POKEMON = 1292;
 
     @Inject
     PokemonController(
@@ -34,16 +33,15 @@ public class PokemonController {
     /**
      * Create a new Pokemon of the specified number and add it to the repo.
      *
-     * @param pokedexNumber the number of the Pokemon to spawn
+     * @param listIndex the number of the Pokemon to spawn
      * @return a new Pokemon with a unique ID
      */
     @Nonnull
-    Pokemon spawnPokemon(int pokedexNumber) {
-        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
+    Pokemon spawnPokemon(int listIndex) {
         PokemonBuilder builder = Pokemon.builder();
-        builder.pokedexNumber(pokedexNumber);
+        PokemonData data = this.pokemonDataList.get(listIndex);
 
-        PokemonData data = this.pokemonDataList.get(pokedexNumber);
+        builder.pokedexNumber(data.getNumber());
         builder.currentHp(data.getHp());
         builder.hp(data.getHp());
         builder.attack(data.getAttack());
@@ -61,7 +59,8 @@ public class PokemonController {
      * @return The spawned Pokemon
      */
     public Pokemon spawnRandonPokemon() {
-        int randomIndex = (new Random()).nextInt(TOTAL_POKEMON);
+        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
+        int randomIndex = (new Random()).nextInt(this.pokemonDataList.size());
         return spawnPokemon(randomIndex);
     }
 
