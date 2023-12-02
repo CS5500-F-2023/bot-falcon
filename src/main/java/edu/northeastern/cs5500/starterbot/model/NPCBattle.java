@@ -150,7 +150,7 @@ public class NPCBattle {
         }
     }
 
-    /** Helper function to calculate and update the coins earned after the battle ends. */
+    /** Helper function to calculate and update the experience gained after the battle ends. */
     private void setXpGained() throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
