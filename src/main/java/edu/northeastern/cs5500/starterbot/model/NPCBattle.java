@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 @Builder
+@Data
 public class NPCBattle {
 
-    private static final int COST_PER_BATTLE = -5;
+    private static final int COST_PER_BATTLE = 5;
 
     private static final int DAMAGE_FLOOR = 8;
     private static final int BASE_LEVEL = 5;
@@ -35,27 +36,24 @@ public class NPCBattle {
     private static final Integer FLOOR_EXP_FOR_LOSER = 5;
     private static final Integer CAP_EXP_FOR_LOSER = 20;
 
-    // Accessible to controllers later
-    @Getter String trDiscordId;
-    @Getter String trPokemonIdStr;
-
-    // Any change to the below will be in memory
-    Trainer trainer;
-    Pokemon trPokemon;
-    @Getter Pokemon npcPokemon;
+    String trDiscordId;
+    String trPokemonIdStr;
+    @Nonnull Trainer trainer;
+    @Nonnull Pokemon trPokemon;
+    Pokemon npcPokemon;
     PokemonSpecies trPokeSpecies;
     PokemonSpecies npcPokeSpecies;
 
     // Result related
-    @Builder.Default @Getter boolean gameOver = false;
-    @Builder.Default @Getter boolean trainerWins = false;
-    @Builder.Default @Getter int coinsEarned = COST_PER_BATTLE;
-    @Builder.Default @Getter int xpGained = 0;
+    @Builder.Default boolean gameOver = false;
+    @Builder.Default boolean trainerWins = false;
+    @Builder.Default int coinsEarned = 0;
+    @Builder.Default int xpGained = 0;
 
     // Messages
-    @Builder.Default @Getter String beginMessage = "";
-    @Builder.Default @Getter @Nonnull String resultMessage = "";
-    @Builder.Default @Getter List<String> roundMessages = new ArrayList<>();
+    @Builder.Default String beginMessage = "";
+    @Builder.Default @Nonnull String resultMessage = "";
+    @Builder.Default List<String> roundMessages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
@@ -100,9 +98,9 @@ public class NPCBattle {
                 if (npcPokemon.getCurrentHp() <= 0) trainerWins = true;
                 try { // Note: change to Trainer and Trainer Pokemon are in memory to format message
                     setCoinsEarned();
-                    trainer.setBalance(trainer.getBalance() + coinsEarned);
+                    if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
-                    boolean leveledUp = trPokemon.setExPoints(trPokemon.getCurrentHp() + xpGained);
+                    boolean leveledUp = trPokemon.setExPoints(trPokemon.getExPoints() + xpGained);
                     resultMessage =
                             trainerWins
                                     ? buildVictoryMessage(leveledUp)
@@ -145,8 +143,6 @@ public class NPCBattle {
             coinsEarned = (int) (BASE_COINS_FOR_WINNER / relStrength);
             if (coinsEarned < FLOOR_COINS_FOR_WINNER) coinsEarned = FLOOR_COINS_FOR_WINNER;
             if (coinsEarned > CAP_COINS_FOR_WINNER) coinsEarned = CAP_COINS_FOR_WINNER;
-        } else {
-            coinsEarned = COST_PER_BATTLE;
         }
     }
 
@@ -350,7 +346,7 @@ public class NPCBattle {
 
         builder.append("💸 Trainer's Expense 💸\n");
         builder.append(BOARD_LINE);
-        builder.append("   Battle Cost 🪙  : -").append(-1 * coinsEarned).append("\n");
+        builder.append("   Battle Cost 🪙  : -").append(COST_PER_BATTLE).append("\n");
         builder.append("   New Balance 💰  :  ").append(trainer.getBalance()).append("\n\n");
 
         builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");

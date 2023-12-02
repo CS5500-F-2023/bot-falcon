@@ -1,6 +1,5 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
-import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle.NPCBattleBuilder;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
@@ -51,22 +50,8 @@ public class BattleController {
     public void runBattle(NPCBattle battle) {
         battle.runBattle();
 
-        // Update trianer in the database
-        String discordMemberId = battle.getTrDiscordId();
-        int coinsEarned = battle.getCoinsEarned();
-        if (coinsEarned >= 0) {
-            trainerController.increaseTrainerBalance(discordMemberId, coinsEarned);
-        } else {
-            try {
-                trainerController.decreaseTrainerBalance(discordMemberId, -1 * coinsEarned);
-            } catch (InsufficientBalanceException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // Update trainer Pokémon's xp and level up info if applicable
-        String trPokemonIdStr = battle.getTrPokemonIdStr();
-        int xpGained = battle.getXpGained();
-        pokemonController.increasePokemonExp(trPokemonIdStr, xpGained);
+        // Update trianer and pokemon in the database
+        trainerController.trainerRepository.update(battle.getTrainer());
+        pokemonController.pokemonRepository.update(battle.getTrPokemon());
     }
 }
