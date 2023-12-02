@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import lombok.Builder;
 import lombok.Data;
@@ -47,16 +48,19 @@ public class NPCBattle {
     // Result related
     @Builder.Default boolean gameOver = false;
     @Builder.Default boolean trainerWins = false;
-    @Builder.Default int coinsEarned = 0;
+    @Builder.Default @Nonnegative int coinsEarned = 0;
     @Builder.Default int xpGained = 0;
 
     // Messages
-    @Builder.Default String beginMessage = "";
+    @Builder.Default @Nonnull String startMessage = "";
     @Builder.Default @Nonnull String resultMessage = "";
     @Builder.Default List<String> roundMessages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
+        // Format start message
+        startMessage = this.formatStartMsg();
+
         // Set current HP to max HP
         trPokemon.setCurrentHp(trPokemon.getHp());
         npcPokemon.setCurrentHp(npcPokemon.getHp());
@@ -165,8 +169,13 @@ public class NPCBattle {
 
     /** ------------------------ Below are message formatters ------------------------ */
 
+    /** Helper function to format battle start message. */
+    private String formatStartMsg() {
+        return "```" + "🥊 The battle begins! 🥊\n" + formatBarMsg() + "```";
+    }
+
     /**
-     * Helper function to build the battle round meddage
+     * Helper function to build the battle round message
      *
      * @param isBot if attacking Pokemon is NPC Pokemon
      * @param physical if the move is a Physical Attack (or a Special Attack)

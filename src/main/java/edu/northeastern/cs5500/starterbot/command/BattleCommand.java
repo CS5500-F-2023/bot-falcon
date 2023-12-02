@@ -186,7 +186,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                             scheduler.schedule(
                                     () ->
                                             interactionHook
-                                                    .sendMessage("🥊 The battle begins! 🥊")
+                                                    .sendMessage(battle.getStartMessage())
                                                     .queue(),
                                     3,
                                     TimeUnit.SECONDS);
@@ -195,7 +195,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                             for (String roundMsg : battle.getRoundMessages()) {
                                 scheduler.schedule(
                                         () -> interactionHook.sendMessage(roundMsg).queue(),
-                                        4,
+                                        5,
                                         TimeUnit.SECONDS);
                             }
 
@@ -205,7 +205,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                                             interactionHook
                                                     .sendMessage(battle.getResultMessage())
                                                     .queue(),
-                                    4,
+                                    5,
                                     TimeUnit.SECONDS);
                         });
     }
