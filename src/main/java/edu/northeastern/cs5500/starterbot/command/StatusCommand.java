@@ -45,13 +45,6 @@ public class StatusCommand implements SlashCommandHandler {
 
         String trainerDiscordId = event.getMember().getId();
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Your Stats");
-        embedBuilder.addField(
-                "💡hint: use `/pokemon` to view your pokemon inventory!",
-                trainerController.buildTrainerStats(trainerDiscordId),
-                false);
-
-        event.replyEmbeds(embedBuilder.build()).queue();
+        event.reply(trainerController.buildTrainerStats(trainerDiscordId)).queue();
     }
 }
