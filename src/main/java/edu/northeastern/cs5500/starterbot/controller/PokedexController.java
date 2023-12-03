@@ -39,7 +39,8 @@ public class PokedexController {
         builder.pokedexNumber(data.getNumber());
         builder.name(data.getSpeciesNames().get("en"));
         builder.imageUrl(data.getSpriteURL());
-        builder.speciesTypes(data.getTypes());
+        String[] types = PokemonType.buildTypesWithEmoji(data.getTypes());
+        builder.speciesTypes(types);
         builder.types(
                 PokemonType.getSingleTypeArray(
                         PokemonType.NORMAL)); // TODO placeholder leftover from demo code
