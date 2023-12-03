@@ -94,10 +94,6 @@ public class Pokemon implements Model {
         return hasLeveledUP;
     }
 
-    public boolean canLevelUpWithAddedXP(int addedXP) {
-        return this.exPoints + addedXP >= LEVEL_UP_THRESHOLD;
-    }
-
     /**
      * Represents the ratio of the current HP to the maximum HP as a bar string.
      *

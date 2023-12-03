@@ -53,14 +53,6 @@ class PokemonTest {
     }
 
     @Test
-    void testCanLevelUpWithAddedXP() {
-        assertThat(bulbasaur.canLevelUpWithAddedXP(89)).isFalse();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(90)).isTrue();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(91)).isTrue();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(190)).isTrue();
-    }
-
-    @Test
     void testGetRelStrength1() { // Same species
         assertThat(Pokemon.getRelStrength(bulbasaur, bulbasaur)).isEqualTo(1.0);
     }
