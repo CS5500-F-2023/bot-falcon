@@ -16,13 +16,13 @@ public class Pokemon implements Model {
     private static final Integer DEFAULT_XP = 10;
     private static final Integer LEVEL_UP_THRESHOLD = 100;
 
-    // Weights for calculating Pokemon's strengths
-    private static final double LEVEL_WEIGHT = 1.5;
-    private static final double HP_WEIGHT = 2.0;
-    private static final double ATTACK_DEFENSE_WEIGHT = 1.5;
-    private static final double SPECIAL_WEIGHT = 1.5;
-    private static final double SPEED_WEIGHT = 2.0;
+    // Battle realted
+    private static final double LEVEL_ADDON = 2.0;
+    private static final double ATTACK_MULTIPLIER = 1.2;
+    private static final double DEFENSE_MULTIPLIER = 0.8;
+    private static final int FLOOR_DAMAGE = 8;
 
+    // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
 
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
@@ -46,26 +46,32 @@ public class Pokemon implements Model {
      *
      * @param trPokemon The player's Pokémon
      * @param npcPokemon The NPC's Pokémon
-     * @return The ratio of the player's Pokémon strength to the NPC's Pokémon strength
+     * @return a double > 1.0 if the Trainer Pokémon is stronger than the NPC's Pokémon strength,
+     *     and a double < 1.0 if the Trainer Pokémon is weaker than the NPC's Pokémon strength
      */
     public static double getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
-        double trStrength = getStrength(trPokemon);
-        double npcStrength = getStrength(npcPokemon);
-        return Math.round(100.0 * trStrength / npcStrength) / 100.0;
+        double roundsForTrToWin = calculateRounds(trPokemon, npcPokemon);
+        double roundsForNpcToWin = calculateRounds(npcPokemon, trPokemon);
+        return Math.round(roundsForNpcToWin / roundsForTrToWin * 100.0) / 100.0;
     }
 
-    /**
-     * Helper function to get a Pokemon's strength
-     *
-     * @param pokemon
-     * @return
-     */
-    private static double getStrength(Pokemon pokemon) {
-        return LEVEL_WEIGHT * pokemon.level
-                + HP_WEIGHT * pokemon.hp
-                + ATTACK_DEFENSE_WEIGHT * (pokemon.attack + pokemon.defense)
-                + SPECIAL_WEIGHT * (pokemon.specialAttack + pokemon.specialDefense)
-                + SPEED_WEIGHT * pokemon.speed;
+    /** Helper function to determine num of rounds for the attacker to knock down the defender. */
+    private static double calculateRounds(Pokemon attacker, Pokemon defender) {
+        double physicalDamage = getBaseDamage(attacker, defender, true);
+        double specialDamage = getBaseDamage(attacker, defender, false);
+        double rounds = defender.getHp() / ((physicalDamage + specialDamage) / 2.0);
+        return Math.round(rounds * 100.0) / 100.0;
+    }
+
+    /** Helper function calculating the base damage depending on base damage. */
+    public static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean physical) {
+        double attack = (double) (physical ? attacker.getAttack() : attacker.getSpecialAttack());
+        attack += LEVEL_ADDON * (attacker.getLevel() - DEFAULT_LEVEL);
+        attack *= ATTACK_MULTIPLIER;
+        double defense = (double) (physical ? defender.getDefense() : defender.getSpecialDefense());
+        defense += LEVEL_ADDON * (defender.getLevel() - DEFAULT_LEVEL);
+        defense *= DEFENSE_MULTIPLIER;
+        return (attack - defense < FLOOR_DAMAGE) ? FLOOR_DAMAGE : (int) (attack - defense);
     }
 
     /**

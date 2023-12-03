@@ -15,14 +15,9 @@ public class NPCBattle {
 
     private static final int COST_PER_BATTLE = 5;
 
-    private static final int DAMAGE_FLOOR = 8;
-    private static final int BASE_LEVEL = 5;
-    private static final int FIXED_WIDTH = 30;
-    private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double EFFECTIVE_THRESHOLD = 1.0;
-    private static final double ATTACK_MULTIPLIER = 1.2;
-    private static final double DEFENSE_MULTIPLIER = 0.7;
 
+    private static final int FIXED_WIDTH = 30;
     private static final String BOARD_LINE = "----------------------------\n";
 
     private static final Integer BASE_COINS_FOR_WINNER = 20;
@@ -84,7 +79,7 @@ public class NPCBattle {
             boolean physical = new Random().nextBoolean();
 
             // Calculate damage and update HP
-            int damage = getBaseDamage(attackPokemon, defensePokemon, physical);
+            int damage = Pokemon.getBaseDamage(attackPokemon, defensePokemon, physical);
             double multiplier = PokemonType.getMoveMultiplier(aType, dType);
             damage = (int) (damage * multiplier);
             damage += new Random().nextInt(5) - 3; // Random factor
@@ -124,17 +119,6 @@ public class NPCBattle {
     private Pokemon getFirstAttacker() {
         if (new Random().nextBoolean()) return trPokemon;
         else return npcPokemon;
-    }
-
-    /** Helper function calculating the base damage depending on base damage. */
-    protected static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean isPhysicalMove) {
-        double attack = isPhysicalMove ? attacker.getAttack() : attacker.getSpecialAttack();
-        attack *= 1.0 + LEVEL_MULTIPLIER_BASE * (attacker.getLevel() - BASE_LEVEL);
-        attack *= ATTACK_MULTIPLIER;
-        double defense = isPhysicalMove ? defender.getDefense() : defender.getSpecialDefense();
-        defense *= 1.0 + LEVEL_MULTIPLIER_BASE * (defender.getLevel() - BASE_LEVEL);
-        defense *= DEFENSE_MULTIPLIER; // so that attack is generally more effective
-        return (attack - defense < DAMAGE_FLOOR) ? DAMAGE_FLOOR : (int) (attack - defense);
     }
 
     /** Helper function to calculate and update the coins earned after the battle ends. */
