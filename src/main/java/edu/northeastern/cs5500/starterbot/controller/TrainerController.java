@@ -113,7 +113,10 @@ public class TrainerController {
         statsBuilder.append("📊 Your Stats 📊\n");
         statsBuilder.append(BOARD_LINE);
         statsBuilder.append("   Balance         💰 : ").append(trainer.getBalance()).append("\n");
-        statsBuilder.append("   Pokemon Numbers 🎒 : ").append(trainer.getPokemonInventory().size()).append("\n");
+        statsBuilder
+                .append("   Pokemon Numbers 🎒 : ")
+                .append(trainer.getPokemonInventory().size())
+                .append("\n");
         statsBuilder.append("\n🍇 Your Berry Inventory 🍇\n");
         statsBuilder.append(BOARD_LINE);
         statsBuilder.append(foodDetail).append("\n");
@@ -125,7 +128,8 @@ public class TrainerController {
             statsBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
         }
         if (trainer.getBalance() <= MIN_BALANCE) {
-            statsBuilder.append("💵 Boost your balance by claiming your daily rewards with /daily!\n");
+            statsBuilder.append(
+                    "💵 Boost your balance by claiming your daily rewards with /daily!\n");
         }
         if (food.containsValue(0)) {
             statsBuilder.append("😋 Refill your berry stock at the shop using /shop!");
@@ -143,11 +147,13 @@ public class TrainerController {
     protected String buildTrainerBerryStockDetail(Map<FoodType, Integer> food) {
         StringBuilder foodBuilder = new StringBuilder();
         for (Map.Entry<FoodType, Integer> entry : food.entrySet()) {
-            foodBuilder.append(String.format("   %-15s %s : %d\n", entry.getKey().getName(), entry.getKey().getEmoji(), entry.getValue()));
+            foodBuilder.append(
+                    String.format(
+                            "   %-15s %s : %d\n",
+                            entry.getKey().getName(), entry.getKey().getEmoji(), entry.getValue()));
         }
         return foodBuilder.toString();
     }
-
 
     /**
      * Retrieves the Pokemon inventory of a trainer identified by their Discord member ID.

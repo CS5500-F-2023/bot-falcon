@@ -114,6 +114,6 @@ class TrainerControllerTest {
         example.put(FoodType.MYSTERYBERRY, 0);
         example.put(FoodType.BERRY, 0);
         example.put(FoodType.GOLDBERRY, 0);
-        //System.out.println(trainerController.buildTrainerBerryStockDetail(example));
+        // System.out.println(trainerController.buildTrainerBerryStockDetail(example));
     }
 }
