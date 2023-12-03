@@ -106,4 +106,14 @@ class TrainerControllerTest {
                 expectedInventory,
                 trainerController.getTrainerFoodInventory(trainer.getDiscordUserId()));
     }
+
+    @Test
+    void testBuildFoodDetial() {
+        TrainerController trainerController = getTrainerController();
+        Map<FoodType, Integer> example = new HashMap<>();
+        example.put(FoodType.MYSTERYBERRY, 0);
+        example.put(FoodType.BERRY, 0);
+        example.put(FoodType.GOLDBERRY, 0);
+        //System.out.println(trainerController.buildTrainerBerryStockDetail(example));
+    }
 }
