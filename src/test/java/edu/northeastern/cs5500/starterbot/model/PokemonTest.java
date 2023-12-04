@@ -67,10 +67,4 @@ class PokemonTest {
         str = "░".repeat(15);
         assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
     }
-
-    @Test
-    void getBaseDamage() {
-        bulbasaur.setLevel(7);
-        charmander.setLevel(6);
-    }
 }

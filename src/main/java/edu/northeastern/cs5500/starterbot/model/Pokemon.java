@@ -20,8 +20,8 @@ public class Pokemon implements Model {
     private static final int LEVEL_ADDON = 3;
     private static final double ATTACK_MULTIPLIER = 1.2;
     private static final double DEFENSE_MULTIPLIER = 0.8;
-    private static final int DAMAGE_FLOOR = 8;
-    private static final int DAMAGE_CAP = 22;
+    private static final int DAMAGE_FLOOR = 7;
+    // private static final int DAMAGE_CAP = 30;
 
     // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
@@ -70,7 +70,7 @@ public class Pokemon implements Model {
         double attack = (double) (physical ? attacker.getAttack() : attacker.getSpecialAttack());
         double defense = (double) (physical ? defender.getDefense() : defender.getSpecialDefense());
         double damage = attack * ATTACK_MULTIPLIER - defense * DEFENSE_MULTIPLIER;
-        return (int) Math.max(Math.min(damage, DAMAGE_CAP), DAMAGE_FLOOR);
+        return (int) Math.max(damage, DAMAGE_FLOOR);
     }
 
     /**
