@@ -66,7 +66,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                         "It costs 5 coins to catch %s. What will you do?", species.getName()));
         embedBuilder.addField(
                 String.format("----\n🔎 Learn more about %s!\n----", species.getName()),
-                String.format("```%s\n%s\n```", pokemonSpeciesDetail, pokemonDetails),
+                String.format("```%s%s```", pokemonSpeciesDetail, pokemonDetails),
                 false);
         embedBuilder.setThumbnail(species.getImageUrl());
 

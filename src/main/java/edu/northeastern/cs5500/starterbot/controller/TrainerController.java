@@ -6,6 +6,7 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
@@ -26,6 +27,10 @@ public class TrainerController {
     static final Integer MIN_FOOD_AMOUNT_REQUIRED = 1;
     private static final String BOARD_LINE = "----------------------------\n";
     private static final Integer MIN_BALANCE = 10;
+
+    private static final Integer POKEMON_THRESHOLD = 10;
+    private static final Integer POKEMON_PER_ROW_TWO = 2;
+    private static final Integer POKEMON_PER_ROW_THREE = 3;
 
     GenericRepository<Trainer> trainerRepository;
 
@@ -171,6 +176,54 @@ public class TrainerController {
             pokemonInventory.add(pokemon);
         }
         return pokemonInventory;
+    }
+
+    /**
+     * Builds a detailed inventory of Pokemon string.
+     *
+     * @param pokemonInventory the list of Pokemon in the inventory
+     * @return the formatted string representation of the Pokemon inventory
+     */
+    public String buildPokemonInventoryDetail(List<Pokemon> pokemonInventory) {
+        StringBuilder pokemonInventoryBuilder = new StringBuilder();
+
+        if (pokemonInventory.isEmpty()) {
+            pokemonInventoryBuilder.append("Oops....no Pokemon Found.\n\n");
+            pokemonInventoryBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
+        } else {
+            pokemonInventoryBuilder.append("🎒 Your Pokemon Inventory 🎒\n\n");
+            int pokemonPerRow =
+                    (pokemonInventory.size() <= POKEMON_THRESHOLD)
+                            ? POKEMON_PER_ROW_TWO
+                            : POKEMON_PER_ROW_THREE;
+
+            /** find max length pokemon name */
+            int maxTextWidth = 0;
+            for (int i = 0; i < pokemonInventory.size(); i++) {
+                Pokemon pokemon = pokemonInventory.get(i);
+                PokemonSpecies species =
+                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                maxTextWidth = Math.max(maxTextWidth, pokemonText.length());
+            }
+            /** build single pokemon name string */
+            for (int i = 0; i < pokemonInventory.size(); i++) {
+                Pokemon pokemon = pokemonInventory.get(i);
+                PokemonSpecies species =
+                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                pokemonInventoryBuilder.append(
+                        String.format("%-" + maxTextWidth + "s", pokemonText));
+
+                if ((i + 1) % pokemonPerRow == 0 || i == pokemonInventory.size() - 1) {
+                    pokemonInventoryBuilder.append("\n");
+                }
+            }
+            pokemonInventoryBuilder.append("\n🔍 Learn more about your Pokemon with /my!");
+        }
+        return "```" + pokemonInventoryBuilder.toString() + "```";
     }
 
     /**

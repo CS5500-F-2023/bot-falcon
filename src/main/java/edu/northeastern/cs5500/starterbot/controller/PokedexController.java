@@ -56,8 +56,9 @@ public class PokedexController {
     public String buildSpeciesDetails(int listIndex) {
         PokemonSpecies species = this.getPokemonSpeciesByPokedex(listIndex);
         String typeString = String.join(", ", species.getSpeciesTypes());
-        return String.format(
-                "Species: %s\nTypes: %s\nPokedex: %d\n",
-                species.getName(), typeString, species.getPokedexNumber());
+        StringBuilder speciesDetailBuilder = new StringBuilder();
+        speciesDetailBuilder.append("Species       : 🐾 ").append(species.getName()).append("\n");
+        speciesDetailBuilder.append("Types         : ").append(typeString).append("\n");
+        return speciesDetailBuilder.toString();
     }
 }
