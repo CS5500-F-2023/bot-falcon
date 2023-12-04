@@ -25,6 +25,7 @@ public class Pokemon implements Model {
 
     // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
+    private static final Integer TOTAL_XP_BARS = 15;
 
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
@@ -126,5 +127,18 @@ public class Pokemon implements Model {
     public String generateHealthBar() {
         int filledBars = (int) Math.ceil(TOTAL_HEALTH_BARS * (this.currentHp * 1.0 / this.hp));
         return "█".repeat(filledBars) + "░".repeat(TOTAL_HEALTH_BARS - filledBars);
+    }
+
+    /**
+     * Generates a progress bar for the experience points (XP) of a Pokemon.
+     *
+     * @return a string representing the XP progress bar
+     */
+    public String generateXpProgressBar() {
+        double progressPercentage = (exPoints * 1.0 / LEVEL_UP_THRESHOLD) * 100.0;
+
+        int filledBars = (int) Math.ceil(TOTAL_XP_BARS * (progressPercentage / 100.0));
+        // TODO (hy) check if it's match to progress bar in feed
+        return "█".repeat(filledBars) + "░".repeat(TOTAL_XP_BARS - filledBars);
     }
 }

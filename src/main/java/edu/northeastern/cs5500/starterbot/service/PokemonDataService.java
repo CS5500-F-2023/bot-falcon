@@ -24,7 +24,7 @@ public class PokemonDataService {
     }
 
     /** For testing purpose */
-    protected PokemonDataService(String path) {
+    public PokemonDataService(String path) {
         loadPokemonDataWithPath(path);
     }
 

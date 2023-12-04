@@ -2,10 +2,8 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
-import java.util.List;
 import org.junit.Test;
 
 public class PokedexControllerTest {
@@ -19,8 +17,6 @@ public class PokedexControllerTest {
     @Test
     public void testGetPokemonSpeciesByPokedex() {
         PokedexController pokedexController = getPokedexController();
-        List<PokemonData> pokemonDataList =
-                pokedexController.pokemonDataService.getPokemonDataList();
         PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByPokedex(0);
         assertThat(bulbasaur.getPokedexNumber()).isEqualTo(1);
     }
@@ -29,9 +25,17 @@ public class PokedexControllerTest {
     public void testBuildSpeciesDetails() {
         PokedexController pokedexController = getPokedexController();
         String bulbasaurDetail = pokedexController.buildSpeciesDetails(0);
-        String typeString = "grass, poison";
+        String typeString = "🌿 Grass, ☠️ Poison";
         String expected =
                 String.format("Species: %s\nTypes: %s\nPokedex: %d\n", "Bulbasaur", typeString, 1);
         assertThat(bulbasaurDetail).isEqualTo(expected);
+    }
+
+    @Test
+    public void testSpeciesTypesWithEmoji() {
+        PokedexController pokedexController = getPokedexController();
+        PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByPokedex(0);
+        String[] expected = {"🌿 Grass", "☠️ Poison"};
+        assertThat(bulbasaur.getSpeciesTypes()).isEqualTo(expected);
     }
 }

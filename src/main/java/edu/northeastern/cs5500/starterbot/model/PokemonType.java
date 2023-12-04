@@ -3,6 +3,9 @@ package edu.northeastern.cs5500.starterbot.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 public enum PokemonType {
@@ -69,6 +72,10 @@ public enum PokemonType {
         return this.emoji;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     // TODO: zqy: to delete, leave it for now just in case
     public static PokemonType[] getSingleTypeArray(PokemonType type) {
         PokemonType[] types = new PokemonType[1];
@@ -95,5 +102,34 @@ public enum PokemonType {
         else if (attackAdvantage) return HAVE_TYPE_ADVANTAGE;
         else if (defenseAdvantage) return HAVE_TYPE_DISADVANTAGE;
         else return NO_TYPE_ADVANTAGE;
+    }
+
+    /** Map for build type with emoji from json */
+    private static final Map<String, PokemonType> typeNameMap = new HashMap<>();
+
+    static {
+        for (PokemonType type : values()) {
+            typeNameMap.put(type.getName().toLowerCase(), type);
+        }
+    }
+
+    /** Helper function to get PokemonType base on type name */
+    private static PokemonType fromTypeName(String typeName) {
+        return typeNameMap.get(typeName.toLowerCase());
+    }
+
+    /**
+     * @param resource
+     * @return
+     */
+    public static String[] buildTypesWithEmoji(String[] resource) {
+        List<String> result = new ArrayList<>();
+        for (String s : resource) {
+            PokemonType t = PokemonType.fromTypeName(s);
+            if (t != null) {
+                result.add(t.getEmoji() + " " + t.getName());
+            }
+        }
+        return result.toArray(new String[0]);
     }
 }

@@ -22,4 +22,37 @@ public class PokemonControllerTest {
         Pokemon p = pokemonController.spawnRandonPokemon();
         assertThat(p).isNotNull();
     }
+
+    @Test
+    public void mockPokemonDetailString() {
+        String attack =
+                String.format("%s             : 🛡️ Phys. %-3d | 🔮 Sp. %-3d\n", "Attack", 10, 11);
+        String defense =
+                String.format("%s            : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n", "Defense", 10, 11);
+        // Attack             : 🛡️ Phys. 10  | 🔮 Sp. 11
+        // Defense            : 🛡️ Phys. 10  | 🛡️ Sp. 11
+        // System.out.println(attack + defense);
+    }
+
+    @Test
+    public void mockPokemonDetailString2() {
+        String attack =
+                String.format("%s             : 🛡️ Phys. %-3d | 🔮 Sp. %-3d\n", "Attack", 1, 11);
+        String defense =
+                String.format("%s            : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n", "Defense", 10, 11);
+        // Attack             : 🛡️ Phys. 1   | 🔮 Sp. 11
+        // Defense            : 🛡️ Phys. 10  | 🛡️ Sp. 11
+        // System.out.println(attack + defense);
+    }
+
+    @Test
+    public void mockPokemonDetailString3() {
+        String attack =
+                String.format("%s             : 🛡️ Phys. %-3d | 🔮 Sp. %-3d\n", "Attack", 111, 11);
+        String defense =
+                String.format("%s            : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n", "Defense", 10, 11);
+        // Attack             : 🛡️ Phys. 111  | 🔮 Sp. 11
+        // Defense            : 🛡️ Phys. 10   | 🛡️ Sp. 11
+        // System.out.println(attack + defense);
+    }
 }

@@ -39,7 +39,8 @@ public class PokedexController {
         builder.pokedexNumber(data.getNumber());
         builder.name(data.getSpeciesNames().get("en"));
         builder.imageUrl(data.getSpriteURL());
-        builder.speciesTypes(data.getTypes());
+        String[] types = PokemonType.buildTypesWithEmoji(data.getTypes());
+        builder.speciesTypes(types);
         builder.types(
                 PokemonType.getSingleTypeArray(
                         PokemonType.NORMAL)); // TODO placeholder leftover from demo code
@@ -55,8 +56,9 @@ public class PokedexController {
     public String buildSpeciesDetails(int listIndex) {
         PokemonSpecies species = this.getPokemonSpeciesByPokedex(listIndex);
         String typeString = String.join(", ", species.getSpeciesTypes());
-        return String.format(
-                "Species: %s\nTypes: %s\nPokedex: %d\n",
-                species.getName(), typeString, species.getPokedexNumber());
+        StringBuilder speciesDetailBuilder = new StringBuilder();
+        speciesDetailBuilder.append("Species       : 🐾 ").append(species.getName()).append("\n");
+        speciesDetailBuilder.append("Types         : ").append(typeString).append("\n");
+        return speciesDetailBuilder.toString();
     }
 }

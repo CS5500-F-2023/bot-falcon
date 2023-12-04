@@ -33,4 +33,12 @@ class PokemonTypeTest {
         double moveMultiplier = PokemonType.getMoveMultiplier(attackType, defenseType);
         assertThat(moveMultiplier).isEqualTo(HAVE_TYPE_DISADVANTAGE);
     }
+
+    @Test
+    void testBuildTypesWithEmoji() {
+        String[] resource = {"water", "electric"};
+        String[] expected = {"💧 Water", "⚡ Electric"};
+        String[] res = PokemonType.buildTypesWithEmoji(resource);
+        assertThat(res).isEqualTo(expected);
+    }
 }

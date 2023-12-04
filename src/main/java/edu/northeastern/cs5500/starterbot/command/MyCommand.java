@@ -58,13 +58,11 @@ public class MyCommand implements SlashCommandHandler {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
 
-            String pokeProfile = buildPokemonProfile(trainerDiscordId, pokemon);
+            String pokeProfile =
+                    buildPokemonProfile(trainerDiscordId, pokemon, pokemonInventoryIndex);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
-            embedBuilder.addField(
-                    "Your Pokemon Detail\n💡hint: use `/feed` command to feed your pokemon!",
-                    pokeProfile,
-                    false);
+            embedBuilder.addField("Your Pokemon Detail\n", pokeProfile, false);
             event.replyEmbeds(embedBuilder.build()).queue();
 
         } catch (InvalidInventoryIndexException e) {
@@ -79,11 +77,29 @@ public class MyCommand implements SlashCommandHandler {
      * @param pokemon the pokemon
      * @return the pokemon profile
      */
-    private String buildPokemonProfile(String trainerDiscordId, Pokemon pokemon) {
+    private String buildPokemonProfile(
+            String trainerDiscordId, Pokemon pokemon, Integer inventoryIndex) {
         String pokemonIdString = pokemon.getId().toString();
         String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
         String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
+        String BOARD_LINE = "\n----------------------------\n";
 
-        return String.format("```%s\n%s```", speciesDetails, pokemonDetails);
+        StringBuilder profileBuilder = new StringBuilder();
+        profileBuilder
+                .append(speciesDetails)
+                .append("\n")
+                .append("🌠 Pokemon Stats 🌠")
+                .append(BOARD_LINE)
+                .append(String.format("Inventory No. : 🔢 %d\n", inventoryIndex))
+                .append(pokemonDetails)
+                .append("\n")
+                .append("📈 Pokemon XP Progress 📈")
+                .append(BOARD_LINE)
+                .append("XP            : ")
+                .append(pokemon.generateXpProgressBar())
+                .append(String.format(" %d/%d", pokemon.getExPoints(), pokemon.LEVEL_UP_THRESHOLD))
+                .append("\n\n🥣 Give your pokemon a boost using /feed with inventory number!");
+
+        return "```" + profileBuilder.toString() + "```";
     }
 }

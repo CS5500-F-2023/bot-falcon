@@ -122,21 +122,34 @@ public class PokemonController {
      *
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
+     *     <p>Sample: Level 🌟 : 5 XP 📊 : 10 Hp ❤️ : 65 Attack ⚔️ : 80 Defense 🛡️ : 140 Special
+     *     Attack 🔥 : 40 Special Defense 🛡️ : 70 Speed 🏃‍♂️ : 70
      */
     public String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats
-        return String.format(
-                "Level: %d\nXP: %d\nHp: %d\nAttack: %d\nDefense: %d\nSpecial Attack: %d\nSpecial Defense: %d\nSpeed: %d",
-                pokemon.getLevel(),
-                pokemon.getExPoints(),
-                pokemon.getHp(),
-                pokemon.getAttack(),
-                pokemon.getDefense(),
-                pokemon.getSpecialAttack(),
-                pokemon.getSpecialDefense(),
-                pokemon.getSpeed());
+        StringBuilder pokemonStatsBuilder = new StringBuilder();
+        pokemonStatsBuilder.append("Level         : 🌟 ").append(pokemon.getLevel()).append("\n");
+        pokemonStatsBuilder
+                .append("XP            : 📊 ")
+                .append(pokemon.getExPoints())
+                .append("\n");
+        pokemonStatsBuilder.append("Hp            : ❤️ ").append(pokemon.getHp()).append("\n");
+        pokemonStatsBuilder
+                .append("Speed         : 🏃‍♂️ ")
+                .append(pokemon.getSpeed())
+                .append("\n");
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s        : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s       : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
+                        "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
+
+        return pokemonStatsBuilder.toString();
     }
 
     /**
