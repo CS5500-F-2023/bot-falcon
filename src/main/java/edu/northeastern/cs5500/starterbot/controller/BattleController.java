@@ -49,9 +49,31 @@ public class BattleController {
 
     public void runBattle(NPCBattle battle) {
         battle.runBattle();
+        // the pokemon's level should be updated in runBattle()
+        Pokemon trPokemon = battle.getTrPokemon();
 
-        // Update trianer and pokemon in the database
-        trainerController.trainerRepository.update(battle.getTrainer());
-        pokemonController.pokemonRepository.update(battle.getTrPokemon());
+        // check if pokemon's level meet evolution criteria and is evolved
+        if (trPokemon.canEvolve()
+                && pokemonController.evolvePokemon(trPokemon.getId().toString())) {
+            trainerController.trainerRepository.update(battle.getTrainer());
+        } else {
+            // Update trianer and pokemon in the database
+            trainerController.trainerRepository.update(battle.getTrainer());
+            pokemonController.pokemonRepository.update(battle.getTrPokemon());
+        }
+    }
+
+    // TODO test if evolution work first, then decide where to insert this msg with @z-q-ying
+    // maybe need to add somewhere in NPCBattle class, but not sure how to avoid break the current
+    // string build methods
+    public String buildEvolveMessage(String trPokemonIdStr) {
+        // when this method is called the pokemon should already be updated
+        Pokemon trPokemon = pokemonController.getPokemonById(trPokemonIdStr);
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByREALPokedex(trPokemon.getPokedexNumber());
+
+        return String.format(
+                "Your %s evolved into %s!\n%s was added to your inventory.",
+                trPokemon.getEvolvedFrom(), species.getName(), species.getName());
     }
 }

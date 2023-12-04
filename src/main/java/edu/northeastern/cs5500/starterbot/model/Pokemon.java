@@ -42,6 +42,9 @@ public class Pokemon implements Model {
     @Nonnull Integer specialDefense; // spDefense
     @Nonnull Integer speed;
 
+    @Builder.Default boolean isEvolved = false;
+    @Builder.Default String evolvedFrom = "placeeholder";
+
     /**
      * Calculates the relative strength of two Pokémon.
      *
@@ -97,6 +100,16 @@ public class Pokemon implements Model {
 
     public boolean canLevelUpWithAddedXP(int addedXP) {
         return this.exPoints + addedXP >= LEVEL_UP_THRESHOLD;
+    }
+
+    /**
+     * Checks if the Pokemon can evolve based on its level. e.g. 5, 10, 15 will evoke evolution,
+     * depending on the length of evolution chain
+     *
+     * @return true if the Pokemon can evolve, false otherwise
+     */
+    public boolean canEvolve() {
+        return this.level % 5 == 0;
     }
 
     /**

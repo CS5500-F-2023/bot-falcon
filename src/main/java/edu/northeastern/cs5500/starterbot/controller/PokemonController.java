@@ -2,10 +2,12 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
-import edu.northeastern.cs5500.starterbot.model.Pokemon.PokemonBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
+import edu.northeastern.cs5500.starterbot.model.PokemonEvolution;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
+import edu.northeastern.cs5500.starterbot.service.PokemonEvolutionService;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -21,7 +23,13 @@ public class PokemonController {
 
     @Inject PokemonDataService pokemonDataService;
 
+    @Inject PokedexController pokedexController;
+
+    @Inject PokemonEvolutionService pokemonEvolutionService;
+
     List<PokemonData> pokemonDataList;
+
+    List<PokemonEvolution> pokemonEvolutionList;
 
     @Inject
     PokemonController(
@@ -38,19 +46,10 @@ public class PokemonController {
      */
     @Nonnull
     Pokemon spawnPokemon(int listIndex) {
-        PokemonBuilder builder = Pokemon.builder();
         PokemonData data = this.pokemonDataList.get(listIndex);
 
-        builder.pokedexNumber(data.getNumber());
-        builder.currentHp(data.getHp());
-        builder.hp(data.getHp());
-        builder.attack(data.getAttack());
-        builder.defense(data.getDefense());
-        builder.specialAttack(data.getSpAttack());
-        builder.specialDefense(data.getSpDefense());
-        builder.speed(data.getSpeed());
-        return Objects.requireNonNull(
-                pokemonRepository.add(Objects.requireNonNull(builder.build())));
+        Pokemon pokemon = buildPokemon(data);
+        return Objects.requireNonNull(pokemonRepository.add(Objects.requireNonNull(pokemon)));
     }
 
     /**
@@ -108,31 +107,23 @@ public class PokemonController {
      *
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
-     *     <p>Sample: Level 🌟 : 5 XP 📊 : 10 Hp ❤️ : 65 Attack ⚔️ : 80 Defense 🛡️ : 140 Special
-     *     Attack 🔥 : 40 Special Defense 🛡️ : 70 Speed 🏃‍♂️ : 70
      */
     public String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats
         StringBuilder pokemonStatsBuilder = new StringBuilder();
-        pokemonStatsBuilder.append("Level         : 🌟 ").append(pokemon.getLevel()).append("\n");
-        pokemonStatsBuilder
-                .append("XP            : 📊 ")
-                .append(pokemon.getExPoints())
-                .append("\n");
-        pokemonStatsBuilder.append("Hp            : ❤️ ").append(pokemon.getHp()).append("\n");
-        pokemonStatsBuilder
-                .append("Speed         : 🏃‍♂️ ")
-                .append(pokemon.getSpeed())
-                .append("\n");
+        pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
+        pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
+        pokemonStatsBuilder.append("Hp      : ❤️ ").append(pokemon.getHp()).append("\n");
+        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s        : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "%s  : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
                         "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s       : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
+                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
                         "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
 
         return pokemonStatsBuilder.toString();
@@ -154,5 +145,83 @@ public class PokemonController {
 
     public void increasePokemonExpByFood(String pokemonIdStr, FoodType food) {
         increasePokemonExp(pokemonIdStr, food.getExp());
+    }
+
+    /**
+     * Evolves a Pokemon based on its ID.
+     *
+     * @param pokemonIdString the ID of the Pokemon to evolve
+     * @return true if the Pokemon was successfully evolved, false otherwise
+     */
+    public boolean evolvePokemon(String pokemonIdString) {
+        Pokemon pokemon = getPokemonById(pokemonIdString);
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+        for (PokemonEvolution pe : pokemonEvolutionList) {
+            if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
+                return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
+            }
+        }
+        return false; // not evolved
+    }
+
+    /** for testing purpose */
+    protected boolean evolvePokemon(String pokemonIdString, PokedexController pokedexController) {
+        Pokemon pokemon = getPokemonById(pokemonIdString);
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+        for (PokemonEvolution pe : pokemonEvolutionList) {
+            if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
+                return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
+            }
+        }
+        return false; // not evolved
+    }
+
+    /**
+     * Evolves a Pokemon by its name. Update pokemon stats except level
+     *
+     * @param pokemonName the name of the Pokemon to evolve
+     * @return true if the Pokemon was successfully evolved, false otherwise
+     */
+    private boolean evolvePokemonByName(
+            String evolutionFrom, String evolutionTo, Pokemon currPokemon) {
+        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
+        for (PokemonData data : pokemonDataList) {
+            if (data.getSpeciesNames().get("en").equals(evolutionTo)) {
+                currPokemon.setPokedexNumber(data.getNumber());
+                currPokemon.setCurrentHp(data.getHp());
+                currPokemon.setHp(data.getHp());
+                currPokemon.setAttack(data.getAttack());
+                currPokemon.setDefense(data.getDefense());
+                currPokemon.setSpecialAttack(data.getSpAttack());
+                currPokemon.setSpecialDefense(data.getSpDefense());
+                currPokemon.setSpeed(data.getSpeed());
+                currPokemon.setEvolvedFrom(evolutionFrom);
+                currPokemon.setEvolved(true);
+                Objects.requireNonNull(pokemonRepository.update(currPokemon));
+                return true;
+            }
+        }
+        return false; // not evolved
+    }
+
+    /**
+     * Builds a Pokemon object based on the provided PokemonData.
+     *
+     * @param data The PokemonData object containing the data for the Pokemon.
+     * @return The built Pokemon object.
+     */
+    protected Pokemon buildPokemon(PokemonData data) {
+        return Pokemon.builder()
+                .pokedexNumber(data.getNumber())
+                .currentHp(data.getHp())
+                .hp(data.getHp())
+                .attack(data.getAttack())
+                .defense(data.getDefense())
+                .specialAttack(data.getSpAttack())
+                .specialDefense(data.getSpDefense())
+                .speed(data.getSpeed())
+                .build();
     }
 }

@@ -1,0 +1,1494 @@
+[
+    {
+        "evolutionFrom": "Bulbasaur",
+        "evolutionTo": "Ivysaur"
+    },
+    {
+        "evolutionFrom": "Ivysaur",
+        "evolutionTo": "Venusaur"
+    },
+    {
+        "evolutionFrom": "Charmander",
+        "evolutionTo": "Charmeleon"
+    },
+    {
+        "evolutionFrom": "Charmeleon",
+        "evolutionTo": "Charizard"
+    },
+    {
+        "evolutionFrom": "Squirtle",
+        "evolutionTo": "Wartortle"
+    },
+    {
+        "evolutionFrom": "Wartortle",
+        "evolutionTo": "Blastoise"
+    },
+    {
+        "evolutionFrom": "Caterpie",
+        "evolutionTo": "Metapod"
+    },
+    {
+        "evolutionFrom": "Metapod",
+        "evolutionTo": "Butterfree"
+    },
+    {
+        "evolutionFrom": "Weedle",
+        "evolutionTo": "Kakuna"
+    },
+    {
+        "evolutionFrom": "Kakuna",
+        "evolutionTo": "Beedrill"
+    },
+    {
+        "evolutionFrom": "Pidgey",
+        "evolutionTo": "Pidgeotto"
+    },
+    {
+        "evolutionFrom": "Pidgeotto",
+        "evolutionTo": "Pidgeot"
+    },
+    {
+        "evolutionFrom": "Rattata",
+        "evolutionTo": "Raticate"
+    },
+    {
+        "evolutionFrom": "Rattata\n Alolan Rattata",
+        "evolutionTo": "Raticate\n Alolan Raticate"
+    },
+    {
+        "evolutionFrom": "Spearow",
+        "evolutionTo": "Fearow"
+    },
+    {
+        "evolutionFrom": "Ekans",
+        "evolutionTo": "Arbok"
+    },
+    {
+        "evolutionFrom": "Sandshrew",
+        "evolutionTo": "Sandslash"
+    },
+    {
+        "evolutionFrom": "Nidoran♀",
+        "evolutionTo": "Nidorina"
+    },
+    {
+        "evolutionFrom": "Nidoran♂",
+        "evolutionTo": "Nidorino"
+    },
+    {
+        "evolutionFrom": "Zubat",
+        "evolutionTo": "Golbat"
+    },
+    {
+        "evolutionFrom": "Oddish",
+        "evolutionTo": "Gloom"
+    },
+    {
+        "evolutionFrom": "Paras",
+        "evolutionTo": "Parasect"
+    },
+    {
+        "evolutionFrom": "Venonat",
+        "evolutionTo": "Venomoth"
+    },
+    {
+        "evolutionFrom": "Diglett",
+        "evolutionTo": "Dugtrio"
+    },
+    {
+        "evolutionFrom": "Diglett\n Alolan Diglett",
+        "evolutionTo": "Dugtrio\n Alolan Dugtrio"
+    },
+    {
+        "evolutionFrom": "Meowth",
+        "evolutionTo": "Persian"
+    },
+    {
+        "evolutionFrom": "Meowth\n Galarian Meowth",
+        "evolutionTo": "Perrserker"
+    },
+    {
+        "evolutionFrom": "Psyduck",
+        "evolutionTo": "Golduck"
+    },
+    {
+        "evolutionFrom": "Mankey",
+        "evolutionTo": "Primeape"
+    },
+    {
+        "evolutionFrom": "Poliwag",
+        "evolutionTo": "Poliwhirl"
+    },
+    {
+        "evolutionFrom": "Abra",
+        "evolutionTo": "Kadabra"
+    },
+    {
+        "evolutionFrom": "Machop",
+        "evolutionTo": "Machoke"
+    },
+    {
+        "evolutionFrom": "Bellsprout",
+        "evolutionTo": "Weepinbell"
+    },
+    {
+        "evolutionFrom": "Tentacool",
+        "evolutionTo": "Tentacruel"
+    },
+    {
+        "evolutionFrom": "Geodude",
+        "evolutionTo": "Graveler"
+    },
+    {
+        "evolutionFrom": "Geodude\n Alolan Geodude",
+        "evolutionTo": "Graveler\n Alolan Graveler"
+    },
+    {
+        "evolutionFrom": "Ponyta",
+        "evolutionTo": "Rapidash"
+    },
+    {
+        "evolutionFrom": "Ponyta\n Galarian Ponyta",
+        "evolutionTo": "Rapidash\n Galarian Rapidash"
+    },
+    {
+        "evolutionFrom": "Slowpoke",
+        "evolutionTo": "Slowbro"
+    },
+    {
+        "evolutionFrom": "Magnemite",
+        "evolutionTo": "Magneton"
+    },
+    {
+        "evolutionFrom": "Doduo",
+        "evolutionTo": "Dodrio"
+    },
+    {
+        "evolutionFrom": "Seel",
+        "evolutionTo": "Dewgong"
+    },
+    {
+        "evolutionFrom": "Grimer",
+        "evolutionTo": "Muk"
+    },
+    {
+        "evolutionFrom": "Grimer\n Alolan Grimer",
+        "evolutionTo": "Muk\n Alolan Muk"
+    },
+    {
+        "evolutionFrom": "Gastly",
+        "evolutionTo": "Haunter"
+    },
+    {
+        "evolutionFrom": "Drowzee",
+        "evolutionTo": "Hypno"
+    },
+    {
+        "evolutionFrom": "Krabby",
+        "evolutionTo": "Kingler"
+    },
+    {
+        "evolutionFrom": "Voltorb",
+        "evolutionTo": "Electrode"
+    },
+    {
+        "evolutionFrom": "Cubone",
+        "evolutionTo": "Marowak"
+    },
+    {
+        "evolutionFrom": "Cubone",
+        "evolutionTo": "Marowak\n Alolan Marowak"
+    },
+    {
+        "evolutionFrom": "Tyrogue",
+        "evolutionTo": "Hitmonlee"
+    },
+    {
+        "evolutionFrom": "Tyrogue",
+        "evolutionTo": "Hitmonchan"
+    },
+    {
+        "evolutionFrom": "Tyrogue",
+        "evolutionTo": "Hitmontop"
+    },
+    {
+        "evolutionFrom": "Koffing",
+        "evolutionTo": "Weezing"
+    },
+    {
+        "evolutionFrom": "Koffing",
+        "evolutionTo": "Weezing\n Galarian Weezing"
+    },
+    {
+        "evolutionFrom": "Rhyhorn",
+        "evolutionTo": "Rhydon"
+    },
+    {
+        "evolutionFrom": "Horsea",
+        "evolutionTo": "Seadra"
+    },
+    {
+        "evolutionFrom": "Goldeen",
+        "evolutionTo": "Seaking"
+    },
+    {
+        "evolutionFrom": "Mr. Mime\n Galarian Mr. Mime",
+        "evolutionTo": "Mr. Rime"
+    },
+    {
+        "evolutionFrom": "Smoochum",
+        "evolutionTo": "Jynx"
+    },
+    {
+        "evolutionFrom": "Elekid",
+        "evolutionTo": "Electabuzz"
+    },
+    {
+        "evolutionFrom": "Magby",
+        "evolutionTo": "Magmar"
+    },
+    {
+        "evolutionFrom": "Magikarp",
+        "evolutionTo": "Gyarados"
+    },
+    {
+        "evolutionFrom": "Omanyte",
+        "evolutionTo": "Omastar"
+    },
+    {
+        "evolutionFrom": "Kabuto",
+        "evolutionTo": "Kabutops"
+    },
+    {
+        "evolutionFrom": "Dratini",
+        "evolutionTo": "Dragonair"
+    },
+    {
+        "evolutionFrom": "Dragonair",
+        "evolutionTo": "Dragonite"
+    },
+    {
+        "evolutionFrom": "Chikorita",
+        "evolutionTo": "Bayleef"
+    },
+    {
+        "evolutionFrom": "Bayleef",
+        "evolutionTo": "Meganium"
+    },
+    {
+        "evolutionFrom": "Cyndaquil",
+        "evolutionTo": "Quilava"
+    },
+    {
+        "evolutionFrom": "Quilava",
+        "evolutionTo": "Typhlosion"
+    },
+    {
+        "evolutionFrom": "Quilava",
+        "evolutionTo": "Typhlosion\n Hisuian Typhlosion"
+    },
+    {
+        "evolutionFrom": "Totodile",
+        "evolutionTo": "Croconaw"
+    },
+    {
+        "evolutionFrom": "Croconaw",
+        "evolutionTo": "Feraligatr"
+    },
+    {
+        "evolutionFrom": "Sentret",
+        "evolutionTo": "Furret"
+    },
+    {
+        "evolutionFrom": "Hoothoot",
+        "evolutionTo": "Noctowl"
+    },
+    {
+        "evolutionFrom": "Ledyba",
+        "evolutionTo": "Ledian"
+    },
+    {
+        "evolutionFrom": "Spinarak",
+        "evolutionTo": "Ariados"
+    },
+    {
+        "evolutionFrom": "Chinchou",
+        "evolutionTo": "Lanturn"
+    },
+    {
+        "evolutionFrom": "Natu",
+        "evolutionTo": "Xatu"
+    },
+    {
+        "evolutionFrom": "Mareep",
+        "evolutionTo": "Flaaffy"
+    },
+    {
+        "evolutionFrom": "Flaaffy",
+        "evolutionTo": "Ampharos"
+    },
+    {
+        "evolutionFrom": "Marill",
+        "evolutionTo": "Azumarill"
+    },
+    {
+        "evolutionFrom": "Hoppip",
+        "evolutionTo": "Skiploom"
+    },
+    {
+        "evolutionFrom": "Skiploom",
+        "evolutionTo": "Jumpluff"
+    },
+    {
+        "evolutionFrom": "Wooper",
+        "evolutionTo": "Quagsire"
+    },
+    {
+        "evolutionFrom": "Wooper\n Paldean Wooper",
+        "evolutionTo": "Clodsire"
+    },
+    {
+        "evolutionFrom": "Wynaut",
+        "evolutionTo": "Wobbuffet"
+    },
+    {
+        "evolutionFrom": "Pineco",
+        "evolutionTo": "Forretress"
+    },
+    {
+        "evolutionFrom": "Snubbull",
+        "evolutionTo": "Granbull"
+    },
+    {
+        "evolutionFrom": "Teddiursa",
+        "evolutionTo": "Ursaring"
+    },
+    {
+        "evolutionFrom": "Slugma",
+        "evolutionTo": "Magcargo"
+    },
+    {
+        "evolutionFrom": "Swinub",
+        "evolutionTo": "Piloswine"
+    },
+    {
+        "evolutionFrom": "Remoraid",
+        "evolutionTo": "Octillery"
+    },
+    {
+        "evolutionFrom": "Houndour",
+        "evolutionTo": "Houndoom"
+    },
+    {
+        "evolutionFrom": "Phanpy",
+        "evolutionTo": "Donphan"
+    },
+    {
+        "evolutionFrom": "Larvitar",
+        "evolutionTo": "Pupitar"
+    },
+    {
+        "evolutionFrom": "Pupitar",
+        "evolutionTo": "Tyranitar"
+    },
+    {
+        "evolutionFrom": "Treecko",
+        "evolutionTo": "Grovyle"
+    },
+    {
+        "evolutionFrom": "Grovyle",
+        "evolutionTo": "Sceptile"
+    },
+    {
+        "evolutionFrom": "Torchic",
+        "evolutionTo": "Combusken"
+    },
+    {
+        "evolutionFrom": "Combusken",
+        "evolutionTo": "Blaziken"
+    },
+    {
+        "evolutionFrom": "Mudkip",
+        "evolutionTo": "Marshtomp"
+    },
+    {
+        "evolutionFrom": "Marshtomp",
+        "evolutionTo": "Swampert"
+    },
+    {
+        "evolutionFrom": "Poochyena",
+        "evolutionTo": "Mightyena"
+    },
+    {
+        "evolutionFrom": "Zigzagoon",
+        "evolutionTo": "Linoone"
+    },
+    {
+        "evolutionFrom": "Zigzagoon\n Galarian Zigzagoon",
+        "evolutionTo": "Linoone\n Galarian Linoone"
+    },
+    {
+        "evolutionFrom": "Linoone\n Galarian Linoone",
+        "evolutionTo": "Obstagoon"
+    },
+    {
+        "evolutionFrom": "Wurmple",
+        "evolutionTo": "Silcoon"
+    },
+    {
+        "evolutionFrom": "Silcoon",
+        "evolutionTo": "Beautifly"
+    },
+    {
+        "evolutionFrom": "Wurmple",
+        "evolutionTo": "Cascoon"
+    },
+    {
+        "evolutionFrom": "Cascoon",
+        "evolutionTo": "Dustox"
+    },
+    {
+        "evolutionFrom": "Lotad",
+        "evolutionTo": "Lombre"
+    },
+    {
+        "evolutionFrom": "Seedot",
+        "evolutionTo": "Nuzleaf"
+    },
+    {
+        "evolutionFrom": "Taillow",
+        "evolutionTo": "Swellow"
+    },
+    {
+        "evolutionFrom": "Wingull",
+        "evolutionTo": "Pelipper"
+    },
+    {
+        "evolutionFrom": "Ralts",
+        "evolutionTo": "Kirlia"
+    },
+    {
+        "evolutionFrom": "Kirlia",
+        "evolutionTo": "Gardevoir"
+    },
+    {
+        "evolutionFrom": "Surskit",
+        "evolutionTo": "Masquerain"
+    },
+    {
+        "evolutionFrom": "Shroomish",
+        "evolutionTo": "Breloom"
+    },
+    {
+        "evolutionFrom": "Slakoth",
+        "evolutionTo": "Vigoroth"
+    },
+    {
+        "evolutionFrom": "Vigoroth",
+        "evolutionTo": "Slaking"
+    },
+    {
+        "evolutionFrom": "Nincada",
+        "evolutionTo": "Ninjask"
+    },
+    {
+        "evolutionFrom": "Nincada",
+        "evolutionTo": "Shedinja"
+    },
+    {
+        "evolutionFrom": "Whismur",
+        "evolutionTo": "Loudred"
+    },
+    {
+        "evolutionFrom": "Loudred",
+        "evolutionTo": "Exploud"
+    },
+    {
+        "evolutionFrom": "Makuhita",
+        "evolutionTo": "Hariyama"
+    },
+    {
+        "evolutionFrom": "Aron",
+        "evolutionTo": "Lairon"
+    },
+    {
+        "evolutionFrom": "Lairon",
+        "evolutionTo": "Aggron"
+    },
+    {
+        "evolutionFrom": "Meditite",
+        "evolutionTo": "Medicham"
+    },
+    {
+        "evolutionFrom": "Electrike",
+        "evolutionTo": "Manectric"
+    },
+    {
+        "evolutionFrom": "Gulpin",
+        "evolutionTo": "Swalot"
+    },
+    {
+        "evolutionFrom": "Carvanha",
+        "evolutionTo": "Sharpedo"
+    },
+    {
+        "evolutionFrom": "Wailmer",
+        "evolutionTo": "Wailord"
+    },
+    {
+        "evolutionFrom": "Numel",
+        "evolutionTo": "Camerupt"
+    },
+    {
+        "evolutionFrom": "Spoink",
+        "evolutionTo": "Grumpig"
+    },
+    {
+        "evolutionFrom": "Trapinch",
+        "evolutionTo": "Vibrava"
+    },
+    {
+        "evolutionFrom": "Vibrava",
+        "evolutionTo": "Flygon"
+    },
+    {
+        "evolutionFrom": "Cacnea",
+        "evolutionTo": "Cacturne"
+    },
+    {
+        "evolutionFrom": "Swablu",
+        "evolutionTo": "Altaria"
+    },
+    {
+        "evolutionFrom": "Barboach",
+        "evolutionTo": "Whiscash"
+    },
+    {
+        "evolutionFrom": "Corphish",
+        "evolutionTo": "Crawdaunt"
+    },
+    {
+        "evolutionFrom": "Baltoy",
+        "evolutionTo": "Claydol"
+    },
+    {
+        "evolutionFrom": "Lileep",
+        "evolutionTo": "Cradily"
+    },
+    {
+        "evolutionFrom": "Anorith",
+        "evolutionTo": "Armaldo"
+    },
+    {
+        "evolutionFrom": "Shuppet",
+        "evolutionTo": "Banette"
+    },
+    {
+        "evolutionFrom": "Duskull",
+        "evolutionTo": "Dusclops"
+    },
+    {
+        "evolutionFrom": "Snorunt",
+        "evolutionTo": "Glalie"
+    },
+    {
+        "evolutionFrom": "Spheal",
+        "evolutionTo": "Sealeo"
+    },
+    {
+        "evolutionFrom": "Sealeo",
+        "evolutionTo": "Walrein"
+    },
+    {
+        "evolutionFrom": "Bagon",
+        "evolutionTo": "Shelgon"
+    },
+    {
+        "evolutionFrom": "Shelgon",
+        "evolutionTo": "Salamence"
+    },
+    {
+        "evolutionFrom": "Beldum",
+        "evolutionTo": "Metang"
+    },
+    {
+        "evolutionFrom": "Metang",
+        "evolutionTo": "Metagross"
+    },
+    {
+        "evolutionFrom": "Turtwig",
+        "evolutionTo": "Grotle"
+    },
+    {
+        "evolutionFrom": "Grotle",
+        "evolutionTo": "Torterra"
+    },
+    {
+        "evolutionFrom": "Chimchar",
+        "evolutionTo": "Monferno"
+    },
+    {
+        "evolutionFrom": "Monferno",
+        "evolutionTo": "Infernape"
+    },
+    {
+        "evolutionFrom": "Piplup",
+        "evolutionTo": "Prinplup"
+    },
+    {
+        "evolutionFrom": "Prinplup",
+        "evolutionTo": "Empoleon"
+    },
+    {
+        "evolutionFrom": "Starly",
+        "evolutionTo": "Staravia"
+    },
+    {
+        "evolutionFrom": "Staravia",
+        "evolutionTo": "Staraptor"
+    },
+    {
+        "evolutionFrom": "Bidoof",
+        "evolutionTo": "Bibarel"
+    },
+    {
+        "evolutionFrom": "Kricketot",
+        "evolutionTo": "Kricketune"
+    },
+    {
+        "evolutionFrom": "Shinx",
+        "evolutionTo": "Luxio"
+    },
+    {
+        "evolutionFrom": "Luxio",
+        "evolutionTo": "Luxray"
+    },
+    {
+        "evolutionFrom": "Cranidos",
+        "evolutionTo": "Rampardos"
+    },
+    {
+        "evolutionFrom": "Shieldon",
+        "evolutionTo": "Bastiodon"
+    },
+    {
+        "evolutionFrom": "Burmy\n Plant Cloak",
+        "evolutionTo": "Mothim"
+    },
+    {
+        "evolutionFrom": "Burmy\n Plant Cloak",
+        "evolutionTo": "Wormadam\n Plant Cloak"
+    },
+    {
+        "evolutionFrom": "Burmy\n Sandy Cloak",
+        "evolutionTo": "Wormadam\n Sandy Cloak"
+    },
+    {
+        "evolutionFrom": "Burmy\n Trash Cloak",
+        "evolutionTo": "Wormadam\n Trash Cloak"
+    },
+    {
+        "evolutionFrom": "Combee",
+        "evolutionTo": "Vespiquen"
+    },
+    {
+        "evolutionFrom": "Buizel",
+        "evolutionTo": "Floatzel"
+    },
+    {
+        "evolutionFrom": "Cherubi",
+        "evolutionTo": "Cherrim"
+    },
+    {
+        "evolutionFrom": "Shellos",
+        "evolutionTo": "Gastrodon"
+    },
+    {
+        "evolutionFrom": "Drifloon",
+        "evolutionTo": "Drifblim"
+    },
+    {
+        "evolutionFrom": "Glameow",
+        "evolutionTo": "Purugly"
+    },
+    {
+        "evolutionFrom": "Stunky",
+        "evolutionTo": "Skuntank"
+    },
+    {
+        "evolutionFrom": "Bronzor",
+        "evolutionTo": "Bronzong"
+    },
+    {
+        "evolutionFrom": "Gible",
+        "evolutionTo": "Gabite"
+    },
+    {
+        "evolutionFrom": "Gabite",
+        "evolutionTo": "Garchomp"
+    },
+    {
+        "evolutionFrom": "Hippopotas",
+        "evolutionTo": "Hippowdon"
+    },
+    {
+        "evolutionFrom": "Skorupi",
+        "evolutionTo": "Drapion"
+    },
+    {
+        "evolutionFrom": "Croagunk",
+        "evolutionTo": "Toxicroak"
+    },
+    {
+        "evolutionFrom": "Finneon",
+        "evolutionTo": "Lumineon"
+    },
+    {
+        "evolutionFrom": "Snover",
+        "evolutionTo": "Abomasnow"
+    },
+    {
+        "evolutionFrom": "Snivy",
+        "evolutionTo": "Servine"
+    },
+    {
+        "evolutionFrom": "Servine",
+        "evolutionTo": "Serperior"
+    },
+    {
+        "evolutionFrom": "Tepig",
+        "evolutionTo": "Pignite"
+    },
+    {
+        "evolutionFrom": "Pignite",
+        "evolutionTo": "Emboar"
+    },
+    {
+        "evolutionFrom": "Oshawott",
+        "evolutionTo": "Dewott"
+    },
+    {
+        "evolutionFrom": "Dewott",
+        "evolutionTo": "Samurott"
+    },
+    {
+        "evolutionFrom": "Dewott",
+        "evolutionTo": "Samurott\n Hisuian Samurott"
+    },
+    {
+        "evolutionFrom": "Patrat",
+        "evolutionTo": "Watchog"
+    },
+    {
+        "evolutionFrom": "Lillipup",
+        "evolutionTo": "Herdier"
+    },
+    {
+        "evolutionFrom": "Herdier",
+        "evolutionTo": "Stoutland"
+    },
+    {
+        "evolutionFrom": "Purrloin",
+        "evolutionTo": "Liepard"
+    },
+    {
+        "evolutionFrom": "Pidove",
+        "evolutionTo": "Tranquill"
+    },
+    {
+        "evolutionFrom": "Tranquill",
+        "evolutionTo": "Unfezant"
+    },
+    {
+        "evolutionFrom": "Blitzle",
+        "evolutionTo": "Zebstrika"
+    },
+    {
+        "evolutionFrom": "Roggenrola",
+        "evolutionTo": "Boldore"
+    },
+    {
+        "evolutionFrom": "Drilbur",
+        "evolutionTo": "Excadrill"
+    },
+    {
+        "evolutionFrom": "Timburr",
+        "evolutionTo": "Gurdurr"
+    },
+    {
+        "evolutionFrom": "Tympole",
+        "evolutionTo": "Palpitoad"
+    },
+    {
+        "evolutionFrom": "Palpitoad",
+        "evolutionTo": "Seismitoad"
+    },
+    {
+        "evolutionFrom": "Sewaddle",
+        "evolutionTo": "Swadloon"
+    },
+    {
+        "evolutionFrom": "Venipede",
+        "evolutionTo": "Whirlipede"
+    },
+    {
+        "evolutionFrom": "Whirlipede",
+        "evolutionTo": "Scolipede"
+    },
+    {
+        "evolutionFrom": "Sandile",
+        "evolutionTo": "Krokorok"
+    },
+    {
+        "evolutionFrom": "Krokorok",
+        "evolutionTo": "Krookodile"
+    },
+    {
+        "evolutionFrom": "Darumaka",
+        "evolutionTo": "Darmanitan\n Standard Mode"
+    },
+    {
+        "evolutionFrom": "Dwebble",
+        "evolutionTo": "Crustle"
+    },
+    {
+        "evolutionFrom": "Scraggy",
+        "evolutionTo": "Scrafty"
+    },
+    {
+        "evolutionFrom": "Yamask",
+        "evolutionTo": "Cofagrigus"
+    },
+    {
+        "evolutionFrom": "Tirtouga",
+        "evolutionTo": "Carracosta"
+    },
+    {
+        "evolutionFrom": "Archen",
+        "evolutionTo": "Archeops"
+    },
+    {
+        "evolutionFrom": "Trubbish",
+        "evolutionTo": "Garbodor"
+    },
+    {
+        "evolutionFrom": "Zorua",
+        "evolutionTo": "Zoroark"
+    },
+    {
+        "evolutionFrom": "Zorua\n Hisuian Zorua",
+        "evolutionTo": "Zoroark\n Hisuian Zoroark"
+    },
+    {
+        "evolutionFrom": "Gothita",
+        "evolutionTo": "Gothorita"
+    },
+    {
+        "evolutionFrom": "Gothorita",
+        "evolutionTo": "Gothitelle"
+    },
+    {
+        "evolutionFrom": "Solosis",
+        "evolutionTo": "Duosion"
+    },
+    {
+        "evolutionFrom": "Duosion",
+        "evolutionTo": "Reuniclus"
+    },
+    {
+        "evolutionFrom": "Ducklett",
+        "evolutionTo": "Swanna"
+    },
+    {
+        "evolutionFrom": "Vanillite",
+        "evolutionTo": "Vanillish"
+    },
+    {
+        "evolutionFrom": "Vanillish",
+        "evolutionTo": "Vanilluxe"
+    },
+    {
+        "evolutionFrom": "Deerling",
+        "evolutionTo": "Sawsbuck"
+    },
+    {
+        "evolutionFrom": "Foongus",
+        "evolutionTo": "Amoonguss"
+    },
+    {
+        "evolutionFrom": "Frillish",
+        "evolutionTo": "Jellicent"
+    },
+    {
+        "evolutionFrom": "Joltik",
+        "evolutionTo": "Galvantula"
+    },
+    {
+        "evolutionFrom": "Ferroseed",
+        "evolutionTo": "Ferrothorn"
+    },
+    {
+        "evolutionFrom": "Klink",
+        "evolutionTo": "Klang"
+    },
+    {
+        "evolutionFrom": "Klang",
+        "evolutionTo": "Klinklang"
+    },
+    {
+        "evolutionFrom": "Tynamo",
+        "evolutionTo": "Eelektrik"
+    },
+    {
+        "evolutionFrom": "Elgyem",
+        "evolutionTo": "Beheeyem"
+    },
+    {
+        "evolutionFrom": "Litwick",
+        "evolutionTo": "Lampent"
+    },
+    {
+        "evolutionFrom": "Axew",
+        "evolutionTo": "Fraxure"
+    },
+    {
+        "evolutionFrom": "Fraxure",
+        "evolutionTo": "Haxorus"
+    },
+    {
+        "evolutionFrom": "Cubchoo",
+        "evolutionTo": "Beartic"
+    },
+    {
+        "evolutionFrom": "Mienfoo",
+        "evolutionTo": "Mienshao"
+    },
+    {
+        "evolutionFrom": "Golett",
+        "evolutionTo": "Golurk"
+    },
+    {
+        "evolutionFrom": "Pawniard",
+        "evolutionTo": "Bisharp"
+    },
+    {
+        "evolutionFrom": "Rufflet",
+        "evolutionTo": "Braviary"
+    },
+    {
+        "evolutionFrom": "Rufflet",
+        "evolutionTo": "Braviary\n Hisuian Braviary"
+    },
+    {
+        "evolutionFrom": "Vullaby",
+        "evolutionTo": "Mandibuzz"
+    },
+    {
+        "evolutionFrom": "Deino",
+        "evolutionTo": "Zweilous"
+    },
+    {
+        "evolutionFrom": "Zweilous",
+        "evolutionTo": "Hydreigon"
+    },
+    {
+        "evolutionFrom": "Larvesta",
+        "evolutionTo": "Volcarona"
+    },
+    {
+        "evolutionFrom": "Chespin",
+        "evolutionTo": "Quilladin"
+    },
+    {
+        "evolutionFrom": "Quilladin",
+        "evolutionTo": "Chesnaught"
+    },
+    {
+        "evolutionFrom": "Fennekin",
+        "evolutionTo": "Braixen"
+    },
+    {
+        "evolutionFrom": "Braixen",
+        "evolutionTo": "Delphox"
+    },
+    {
+        "evolutionFrom": "Froakie",
+        "evolutionTo": "Frogadier"
+    },
+    {
+        "evolutionFrom": "Frogadier",
+        "evolutionTo": "Greninja"
+    },
+    {
+        "evolutionFrom": "Bunnelby",
+        "evolutionTo": "Diggersby"
+    },
+    {
+        "evolutionFrom": "Fletchling",
+        "evolutionTo": "Fletchinder"
+    },
+    {
+        "evolutionFrom": "Fletchinder",
+        "evolutionTo": "Talonflame"
+    },
+    {
+        "evolutionFrom": "Scatterbug",
+        "evolutionTo": "Spewpa"
+    },
+    {
+        "evolutionFrom": "Spewpa",
+        "evolutionTo": "Vivillon"
+    },
+    {
+        "evolutionFrom": "Litleo",
+        "evolutionTo": "Pyroar"
+    },
+    {
+        "evolutionFrom": "Flabébé",
+        "evolutionTo": "Floette"
+    },
+    {
+        "evolutionFrom": "Skiddo",
+        "evolutionTo": "Gogoat"
+    },
+    {
+        "evolutionFrom": "Pancham",
+        "evolutionTo": "Pangoro"
+    },
+    {
+        "evolutionFrom": "Espurr",
+        "evolutionTo": "Meowstic\n Male"
+    },
+    {
+        "evolutionFrom": "Espurr",
+        "evolutionTo": "Meowstic\n Female"
+    },
+    {
+        "evolutionFrom": "Honedge",
+        "evolutionTo": "Doublade"
+    },
+    {
+        "evolutionFrom": "Inkay",
+        "evolutionTo": "Malamar"
+    },
+    {
+        "evolutionFrom": "Binacle",
+        "evolutionTo": "Barbaracle"
+    },
+    {
+        "evolutionFrom": "Skrelp",
+        "evolutionTo": "Dragalge"
+    },
+    {
+        "evolutionFrom": "Clauncher",
+        "evolutionTo": "Clawitzer"
+    },
+    {
+        "evolutionFrom": "Tyrunt",
+        "evolutionTo": "Tyrantrum"
+    },
+    {
+        "evolutionFrom": "Amaura",
+        "evolutionTo": "Aurorus"
+    },
+    {
+        "evolutionFrom": "Goomy",
+        "evolutionTo": "Sliggoo"
+    },
+    {
+        "evolutionFrom": "Sliggoo",
+        "evolutionTo": "Goodra"
+    },
+    {
+        "evolutionFrom": "Goomy",
+        "evolutionTo": "Sliggoo\n Hisuian Sliggoo"
+    },
+    {
+        "evolutionFrom": "Sliggoo\n Hisuian Sliggoo",
+        "evolutionTo": "Goodra\n Hisuian Goodra"
+    },
+    {
+        "evolutionFrom": "Bergmite",
+        "evolutionTo": "Avalugg"
+    },
+    {
+        "evolutionFrom": "Bergmite",
+        "evolutionTo": "Avalugg\n Hisuian Avalugg"
+    },
+    {
+        "evolutionFrom": "Noibat",
+        "evolutionTo": "Noivern"
+    },
+    {
+        "evolutionFrom": "Rowlet",
+        "evolutionTo": "Dartrix"
+    },
+    {
+        "evolutionFrom": "Dartrix",
+        "evolutionTo": "Decidueye"
+    },
+    {
+        "evolutionFrom": "Dartrix",
+        "evolutionTo": "Decidueye\n Hisuian Decidueye"
+    },
+    {
+        "evolutionFrom": "Litten",
+        "evolutionTo": "Torracat"
+    },
+    {
+        "evolutionFrom": "Torracat",
+        "evolutionTo": "Incineroar"
+    },
+    {
+        "evolutionFrom": "Popplio",
+        "evolutionTo": "Brionne"
+    },
+    {
+        "evolutionFrom": "Brionne",
+        "evolutionTo": "Primarina"
+    },
+    {
+        "evolutionFrom": "Pikipek",
+        "evolutionTo": "Trumbeak"
+    },
+    {
+        "evolutionFrom": "Trumbeak",
+        "evolutionTo": "Toucannon"
+    },
+    {
+        "evolutionFrom": "Yungoos",
+        "evolutionTo": "Gumshoos"
+    },
+    {
+        "evolutionFrom": "Grubbin",
+        "evolutionTo": "Charjabug"
+    },
+    {
+        "evolutionFrom": "Cutiefly",
+        "evolutionTo": "Ribombee"
+    },
+    {
+        "evolutionFrom": "Rockruff",
+        "evolutionTo": "Lycanroc\n Midday Form"
+    },
+    {
+        "evolutionFrom": "Rockruff",
+        "evolutionTo": "Lycanroc\n Midnight Form"
+    },
+    {
+        "evolutionFrom": "Rockruff\n Own Tempo Rockruff",
+        "evolutionTo": "Lycanroc\n Dusk Form"
+    },
+    {
+        "evolutionFrom": "Mareanie",
+        "evolutionTo": "Toxapex"
+    },
+    {
+        "evolutionFrom": "Mudbray",
+        "evolutionTo": "Mudsdale"
+    },
+    {
+        "evolutionFrom": "Dewpider",
+        "evolutionTo": "Araquanid"
+    },
+    {
+        "evolutionFrom": "Fomantis",
+        "evolutionTo": "Lurantis"
+    },
+    {
+        "evolutionFrom": "Morelull",
+        "evolutionTo": "Shiinotic"
+    },
+    {
+        "evolutionFrom": "Salandit",
+        "evolutionTo": "Salazzle"
+    },
+    {
+        "evolutionFrom": "Stufful",
+        "evolutionTo": "Bewear"
+    },
+    {
+        "evolutionFrom": "Bounsweet",
+        "evolutionTo": "Steenee"
+    },
+    {
+        "evolutionFrom": "Wimpod",
+        "evolutionTo": "Golisopod"
+    },
+    {
+        "evolutionFrom": "Sandygast",
+        "evolutionTo": "Palossand"
+    },
+    {
+        "evolutionFrom": "Jangmo-o",
+        "evolutionTo": "Hakamo-o"
+    },
+    {
+        "evolutionFrom": "Hakamo-o",
+        "evolutionTo": "Kommo-o"
+    },
+    {
+        "evolutionFrom": "Cosmog",
+        "evolutionTo": "Cosmoem"
+    },
+    {
+        "evolutionFrom": "Cosmoem",
+        "evolutionTo": "Solgaleo"
+    },
+    {
+        "evolutionFrom": "Cosmoem",
+        "evolutionTo": "Lunala"
+    },
+    {
+        "evolutionFrom": "Grookey",
+        "evolutionTo": "Thwackey"
+    },
+    {
+        "evolutionFrom": "Thwackey",
+        "evolutionTo": "Rillaboom"
+    },
+    {
+        "evolutionFrom": "Scorbunny",
+        "evolutionTo": "Raboot"
+    },
+    {
+        "evolutionFrom": "Raboot",
+        "evolutionTo": "Cinderace"
+    },
+    {
+        "evolutionFrom": "Sobble",
+        "evolutionTo": "Drizzile"
+    },
+    {
+        "evolutionFrom": "Drizzile",
+        "evolutionTo": "Inteleon"
+    },
+    {
+        "evolutionFrom": "Blipbug",
+        "evolutionTo": "Dottler"
+    },
+    {
+        "evolutionFrom": "Dottler",
+        "evolutionTo": "Orbeetle"
+    },
+    {
+        "evolutionFrom": "Rookidee",
+        "evolutionTo": "Corvisquire"
+    },
+    {
+        "evolutionFrom": "Corvisquire",
+        "evolutionTo": "Corviknight"
+    },
+    {
+        "evolutionFrom": "Skwovet",
+        "evolutionTo": "Greedent"
+    },
+    {
+        "evolutionFrom": "Nickit",
+        "evolutionTo": "Thievul"
+    },
+    {
+        "evolutionFrom": "Wooloo",
+        "evolutionTo": "Dubwool"
+    },
+    {
+        "evolutionFrom": "Chewtle",
+        "evolutionTo": "Drednaw"
+    },
+    {
+        "evolutionFrom": "Yamper",
+        "evolutionTo": "Boltund"
+    },
+    {
+        "evolutionFrom": "Gossifleur",
+        "evolutionTo": "Eldegoss"
+    },
+    {
+        "evolutionFrom": "Sizzlipede",
+        "evolutionTo": "Centiskorch"
+    },
+    {
+        "evolutionFrom": "Rolycoly",
+        "evolutionTo": "Carkol"
+    },
+    {
+        "evolutionFrom": "Carkol",
+        "evolutionTo": "Coalossal"
+    },
+    {
+        "evolutionFrom": "Arrokuda",
+        "evolutionTo": "Barraskewda"
+    },
+    {
+        "evolutionFrom": "Corsola\n Galarian Corsola",
+        "evolutionTo": "Cursola"
+    },
+    {
+        "evolutionFrom": "Impidimp",
+        "evolutionTo": "Morgrem"
+    },
+    {
+        "evolutionFrom": "Morgrem",
+        "evolutionTo": "Grimmsnarl"
+    },
+    {
+        "evolutionFrom": "Hatenna",
+        "evolutionTo": "Hattrem"
+    },
+    {
+        "evolutionFrom": "Hattrem",
+        "evolutionTo": "Hatterene"
+    },
+    {
+        "evolutionFrom": "Cufant",
+        "evolutionTo": "Copperajah"
+    },
+    {
+        "evolutionFrom": "Toxel",
+        "evolutionTo": "Toxtricity\n Amped Form"
+    },
+    {
+        "evolutionFrom": "Toxel",
+        "evolutionTo": "Toxtricity\n Low Key Form"
+    },
+    {
+        "evolutionFrom": "Silicobra",
+        "evolutionTo": "Sandaconda"
+    },
+    {
+        "evolutionFrom": "Dreepy",
+        "evolutionTo": "Drakloak"
+    },
+    {
+        "evolutionFrom": "Drakloak",
+        "evolutionTo": "Dragapult"
+    },
+    {
+        "evolutionFrom": "Sprigatito",
+        "evolutionTo": "Floragato"
+    },
+    {
+        "evolutionFrom": "Floragato",
+        "evolutionTo": "Meowscarada"
+    },
+    {
+        "evolutionFrom": "Fuecoco",
+        "evolutionTo": "Crocalor"
+    },
+    {
+        "evolutionFrom": "Crocalor",
+        "evolutionTo": "Skeledirge"
+    },
+    {
+        "evolutionFrom": "Quaxly",
+        "evolutionTo": "Quaxwell"
+    },
+    {
+        "evolutionFrom": "Quaxwell",
+        "evolutionTo": "Quaquaval"
+    },
+    {
+        "evolutionFrom": "Lechonk",
+        "evolutionTo": "Oinkologne\n Male"
+    },
+    {
+        "evolutionFrom": "Lechonk",
+        "evolutionTo": "Oinkologne\n Female"
+    },
+    {
+        "evolutionFrom": "Tarountula",
+        "evolutionTo": "Spidops"
+    },
+    {
+        "evolutionFrom": "Nymble",
+        "evolutionTo": "Lokix"
+    },
+    {
+        "evolutionFrom": "Greavard",
+        "evolutionTo": "Houndstone"
+    },
+    {
+        "evolutionFrom": "Flittle",
+        "evolutionTo": "Espathra"
+    },
+    {
+        "evolutionFrom": "Wiglett",
+        "evolutionTo": "Wugtrio"
+    },
+    {
+        "evolutionFrom": "Finizen",
+        "evolutionTo": "Palafin\n Zero Form"
+    },
+    {
+        "evolutionFrom": "Smoliv",
+        "evolutionTo": "Dolliv"
+    },
+    {
+        "evolutionFrom": "Dolliv",
+        "evolutionTo": "Arboliva"
+    },
+    {
+        "evolutionFrom": "Varoom",
+        "evolutionTo": "Revavroom"
+    },
+    {
+        "evolutionFrom": "Tandemaus",
+        "evolutionTo": "Maushold\n Family of Three"
+    },
+    {
+        "evolutionFrom": "Tandemaus",
+        "evolutionTo": "Maushold\n Family of Four"
+    },
+    {
+        "evolutionFrom": "Frigibax",
+        "evolutionTo": "Arctibax"
+    },
+    {
+        "evolutionFrom": "Arctibax",
+        "evolutionTo": "Baxcalibur"
+    },
+    {
+        "evolutionFrom": "Pawmi",
+        "evolutionTo": "Pawmo"
+    },
+    {
+        "evolutionFrom": "Wattrel",
+        "evolutionTo": "Kilowattrel"
+    },
+    {
+        "evolutionFrom": "Nacli",
+        "evolutionTo": "Naclstack"
+    },
+    {
+        "evolutionFrom": "Naclstack",
+        "evolutionTo": "Garganacl"
+    },
+    {
+        "evolutionFrom": "Glimmet",
+        "evolutionTo": "Glimmora"
+    },
+    {
+        "evolutionFrom": "Shroodle",
+        "evolutionTo": "Grafaiai"
+    },
+    {
+        "evolutionFrom": "Fidough",
+        "evolutionTo": "Dachsbun"
+    },
+    {
+        "evolutionFrom": "Maschiff",
+        "evolutionTo": "Mabosstiff"
+    },
+    {
+        "evolutionFrom": "Tinkatink",
+        "evolutionTo": "Tinkatuff"
+    },
+    {
+        "evolutionFrom": "Tinkatuff",
+        "evolutionTo": "Tinkaton"
+    },
+    {
+        "evolutionFrom": "Toedscool",
+        "evolutionTo": "Toedscruel"
+    }
+]

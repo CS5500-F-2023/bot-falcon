@@ -1,0 +1,10 @@
+[
+    {
+        "evolutionFrom": "Bulbasaur",
+        "evolutionTo": "Ivysaur"
+    },
+    {
+        "evolutionFrom": "Ivysaur",
+        "evolutionTo": "Venusaur"
+    }
+]
