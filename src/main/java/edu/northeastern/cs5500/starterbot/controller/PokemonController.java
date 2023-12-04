@@ -3,11 +3,8 @@ package edu.northeastern.cs5500.starterbot.controller;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
-import edu.northeastern.cs5500.starterbot.model.PokemonEvolution;
-import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
-import edu.northeastern.cs5500.starterbot.service.PokemonEvolutionService;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -25,11 +22,7 @@ public class PokemonController {
 
     @Inject PokedexController pokedexController;
 
-    @Inject PokemonEvolutionService pokemonEvolutionService;
-
     List<PokemonData> pokemonDataList;
-
-    List<PokemonEvolution> pokemonEvolutionList;
 
     @Inject
     PokemonController(
@@ -145,65 +138,6 @@ public class PokemonController {
 
     public void increasePokemonExpByFood(String pokemonIdStr, FoodType food) {
         increasePokemonExp(pokemonIdStr, food.getExp());
-    }
-
-    /**
-     * Evolves a Pokemon based on its ID.
-     *
-     * @param pokemonIdString the ID of the Pokemon to evolve
-     * @return true if the Pokemon was successfully evolved, false otherwise
-     */
-    public boolean evolvePokemon(String pokemonIdString) {
-        Pokemon pokemon = getPokemonById(pokemonIdString);
-        PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
-        for (PokemonEvolution pe : pokemonEvolutionList) {
-            if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
-                return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
-            }
-        }
-        return false; // not evolved
-    }
-
-    /** for testing purpose */
-    protected boolean evolvePokemon(String pokemonIdString, PokedexController pokedexController) {
-        Pokemon pokemon = getPokemonById(pokemonIdString);
-        PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
-        for (PokemonEvolution pe : pokemonEvolutionList) {
-            if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
-                return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
-            }
-        }
-        return false; // not evolved
-    }
-
-    /**
-     * Evolves a Pokemon by its name. Update pokemon stats except level
-     *
-     * @param pokemonName the name of the Pokemon to evolve
-     * @return true if the Pokemon was successfully evolved, false otherwise
-     */
-    private boolean evolvePokemonByName(
-            String evolutionFrom, String evolutionTo, Pokemon currPokemon) {
-        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
-        for (PokemonData data : pokemonDataList) {
-            if (data.getSpeciesNames().get("en").equals(evolutionTo)) {
-                currPokemon.setPokedexNumber(data.getNumber());
-                currPokemon.setCurrentHp(data.getHp());
-                currPokemon.setHp(data.getHp());
-                currPokemon.setAttack(data.getAttack());
-                currPokemon.setDefense(data.getDefense());
-                currPokemon.setSpecialAttack(data.getSpAttack());
-                currPokemon.setSpecialDefense(data.getSpDefense());
-                currPokemon.setSpeed(data.getSpeed());
-                currPokemon.setEvolvedFrom(evolutionFrom);
-                currPokemon.setEvolved(true);
-                Objects.requireNonNull(pokemonRepository.update(currPokemon));
-                return true;
-            }
-        }
-        return false; // not evolved
     }
 
     /**
