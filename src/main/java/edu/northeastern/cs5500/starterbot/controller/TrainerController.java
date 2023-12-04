@@ -6,6 +6,7 @@ import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDate;
@@ -24,6 +25,12 @@ import org.bson.types.ObjectId;
 public class TrainerController {
 
     static final Integer MIN_FOOD_AMOUNT_REQUIRED = 1;
+    private static final String BOARD_LINE = "----------------------------\n";
+    private static final Integer MIN_BALANCE = 10;
+
+    private static final Integer POKEMON_THRESHOLD = 10;
+    private static final Integer POKEMON_PER_ROW_TWO = 2;
+    private static final Integer POKEMON_PER_ROW_THREE = 3;
 
     GenericRepository<Trainer> trainerRepository;
 
@@ -105,9 +112,35 @@ public class TrainerController {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         Map<FoodType, Integer> food = getTrainerFoodInventory(discordMemberId);
         String foodDetail = buildTrainerBerryStockDetail(food);
-        return String.format(
-                "```Balance: %d\nPokemon Numbers: %d\n%s\n```",
-                trainer.getBalance(), trainer.getPokemonInventory().size(), foodDetail);
+        StringBuilder statsBuilder = new StringBuilder();
+
+        /** build basic stats */
+        statsBuilder.append("📊 Your Stats 📊\n");
+        statsBuilder.append(BOARD_LINE);
+        statsBuilder.append("   Balance         💰 : ").append(trainer.getBalance()).append("\n");
+        statsBuilder
+                .append("   Pokemon Numbers 🎒 : ")
+                .append(trainer.getPokemonInventory().size())
+                .append("\n");
+        statsBuilder.append("\n🍇 Your Berry Inventory 🍇\n");
+        statsBuilder.append(BOARD_LINE);
+        statsBuilder.append(foodDetail).append("\n");
+
+        /** customize hint base on stats */
+        if (!trainer.getPokemonInventory().isEmpty()) {
+            statsBuilder.append("🔍 Explore your Pokemon inventory with /pokemon!\n");
+        } else {
+            statsBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
+        }
+        if (trainer.getBalance() <= MIN_BALANCE) {
+            statsBuilder.append(
+                    "💵 Boost your balance by claiming your daily rewards with /daily!\n");
+        }
+        if (food.containsValue(0)) {
+            statsBuilder.append("😋 Refill your berry stock at the shop using /shop!");
+        }
+
+        return "```" + statsBuilder.toString() + "```";
     }
 
     /**
@@ -116,15 +149,15 @@ public class TrainerController {
      * @param food a map containing the quantity of each food type
      * @return a string representation of the trainer's berry stock details
      */
-    private String buildTrainerBerryStockDetail(Map<FoodType, Integer> food) {
-        return String.format(
-                "%s: %d\n%s: %d\n%s: %d",
-                FoodType.GOLDBERRY.name(),
-                food.get(FoodType.GOLDBERRY),
-                FoodType.BERRY.name(),
-                food.get(FoodType.BERRY),
-                FoodType.MYSTERYBERRY.name(),
-                food.get(FoodType.MYSTERYBERRY));
+    protected String buildTrainerBerryStockDetail(Map<FoodType, Integer> food) {
+        StringBuilder foodBuilder = new StringBuilder();
+        for (Map.Entry<FoodType, Integer> entry : food.entrySet()) {
+            foodBuilder.append(
+                    String.format(
+                            "   %-15s %s : %d\n",
+                            entry.getKey().getName(), entry.getKey().getEmoji(), entry.getValue()));
+        }
+        return foodBuilder.toString();
     }
 
     /**
@@ -143,6 +176,54 @@ public class TrainerController {
             pokemonInventory.add(pokemon);
         }
         return pokemonInventory;
+    }
+
+    /**
+     * Builds a detailed inventory of Pokemon string.
+     *
+     * @param pokemonInventory the list of Pokemon in the inventory
+     * @return the formatted string representation of the Pokemon inventory
+     */
+    public String buildPokemonInventoryDetail(List<Pokemon> pokemonInventory) {
+        StringBuilder pokemonInventoryBuilder = new StringBuilder();
+
+        if (pokemonInventory.isEmpty()) {
+            pokemonInventoryBuilder.append("Oops....no Pokemon Found.\n\n");
+            pokemonInventoryBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
+        } else {
+            pokemonInventoryBuilder.append("🎒 Your Pokemon Inventory 🎒\n\n");
+            int pokemonPerRow =
+                    (pokemonInventory.size() <= POKEMON_THRESHOLD)
+                            ? POKEMON_PER_ROW_TWO
+                            : POKEMON_PER_ROW_THREE;
+
+            /** find max length pokemon name */
+            int maxTextWidth = 0;
+            for (int i = 0; i < pokemonInventory.size(); i++) {
+                Pokemon pokemon = pokemonInventory.get(i);
+                PokemonSpecies species =
+                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                maxTextWidth = Math.max(maxTextWidth, pokemonText.length());
+            }
+            /** build single pokemon name string */
+            for (int i = 0; i < pokemonInventory.size(); i++) {
+                Pokemon pokemon = pokemonInventory.get(i);
+                PokemonSpecies species =
+                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                pokemonInventoryBuilder.append(
+                        String.format("%-" + maxTextWidth + "s", pokemonText));
+
+                if ((i + 1) % pokemonPerRow == 0 || i == pokemonInventory.size() - 1) {
+                    pokemonInventoryBuilder.append("\n");
+                }
+            }
+            pokemonInventoryBuilder.append("\n🔍 Learn more about your Pokemon with /my!");
+        }
+        return "```" + pokemonInventoryBuilder.toString() + "```";
     }
 
     /**

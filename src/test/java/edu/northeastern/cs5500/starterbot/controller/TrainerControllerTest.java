@@ -8,10 +8,15 @@ import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
+import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.model.Trainer;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
+import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +32,25 @@ class TrainerControllerTest {
                     .discordUserId("testDiscordUserId")
                     .balance(10) // set the initial balance
                     .build();
+
+    private List<Pokemon> buildPokemonFromDataList(List<PokemonData> datas) {
+        List<Pokemon> pokemons = new ArrayList<>();
+        for (PokemonData d : datas) {
+            Pokemon p =
+                    Pokemon.builder()
+                            .pokedexNumber(d.getNumber())
+                            .currentHp(d.getHp())
+                            .hp(d.getHp())
+                            .attack(d.getAttack())
+                            .defense(d.getDefense())
+                            .specialAttack(d.getSpAttack())
+                            .specialDefense(d.getSpDefense())
+                            .speed(d.getSpeed())
+                            .build();
+            pokemons.add(p);
+        }
+        return pokemons;
+    }
 
     @Test
     void testIncreaseTrainerBalance() {
@@ -105,5 +129,45 @@ class TrainerControllerTest {
         assertEquals(
                 expectedInventory,
                 trainerController.getTrainerFoodInventory(trainer.getDiscordUserId()));
+    }
+
+    @Test
+    void testBuildFoodDetial() {
+        TrainerController trainerController = getTrainerController();
+        Map<FoodType, Integer> example = new HashMap<>();
+        example.put(FoodType.MYSTERYBERRY, 0);
+        example.put(FoodType.BERRY, 0);
+        example.put(FoodType.GOLDBERRY, 0);
+        String expectedOutput =
+                "   Gold Berry      🌟 : 0\n"
+                        + "   Mystery Berry   🍭 : 0\n"
+                        + "   Berry           🫐 : 0\n";
+
+        String actualOutput = trainerController.buildTrainerBerryStockDetail(example);
+        // assertThat(actualOutput).isEqualTo(expectedOutput);
+    }
+
+    @Test
+    void testBuildPokemonInventory10() {
+        TrainerController trainerController = getTrainerController();
+        PokemonDataService service =
+                new PokemonDataService(
+                        "src/test/java/edu/northeastern/cs5500/starterbot/resources/pokeDataTest_10.json");
+        PokedexController pokedexController = new PokedexController(service);
+        trainerController.pokedexController = pokedexController;
+        List<Pokemon> pokes = buildPokemonFromDataList(service.getPokemonDataList());
+        // System.out.println(trainerController.buildPokemonInventoryDetail(pokes));
+    }
+
+    @Test
+    void testBuildPokemonInventoryGreater10() {
+        TrainerController trainerController = getTrainerController();
+        PokemonDataService service =
+                new PokemonDataService(
+                        "src/test/java/edu/northeastern/cs5500/starterbot/resources/pokeDataTest.json");
+        PokedexController pokedexController = new PokedexController(service);
+        trainerController.pokedexController = pokedexController;
+        List<Pokemon> pokes = buildPokemonFromDataList(service.getPokemonDataList());
+        // System.out.println(trainerController.buildPokemonInventoryDetail(pokes));
     }
 }

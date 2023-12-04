@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -45,13 +44,6 @@ public class StatusCommand implements SlashCommandHandler {
 
         String trainerDiscordId = event.getMember().getId();
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Your Stats");
-        embedBuilder.addField(
-                "💡hint: use `/pokemon` to view your pokemon inventory!",
-                trainerController.buildTrainerStats(trainerDiscordId),
-                false);
-
-        event.replyEmbeds(embedBuilder.build()).queue();
+        event.reply(trainerController.buildTrainerStats(trainerDiscordId)).queue();
     }
 }

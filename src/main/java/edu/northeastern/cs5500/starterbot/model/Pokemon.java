@@ -14,7 +14,7 @@ public class Pokemon implements Model {
     // Level up constants
     private static final Integer DEFAULT_LEVEL = 5;
     private static final Integer DEFAULT_XP = 10;
-    private static final Integer LEVEL_UP_THRESHOLD = 100;
+    public static final Integer LEVEL_UP_THRESHOLD = 100;
 
     // Weights for calculating Pokemon's strengths
     private static final double LEVEL_WEIGHT = 1.5;
@@ -24,6 +24,7 @@ public class Pokemon implements Model {
     private static final double SPEED_WEIGHT = 2.0;
 
     private static final Integer TOTAL_HEALTH_BARS = 15;
+    private static final Integer TOTAL_XP_BARS = 15;
 
     @Nonnull @Builder.Default ObjectId id = new ObjectId();
 
@@ -106,5 +107,18 @@ public class Pokemon implements Model {
     public String generateHealthBar() {
         int filledBars = (int) Math.ceil(TOTAL_HEALTH_BARS * (this.currentHp * 1.0 / this.hp));
         return "█".repeat(filledBars) + "░".repeat(TOTAL_HEALTH_BARS - filledBars);
+    }
+
+    /**
+     * Generates a progress bar for the experience points (XP) of a Pokemon.
+     *
+     * @return a string representing the XP progress bar
+     */
+    public String generateXpProgressBar() {
+        double progressPercentage = (exPoints * 1.0 / LEVEL_UP_THRESHOLD) * 100.0;
+
+        int filledBars = (int) Math.ceil(TOTAL_XP_BARS * (progressPercentage / 100.0));
+        // TODO (hy) check if it's match to progress bar in feed
+        return "█".repeat(filledBars) + "░".repeat(TOTAL_XP_BARS - filledBars);
     }
 }
