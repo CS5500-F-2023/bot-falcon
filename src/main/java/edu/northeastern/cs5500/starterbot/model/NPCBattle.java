@@ -29,12 +29,12 @@ public class NPCBattle {
     private static final Integer FLOOR_EXP_FOR_WINNER = 5;
     private static final Integer CAP_EXP_FOR_WINNER = 80;
 
-    private static final Integer BASE_EXP_FOR_LOSER = 10;
-    private static final Integer FLOOR_EXP_FOR_LOSER = 5;
-    private static final Integer CAP_EXP_FOR_LOSER = 20;
+    private static final Integer BASE_EXP_FOR_LOSER = 15;
+    private static final Integer FLOOR_EXP_FOR_LOSER = 8;
+    private static final Integer CAP_EXP_FOR_LOSER = 25;
 
-    String trDiscordId;
-    String trPokemonIdStr;
+    String trDiscordId; // TODO (zqy): Do we need this?
+    String trPokemonIdStr; // TODO (zqy): Do we need this?
     @Nonnull Trainer trainer;
     @Nonnull Pokemon trPokemon;
     Pokemon npcPokemon;
@@ -123,7 +123,7 @@ public class NPCBattle {
     }
 
     /** Helper function to calculate and update the coins earned after the battle ends. */
-    private void setCoinsEarned() throws InvalidBattleStatusException {
+    protected void setCoinsEarned() throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
@@ -136,7 +136,7 @@ public class NPCBattle {
     }
 
     /** Helper function to calculate and update the experience gained after the battle ends. */
-    private void setXpGained() throws InvalidBattleStatusException {
+    protected void setXpGained() throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
