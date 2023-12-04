@@ -12,15 +12,16 @@ import org.bson.types.ObjectId;
 public class Pokemon implements Model {
 
     // Level up constants
-    private static final Integer DEFAULT_LEVEL = 5;
-    private static final Integer DEFAULT_XP = 10;
-    private static final Integer LEVEL_UP_THRESHOLD = 100;
+    public static final Integer DEFAULT_LEVEL = 5;
+    public static final Integer DEFAULT_XP = 10;
+    public static final Integer LEVEL_UP_THRESHOLD = 100;
 
     // Battle realted
-    private static final double LEVEL_ADDON = 2.0;
+    private static final int LEVEL_ADDON = 3;
     private static final double ATTACK_MULTIPLIER = 1.2;
     private static final double DEFENSE_MULTIPLIER = 0.8;
-    private static final int FLOOR_DAMAGE = 8;
+    private static final int DAMAGE_FLOOR = 8;
+    private static final int DAMAGE_CAP = 22;
 
     // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
@@ -66,23 +67,29 @@ public class Pokemon implements Model {
     /** Helper function calculating the base damage depending on base damage. */
     public static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean physical) {
         double attack = (double) (physical ? attacker.getAttack() : attacker.getSpecialAttack());
-        attack += LEVEL_ADDON * (attacker.getLevel() - DEFAULT_LEVEL);
-        attack *= ATTACK_MULTIPLIER;
         double defense = (double) (physical ? defender.getDefense() : defender.getSpecialDefense());
-        defense += LEVEL_ADDON * (defender.getLevel() - DEFAULT_LEVEL);
-        defense *= DEFENSE_MULTIPLIER;
-        return (attack - defense < FLOOR_DAMAGE) ? FLOOR_DAMAGE : (int) (attack - defense);
+        double damage = attack * ATTACK_MULTIPLIER - defense * DEFENSE_MULTIPLIER;
+        return (int) Math.max(Math.min(damage, DAMAGE_CAP), DAMAGE_FLOOR);
     }
 
     /**
-     * Sets the experience points of the Pokémon and checks if it levels up.
+     * Increases the experience points of a Pokemon by the specified amount.
      *
-     * @param exPoints The new experience points total for the Pokémon
-     * @return true if the Pokémon levels up as a result of the added EX points, otherwise false
+     * <p>It then checks if the Pokemon has gained enough experience to level up and if yes, will
+     * update level and relevant stat automatically.
+     *
+     * @param increasedXPs The number of experience points to be added
+     * @return true if the Pokémon levels up as a result of the added experience points, otherwise
+     *     false
      */
-    public boolean setExPoints(int exPoints) {
-        this.exPoints = exPoints;
+    public boolean increaseExpPts(int increasedXPs) {
+        setExPoints(this.exPoints + increasedXPs);
         return this.levelUp();
+    }
+
+    /** Private setter: Use `increaseExpPts()` instead. */
+    private void setExPoints(int exPoints) {
+        this.exPoints = exPoints;
     }
 
     /**
@@ -91,13 +98,24 @@ public class Pokemon implements Model {
      * @return True if the Pokémon has leveled up at least once during the process
      */
     private boolean levelUp() {
-        boolean hasLeveledUP = false;
+        int levelUpCount = 0;
         while (exPoints >= LEVEL_UP_THRESHOLD) {
             this.level += 1;
             this.exPoints -= LEVEL_UP_THRESHOLD;
-            hasLeveledUP = true;
+            levelUpCount++;
         }
-        return hasLeveledUP;
+        updateStatDueToLevelUp(levelUpCount);
+        return levelUpCount > 0;
+    }
+
+    /** Handles the update of stat due to level up. */
+    private void updateStatDueToLevelUp(int level) {
+        this.setHp(hp + LEVEL_ADDON * level);
+        this.setAttack(attack + LEVEL_ADDON * level);
+        this.setDefense(defense + LEVEL_ADDON * level);
+        this.setSpecialAttack(specialAttack + LEVEL_ADDON * level);
+        this.setSpecialDefense(specialDefense + LEVEL_ADDON * level);
+        this.setSpeed(speed + LEVEL_ADDON * level);
     }
 
     /**

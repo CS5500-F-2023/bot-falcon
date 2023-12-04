@@ -17,6 +17,9 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
+    private static final double RELATIVE_STRENGTH_BASE = 1.0;
+    private static final double RELATIVE_STRENGTH_THRESHOLD = 0.2;
+
     GenericRepository<Pokemon> pokemonRepository;
 
     @Inject PokemonDataService pokemonDataService;
@@ -75,18 +78,29 @@ public class PokemonController {
      */
     public Pokemon spawnNpcPokemonForBattle(Pokemon trPokemon) {
         int maxAttempt = 100;
-        Pokemon closestNpcPokemon = this.spawnRandonPokemon();
-        double closestDistance = 10000.0;
+        double closestDistance = 100.0;
+        Pokemon closestNpcPokemon = spawnRandonPokemon();
+
         while (maxAttempt > 0) {
             maxAttempt--;
-            Pokemon npcPokemon = this.spawnRandonPokemon();
+            Pokemon npcPokemon = spawnRandonPokemon();
             // Ideally we want to battle with a different species
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
-            npcPokemon.setLevel(trPokemon.getLevel());
+
+            // TODO (zqy): adjust the NPC Pokemon's level subject to the evolution impl
+            int addedExp =
+                    (trPokemon.getLevel() - Pokemon.DEFAULT_LEVEL) * Pokemon.LEVEL_UP_THRESHOLD
+                            + (trPokemon.getExPoints() - Pokemon.DEFAULT_XP);
+            npcPokemon.increaseExpPts(addedExp);
+
+            // Check relative strength
             double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
-            if (relStrength < 0.8 || relStrength > 1.2) return npcPokemon;
-            if (Math.abs(relStrength - 1.0) < closestDistance) {
-                closestDistance = Math.abs(relStrength - 1.0);
+            double strengthDist = Math.abs(relStrength - RELATIVE_STRENGTH_BASE);
+            if (strengthDist < RELATIVE_STRENGTH_THRESHOLD) {
+                return npcPokemon;
+            }
+            if (strengthDist < closestDistance) {
+                closestDistance = strengthDist;
                 closestNpcPokemon = npcPokemon;
             }
         }
@@ -134,7 +148,7 @@ public class PokemonController {
      */
     public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
         Pokemon pokemon = getPokemonById(pokemonIdStr);
-        boolean levelUp = pokemon.setExPoints(pokemon.getExPoints() + expGained);
+        boolean levelUp = pokemon.increaseExpPts(expGained);
         pokemonRepository.update(pokemon);
         return levelUp;
     }

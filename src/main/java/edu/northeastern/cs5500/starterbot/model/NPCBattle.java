@@ -99,7 +99,7 @@ public class NPCBattle {
                     setCoinsEarned();
                     if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
-                    boolean leveledUp = trPokemon.setExPoints(trPokemon.getExPoints() + xpGained);
+                    boolean leveledUp = trPokemon.increaseExpPts(xpGained);
                     resultMessage =
                             trainerWins
                                     ? buildVictoryMessage(leveledUp)
