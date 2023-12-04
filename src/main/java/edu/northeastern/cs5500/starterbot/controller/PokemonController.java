@@ -17,8 +17,7 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
-    private static final double RELATIVE_STRENGTH_BASE = 1.0;
-    private static final double RELATIVE_STRENGTH_THRESHOLD = 0.2;
+    private static final int RELATIVE_STRENGTH_THRESHOLD = 2;
 
     GenericRepository<Pokemon> pokemonRepository;
 
@@ -69,7 +68,7 @@ public class PokemonController {
 
     /**
      * Spawns a NPC Pokemon for battle, matching the trainer's Pokemon level. The method ensures the
-     * NPC Pokemon's relative strength is within 0.8 to 1.2 times that of the trainer's Pokemon. It
+     * relative strength of each Pokemon to knock down the opponent shall be within 2 rounds. It
      * also avoids selecting an NPC Pokemon of the same species as the trainer's. If no ideal match
      * is found within the strength range, the closest match is returned.
      *
@@ -78,29 +77,26 @@ public class PokemonController {
      */
     public Pokemon spawnNpcPokemonForBattle(Pokemon trPokemon) {
         int maxAttempt = 100;
-        double closestDistance = 100.0;
+        int closestDistance = 100000;
         Pokemon closestNpcPokemon = spawnRandonPokemon();
 
         while (maxAttempt > 0) {
             maxAttempt--;
             Pokemon npcPokemon = spawnRandonPokemon();
-            // Ideally we want to battle with a different species
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
-            // TODO (zqy): adjust the NPC Pokemon's level subject to the evolution impl
+            // TODO (zqy): adjust subject to the evolution impl
             int addedExp =
                     (trPokemon.getLevel() - Pokemon.DEFAULT_LEVEL) * Pokemon.LEVEL_UP_THRESHOLD
                             + (trPokemon.getExPoints() - Pokemon.DEFAULT_XP);
             npcPokemon.increaseExpPts(addedExp);
 
-            // Check relative strength
-            double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
-            double strengthDist = Math.abs(relStrength - RELATIVE_STRENGTH_BASE);
-            if (strengthDist < RELATIVE_STRENGTH_THRESHOLD) {
+            int absRelStrength = Math.abs(Pokemon.getRelStrength(trPokemon, npcPokemon));
+            if (absRelStrength <= RELATIVE_STRENGTH_THRESHOLD) {
                 return npcPokemon;
             }
-            if (strengthDist < closestDistance) {
-                closestDistance = strengthDist;
+            if (absRelStrength < closestDistance) {
+                closestDistance = absRelStrength;
                 closestNpcPokemon = npcPokemon;
             }
         }

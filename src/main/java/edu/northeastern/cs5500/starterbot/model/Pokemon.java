@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +19,9 @@ public class Pokemon implements Model {
 
     // Battle realted
     private static final int LEVEL_ADDON = 3;
-    private static final double ATTACK_MULTIPLIER = 1.2;
-    private static final double DEFENSE_MULTIPLIER = 0.8;
+    private static final double ATTACK_MULTIPLIER = 1.1;
+    private static final double DEFENSE_MULTIPLIER = 0.9;
     private static final int DAMAGE_FLOOR = 7;
-    // private static final int DAMAGE_CAP = 30;
 
     // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
@@ -48,21 +48,20 @@ public class Pokemon implements Model {
      *
      * @param trPokemon The player's Pokémon
      * @param npcPokemon The NPC's Pokémon
-     * @return a double > 1.0 if the Trainer Pokémon is stronger than the NPC's Pokémon strength,
-     *     and a double < 1.0 if the Trainer Pokémon is weaker than the NPC's Pokémon strength
+     * @return an int > 0 if the Trainer Pokémon is stronger than the NPC's Pokémon, and an int < 0
+     *     if the Trainer Pokémon is weaker than the NPC's Pokémon
      */
-    public static double getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
-        double roundsForTrToWin = calculateRounds(trPokemon, npcPokemon);
-        double roundsForNpcToWin = calculateRounds(npcPokemon, trPokemon);
-        return Math.round(roundsForNpcToWin / roundsForTrToWin * 100.0) / 100.0;
+    public static int getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
+        int roundsForTrToWin = calculateRounds(trPokemon, npcPokemon);
+        int roundsForNpcToWin = calculateRounds(npcPokemon, trPokemon);
+        return roundsForNpcToWin - roundsForTrToWin;
     }
 
     /** Helper function to determine num of rounds for the attacker to knock down the defender. */
-    private static double calculateRounds(Pokemon attacker, Pokemon defender) {
-        double physicalDamage = getBaseDamage(attacker, defender, true);
-        double specialDamage = getBaseDamage(attacker, defender, false);
-        double rounds = defender.getHp() / ((physicalDamage + specialDamage) / 2.0);
-        return Math.round(rounds * 100.0) / 100.0;
+    protected static int calculateRounds(Pokemon attacker, Pokemon defender) {
+        int physicalDamage = getBaseDamage(attacker, defender, true);
+        int specialDamage = getBaseDamage(attacker, defender, false);
+        return (int) Math.ceil(defender.getHp() / ((physicalDamage + specialDamage) / 2.0));
     }
 
     /** Helper function calculating the base damage depending on base damage. */
@@ -80,10 +79,9 @@ public class Pokemon implements Model {
      * update level and relevant stat automatically.
      *
      * @param increasedXPs The number of experience points to be added
-     * @return true if the Pokémon levels up as a result of the added experience points, otherwise
-     *     false
+     * @return true if the Pokémon levels up as a result of the added experience points
      */
-    public boolean increaseExpPts(int increasedXPs) {
+    public boolean increaseExpPts(@Nonnegative int increasedXPs) {
         setExPoints(this.exPoints + increasedXPs);
         return this.levelUp();
     }

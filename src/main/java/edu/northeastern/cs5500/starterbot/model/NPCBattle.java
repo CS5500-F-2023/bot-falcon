@@ -14,6 +14,7 @@ import lombok.Data;
 public class NPCBattle {
 
     private static final int COST_PER_BATTLE = 5;
+    private static final int REL_STRENGTH_ADDON = 2;
 
     private static final double EFFECTIVE_THRESHOLD = 1.0;
 
@@ -126,9 +127,9 @@ public class NPCBattle {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
-        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        int relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
         if (trainerWins) {
-            coinsEarned = (int) (BASE_COINS_FOR_WINNER / relStrength);
+            coinsEarned = BASE_COINS_FOR_WINNER - relStrength * REL_STRENGTH_ADDON;
             if (coinsEarned < FLOOR_COINS_FOR_WINNER) coinsEarned = FLOOR_COINS_FOR_WINNER;
             if (coinsEarned > CAP_COINS_FOR_WINNER) coinsEarned = CAP_COINS_FOR_WINNER;
         }
@@ -139,13 +140,13 @@ public class NPCBattle {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
-        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        int relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
         if (trainerWins) {
-            xpGained = (int) (BASE_EXP_FOR_WINNER / relStrength);
+            xpGained = (BASE_EXP_FOR_WINNER - relStrength * REL_STRENGTH_ADDON);
             if (xpGained < FLOOR_EXP_FOR_WINNER) xpGained = FLOOR_EXP_FOR_WINNER;
             if (xpGained > CAP_EXP_FOR_WINNER) xpGained = CAP_EXP_FOR_WINNER;
         } else {
-            xpGained = (int) (BASE_EXP_FOR_LOSER / relStrength);
+            xpGained = (BASE_EXP_FOR_LOSER - relStrength * REL_STRENGTH_ADDON);
             if (xpGained < FLOOR_EXP_FOR_LOSER) xpGained = FLOOR_EXP_FOR_LOSER;
             if (xpGained > CAP_EXP_FOR_LOSER) xpGained = CAP_EXP_FOR_LOSER;
         }
