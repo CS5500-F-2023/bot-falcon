@@ -172,20 +172,20 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                             species.getName(), xpRequiredNextLevel);
                 }
 
-                String xpProgressBar = generateXPProgressBar(newXP, LEVEL_UP_THRESHOLD);
-
                 event.reply(
                         String.format(
                                 "```%s Yummy! Your %s gained %d experience points!\n"
                                         + BOARD_LINE
-                                        + "Current Level: %d\nCurrent XP: %s\n"
+                                        + "Current Level: %d\nCurrent XP: %s    %d/%d\n"
                                         + BOARD_LINE
                                         + "%s```",
                                 selectedFoodType.getEmoji(),
                                 species.getName(),
                                 selectedFoodType.getExp(),
                                 levelAfter,
-                                xpProgressBar,
+                                pokemon.generateXpProgressBar(),
+                                pokemon.getExPoints(),
+                                LEVEL_UP_THRESHOLD,
                                 levelUpMessage))
                         .queue();
                 event.getMessage()
@@ -213,21 +213,5 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     .setComponents()
                     .queue(); // disable button
         }
-    }
-
-    private String generateXPProgressBar(int currentXP, int maxXP) {
-        int progressBarLength = 10;
-        int progress = (int) Math.ceil(((double) currentXP / maxXP) * progressBarLength);
-        int remaining = progressBarLength - progress;
-
-        StringBuilder progressBar = new StringBuilder();
-        for (int i = 0; i < progress; i++) {
-            progressBar.append("█");
-        }
-        for (int i = 0; i < remaining; i++) {
-            progressBar.append("░");
-        }
-
-        return String.format("%s  %d/%d", progressBar.toString(), currentXP, maxXP);
     }
 }
