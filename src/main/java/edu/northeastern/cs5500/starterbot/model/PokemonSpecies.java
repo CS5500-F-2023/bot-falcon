@@ -16,12 +16,11 @@ public class PokemonSpecies { // Not implementing Model
 
     @Nonnull final String[] speciesTypes; // types
 
-    @Nonnull final PokemonType[] types; // TODO - to be removed, keep it just in case
+    @Nonnull final PokemonType[] types;
 
-    public PokemonType getRandomType() { // Use in battle
-        int idx;
-        if (speciesTypes.length == 1) idx = 0;
-        else idx = new Random().nextInt(speciesTypes.length);
-        return PokemonType.valueOf(speciesTypes[idx].toUpperCase());
+    /** Randomly selects a PokemonType from the available types. */
+    public PokemonType getRandomType() {
+        int idx = new Random().nextInt(types.length);
+        return types[idx];
     }
 }

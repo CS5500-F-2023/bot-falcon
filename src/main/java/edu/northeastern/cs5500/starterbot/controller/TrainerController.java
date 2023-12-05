@@ -273,7 +273,7 @@ public class TrainerController {
      * Retrieves the Food inventory of a trainer identified by their Discord member ID.
      *
      * @param discordMemberId the Discord member ID of the trainer
-     * @return the list of Pokemon in the trainer's inventory
+     * @return the Map of fodd in the trainer's food inventory
      */
     public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
         Map<FoodType, Integer> foodInventory = new HashMap<>();
