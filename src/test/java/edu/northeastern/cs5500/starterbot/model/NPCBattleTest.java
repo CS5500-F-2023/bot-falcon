@@ -1,8 +1,12 @@
 package edu.northeastern.cs5500.starterbot.model;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException;
 import org.junit.jupiter.api.Test;
+
+// import static com.google.common.truth.Truth.assertThat;
 
 public class NPCBattleTest {
 
@@ -30,31 +34,69 @@ public class NPCBattleTest {
                     .speed(65)
                     .build();
 
+    private Trainer trainer = Trainer.builder().discordUserId("123").balance(20).build();
+
+    private NPCBattle npcBattle =
+            NPCBattle.builder()
+                    .trDiscordId(trainer.getDiscordUserId())
+                    .trPokemonIdStr(bulbasaur.getId().toString())
+                    .trainer(trainer)
+                    .trPokemon(bulbasaur)
+                    .trPokeSpecies(null)
+                    .npcPokemon(charmander)
+                    .npcPokeSpecies(null)
+                    .build();
+
     @Test
-    void testGetBaseDamage1() { // Physical move with level multiplier
-        bulbasaur.setLevel(7);
-        double attack = bulbasaur.getAttack() * (1.0 + 0.2) * 1.2;
-        double defense = charmander.getDefense() * (1.0) * 0.7;
-        int damage = (int) (attack - defense);
-        assertThat(NPCBattle.getBaseDamage(bulbasaur, charmander, true)).isEqualTo(damage);
+    void testSetCoinsEarnedException() {
+        assertThrows(InvalidBattleStatusException.class, () -> npcBattle.setCoinsEarned());
     }
 
     @Test
-    void testGetBaseDamage2() { // Special attack with level multiplier
-        double attack = bulbasaur.getSpecialAttack() * (1.0) * 1.2;
-        charmander.setLevel(7);
-        double defense = charmander.getSpecialDefense() * (1.0 + 0.2) * 0.7;
-        int damage = (int) (attack - defense);
-        assertThat(NPCBattle.getBaseDamage(bulbasaur, charmander, false)).isEqualTo(damage);
+    void testSetCoinsEarnedTrainerWins() throws InvalidBattleStatusException {
+        npcBattle.setGameOver(true);
+        npcBattle.setTrainerWins(true);
+        int relStrength = Pokemon.getRelStrength(bulbasaur, charmander);
+        assertThat(relStrength).isEqualTo(3);
+        int coinsEarned = 20 - relStrength * 2;
+        assertThat(coinsEarned).isEqualTo(14);
+        npcBattle.setCoinsEarned();
+        assertThat(npcBattle.getCoinsEarned()).isEqualTo(14);
     }
 
     @Test
-    void testGetBaseDamage3() { // Floor damage
-        double attack = bulbasaur.getSpecialAttack() * (1.0);
-        charmander.setLevel(20);
-        double defense = charmander.getSpecialDefense() * (1.0 + 1.5) * 0.65;
-        int damageBeforeFloor = (int) (attack - defense);
-        assertThat(damageBeforeFloor).isEqualTo(-16);
-        assertThat(NPCBattle.getBaseDamage(bulbasaur, charmander, false)).isEqualTo(8);
+    void testSetCoinsEarnedTrainerLoses() throws InvalidBattleStatusException {
+        npcBattle.setGameOver(true);
+        npcBattle.setTrainerWins(false);
+        npcBattle.setCoinsEarned();
+        assertThat(npcBattle.getCoinsEarned()).isEqualTo(0);
+    }
+
+    @Test
+    void testSetXpGainedException() {
+        assertThrows(InvalidBattleStatusException.class, () -> npcBattle.setXpGained());
+    }
+
+    @Test
+    void testSetXpGainedTrainerWins() throws InvalidBattleStatusException {
+        npcBattle.setGameOver(true);
+        npcBattle.setTrainerWins(true);
+        int relStrength = Pokemon.getRelStrength(bulbasaur, charmander);
+        assertThat(relStrength).isEqualTo(3);
+        int xpGained = 40 - relStrength * 2;
+        assertThat(xpGained).isEqualTo(34);
+        npcBattle.setXpGained();
+        assertThat(npcBattle.getXpGained()).isEqualTo(34);
+    }
+
+    @Test
+    void testSetXpGainedTrainerLoses() throws InvalidBattleStatusException {
+        npcBattle.setGameOver(true);
+        npcBattle.setTrainerWins(false);
+        int relStrength = 3;
+        int xpGained = 15 - relStrength * 2;
+        assertThat(xpGained).isEqualTo(9);
+        npcBattle.setXpGained();
+        assertThat(npcBattle.getXpGained()).isEqualTo(9);
     }
 }

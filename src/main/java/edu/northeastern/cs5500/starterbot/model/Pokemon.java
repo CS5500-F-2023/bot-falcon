@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,17 +13,17 @@ import org.bson.types.ObjectId;
 public class Pokemon implements Model {
 
     // Level up constants
-    private static final Integer DEFAULT_LEVEL = 5;
-    private static final Integer DEFAULT_XP = 10;
+    public static final Integer DEFAULT_LEVEL = 5;
+    public static final Integer DEFAULT_XP = 10;
     public static final Integer LEVEL_UP_THRESHOLD = 100;
 
-    // Weights for calculating Pokemon's strengths
-    private static final double LEVEL_WEIGHT = 1.5;
-    private static final double HP_WEIGHT = 2.0;
-    private static final double ATTACK_DEFENSE_WEIGHT = 1.5;
-    private static final double SPECIAL_WEIGHT = 1.5;
-    private static final double SPEED_WEIGHT = 2.0;
+    // Battle realted
+    private static final int LEVEL_ADDON = 3;
+    private static final double ATTACK_MULTIPLIER = 1.1;
+    private static final double DEFENSE_MULTIPLIER = 0.9;
+    private static final int DAMAGE_FLOOR = 7;
 
+    // Formatted message related
     private static final Integer TOTAL_HEALTH_BARS = 15;
     private static final Integer TOTAL_XP_BARS = 15;
 
@@ -47,37 +48,47 @@ public class Pokemon implements Model {
      *
      * @param trPokemon The player's Pokémon
      * @param npcPokemon The NPC's Pokémon
-     * @return The ratio of the player's Pokémon strength to the NPC's Pokémon strength
+     * @return an int > 0 if the Trainer Pokémon is stronger than the NPC's Pokémon, and an int < 0
+     *     if the Trainer Pokémon is weaker than the NPC's Pokémon
      */
-    public static double getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
-        double trStrength = getStrength(trPokemon);
-        double npcStrength = getStrength(npcPokemon);
-        return Math.round(100.0 * trStrength / npcStrength) / 100.0;
+    public static int getRelStrength(Pokemon trPokemon, Pokemon npcPokemon) {
+        int roundsForTrToWin = calculateRounds(trPokemon, npcPokemon);
+        int roundsForNpcToWin = calculateRounds(npcPokemon, trPokemon);
+        return roundsForNpcToWin - roundsForTrToWin;
+    }
+
+    /** Helper function to determine num of rounds for the attacker to knock down the defender. */
+    protected static int calculateRounds(Pokemon attacker, Pokemon defender) {
+        int physicalDamage = getBaseDamage(attacker, defender, true);
+        int specialDamage = getBaseDamage(attacker, defender, false);
+        return (int) Math.ceil(defender.getHp() / ((physicalDamage + specialDamage) / 2.0));
+    }
+
+    /** Helper function calculating the base damage depending on base damage. */
+    public static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean physical) {
+        double attack = (double) (physical ? attacker.getAttack() : attacker.getSpecialAttack());
+        double defense = (double) (physical ? defender.getDefense() : defender.getSpecialDefense());
+        double damage = attack * ATTACK_MULTIPLIER - defense * DEFENSE_MULTIPLIER;
+        return (int) Math.max(damage, DAMAGE_FLOOR);
     }
 
     /**
-     * Helper function to get a Pokemon's strength
+     * Increases the experience points of a Pokemon by the specified amount.
      *
-     * @param pokemon
-     * @return
-     */
-    private static double getStrength(Pokemon pokemon) {
-        return LEVEL_WEIGHT * pokemon.level
-                + HP_WEIGHT * pokemon.hp
-                + ATTACK_DEFENSE_WEIGHT * (pokemon.attack + pokemon.defense)
-                + SPECIAL_WEIGHT * (pokemon.specialAttack + pokemon.specialDefense)
-                + SPEED_WEIGHT * pokemon.speed;
-    }
-
-    /**
-     * Sets the experience points of the Pokémon and checks if it levels up.
+     * <p>It then checks if the Pokemon has gained enough experience to level up and if yes, will
+     * update level and relevant stat automatically.
      *
-     * @param exPoints The new experience points total for the Pokémon
-     * @return true if the Pokémon levels up as a result of the added EX points, otherwise false
+     * @param increasedXPs The number of experience points to be added
+     * @return true if the Pokémon levels up as a result of the added experience points
      */
-    public boolean setExPoints(int exPoints) {
-        this.exPoints = exPoints;
+    public boolean increaseExpPts(@Nonnegative int increasedXPs) {
+        setExPoints(this.exPoints + increasedXPs);
         return this.levelUp();
+    }
+
+    /** Private setter: Use `increaseExpPts()` instead. */
+    private void setExPoints(int exPoints) {
+        this.exPoints = exPoints;
     }
 
     /**
@@ -86,17 +97,24 @@ public class Pokemon implements Model {
      * @return True if the Pokémon has leveled up at least once during the process
      */
     private boolean levelUp() {
-        boolean hasLeveledUP = false;
+        int levelUpCount = 0;
         while (exPoints >= LEVEL_UP_THRESHOLD) {
             this.level += 1;
             this.exPoints -= LEVEL_UP_THRESHOLD;
-            hasLeveledUP = true;
+            levelUpCount++;
         }
-        return hasLeveledUP;
+        updateStatDueToLevelUp(levelUpCount);
+        return levelUpCount > 0;
     }
 
-    public boolean canLevelUpWithAddedXP(int addedXP) {
-        return this.exPoints + addedXP >= LEVEL_UP_THRESHOLD;
+    /** Handles the update of stat due to level up. */
+    private void updateStatDueToLevelUp(int level) {
+        this.setHp(hp + LEVEL_ADDON * level);
+        this.setAttack(attack + LEVEL_ADDON * level);
+        this.setDefense(defense + LEVEL_ADDON * level);
+        this.setSpecialAttack(specialAttack + LEVEL_ADDON * level);
+        this.setSpecialDefense(specialDefense + LEVEL_ADDON * level);
+        this.setSpeed(speed + LEVEL_ADDON * level);
     }
 
     /**

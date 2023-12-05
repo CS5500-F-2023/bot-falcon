@@ -51,8 +51,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
     @Nonnull
     public CommandData getCommandData() {
         return Commands.slash(
-                getName(),
-                "Start a battle with a random Pokémon. \nIt costs 5 coins to start a battle");
+                getName(), "Start a battle with a random Pokémon, with a cost of only 5 coins");
     }
 
     @Override
