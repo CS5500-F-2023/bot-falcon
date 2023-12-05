@@ -36,6 +36,7 @@ public class PokemonEvolutionController {
      * @return true if the Pokemon was successfully evolved, false otherwise
      */
     public boolean evolvePokemon(String pokemonIdString) {
+        this.pokemonEvolutionList = this.pokemonEvolutionService.getPokemonEvolutionList();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdString);
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
@@ -81,6 +82,7 @@ public class PokemonEvolutionController {
     }
 
     /**
+     * TODO msg can be redesigned per the battle msg requirement.
      * @param pokemonIdStr
      * @return
      */
