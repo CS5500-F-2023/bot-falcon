@@ -1,7 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
 import javax.annotation.Nonnegative;
-import java.util.Objects;
 import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -134,7 +133,7 @@ public class Pokemon implements Model {
      * @return true if the Pokemon can evolve, false otherwise
      */
     public boolean canEvolve() {
-        return !Objects.equals(this.level, DEFAULT_LEVEL) && this.level % DEFAULT_LEVEL == 0;
+        return !this.level.equals(DEFAULT_LEVEL) && this.level % DEFAULT_LEVEL == 0;
     }
 
     /**
