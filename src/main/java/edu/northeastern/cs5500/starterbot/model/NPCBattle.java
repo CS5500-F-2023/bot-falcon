@@ -291,8 +291,9 @@ public class NPCBattle {
 
         builder.append("💰 Trainer's Bounty 💰\n");
         builder.append(BOARD_LINE);
-        builder.append("   Coins Earned 🪙 : +").append(coinsEarned).append("\n");
-        builder.append("   New Balance  💸 :  ").append(trainer.getBalance()).append("\n\n");
+        builder.append("   Coins Earned 🤑 : +").append(coinsEarned).append("\n");
+        builder.append("   Battle Cost  💸 : -").append(COST_PER_BATTLE).append("\n");
+        builder.append("   New Balance  💰 :  ").append(trainer.getBalance()).append("\n\n");
 
         builder.append("🌈 Celebrate this victory. The journey to greatness continues!\n");
 
@@ -340,7 +341,7 @@ public class NPCBattle {
 
         builder.append("💸 Trainer's Expense 💸\n");
         builder.append(BOARD_LINE);
-        builder.append("   Battle Cost 🪙  : -").append(COST_PER_BATTLE).append("\n");
+        builder.append("   Battle Cost 💸  : -").append(COST_PER_BATTLE).append("\n");
         builder.append("   New Balance 💰  :  ").append(trainer.getBalance()).append("\n\n");
 
         builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");
