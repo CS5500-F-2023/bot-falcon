@@ -85,9 +85,6 @@ public class PokemonEvolutionController {
 
     /**
      * Builds an evolution message for a given Pokemon ID.
-     * Example usage:
-     *      - 🏆 Unleashing its full potential, [your Bronzor is evolved to Bronzong!]
-     *      - 🏆 Despite the challenges faced, [your Bronzor is evolved to Bronzong!]
      *
      * @param pokemonIdStr the ID of the Pokemon
      * @return the evolution message
@@ -98,6 +95,9 @@ public class PokemonEvolutionController {
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
+        // Example usage:
+        // - 🏆 Unleashing its full potential, [your Bronzor is evolved to Bronzong!]
+        // - 💪 Despite the challenges faced, [your Bronzor is evolved to Bronzong!]
         return String.format(
                 "your %s evolved into %s!",
                 pokemon.getEvolvedFrom(), species.getName(), species.getName());
@@ -105,8 +105,6 @@ public class PokemonEvolutionController {
 
     /**
      * Builds a message containing the evolution stats of a Pokemon.
-     * Example usage:
-     *      - EVOLVE to   💯 :  Bronzong
      *
      * @param pokemonIdStr the ID of the Pokemon
      * @return the message containing the evolution stats
@@ -115,7 +113,9 @@ public class PokemonEvolutionController {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+
         // todo sapcing to be adjusted base on actual msg
+        // Example usage: EVOLVE to 💯 : Bronzong
         return String.format("EVOLVE to   💯 :  %s", species.getName());
     }
 }
