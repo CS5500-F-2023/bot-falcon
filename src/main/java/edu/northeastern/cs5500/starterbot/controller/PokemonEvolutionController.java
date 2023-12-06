@@ -85,6 +85,9 @@ public class PokemonEvolutionController {
 
     /**
      * Builds an evolution message for a given Pokemon ID.
+     * Example usage:
+     *      - 🏆 Unleashing its full potential, [your Bronzor is evolved to Bronzong!]
+     *      - 🏆 Despite the challenges faced, [your Bronzor is evolved to Bronzong!]
      *
      * @param pokemonIdStr the ID of the Pokemon
      * @return the evolution message
@@ -102,6 +105,8 @@ public class PokemonEvolutionController {
 
     /**
      * Builds a message containing the evolution stats of a Pokemon.
+     * Example usage:
+     *      - EVOLVE to   💯 :  Bronzong
      *
      * @param pokemonIdStr the ID of the Pokemon
      * @return the message containing the evolution stats
