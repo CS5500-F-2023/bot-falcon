@@ -38,11 +38,13 @@ public class PokemonEvolutionController {
     public boolean evolvePokemon(String pokemonIdString) {
         this.pokemonEvolutionList = this.pokemonEvolutionService.getPokemonEvolutionList();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdString);
-        PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
-        for (PokemonEvolution pe : pokemonEvolutionList) {
-            if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
-                return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
+        if (pokemon.canEvolve()) {
+            PokemonSpecies species =
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+            for (PokemonEvolution pe : pokemonEvolutionList) {
+                if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
+                    return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
+                }
             }
         }
         return false; // not evolved
@@ -82,19 +84,33 @@ public class PokemonEvolutionController {
     }
 
     /**
-     * TODO msg can be redesigned per the battle msg requirement.
+     * Builds an evolution message for a given Pokemon ID.
      *
-     * @param pokemonIdStr
-     * @return
+     * @param pokemonIdStr the ID of the Pokemon
+     * @return the evolution message
      */
     public String buildEvolveMessage(String pokemonIdStr) {
         // when this method is called the pokemon should already be updated
-        Pokemon trPokemon = pokemonController.getPokemonById(pokemonIdStr);
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByREALPokedex(trPokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
         return String.format(
-                "Your %s evolved into %s!\n%s was added to your inventory.",
-                trPokemon.getEvolvedFrom(), species.getName(), species.getName());
+                "your %s evolved into %s!",
+                pokemon.getEvolvedFrom(), species.getName(), species.getName());
+    }
+
+    /**
+     * Builds a message containing the evolution stats of a Pokemon.
+     *
+     * @param pokemonIdStr the ID of the Pokemon
+     * @return the message containing the evolution stats
+     */
+    public String buildEvolveStatsMessage(String pokemonIdStr) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+        // todo sapcing to be adjusted base on actual msg
+        return String.format("EVOLVE to   💯 :  %s", species.getName());
     }
 }

@@ -61,10 +61,7 @@ public class PokemonEvolutionControllerTest {
         PokemonEvolutionController.pokemonController.pokemonRepository.add(pokemon);
         boolean isEvolvedAndUpdated = false;
         // evolve
-        if (pokemon.canEvolve()) {
-            isEvolvedAndUpdated =
-                    PokemonEvolutionController.evolvePokemon(pokemon.getId().toString());
-        }
+        isEvolvedAndUpdated = PokemonEvolutionController.evolvePokemon(pokemon.getId().toString());
 
         assertThat(isEvolvedAndUpdated).isFalse();
     }
@@ -91,14 +88,10 @@ public class PokemonEvolutionControllerTest {
         PokemonEvolutionController.pokemonController.pokemonRepository.add(pokemon);
         boolean isEvolvedAndUpdated = false;
         // evolve
-        if (pokemon.canEvolve()) {
-            isEvolvedAndUpdated =
-                    PokemonEvolutionController.evolvePokemon(pokemon.getId().toString());
-        }
+        isEvolvedAndUpdated = PokemonEvolutionController.evolvePokemon(pokemon.getId().toString());
 
         String msg = PokemonEvolutionController.buildEvolveMessage(pokemon.getId().toString());
-        String expected =
-                "Your Bulbasaur evolved into Ivysaur!\nIvysaur was added to your inventory.";
+        String expected = "your Bulbasaur evolved into Ivysaur!";
 
         assertThat(isEvolvedAndUpdated).isTrue();
         assertThat(msg).isEqualTo(expected);
