@@ -73,11 +73,12 @@ public class DailyCommand implements SlashCommandHandler {
         }
 
         EmbedBuilder greetingEmbed = createPokemonGreetingEmbed(trainerDiscordId);
-        EmbedBuilder rewardEmbed = createDailyRewardEmbed(trainerDiscordId, randomCoins, resultBal);
-
+        EmbedBuilder rewardEmbed = createDailyRewardEmbed(randomCoins, resultBal);
+        String mention = String.format("<@%s>", trainerDiscordId);
+        String content = mention + ", here is your daily update!";
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(greetingEmbed.build(), rewardEmbed.build());
-        event.reply(messageCreateBuilder.build()).queue();
+        event.reply(content).setEmbeds(greetingEmbed.build(), rewardEmbed.build()).queue();
     }
 
     private EmbedBuilder createPokemonGreetingEmbed(String trainerDiscordId) {
@@ -99,40 +100,31 @@ public class DailyCommand implements SlashCommandHandler {
                 pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        if (isWild) {
-            embedBuilder.setTitle(
-                    String.format(
-                            "<@%s>, a wild %s has wandered up to greet you with a curious glance 👋",
-                            trainerDiscordId, species.getName()));
-        } else {
-            embedBuilder.setTitle(
-                    String.format(
-                            "<@%s>, your %s bounds up to greet you with enthusiasm 👋",
-                            trainerDiscordId, species.getName()));
-        }
+        String title =
+                isWild
+                        ? String.format("🌿 A wild %s greets you curiously 🌿", species.getName())
+                        : String.format(
+                                "🌟 Your %s bounds up to greet you with enthusiasm 🌟",
+                                species.getName());
+        embedBuilder.setTitle(title);
         log.error("!!! about to set Pokemon URL");
         embedBuilder.setImage(species.getImageUrl());
+        embedBuilder.setColor(0x5CA266); // Same color as the successful button
         log.error("!!! set Pokemon URL");
         embedBuilder.setDescription(
-                String.format("%s looks excited to see you today!", species.getName()));
+                String.format("%s seems thrilled to see you!", species.getName()));
         return embedBuilder;
     }
 
-    private EmbedBuilder createDailyRewardEmbed(
-            String trainerDiscordId, Integer randomCoins, Integer resultBal) {
+    private EmbedBuilder createDailyRewardEmbed(Integer randomCoins, Integer resultBal) {
         log.error("!!! createDailyRewardEmbed");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(
-                String.format(
-                        "Congratulations <@%s>! you've earned %d coins today!",
-                        trainerDiscordId, randomCoins));
-        embedBuilder.setDescription("Come back tomorrow for more thrilling rewards!");
+                String.format("🎉 Hooray, you've earned %d coins today! 🎉", randomCoins));
+        embedBuilder.setDescription("🚀 Come back tomorrow for more thrilling rewards! 🚀");
         embedBuilder.setColor(0x5CA266); // Same color as the successful button
-        embedBuilder.addField(
-                "New balance", Integer.toString(resultBal) + " coins", false);
+        embedBuilder.addField("💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
         log.error("!!! about to set coins URL");
-        embedBuilder.setThumbnail(
-                "https://www.cleanpng.com/png-bag-of-money-png-clipart-picture-15824/");
         log.error("!!! set coins URL");
         return embedBuilder;
     }
