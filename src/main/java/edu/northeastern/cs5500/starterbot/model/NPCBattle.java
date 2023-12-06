@@ -14,15 +14,11 @@ import lombok.Data;
 public class NPCBattle {
 
     private static final int COST_PER_BATTLE = 5;
+    private static final int REL_STRENGTH_ADDON = 2;
 
-    private static final int DAMAGE_FLOOR = 8;
-    private static final int BASE_LEVEL = 5;
-    private static final int FIXED_WIDTH = 30;
-    private static final double LEVEL_MULTIPLIER_BASE = 0.1;
     private static final double EFFECTIVE_THRESHOLD = 1.0;
-    private static final double ATTACK_MULTIPLIER = 1.2;
-    private static final double DEFENSE_MULTIPLIER = 0.7;
 
+    private static final int FIXED_WIDTH = 30;
     private static final String BOARD_LINE = "----------------------------\n";
 
     private static final Integer BASE_COINS_FOR_WINNER = 20;
@@ -33,12 +29,12 @@ public class NPCBattle {
     private static final Integer FLOOR_EXP_FOR_WINNER = 5;
     private static final Integer CAP_EXP_FOR_WINNER = 80;
 
-    private static final Integer BASE_EXP_FOR_LOSER = 10;
-    private static final Integer FLOOR_EXP_FOR_LOSER = 5;
-    private static final Integer CAP_EXP_FOR_LOSER = 20;
+    private static final Integer BASE_EXP_FOR_LOSER = 15;
+    private static final Integer FLOOR_EXP_FOR_LOSER = 8;
+    private static final Integer CAP_EXP_FOR_LOSER = 25;
 
-    String trDiscordId;
-    String trPokemonIdStr;
+    String trDiscordId; // TODO (zqy): Do we need this?
+    String trPokemonIdStr; // TODO (zqy): Do we need this?
     @Nonnull Trainer trainer;
     @Nonnull Pokemon trPokemon;
     Pokemon npcPokemon;
@@ -84,7 +80,7 @@ public class NPCBattle {
             boolean physical = new Random().nextBoolean();
 
             // Calculate damage and update HP
-            int damage = getBaseDamage(attackPokemon, defensePokemon, physical);
+            int damage = Pokemon.getBaseDamage(attackPokemon, defensePokemon, physical);
             double multiplier = PokemonType.getMoveMultiplier(aType, dType);
             damage = (int) (damage * multiplier);
             damage += new Random().nextInt(5) - 3; // Random factor
@@ -104,7 +100,7 @@ public class NPCBattle {
                     setCoinsEarned();
                     if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
-                    boolean leveledUp = trPokemon.setExPoints(trPokemon.getExPoints() + xpGained);
+                    boolean leveledUp = trPokemon.increaseExpPts(xpGained);
                     resultMessage =
                             trainerWins
                                     ? buildVictoryMessage(leveledUp)
@@ -126,42 +122,31 @@ public class NPCBattle {
         else return npcPokemon;
     }
 
-    /** Helper function calculating the base damage depending on base damage. */
-    protected static int getBaseDamage(Pokemon attacker, Pokemon defender, boolean isPhysicalMove) {
-        double attack = isPhysicalMove ? attacker.getAttack() : attacker.getSpecialAttack();
-        attack *= 1.0 + LEVEL_MULTIPLIER_BASE * (attacker.getLevel() - BASE_LEVEL);
-        attack *= ATTACK_MULTIPLIER;
-        double defense = isPhysicalMove ? defender.getDefense() : defender.getSpecialDefense();
-        defense *= 1.0 + LEVEL_MULTIPLIER_BASE * (defender.getLevel() - BASE_LEVEL);
-        defense *= DEFENSE_MULTIPLIER; // so that attack is generally more effective
-        return (attack - defense < DAMAGE_FLOOR) ? DAMAGE_FLOOR : (int) (attack - defense);
-    }
-
     /** Helper function to calculate and update the coins earned after the battle ends. */
-    private void setCoinsEarned() throws InvalidBattleStatusException {
+    protected void setCoinsEarned() throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
-        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        int relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
         if (trainerWins) {
-            coinsEarned = (int) (BASE_COINS_FOR_WINNER / relStrength);
+            coinsEarned = BASE_COINS_FOR_WINNER - relStrength * REL_STRENGTH_ADDON;
             if (coinsEarned < FLOOR_COINS_FOR_WINNER) coinsEarned = FLOOR_COINS_FOR_WINNER;
             if (coinsEarned > CAP_COINS_FOR_WINNER) coinsEarned = CAP_COINS_FOR_WINNER;
         }
     }
 
     /** Helper function to calculate and update the experience gained after the battle ends. */
-    private void setXpGained() throws InvalidBattleStatusException {
+    protected void setXpGained() throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Set coinsEarn after battle ends.");
         }
-        double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
+        int relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
         if (trainerWins) {
-            xpGained = (int) (BASE_EXP_FOR_WINNER / relStrength);
+            xpGained = (BASE_EXP_FOR_WINNER - relStrength * REL_STRENGTH_ADDON);
             if (xpGained < FLOOR_EXP_FOR_WINNER) xpGained = FLOOR_EXP_FOR_WINNER;
             if (xpGained > CAP_EXP_FOR_WINNER) xpGained = CAP_EXP_FOR_WINNER;
         } else {
-            xpGained = (int) (BASE_EXP_FOR_LOSER / relStrength);
+            xpGained = (BASE_EXP_FOR_LOSER - relStrength * REL_STRENGTH_ADDON);
             if (xpGained < FLOOR_EXP_FOR_LOSER) xpGained = FLOOR_EXP_FOR_LOSER;
             if (xpGained > CAP_EXP_FOR_LOSER) xpGained = CAP_EXP_FOR_LOSER;
         }

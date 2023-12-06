@@ -16,6 +16,8 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
+    private static final int RELATIVE_STRENGTH_THRESHOLD = 2;
+
     GenericRepository<Pokemon> pokemonRepository;
 
     @Inject PokemonDataService pokemonDataService;
@@ -58,7 +60,7 @@ public class PokemonController {
 
     /**
      * Spawns a NPC Pokemon for battle, matching the trainer's Pokemon level. The method ensures the
-     * NPC Pokemon's relative strength is within 0.8 to 1.2 times that of the trainer's Pokemon. It
+     * relative strength of each Pokemon to knock down the opponent shall be within 2 rounds. It
      * also avoids selecting an NPC Pokemon of the same species as the trainer's. If no ideal match
      * is found within the strength range, the closest match is returned.
      *
@@ -67,18 +69,26 @@ public class PokemonController {
      */
     public Pokemon spawnNpcPokemonForBattle(Pokemon trPokemon) {
         int maxAttempt = 100;
-        Pokemon closestNpcPokemon = this.spawnRandonPokemon();
-        double closestDistance = 10000.0;
+        int closestDistance = 100000;
+        Pokemon closestNpcPokemon = spawnRandonPokemon();
+
         while (maxAttempt > 0) {
             maxAttempt--;
-            Pokemon npcPokemon = this.spawnRandonPokemon();
-            // Ideally we want to battle with a different species
+            Pokemon npcPokemon = spawnRandonPokemon();
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
-            npcPokemon.setLevel(trPokemon.getLevel());
-            double relStrength = Pokemon.getRelStrength(trPokemon, npcPokemon);
-            if (relStrength < 0.8 || relStrength > 1.2) return npcPokemon;
-            if (Math.abs(relStrength - 1.0) < closestDistance) {
-                closestDistance = Math.abs(relStrength - 1.0);
+
+            // TODO (zqy): adjust subject to the evolution impl
+            int addedExp =
+                    (trPokemon.getLevel() - Pokemon.DEFAULT_LEVEL) * Pokemon.LEVEL_UP_THRESHOLD
+                            + (trPokemon.getExPoints() - Pokemon.DEFAULT_XP);
+            npcPokemon.increaseExpPts(addedExp);
+
+            int absRelStrength = Math.abs(Pokemon.getRelStrength(trPokemon, npcPokemon));
+            if (absRelStrength <= RELATIVE_STRENGTH_THRESHOLD) {
+                return npcPokemon;
+            }
+            if (absRelStrength < closestDistance) {
+                closestDistance = absRelStrength;
                 closestNpcPokemon = npcPokemon;
             }
         }
@@ -131,7 +141,7 @@ public class PokemonController {
      */
     public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
         Pokemon pokemon = getPokemonById(pokemonIdStr);
-        boolean levelUp = pokemon.setExPoints(pokemon.getExPoints() + expGained);
+        boolean levelUp = pokemon.increaseExpPts(expGained);
         pokemonRepository.update(pokemon);
         return levelUp;
     }

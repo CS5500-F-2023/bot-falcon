@@ -76,14 +76,12 @@ public enum PokemonType {
         return this.name;
     }
 
-    // TODO: zqy: to delete, leave it for now just in case
     public static PokemonType[] getSingleTypeArray(PokemonType type) {
         PokemonType[] types = new PokemonType[1];
         types[0] = type;
         return types;
     }
 
-    // TODO: zqy: to delete, leave it for now just in case
     public static String getTypeString(PokemonType[] types) {
         StringBuilder typeBuilder = new StringBuilder();
         for (int i = 0; i < types.length; i++) {

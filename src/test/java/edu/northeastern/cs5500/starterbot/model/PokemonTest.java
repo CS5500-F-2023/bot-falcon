@@ -30,49 +30,48 @@ class PokemonTest {
                     .speed(65)
                     .build();
 
+    private Pokemon crobat =
+            Pokemon.builder()
+                    .pokedexNumber(169)
+                    .currentHp(10)
+                    .hp(85)
+                    .attack(90)
+                    .defense(80)
+                    .specialAttack(70)
+                    .specialDefense(80)
+                    .speed(130)
+                    .build();
+
     @Test
-    void testSetExPoints1() { // No level up
-        assertThat(bulbasaur.setExPoints(99)).isFalse();
+    void increaseExpPts() {
+        // No level up
+        assertThat(bulbasaur.increaseExpPts(0)).isFalse();
+        assertThat(bulbasaur.getExPoints()).isEqualTo(10);
+        assertThat(bulbasaur.increaseExpPts(89)).isFalse();
         assertThat(bulbasaur.getLevel()).isEqualTo(5);
         assertThat(bulbasaur.getExPoints()).isEqualTo(99);
-    }
 
-    @Test
-    void testSetExPoints2() { // Border case
-        assertThat(bulbasaur.setExPoints(100)).isTrue();
+        // Just level up
+        assertThat(bulbasaur.increaseExpPts(1)).isTrue();
         assertThat(bulbasaur.getLevel()).isEqualTo(6);
         assertThat(bulbasaur.getExPoints()).isEqualTo(0);
-    }
 
-    @Test
-    void testSetExPoints3() { // Up 2 levels
-        assertThat(bulbasaur.getExPoints()).isEqualTo(10);
-        assertThat(bulbasaur.setExPoints(240)).isTrue();
-        assertThat(bulbasaur.getLevel()).isEqualTo(7);
-        assertThat(bulbasaur.getExPoints()).isEqualTo(40);
-    }
+        assertThat(bulbasaur.getHp()).isEqualTo(45 + 3);
+        assertThat(bulbasaur.getAttack()).isEqualTo(49 + 3);
+        assertThat(bulbasaur.getSpecialAttack()).isEqualTo(65 + 3);
+        assertThat(bulbasaur.getSpecialDefense()).isEqualTo(65 + 3);
+        assertThat(bulbasaur.getSpeed()).isEqualTo(45 + 3);
 
-    @Test
-    void testCanLevelUpWithAddedXP() {
-        assertThat(bulbasaur.canLevelUpWithAddedXP(89)).isFalse();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(90)).isTrue();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(91)).isTrue();
-        assertThat(bulbasaur.canLevelUpWithAddedXP(190)).isTrue();
-    }
+        // Leveling up twice
+        assertThat(bulbasaur.increaseExpPts(201)).isTrue();
+        assertThat(bulbasaur.getLevel()).isEqualTo(8);
+        assertThat(bulbasaur.getExPoints()).isEqualTo(1);
 
-    @Test
-    void testGetRelStrength1() { // Same species
-        assertThat(Pokemon.getRelStrength(bulbasaur, bulbasaur)).isEqualTo(1.0);
-    }
-
-    @Test
-    void testGetRelStrength2() { // Different species
-        double bulStrength = 529.5;
-        double charStrength = 523.0;
-        double relativeStr1 = Math.round(100.0 * bulStrength / charStrength) / 100.0;
-        double relativeStr2 = Math.round(100.0 * charStrength / bulStrength) / 100.0;
-        assertThat(Pokemon.getRelStrength(bulbasaur, charmander)).isEqualTo(relativeStr1);
-        assertThat(Pokemon.getRelStrength(charmander, bulbasaur)).isEqualTo(relativeStr2);
+        assertThat(bulbasaur.getHp()).isEqualTo(45 + 3 + 6);
+        assertThat(bulbasaur.getAttack()).isEqualTo(49 + 3 + 6);
+        assertThat(bulbasaur.getSpecialAttack()).isEqualTo(65 + 3 + 6);
+        assertThat(bulbasaur.getSpecialDefense()).isEqualTo(65 + 3 + 6);
+        assertThat(bulbasaur.getSpeed()).isEqualTo(45 + 3 + 6);
     }
 
     @Test
@@ -88,5 +87,39 @@ class PokemonTest {
         bulbasaur.setCurrentHp(0);
         str = "░".repeat(15);
         assertThat(bulbasaur.generateHealthBar()).isEqualTo(str);
+    }
+
+    @Test
+    void testGetBaseDamage() {
+        // bulbasaur attacks charmander, physical
+        int damage = (int) (49.0 * 1.1 - 43.0 * 0.9);
+        assertThat(Pokemon.getBaseDamage(bulbasaur, charmander, true)).isEqualTo(damage);
+
+        // bulbasaur attacks charmander, special
+        damage = (int) (65.0 * 1.1 - 50.0 * 0.9);
+        assertThat(Pokemon.getBaseDamage(bulbasaur, charmander, false)).isEqualTo(damage);
+
+        // bulbasaur attacks crobat, special, floor damage
+        assertThat(Pokemon.getBaseDamage(bulbasaur, crobat, false)).isEqualTo(7);
+    }
+
+    @Test
+    void testGetRelStrength() {
+        int pDamage = Pokemon.getBaseDamage(bulbasaur, charmander, true);
+        assertThat(pDamage).isEqualTo(15);
+        int sDamage = Pokemon.getBaseDamage(bulbasaur, charmander, false);
+        assertThat(sDamage).isEqualTo(26);
+        int round1 = (int) Math.ceil(charmander.getHp() / ((pDamage + sDamage) / 2.0));
+        assertThat(round1).isEqualTo(2); // Round up 1.9
+
+        int pDamage2 = Pokemon.getBaseDamage(charmander, bulbasaur, true);
+        assertThat(pDamage2).isEqualTo(13);
+        int sDamage2 = Pokemon.getBaseDamage(charmander, bulbasaur, false);
+        assertThat(sDamage2).isEqualTo(7);
+        int round2 = (int) Math.ceil(bulbasaur.getHp() / ((pDamage2 + sDamage2) / 2.0));
+        assertThat(round2).isEqualTo(5); // Round up 4.5
+
+        int relStrength = Pokemon.getRelStrength(bulbasaur, charmander);
+        assertThat(relStrength).isEqualTo(round2 - round1);
     }
 }
