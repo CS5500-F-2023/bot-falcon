@@ -2,7 +2,6 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
-import edu.northeastern.cs5500.starterbot.model.Pokemon.PokemonBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
@@ -23,6 +22,8 @@ public class PokemonController {
 
     @Inject PokemonDataService pokemonDataService;
 
+    @Inject PokedexController pokedexController;
+
     List<PokemonData> pokemonDataList;
 
     @Inject
@@ -40,19 +41,10 @@ public class PokemonController {
      */
     @Nonnull
     Pokemon spawnPokemon(int listIndex) {
-        PokemonBuilder builder = Pokemon.builder();
         PokemonData data = this.pokemonDataList.get(listIndex);
 
-        builder.pokedexNumber(data.getNumber());
-        builder.currentHp(data.getHp());
-        builder.hp(data.getHp());
-        builder.attack(data.getAttack());
-        builder.defense(data.getDefense());
-        builder.specialAttack(data.getSpAttack());
-        builder.specialDefense(data.getSpDefense());
-        builder.speed(data.getSpeed());
-        return Objects.requireNonNull(
-                pokemonRepository.add(Objects.requireNonNull(builder.build())));
+        Pokemon pokemon = buildPokemon(data);
+        return Objects.requireNonNull(pokemonRepository.add(Objects.requireNonNull(pokemon)));
     }
 
     /**
@@ -118,31 +110,23 @@ public class PokemonController {
      *
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
-     *     <p>Sample: Level 🌟 : 5 XP 📊 : 10 Hp ❤️ : 65 Attack ⚔️ : 80 Defense 🛡️ : 140 Special
-     *     Attack 🔥 : 40 Special Defense 🛡️ : 70 Speed 🏃‍♂️ : 70
      */
     public String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats
         StringBuilder pokemonStatsBuilder = new StringBuilder();
-        pokemonStatsBuilder.append("Level         : 🌟 ").append(pokemon.getLevel()).append("\n");
-        pokemonStatsBuilder
-                .append("XP            : 📊 ")
-                .append(pokemon.getExPoints())
-                .append("\n");
-        pokemonStatsBuilder.append("Hp            : ❤️ ").append(pokemon.getHp()).append("\n");
-        pokemonStatsBuilder
-                .append("Speed         : 🏃‍♂️ ")
-                .append(pokemon.getSpeed())
-                .append("\n");
+        pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
+        pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
+        pokemonStatsBuilder.append("Hp      : ❤️ ").append(pokemon.getHp()).append("\n");
+        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s        : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "%s  : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
                         "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s       : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
+                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
                         "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
 
         return pokemonStatsBuilder.toString();
@@ -164,5 +148,24 @@ public class PokemonController {
 
     public void increasePokemonExpByFood(String pokemonIdStr, FoodType food) {
         increasePokemonExp(pokemonIdStr, food.getExp());
+    }
+
+    /**
+     * Builds a Pokemon object based on the provided PokemonData.
+     *
+     * @param data The PokemonData object containing the data for the Pokemon.
+     * @return The built Pokemon object.
+     */
+    protected Pokemon buildPokemon(PokemonData data) {
+        return Pokemon.builder()
+                .pokedexNumber(data.getNumber())
+                .currentHp(data.getHp())
+                .hp(data.getHp())
+                .attack(data.getAttack())
+                .defense(data.getDefense())
+                .specialAttack(data.getSpAttack())
+                .specialDefense(data.getSpDefense())
+                .speed(data.getSpeed())
+                .build();
     }
 }

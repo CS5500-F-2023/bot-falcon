@@ -43,6 +43,14 @@ public class Pokemon implements Model {
     @Nonnull Integer specialDefense; // spDefense
     @Nonnull Integer speed;
 
+    @Builder.Default
+    boolean isEvolved = false; // check if pokemon is evolved, by default, it is set to false
+
+    @Builder.Default
+    String evolvedFrom =
+            "placeholder"; // store previous species name to build informative messages for
+    // evolution
+
     /**
      * Calculates the relative strength of two Pokémon.
      *
@@ -118,6 +126,17 @@ public class Pokemon implements Model {
     }
 
     /**
+     * Checks if the Pokemon can evolve based on its level. e.g. 10, 15 will evoke evolution. Will
+     * be used in evolve method, whether a pokemon can be evolved depends on the length of evolution
+     * chain.
+     *
+     * @return true if the Pokemon can evolve, false otherwise
+     */
+    public boolean canEvolve() {
+        return !this.level.equals(DEFAULT_LEVEL) && this.level % DEFAULT_LEVEL == 0;
+    }
+
+    /**
      * Represents the ratio of the current HP to the maximum HP as a bar string.
      *
      * @return The string representation of a bar
@@ -136,7 +155,6 @@ public class Pokemon implements Model {
         double progressPercentage = (exPoints * 1.0 / LEVEL_UP_THRESHOLD) * 100.0;
 
         int filledBars = (int) Math.ceil(TOTAL_XP_BARS * (progressPercentage / 100.0));
-        // TODO (hy) check if it's match to progress bar in feed
         return "█".repeat(filledBars) + "░".repeat(TOTAL_XP_BARS - filledBars);
     }
 }

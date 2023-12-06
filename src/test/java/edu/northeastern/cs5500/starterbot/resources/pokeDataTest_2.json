@@ -1,0 +1,64 @@
+[
+    {
+        "name": "bulbasaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギダネ",
+            "roomaji": "Fushigidane",
+            "ko": "이상해씨",
+            "zh-Hant": "妙蛙種子",
+            "fr": "Bulbizarre",
+            "de": "Bisasam",
+            "es": "Bulbasaur",
+            "it": "Bulbasaur",
+            "en": "Bulbasaur",
+            "ja": "フシギダネ",
+            "zh-Hans": "妙蛙种子"
+        },
+        "formNames": {},
+        "number": 1,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+        "hp": 45,
+        "attack": 49,
+        "defense": 49,
+        "spAttack": 65,
+        "spDefense": 65,
+        "speed": 45,
+        "id": "1",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "ivysaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギソウ",
+            "roomaji": "Fushigisou",
+            "ko": "이상해풀",
+            "zh-Hant": "妙蛙草",
+            "fr": "Herbizarre",
+            "de": "Bisaknosp",
+            "es": "Ivysaur",
+            "it": "Ivysaur",
+            "en": "Ivysaur",
+            "ja": "フシギソウ",
+            "zh-Hans": "妙蛙草"
+        },
+        "formNames": {},
+        "number": 2,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/2.png",
+        "hp": 60,
+        "attack": 62,
+        "defense": 63,
+        "spAttack": 80,
+        "spDefense": 80,
+        "speed": 60,
+        "id": "2",
+        "types": [
+            "grass",
+            "poison"
+        ]
+    }
+]

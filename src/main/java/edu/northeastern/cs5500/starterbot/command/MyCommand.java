@@ -90,15 +90,15 @@ public class MyCommand implements SlashCommandHandler {
                 .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
                 .append(BOARD_LINE)
-                .append(String.format("Inventory No. : 🔢 %d\n", inventoryIndex))
+                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
                 .append(BOARD_LINE)
-                .append("XP            : ")
+                .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
                 .append(String.format(" %d/%d", pokemon.getExPoints(), pokemon.LEVEL_UP_THRESHOLD))
-                .append("\n\n🥣 Give your pokemon a boost using /feed with inventory number!");
+                .append("\n\n🥣 Boost your pokemon using /feed with PokeID!");
 
         return "```" + profileBuilder.toString() + "```";
     }

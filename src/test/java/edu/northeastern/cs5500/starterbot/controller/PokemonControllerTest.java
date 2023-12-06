@@ -10,9 +10,17 @@ import org.junit.jupiter.api.Test;
 public class PokemonControllerTest {
 
     private PokemonController getPokemonController() {
-        PokemonDataService pokemonDataService = new PokemonDataService();
+        // mock injection
+        PokemonDataService pokemonDataService =
+                new PokemonDataService(
+                        "src/test/java/edu/northeastern/cs5500/starterbot/resources/pokeDataTest_2.json");
+        PokedexController pokedexController = new PokedexController(pokemonDataService);
         PokemonController pokemonController =
                 new PokemonController(new InMemoryRepository<>(), pokemonDataService);
+
+        pokemonController.pokedexController = pokedexController;
+        pokedexController.pokemonDataList = pokemonDataService.getPokemonDataList();
+
         return pokemonController;
     }
 
@@ -25,12 +33,10 @@ public class PokemonControllerTest {
 
     @Test
     public void mockPokemonDetailString() {
-        String attack =
-                String.format("%s             : 🛡️ Phys. %-3d | 🔮 Sp. %-3d\n", "Attack", 10, 11);
-        String defense =
-                String.format("%s            : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n", "Defense", 10, 11);
-        // Attack             : 🛡️ Phys. 10  | 🔮 Sp. 11
-        // Defense            : 🛡️ Phys. 10  | 🛡️ Sp. 11
+        String attack = String.format("%s  : 🛡️ Phys. %-3d | 🔮 Sp. %-3d\n", "Attack", 1, 1);
+        String defense = String.format("%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n", "Defense", 1, 1);
+        // Attack       : 🛡️ Phys. 10  | 🔮 Sp. 11
+        // Defense      : 🛡️ Phys. 10  | 🛡️ Sp. 11
         // System.out.println(attack + defense);
     }
 
