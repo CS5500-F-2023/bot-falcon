@@ -117,8 +117,7 @@ public class DailyCommand implements SlashCommandHandler {
                 String.format("🥳 Hooray, you've earned %d coins today! 🥳", randomCoins));
         embedBuilder.setDescription("```More amazing rewards await you tomorrow 🎁  ```");
         embedBuilder.setColor(0x5CA266); // Same color as the successful button
-        embedBuilder.addField(
-                "💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
+        embedBuilder.addField("💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
         return embedBuilder;
     }
 }
