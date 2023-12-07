@@ -67,10 +67,15 @@ public class PokedexController {
      */
     private PokemonSpecies buildPokemonSpecies(PokemonData data) {
         String[] types = PokemonType.buildTypesWithEmoji(data.getTypes());
+        int pokedex = data.getNumber();
+        String formatSpecifier = (pokedex < 1000) ? "%03d" : "%d";
+        String formattedNumber = String.format(formatSpecifier, pokedex);
         return PokemonSpecies.builder()
-                .pokedexNumber(data.getNumber())
+                .pokedexNumber(pokedex)
                 .name(data.getSpeciesNames().get("en"))
-                .imageUrl(data.getSpriteURL())
+                .imageUrl(
+                        String.format(
+                                "http://www.serebii.net/pokemongo/pokemon/%s.png", formattedNumber))
                 .speciesTypes(types)
                 .types(
                         PokemonType.getSingleTypeArray(
