@@ -118,11 +118,11 @@ public class PokemonController {
         StringBuilder pokemonStatsBuilder = new StringBuilder();
         pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
         pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
-        pokemonStatsBuilder.append("Hp      : ❤️ ").append(pokemon.getHp()).append("\n");
+        pokemonStatsBuilder.append("Hp      : 🩷 ").append(pokemon.getHp()).append("\n");
         pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s  : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "%s  : 🗡️ Phys. %-3d | 🔮 Sp. %-3d\n",
                         "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
         pokemonStatsBuilder.append(
                 String.format(
