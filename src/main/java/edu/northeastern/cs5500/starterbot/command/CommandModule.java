@@ -141,4 +141,11 @@ public class CommandModule {
     public ButtonHandler provideFeedCommandClickHandler(FeedCommand feedCommand) {
         return feedCommand;
     }
+
+    @Provides
+    @IntoMap
+    @StringKey(HelpCommand.NAME)
+    public SlashCommandHandler provideHelpCommand(HelpCommand helpCommand) {
+        return helpCommand;
+    }
 }
