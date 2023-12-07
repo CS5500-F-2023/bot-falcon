@@ -71,7 +71,8 @@ public class DailyCommand implements SlashCommandHandler {
         }
 
         EmbedBuilder greetingEmbed = createPokemonGreetingEmbed(trainerDiscordId);
-        EmbedBuilder rewardEmbed = createDailyRewardEmbed(randomCoins, resultBal);
+        EmbedBuilder rewardEmbed =
+                createDailyRewardEmbed(resultBal - randomCoins, randomCoins, resultBal);
         event.replyEmbeds(greetingEmbed.build(), rewardEmbed.build()).queue();
     }
 
@@ -111,13 +112,36 @@ public class DailyCommand implements SlashCommandHandler {
         return embedBuilder;
     }
 
-    private EmbedBuilder createDailyRewardEmbed(Integer randomCoins, Integer resultBal) {
+    private EmbedBuilder createDailyRewardEmbed(
+            Integer prevBal, Integer randomCoins, Integer newBal) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        int maxLen =
+                Math.max(
+                        Math.max(
+                                Integer.toString(prevBal).length(),
+                                Integer.toString(randomCoins).length()),
+                        Integer.toString(newBal).length());
+
+        String separator = "-".repeat(maxLen + 20);
+
         embedBuilder.setTitle(
                 String.format("🥳 Hooray, you've earned %d coins today! 🥳", randomCoins));
-        embedBuilder.setDescription("```More amazing rewards await you tomorrow 🎁  ```");
+
+        String statementFormat =
+                "```\n"
+                        + "🏦 Your Statement 🏦\n"
+                        + "%s\n"
+                        + ("Prev. Balance 💸:  %" + maxLen + "d\n")
+                        + ("Coins Earned  🤑: +%" + (maxLen - 1) + "d\n")
+                        + ("New Balance   💰:  %" + maxLen + "d\n\n")
+                        + "More amazing rewards await you tomorrow 🎁  \n"
+                        + "```";
+
+        String statement = String.format(statementFormat, separator, prevBal, randomCoins, newBal);
+        embedBuilder.setDescription(statement);
         embedBuilder.setColor(0x5CA266); // Same color as the successful button
-        embedBuilder.addField("💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
+
         return embedBuilder;
     }
 }
