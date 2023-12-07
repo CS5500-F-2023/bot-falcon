@@ -17,12 +17,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 @Slf4j
 public class DailyCommand implements SlashCommandHandler {
 
     static final String NAME = "daily";
+    static final int WIDTH = 14;
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -55,14 +55,12 @@ public class DailyCommand implements SlashCommandHandler {
         LocalDate curCheckinDate = OffsetDateTime.now().toLocalDate();
         Random random = new Random();
         Integer randomCoins = (random.nextInt(10) + 1) * 10; // 10, 20... 90, 100
-        Integer resultBal = 0; // Declare resultBal outside the try-catch block
-        log.error("!!! random coins is" + randomCoins);
+        Integer resultBal = 0;
 
         try {
             resultBal =
                     trainerController.addDailyRewardsToTrainer(
                             trainerDiscordId, randomCoins, curCheckinDate);
-            log.error("!!! result balance is" + resultBal);
         } catch (InvalidCheckinDayException e) {
             StringBuilder sb = new StringBuilder();
             sb.append("Oops, looks like you've already checked in today, <@");
@@ -74,15 +72,10 @@ public class DailyCommand implements SlashCommandHandler {
 
         EmbedBuilder greetingEmbed = createPokemonGreetingEmbed(trainerDiscordId);
         EmbedBuilder rewardEmbed = createDailyRewardEmbed(randomCoins, resultBal);
-        String mention = String.format("<@%s>", trainerDiscordId);
-        String content = mention + ", here is your daily update!";
-        MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-        messageCreateBuilder.addEmbeds(greetingEmbed.build(), rewardEmbed.build());
-        event.reply(content).setEmbeds(greetingEmbed.build(), rewardEmbed.build()).queue();
+        event.replyEmbeds(greetingEmbed.build(), rewardEmbed.build()).queue();
     }
 
     private EmbedBuilder createPokemonGreetingEmbed(String trainerDiscordId) {
-        log.error("!!! createPokemonGreetingEmbed");
         List<Pokemon> inventory = trainerController.getTrainerPokemonInventory(trainerDiscordId);
 
         Pokemon pokemon;
@@ -104,28 +97,28 @@ public class DailyCommand implements SlashCommandHandler {
                 isWild
                         ? String.format("🌿 A wild %s greets you curiously 🌿", species.getName())
                         : String.format(
-                                "🌟 Your %s bounds up to greet you with enthusiasm 🌟",
-                                species.getName());
+                                "🌟 Your %s greets you with enthusiasm 🌟", species.getName());
         embedBuilder.setTitle(title);
-        log.error("!!! about to set Pokemon URL");
         embedBuilder.setImage(species.getImageUrl());
         embedBuilder.setColor(0x5CA266); // Same color as the successful button
-        log.error("!!! set Pokemon URL");
         embedBuilder.setDescription(
-                String.format("%s seems thrilled to see you!", species.getName()));
+                String.format(
+                        "```%s %s seems thrilled to see you!"
+                                + " ".repeat(WIDTH - species.getName().length())
+                                + "```",
+                        species.getName(),
+                        species.getRandomType().getEmoji()));
         return embedBuilder;
     }
 
     private EmbedBuilder createDailyRewardEmbed(Integer randomCoins, Integer resultBal) {
-        log.error("!!! createDailyRewardEmbed");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(
-                String.format("🎉 Hooray, you've earned %d coins today! 🎉", randomCoins));
-        embedBuilder.setDescription("🚀 Come back tomorrow for more thrilling rewards! 🚀");
+                String.format("🥳 Hooray, you've earned %d coins today! 🥳", randomCoins));
+        embedBuilder.setDescription("```More amazing rewards await you tomorrow 🎁  ```");
         embedBuilder.setColor(0x5CA266); // Same color as the successful button
-        embedBuilder.addField("💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
-        log.error("!!! about to set coins URL");
-        log.error("!!! set coins URL");
+        embedBuilder.addField(
+                "💰 New balance 💰", Integer.toString(resultBal) + " coins", false);
         return embedBuilder;
     }
 }

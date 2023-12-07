@@ -12,7 +12,7 @@ public enum PokemonType {
     FIRE("Fire", "🔥"),
     WATER("Water", "💧"),
     GRASS("Grass", "🌿"),
-    NORMAL("Normal", "😐"),
+    NORMAL("Normal", "🧩"),
     FIGHTING("Fighting", "🥊"),
     FLYING("Flying", "🕊️"),
     ROCK("Rock", "🪨"),
