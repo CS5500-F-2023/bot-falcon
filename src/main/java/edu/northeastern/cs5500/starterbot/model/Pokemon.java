@@ -16,7 +16,10 @@ public class Pokemon implements Model {
     public static final Integer DEFAULT_LEVEL = 5;
     public static final Integer DEFAULT_XP = 10;
     public static final Integer LEVEL_UP_THRESHOLD = 100;
-    public static final Integer FLOOR_CATCH_COSTS = 5;
+
+    // Spawn cost related
+    private static final Integer FLOOR_CATCH_COSTS = 5;
+    private static final Integer COST_ADDON_PER_LEVEL = 2;
 
     // Battle realted
     private static final int LEVEL_ADDON = 3;
@@ -165,8 +168,6 @@ public class Pokemon implements Model {
      * @return The cost in coins to catch this Pokemon as an integer
      */
     public int getCatchCosts() {
-        return ((this.level - DEFAULT_LEVEL) * LEVEL_UP_THRESHOLD + this.exPoints)
-                        / LEVEL_UP_THRESHOLD
-                + FLOOR_CATCH_COSTS;
+        return FLOOR_CATCH_COSTS + (this.level - DEFAULT_LEVEL) * COST_ADDON_PER_LEVEL;
     }
 }

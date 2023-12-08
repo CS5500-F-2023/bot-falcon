@@ -130,11 +130,11 @@ class PokemonTest {
         assertThat(bulbasaur.increaseExpPts(90)).isTrue();
         assertThat(bulbasaur.getLevel()).isEqualTo(6);
         assertThat(bulbasaur.getExPoints()).isEqualTo(0);
-        assertThat(bulbasaur.getCatchCosts()).isEqualTo(6);
+        assertThat(bulbasaur.getCatchCosts()).isEqualTo(7);
 
         assertThat(bulbasaur.increaseExpPts(450)).isTrue();
         assertThat(bulbasaur.getLevel()).isEqualTo(10);
         assertThat(bulbasaur.getExPoints()).isEqualTo(50);
-        assertThat(bulbasaur.getCatchCosts()).isEqualTo(10);
+        assertThat(bulbasaur.getCatchCosts()).isEqualTo(15);
     }
 }
