@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -115,10 +116,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         final String response = event.getInteraction().getValues().get(0);
         String[] fields = response.split(":");
         String trPokemonID = fields[0];
-        log.error("!!! onStringSelectInteraction: " + "trPokemonID: " + trPokemonID);
         String initiatorDiscordId = fields[1];
         String trDiscordId = event.getMember().getId();
-        log.error("!!! onStringSelectInteraction: " + "trDiscordId: " + initiatorDiscordId);
 
         // If user who clicks list is Not the same as who initiated the list
         if (!trDiscordId.equals(initiatorDiscordId)) {
@@ -133,52 +132,23 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
             return;
         }
 
-        // The user chooses the his or her Pokémon, being the Trainer Pokémon
-        Pokemon trPokemon = pokemonController.getPokemonById(trPokemonID);
-        trPokemon.setCurrentHp(trPokemon.getHp());
-        Integer trPokedex = trPokemon.getPokedexNumber();
-        PokemonSpecies trPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
-        String trPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(trPokedex);
-        String trPokeInfoStr = pokemonController.buildPokemonStats(trPokemonID);
-        String trPokeName = trPokeSpecies.getName();
+        MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen");
+        MessageEmbed trPokeStat = buildPokemonStat(trPokemonID);
 
-        // Set up the Embedded Message for Trainer Pokémon
-        EmbedBuilder embedBuilder1 = new EmbedBuilder();
-        embedBuilder1.setTitle(String.format("You have chosen %s!", trPokeName));
-        embedBuilder1.addField(
-                "----\n🔎 Details of your chosen Pokémon!\n----",
-                String.format("```%s%n%s%n```", trPokeSpeciesInfoStr, trPokeInfoStr),
-                false);
-        embedBuilder1.setThumbnail(trPokeSpecies.getImageUrl());
-
-        // Set up the battle
         NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
 
-        // The NPC Pokémon is accessible by calling battle.getNpcPokemon()
         Pokemon npcPokemon = battle.getNpcPokemon();
-        Integer npcPokedex = npcPokemon.getPokedexNumber();
-        PokemonSpecies npcPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
-        String npcPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(npcPokedex);
-        String npcPokeInfoStr = pokemonController.buildPokemonStats(npcPokemon.getId().toString());
-        String npcPokeName = npcPokeSpecies.getName();
-
-        // Set up the Embedded Message for NPC Pokémon
-        EmbedBuilder embedBuilder2 = new EmbedBuilder();
-        embedBuilder2.setTitle(String.format("Your opponent's Pokémon is %s!", npcPokeName));
-        embedBuilder2.addField(
-                "----\n🔎 Details of your opponent's Pokémon!\n----",
-                String.format("```%s%n%s%n```", npcPokeSpeciesInfoStr, npcPokeInfoStr),
-                false);
-        embedBuilder2.setThumbnail(npcPokeSpecies.getImageUrl());
+        String npcPokemonID = npcPokemon.getId().toString();
+        MessageEmbed npcPokeProfile = buildPokemonProfile(npcPokemonID, "Your opponent Pokemon is");
+        MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID);
 
         // Start battle and get the battle record
         battleController.runBattle(battle);
-        log.error("!!! runBattle: ");
 
         // Build up and send the battle rounds and result messages
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-        messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
+        messageCreateBuilder.addEmbeds(trPokeProfile, trPokeStat, npcPokeProfile, npcPokeStat);
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
@@ -207,5 +177,27 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                                     5,
                                     TimeUnit.SECONDS);
                         });
+    }
+
+    private MessageEmbed buildPokemonProfile(String pokemonIdStr, String msg) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
+        Integer pokedex = pokemon.getPokedexNumber();
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByPokedex(pokedex);
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setTitle(String.format("%s %s!", msg, species.getName()));
+        embedBuilder.setImage(species.getImageUrl());
+        return embedBuilder.build();
+    }
+
+    private MessageEmbed buildPokemonStat(String pokemonIdStr) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
+        Integer pokedex = pokemon.getPokedexNumber();
+        String speciesInfoStr = pokedexController.buildSpeciesDetails(pokedex);
+        String pokeInfoStr = pokemonController.buildPokemonStats(pokemonIdStr);
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setDescription(String.format("%s%n%s", speciesInfoStr, pokeInfoStr));
+        return embedBuilder.build();
     }
 }
