@@ -44,9 +44,6 @@ public class Pokemon implements Model {
     @Nonnull Integer speed;
 
     @Builder.Default
-    boolean isEvolved = false; // check if pokemon is evolved, by default, it is set to false
-
-    @Builder.Default
     String evolvedFrom =
             "placeholder"; // store previous species name to build informative messages for
     // evolution
