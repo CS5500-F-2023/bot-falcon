@@ -7,6 +7,7 @@ import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
 import edu.northeastern.cs5500.starterbot.service.PokemonEvolutionService;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.inject.Inject;
 
@@ -20,7 +21,7 @@ public class PokemonEvolutionController {
 
     @Inject PokemonDataService pokemonDataService;
 
-    List<PokemonEvolution> pokemonEvolutionList;
+    Map<String, PokemonEvolution> pokemonEvolutionMap;
 
     List<PokemonData> pokemonDataList;
 
@@ -36,15 +37,18 @@ public class PokemonEvolutionController {
      * @return true if the Pokemon was successfully evolved, false otherwise
      */
     public boolean evolvePokemon(String pokemonIdString) {
-        this.pokemonEvolutionList = this.pokemonEvolutionService.getPokemonEvolutionList();
+        this.pokemonEvolutionMap = this.pokemonEvolutionService.getPokemonEvolutionMap();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdString);
         if (pokemon.canEvolve()) {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
-            for (PokemonEvolution pe : pokemonEvolutionList) {
-                if (pe.getEvolutionFrom().equalsIgnoreCase(species.getName())) {
-                    return evolvePokemonByName(pe.getEvolutionFrom(), pe.getEvolutionTo(), pokemon);
+            String speciesName = species.getName();
+            if (pokemonEvolutionMap.containsKey(speciesName)) {
+                PokemonEvolution pe = pokemonEvolutionMap.get(speciesName);
+                if (pe.getEvolutionTo().isEmpty()) {
+                    return false; // not evolvable if there is no value in evolutionTo
                 }
+                return evolvePokemonByName(speciesName, pe.getEvolutionTo(), pokemon);
             }
         }
         return false; // not evolved
@@ -73,7 +77,6 @@ public class PokemonEvolutionController {
                 pokemon.setSpecialDefense(data.getSpDefense());
                 pokemon.setSpeed(data.getSpeed());
                 pokemon.setEvolvedFrom(evolutionFrom);
-                pokemon.setEvolved(true);
 
                 // update pokemon in the repository
                 Objects.requireNonNull(pokemonController.pokemonRepository.update(pokemon));

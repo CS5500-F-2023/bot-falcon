@@ -60,5 +60,36 @@
             "grass",
             "poison"
         ]
+    },
+    {
+        "name": "venusaur",
+        "speciesNames": {
+            "ja-Hrkt": "フシギバナ",
+            "roomaji": "Fushigibana",
+            "ko": "이상해꽃",
+            "zh-Hant": "妙蛙花",
+            "fr": "Florizarre",
+            "de": "Bisaflor",
+            "es": "Venusaur",
+            "it": "Venusaur",
+            "en": "Venusaur",
+            "ja": "フシギバナ",
+            "zh-Hans": "妙蛙花"
+        },
+        "formNames": {},
+        "number": 3,
+        "spriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+        "shinySpriteURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/3.png",
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "spAttack": 100,
+        "spDefense": 100,
+        "speed": 80,
+        "id": "3",
+        "types": [
+            "grass",
+            "poison"
+        ]
     }
 ]
