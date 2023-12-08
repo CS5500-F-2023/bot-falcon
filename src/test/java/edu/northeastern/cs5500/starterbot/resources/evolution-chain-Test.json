@@ -1,0 +1,22 @@
+{
+    "Bulbasaur": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ivysaur",
+        "prev": []
+    },
+    "Ivysaur": {
+        "evolutionFrom": "Bulbasaur",
+        "evolutionTo": "Venusaur",
+        "prev": [
+            "Bulbasaur"
+        ]
+    },
+    "Venusaur": {
+        "evolutionFrom": "Ivysaur",
+        "evolutionTo": "",
+        "prev": [
+            "Bulbasaur",
+            "Ivysaur"
+        ]
+    }
+}
