@@ -33,8 +33,8 @@ public class NPCBattle {
     private static final Integer FLOOR_EXP_FOR_LOSER = 8;
     private static final Integer CAP_EXP_FOR_LOSER = 25;
 
-    String trDiscordId; // TODO (zqy): Do we need this?
-    String trPokemonIdStr; // TODO (zqy): Do we need this?
+    String trDiscordId;
+    String trPokemonIdStr;
     @Nonnull Trainer trainer;
     @Nonnull Pokemon trPokemon;
     Pokemon npcPokemon;

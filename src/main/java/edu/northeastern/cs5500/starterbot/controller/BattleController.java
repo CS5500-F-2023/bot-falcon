@@ -17,6 +17,8 @@ public class BattleController {
 
     @Inject TrainerController trainerController;
 
+    @Inject PokemonEvolutionController pokemonEvolutionController;
+
     @Inject
     BattleController() {
         // No args as we are not saving anythin
@@ -53,5 +55,14 @@ public class BattleController {
         // Update trianer and pokemon in the database
         trainerController.trainerRepository.update(battle.getTrainer());
         pokemonController.pokemonRepository.update(battle.getTrPokemon());
+
+        // Check evolution
+        String pokemonId = battle.getTrPokemonIdStr();
+        boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonId);
+        if (evolved) {
+            String s1 = pokemonEvolutionController.buildEvolveMessage(pokemonId);
+            String s2 = pokemonEvolutionController.buildEvolveStatsMessage(pokemonId);
+            battle.getMessages().add("```" + s1 + "\n\n" + s2 + "```");
+        }
     }
 }
