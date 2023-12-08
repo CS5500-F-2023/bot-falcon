@@ -171,41 +171,22 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                 false);
         embedBuilder2.setThumbnail(npcPokeSpecies.getImageUrl());
 
-        // Start battle and get the battle record
+        // Run the battle
         battleController.runBattle(battle);
-        log.error("!!! runBattle: ");
 
-        // Build up and send the battle rounds and result messages
+        // Build up and send the battle messages
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(embedBuilder1.build(), embedBuilder2.build());
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
-                            scheduler.schedule(
-                                    () ->
-                                            interactionHook
-                                                    .sendMessage(battle.getStartMessage())
-                                                    .queue(),
-                                    3,
-                                    TimeUnit.SECONDS);
-
-                            // Send round info
-                            for (String roundMsg : battle.getRoundMessages()) {
+                            for (String msg : battle.getMessages()) {
                                 scheduler.schedule(
-                                        () -> interactionHook.sendMessage(roundMsg).queue(),
-                                        5,
+                                        () -> interactionHook.sendMessage(msg).queue(),
+                                        4,
                                         TimeUnit.SECONDS);
                             }
-
-                            // Send result info
-                            scheduler.schedule(
-                                    () ->
-                                            interactionHook
-                                                    .sendMessage(battle.getResultMessage())
-                                                    .queue(),
-                                    5,
-                                    TimeUnit.SECONDS);
                         });
     }
 }

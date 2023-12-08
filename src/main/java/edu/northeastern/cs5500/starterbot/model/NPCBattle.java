@@ -48,14 +48,12 @@ public class NPCBattle {
     @Builder.Default int xpGained = 0;
 
     // Messages
-    @Builder.Default @Nonnull String startMessage = "";
-    @Builder.Default @Nonnull String resultMessage = "";
-    @Builder.Default List<String> roundMessages = new ArrayList<>();
+    @Builder.Default List<String> messages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
         // Format start message
-        startMessage = this.formatStartMsg();
+        this.messages.add(this.formatStartMsg());
 
         // Set current HP to max HP
         trPokemon.setCurrentHp(trPokemon.getHp());
@@ -90,12 +88,13 @@ public class NPCBattle {
             // Generate round message
             boolean isBot = attackPokemon.equals(npcPokemon);
             String s = formatRoundMsg(isBot, physical, aType, dType, multiplier, damage);
-            this.roundMessages.add(s);
+            this.messages.add(s);
 
             // Check if the game ends; if so, update final result
             if (trPokemon.getCurrentHp() <= 0 || npcPokemon.getCurrentHp() <= 0) {
                 gameOver = true;
                 if (npcPokemon.getCurrentHp() <= 0) trainerWins = true;
+                String resultMessage;
                 try { // Note: change to Trainer and Trainer Pokemon are in memory to format message
                     setCoinsEarned();
                     if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
@@ -108,6 +107,7 @@ public class NPCBattle {
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
+                this.messages.add(resultMessage);
             } else { // Swith attacker and defenser
                 Pokemon temp = attackPokemon;
                 attackPokemon = defensePokemon;
@@ -250,24 +250,22 @@ public class NPCBattle {
                 npcPokemon.getHp());
     }
 
-    // Sample:
-    // 🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟
+    // Sample
+    // 💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥
     //
-    // 🎉 A splendid triumph, your Pikachu shines in glory!
+    // 💔 Tough luck, your Spiritomb bravely faced the challenge!
     //
-    // 🔥 Pikachu's Rewards 🔥
+    // 🔥 Spiritomb's Gains 🔥
     // ----------------------------
-    //    XP Spark     🌟 : +40
-    //    Current XP   🏆 :  50
-    //    LEVEL UP to  🚀 :  6
+    //    XP Earned    🌟 : +17
+    //    Current XP   🏆 :  27
     //
-    // 💰 Trainer's Bounty 💰
+    // 💸 Trainer's Expense 💸
     // ----------------------------
-    //    Coins Earned 🪙 : +20
-    //    New Balance  💸 :  185
+    //    Battle Cost 💸  : -5
+    //    New Balance 💰  :  0
     //
-    // 🌈 Celebrate this victory! The journey to greatness continues!
-    //
+    // 🌟 Every battle is a lesson. Your next victory awaits!
     private String buildVictoryMessage(boolean leveledUp) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
@@ -301,23 +299,22 @@ public class NPCBattle {
     }
 
     // Sample:
-    // 💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥
+    // 🌟🏆🌟 VICTORY ACHIEVED! 🌟🏆🌟
     //
-    // 💔 Tough luck, your Pikachu bravely faced the challenge!
+    // 🎉 A splendid triumph, your Torkoal shines in glory!
     //
-    // 🔥 Pikachu's Gains 🔥
+    // 🔥 Torkoal's Rewards 🔥
     // ----------------------------
-    //    XP Earned    🌟 : +15
-    //    Current XP   🏆 :  65
-    //    LEVEL UP to  🚀 :  6
+    //    XP Spark     🌟 : +36
+    //    Current XP   🏆 :  46
     //
-    // 💸 Trainer's Expense 💸
+    // 💰 Trainer's Bounty 💰
     // ----------------------------
-    //    Battle Cost  🪙 : -5
-    //    New Balance  💰 :  180
+    //    Coins Earned 🤑 : +16
+    //    Battle Cost  💸 : -5
+    //    New Balance  💰 :  96
     //
-    // 🌟 Every battle is a lesson. Your next victory awaits!
-    //
+    // 🌈 Celebrate this victory. The journey to greatness continues!
     private String buildDefeatMessage(boolean leveledUp) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
