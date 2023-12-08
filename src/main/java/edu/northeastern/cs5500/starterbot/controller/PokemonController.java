@@ -189,11 +189,7 @@ public class PokemonController {
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
         if (pokemonEvolutionMap.containsKey(species.getName())) {
             PokemonEvolution evolution = pokemonEvolutionMap.get(species.getName());
-            if (evolution.getPrev().isEmpty()) {
-                return Pokemon.DEFAULT_LEVEL;
-            } else {
-                return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
-            }
+            return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
         }
         return Pokemon.DEFAULT_LEVEL;
     }
