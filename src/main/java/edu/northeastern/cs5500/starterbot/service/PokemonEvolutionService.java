@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -34,7 +33,9 @@ public class PokemonEvolutionService {
         try {
             Gson gson = new Gson();
             FileReader reader = new FileReader(POKEMON_DATA_FILE_NAME);
-            pokemonEvolutionMap = gson.fromJson(reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
+            pokemonEvolutionMap =
+                    gson.fromJson(
+                            reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -45,7 +46,9 @@ public class PokemonEvolutionService {
         try {
             Gson gson = new Gson();
             FileReader reader = new FileReader(p);
-            pokemonEvolutionMap = gson.fromJson(reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
+            pokemonEvolutionMap =
+                    gson.fromJson(
+                            reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
