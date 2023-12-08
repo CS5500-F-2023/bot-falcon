@@ -5,7 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import edu.northeastern.cs5500.starterbot.model.PokemonEvolution;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -14,7 +16,7 @@ import javax.inject.Singleton;
 public class PokemonEvolutionService {
     private static String POKEMON_DATA_FILE_NAME = "src/main/resources/evolution-chain.json";
 
-    private List<PokemonEvolution> pokemonEvolutionList;
+    private Map<String, PokemonEvolution> pokemonEvolutionMap = new HashMap<>();
 
     /** Constructs a new PokemonEvolutionService and loads the Pokemon Evolution data. */
     @Inject
@@ -24,7 +26,7 @@ public class PokemonEvolutionService {
 
     /** For testing purpose */
     public PokemonEvolutionService(String path) {
-        loadPokemonEvolutionWithPath(path);
+        loadPokemonEvolution(path);
     }
 
     /** Loads the Pokemon data from a JSON file. */
@@ -32,31 +34,29 @@ public class PokemonEvolutionService {
         try {
             Gson gson = new Gson();
             FileReader reader = new FileReader(POKEMON_DATA_FILE_NAME);
-            pokemonEvolutionList =
-                    gson.fromJson(reader, new TypeToken<List<PokemonEvolution>>() {}.getType());
+            pokemonEvolutionMap = gson.fromJson(reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     /** For testing purpose */
-    private void loadPokemonEvolutionWithPath(String p) {
+    private void loadPokemonEvolution(String p) {
         try {
             Gson gson = new Gson();
             FileReader reader = new FileReader(p);
-            pokemonEvolutionList =
-                    gson.fromJson(reader, new TypeToken<List<PokemonEvolution>>() {}.getType());
+            pokemonEvolutionMap = gson.fromJson(reader, new TypeToken<Map<String, PokemonEvolution>>() {}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Returns the list of valid Pokemon data.
+     * Returns map of valid Pokemon evolution data.
      *
-     * @return the list of Pokemon data
+     * @return the map of Pokemon evolution data, with species name as key.
      */
-    public List<PokemonEvolution> getPokemonEvolutionList() {
-        return pokemonEvolutionList;
+    public Map<String, PokemonEvolution> getPokemonEvolutionMap() {
+        return pokemonEvolutionMap;
     }
 }

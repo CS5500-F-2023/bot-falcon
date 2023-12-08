@@ -1,7 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,15 +9,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PokemonEvolution {
-    @Nonnull
-    private String name;
 
-    @Nonnull
-    private List<String> evolutionFrom;
+    @Nonnull private String evolutionFrom;
 
-    @Nonnull
-    private List<String> evolutionTo;
+    @Nonnull private String evolutionTo;
 
-    @Nonnull
-    private List<String> prev;
+    @Nonnull private List<String> prev;
 }
