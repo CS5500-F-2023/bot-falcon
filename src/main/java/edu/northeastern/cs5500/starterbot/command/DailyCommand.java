@@ -1,9 +1,14 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.controller.PokedexController;
+import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
+import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -12,14 +17,16 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 @Slf4j
 public class DailyCommand implements SlashCommandHandler {
 
     static final String NAME = "daily";
+    static final int WIDTH = 14;
 
     @Inject TrainerController trainerController;
+    @Inject PokemonController pokemonController;
+    @Inject PokedexController pokedexController;
 
     @Inject
     public DailyCommand() {
@@ -48,31 +55,93 @@ public class DailyCommand implements SlashCommandHandler {
         LocalDate curCheckinDate = OffsetDateTime.now().toLocalDate();
         Random random = new Random();
         Integer randomCoins = (random.nextInt(10) + 1) * 10; // 10, 20... 90, 100
+        Integer resultBal = 0;
 
         try {
-            Integer resultBal =
+            resultBal =
                     trainerController.addDailyRewardsToTrainer(
                             trainerDiscordId, randomCoins, curCheckinDate);
-
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle(
-                    String.format("Congratulations, you've earned %d coins today!", randomCoins));
-            embedBuilder.setDescription("Come back tomorrow for more exciting rewards!");
-            embedBuilder.setColor(0x5CA266); // Same color as the successful button
-            embedBuilder.addField("Updated Balance", Integer.toString(resultBal), false);
-            embedBuilder.setThumbnail( // TODO: [zqy] Add the pic to the resources folder
-                    "https://img.freepik.com/premium-vector/money-stack-coins-dollar_464314-3776.jpg");
-
-            MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-            messageCreateBuilder.addEmbeds(embedBuilder.build());
-            event.reply(messageCreateBuilder.build()).queue();
-
         } catch (InvalidCheckinDayException e) {
-            event.reply(
-                            String.format(
-                                    "Oops, looks like you've already checked in today, <@%s>!\nCome back tomorrow for more exciting rewards and surprises!",
-                                    trainerDiscordId))
-                    .queue();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Oops, looks like you've already checked in today, <@");
+            sb.append(trainerDiscordId);
+            sb.append(">!\nCome back tomorrow for more exciting rewards and surprises!");
+            event.reply(sb.toString()).queue();
+            return;
         }
+
+        EmbedBuilder greetingEmbed = createPokemonGreetingEmbed(trainerDiscordId);
+        EmbedBuilder rewardEmbed =
+                createDailyRewardEmbed(resultBal - randomCoins, randomCoins, resultBal);
+        event.replyEmbeds(greetingEmbed.build(), rewardEmbed.build()).queue();
+    }
+
+    private EmbedBuilder createPokemonGreetingEmbed(String trainerDiscordId) {
+        List<Pokemon> inventory = trainerController.getTrainerPokemonInventory(trainerDiscordId);
+
+        Pokemon pokemon;
+        boolean isWild = false;
+
+        if (inventory.isEmpty()) {
+            pokemon = pokemonController.spawnRandonPokemon(); // TODO (zqy): in memory
+            isWild = true;
+        } else {
+            int randomIndex = new Random().nextInt(inventory.size());
+            pokemon = inventory.get(randomIndex);
+        }
+
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        String title =
+                isWild
+                        ? String.format("🌿 A wild %s greets you curiously 🌿", species.getName())
+                        : String.format(
+                                "🌟 Your %s greets you with enthusiasm 🌟", species.getName());
+        embedBuilder.setTitle(title);
+        embedBuilder.setImage(species.getImageUrl());
+        embedBuilder.setColor(0x5CA266); // Same color as the successful button
+        embedBuilder.setDescription(
+                String.format(
+                        "```%s %s seems thrilled to see you!"
+                                + " ".repeat(WIDTH - species.getName().length())
+                                + "```",
+                        species.getName(),
+                        species.getRandomType().getEmoji()));
+        return embedBuilder;
+    }
+
+    private EmbedBuilder createDailyRewardEmbed(
+            Integer prevBal, Integer randomCoins, Integer newBal) {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        int maxLen =
+                Math.max(
+                        Math.max(
+                                Integer.toString(prevBal).length(),
+                                Integer.toString(randomCoins).length()),
+                        Integer.toString(newBal).length());
+
+        String separator = "-".repeat(maxLen + 20);
+
+        embedBuilder.setTitle(
+                String.format("🥳 Hooray, you've earned %d coins today! 🥳", randomCoins));
+
+        String statementFormat =
+                "```\n"
+                        + "🏦 Your Statement 🏦\n"
+                        + "%s\n"
+                        + ("Prev. Balance 💸:  %" + maxLen + "d\n")
+                        + ("Coins Earned  🤑: +%" + (maxLen - 1) + "d\n")
+                        + ("New Balance   💰:  %" + maxLen + "d\n\n")
+                        + "More amazing rewards await you tomorrow 🎁  \n"
+                        + "```";
+
+        String statement = String.format(statementFormat, separator, prevBal, randomCoins, newBal);
+        embedBuilder.setDescription(statement);
+        embedBuilder.setColor(0x5CA266); // Same color as the successful button
+
+        return embedBuilder;
     }
 }
