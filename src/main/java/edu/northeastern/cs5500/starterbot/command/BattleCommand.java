@@ -97,7 +97,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         menuBuilder.addOption("Maybe next time", "maybe-next-time" + ":" + trainerDiscordId);
         for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
             menuBuilder.addOption(
                     species.getName(), pokemon.getId().toString() + ":" + trainerDiscordId);
         }
@@ -115,10 +115,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         final String response = event.getInteraction().getValues().get(0);
         String[] fields = response.split(":");
         String trPokemonID = fields[0];
-        log.error("!!! onStringSelectInteraction: " + "trPokemonID: " + trPokemonID);
         String initiatorDiscordId = fields[1];
         String trDiscordId = event.getMember().getId();
-        log.error("!!! onStringSelectInteraction: " + "trDiscordId: " + initiatorDiscordId);
 
         // If user who clicks list is Not the same as who initiated the list
         if (!trDiscordId.equals(initiatorDiscordId)) {
@@ -137,7 +135,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         Pokemon trPokemon = pokemonController.getPokemonById(trPokemonID);
         trPokemon.setCurrentHp(trPokemon.getHp());
         Integer trPokedex = trPokemon.getPokedexNumber();
-        PokemonSpecies trPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
+        PokemonSpecies trPokeSpecies = pokedexController.getPokemonSpeciesByREALPokedex(trPokedex);
         String trPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(trPokedex);
         String trPokeInfoStr = pokemonController.buildPokemonStats(trPokemonID);
         String trPokeName = trPokeSpecies.getName();
@@ -157,7 +155,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         // The NPC Pokémon is accessible by calling battle.getNpcPokemon()
         Pokemon npcPokemon = battle.getNpcPokemon();
         Integer npcPokedex = npcPokemon.getPokedexNumber();
-        PokemonSpecies npcPokeSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
+        PokemonSpecies npcPokeSpecies =
+                pokedexController.getPokemonSpeciesByREALPokedex(npcPokedex);
         String npcPokeSpeciesInfoStr = pokedexController.buildSpeciesDetails(npcPokedex);
         String npcPokeInfoStr = pokemonController.buildPokemonStats(npcPokemon.getId().toString());
         String npcPokeName = npcPokeSpecies.getName();

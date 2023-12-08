@@ -29,7 +29,7 @@ public class PokedexController {
      * @param listIndex The index of the data list.
      * @return The Pokemon species information.
      */
-    public PokemonSpecies getPokemonSpeciesByPokedex(int listIndex) {
+    private PokemonSpecies getPokemonSpeciesByPokedex(int listIndex) {
         this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
         PokemonSpeciesBuilder builder = PokemonSpecies.builder();
 
@@ -86,11 +86,11 @@ public class PokedexController {
     /**
      * Builds a string representation of the Pokemon Species's details based on its pokedex number.
      *
-     * @param listIndex The index of the pokemon species.
+     * @param pokedex The index of the pokemon species.
      * @return A string containing pokemon species and types.
      */
-    public String buildSpeciesDetails(int listIndex) {
-        PokemonSpecies species = this.getPokemonSpeciesByPokedex(listIndex);
+    public String buildSpeciesDetails(int pokedex) {
+        PokemonSpecies species = this.getPokemonSpeciesByREALPokedex(pokedex);
         String typeString = String.join(", ", species.getSpeciesTypes());
         StringBuilder speciesDetailBuilder = new StringBuilder();
         speciesDetailBuilder.append("Species : 🐾 ").append(species.getName()).append("\n");

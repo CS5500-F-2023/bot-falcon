@@ -17,7 +17,7 @@ public class PokedexControllerTest {
     @Test
     public void testGetPokemonSpeciesByPokedex() {
         PokedexController pokedexController = getPokedexController();
-        PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByPokedex(0);
+        PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByREALPokedex(1);
         assertThat(bulbasaur.getPokedexNumber()).isEqualTo(1);
     }
 
@@ -34,7 +34,7 @@ public class PokedexControllerTest {
     @Test
     public void testSpeciesTypesWithEmoji() {
         PokedexController pokedexController = getPokedexController();
-        PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByPokedex(0);
+        PokemonSpecies bulbasaur = pokedexController.getPokemonSpeciesByREALPokedex(1);
         String[] expected = {"🌿 Grass", "☠️ Poison"};
         assertThat(bulbasaur.getSpeciesTypes()).isEqualTo(expected);
     }

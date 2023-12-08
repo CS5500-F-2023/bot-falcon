@@ -56,7 +56,7 @@ public class MyCommand implements SlashCommandHandler {
                     trainerController.getPokemonFromInventory(
                             trainerDiscordId, pokemonInventoryIndex);
             PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
             String pokeProfile =
                     buildPokemonProfile(trainerDiscordId, pokemon, pokemonInventoryIndex);

@@ -50,7 +50,6 @@ public class PokemonController {
     @Nonnull
     Pokemon spawnPokemon(int listIndex) {
         PokemonData data = this.pokemonDataList.get(listIndex);
-
         Pokemon pokemon = buildPokemon(data);
         return Objects.requireNonNull(pokemonRepository.add(Objects.requireNonNull(pokemon)));
     }

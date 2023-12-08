@@ -34,8 +34,8 @@ public class BattleController {
         int trPokedex = trPokemon.getPokedexNumber();
         int npcPokedex = npcPokemon.getPokedexNumber();
         Trainer trainer = trainerController.getTrainerForMemberId(trDiscordMemberId);
-        PokemonSpecies trSpecies = pokedexController.getPokemonSpeciesByPokedex(trPokedex);
-        PokemonSpecies npcSpecies = pokedexController.getPokemonSpeciesByPokedex(npcPokedex);
+        PokemonSpecies trSpecies = pokedexController.getPokemonSpeciesByREALPokedex(trPokedex);
+        PokemonSpecies npcSpecies = pokedexController.getPokemonSpeciesByREALPokedex(npcPokedex);
 
         // Set up a battle
         NPCBattleBuilder builder = NPCBattle.builder();

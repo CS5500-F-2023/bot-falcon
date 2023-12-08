@@ -91,7 +91,7 @@ public class DailyCommand implements SlashCommandHandler {
         }
 
         PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         String title =
