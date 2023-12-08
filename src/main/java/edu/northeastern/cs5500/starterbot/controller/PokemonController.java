@@ -3,9 +3,13 @@ package edu.northeastern.cs5500.starterbot.controller;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
+import edu.northeastern.cs5500.starterbot.model.PokemonEvolution;
+import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
+import edu.northeastern.cs5500.starterbot.service.PokemonEvolutionService;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import javax.annotation.Nonnull;
@@ -24,7 +28,11 @@ public class PokemonController {
 
     @Inject PokedexController pokedexController;
 
+    @Inject PokemonEvolutionService pokemonEvolutionService;
+
     List<PokemonData> pokemonDataList;
+
+    Map<String, PokemonEvolution> pokemonEvolutionMap;
 
     @Inject
     PokemonController(
@@ -166,6 +174,27 @@ public class PokemonController {
                 .specialAttack(data.getSpAttack())
                 .specialDefense(data.getSpDefense())
                 .speed(data.getSpeed())
+                .level(buildPokemonLevel(data.getNumber()))
                 .build();
+    }
+
+    /**
+     * Builds the level of a Pokemon based on its Pokedex number.
+     *
+     * @param pokedex The Pokedex number of the Pokemon.
+     * @return The level of the Pokemon.
+     */
+    private Integer buildPokemonLevel(Integer pokedex) {
+        this.pokemonEvolutionMap = pokemonEvolutionService.getPokemonEvolutionMap();
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+        if (pokemonEvolutionMap.containsKey(species.getName())) {
+            PokemonEvolution evolution = pokemonEvolutionMap.get(species.getName());
+            if (evolution.getPrev().isEmpty()) {
+                return Pokemon.DEFAULT_LEVEL;
+            } else {
+                return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
+            }
+        }
+        return Pokemon.DEFAULT_LEVEL;
     }
 }
