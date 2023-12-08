@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 public class SayCommand implements SlashCommandHandler {
 
     static final String NAME = "say";
+    static final int TRAINER_COLOR = 0xDC143C; // sky blue
+    static final int NPC_COLOR = 0xDC143C; // crimson red
 
     @Inject
     public SayCommand() {

@@ -17,15 +17,15 @@ public enum PokemonType {
     FLYING("Flying", "🕊️"),
     ROCK("Rock", "🪨"),
     BUG("Bug", "🐛"),
-    ELECTRIC("Electric", "⚡"),
+    ELECTRIC("Electric", "💡"),
     GROUND("Ground", "🌍"),
-    POISON("Poison", "☠️"),
+    POISON("Poison", "💀"),
     PSYCHIC("Psychic", "🔮"),
     GHOST("Ghost", "👻"),
     DARK("Dark", "🌑"),
     FAIRY("Fairy", "🧚"),
     STEEL("Steel", "🛡️"),
-    ICE("Ice", "❄️"),
+    ICE("Ice", "🧊"),
     DRAGON("Dragon", "🐉");
 
     // Define the Pokemon type advantage system

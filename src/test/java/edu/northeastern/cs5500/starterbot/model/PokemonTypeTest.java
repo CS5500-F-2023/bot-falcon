@@ -37,7 +37,7 @@ class PokemonTypeTest {
     @Test
     void testBuildTypesWithEmoji() {
         String[] resource = {"water", "electric"};
-        String[] expected = {"💧 Water", "⚡ Electric"};
+        String[] expected = {"💧 Water", "💡 Electric"};
         String[] res = PokemonType.buildTypesWithEmoji(resource);
         assertThat(res).isEqualTo(expected);
     }

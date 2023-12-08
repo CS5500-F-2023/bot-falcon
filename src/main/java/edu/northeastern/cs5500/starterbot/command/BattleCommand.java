@@ -28,6 +28,9 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
     static final String NAME = "battle";
+    static final int WIDTH = 12;
+    static final int TR_COLOR = 0x87CEEB; // trainer's color: sky blue
+    static final int NPC_COLOR = 0xDC143C; // npc's color: crimson red
 
     @Inject PokemonController pokemonController;
 
@@ -132,15 +135,18 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
             return;
         }
 
-        MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen");
-        MessageEmbed trPokeStat = buildPokemonStat(trPokemonID);
+        log.error("!!! about ot call buildPokemonProfile");
+        MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen ", TR_COLOR);
+        log.error("!!! about ot call buildPokemonStat");
+        MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, TR_COLOR);
 
         NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
 
         Pokemon npcPokemon = battle.getNpcPokemon();
         String npcPokemonID = npcPokemon.getId().toString();
-        MessageEmbed npcPokeProfile = buildPokemonProfile(npcPokemonID, "Your opponent Pokemon is");
-        MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID);
+        MessageEmbed npcPokeProfile =
+                buildPokemonProfile(npcPokemonID, "Bot has chosen ", NPC_COLOR);
+        MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID, NPC_COLOR);
 
         // Start battle and get the battle record
         battleController.runBattle(battle);
@@ -179,25 +185,38 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                         });
     }
 
-    private MessageEmbed buildPokemonProfile(String pokemonIdStr, String msg) {
+    private MessageEmbed buildPokemonProfile(String pokemonIdStr, String msg, int color) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
         PokemonSpecies species = pokedexController.getPokemonSpeciesByPokedex(pokedex);
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("```");
+        sb.append(String.format("%s ", species.getRandomType().getEmoji()));
+        sb.append(String.format("%s ", species.getName()));
+        sb.append("is ready to battle!");
+        sb.append(" ".repeat(WIDTH - species.getName().length()));
+        sb.append("```");
+
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(String.format("%s %s!", msg, species.getName()));
+        embedBuilder.setTitle(String.format("%s %s 🎖️", msg, species.getName()));
+        embedBuilder.setDescription(sb.toString());
         embedBuilder.setImage(species.getImageUrl());
+        embedBuilder.setColor(color);
+        log.error("!!! about to return MessageEmbed in buildPokemonProfile");
         return embedBuilder.build();
     }
 
-    private MessageEmbed buildPokemonStat(String pokemonIdStr) {
+    private MessageEmbed buildPokemonStat(String pokemonIdStr, int color) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
         String speciesInfoStr = pokedexController.buildSpeciesDetails(pokedex);
         String pokeInfoStr = pokemonController.buildPokemonStats(pokemonIdStr);
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setDescription(String.format("%s%n%s", speciesInfoStr, pokeInfoStr));
+        embedBuilder.setDescription(String.format("```%s%s```", speciesInfoStr, pokeInfoStr));
+        embedBuilder.setColor(color);
+        log.error("!!! about to return MessageEmbed in buildPokemonStat");
         return embedBuilder.build();
     }
 }
