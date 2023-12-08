@@ -34,8 +34,8 @@ public class PokemonEvolutionControllerTest {
         pokemonEvolutionController.pokemonEvolutionService = pokemonEvolutionService;
 
         pokemonEvolutionController.pokemonDataList = pokemonDataService.getPokemonDataList();
-        pokemonEvolutionController.pokemonEvolutionList =
-                pokemonEvolutionService.getPokemonEvolutionList();
+        pokemonEvolutionController.pokemonEvolutionMap =
+                pokemonEvolutionService.getPokemonEvolutionMap();
 
         return pokemonEvolutionController;
     }
