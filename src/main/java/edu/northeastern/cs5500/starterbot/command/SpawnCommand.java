@@ -51,7 +51,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         log.info("event: /spawn");
         Pokemon pokemon = pokemonController.spawnRandonPokemon();
         PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
         String pokemonDetails = pokemonController.buildPokemonStats(pokemon.getId().toString());
         String pokemonSpeciesDetail =
@@ -102,7 +102,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
         PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
         // Handle the button interaction
         if (action.equals("catch") && trainerDiscordId.equals(initiateTrainerDiscordId)) {

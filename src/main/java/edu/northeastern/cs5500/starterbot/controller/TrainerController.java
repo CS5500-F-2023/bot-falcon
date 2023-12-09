@@ -202,7 +202,8 @@ public class TrainerController {
             for (int i = 0; i < pokemonInventory.size(); i++) {
                 Pokemon pokemon = pokemonInventory.get(i);
                 PokemonSpecies species =
-                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                        pokedexController.getPokemonSpeciesByREALPokedex(
+                                pokemon.getPokedexNumber());
 
                 String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
                 maxTextWidth = Math.max(maxTextWidth, pokemonText.length());
@@ -211,7 +212,8 @@ public class TrainerController {
             for (int i = 0; i < pokemonInventory.size(); i++) {
                 Pokemon pokemon = pokemonInventory.get(i);
                 PokemonSpecies species =
-                        pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                        pokedexController.getPokemonSpeciesByREALPokedex(
+                                pokemon.getPokedexNumber());
 
                 String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
                 pokemonInventoryBuilder.append(
