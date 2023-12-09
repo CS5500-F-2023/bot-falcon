@@ -63,7 +63,8 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         embedBuilder.setTitle(String.format("A wild %s appear!", species.getName()));
         embedBuilder.setDescription(
                 String.format(
-                        "It costs 5 coins to catch %s. What will you do?", species.getName()));
+                        "It costs %d coins to catch %s. What will you do?",
+                        pokemon.getCatchCosts(), species.getName()));
         embedBuilder.addField(
                 String.format("----\n🔎 Learn more about %s!\n----", species.getName()),
                 String.format("```%s%s```", pokemonSpeciesDetail, pokemonDetails),
@@ -106,8 +107,9 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         // Handle the button interaction
         if (action.equals("catch") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
             // Handle the 'Catch' action
+            int costs = pokemon.getCatchCosts();
             try {
-                trainerController.decreaseTrainerBalance(trainerDiscordId, 5);
+                trainerController.decreaseTrainerBalance(trainerDiscordId, costs);
                 trainerController.addPokemonToTrainer(trainerDiscordId, pokemonID);
                 event.reply(
                                 String.format(

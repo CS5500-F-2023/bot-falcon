@@ -17,6 +17,10 @@ public class Pokemon implements Model {
     public static final Integer DEFAULT_XP = 10;
     public static final Integer LEVEL_UP_THRESHOLD = 100;
 
+    // Spawn cost related
+    private static final Integer FLOOR_CATCH_COSTS = 5;
+    private static final Integer COST_ADDON_PER_LEVEL = 2;
+
     // Battle realted
     private static final int LEVEL_ADDON = 3;
     private static final double ATTACK_MULTIPLIER = 1.1;
@@ -153,5 +157,14 @@ public class Pokemon implements Model {
 
         int filledBars = (int) Math.ceil(TOTAL_XP_BARS * (progressPercentage / 100.0));
         return "█".repeat(filledBars) + "░".repeat(TOTAL_XP_BARS - filledBars);
+    }
+
+    /**
+     * Calculates the cost to catch this Pokemon.
+     *
+     * @return The cost in coins to catch this Pokemon as an integer
+     */
+    public int getCatchCosts() {
+        return FLOOR_CATCH_COSTS + (this.level - DEFAULT_LEVEL) * COST_ADDON_PER_LEVEL;
     }
 }

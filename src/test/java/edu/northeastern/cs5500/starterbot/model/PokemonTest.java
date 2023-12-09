@@ -122,4 +122,19 @@ class PokemonTest {
         int relStrength = Pokemon.getRelStrength(bulbasaur, charmander);
         assertThat(relStrength).isEqualTo(round2 - round1);
     }
+
+    @Test
+    void testCalculateCatchCosts() {
+        assertThat(bulbasaur.getCatchCosts()).isEqualTo(5);
+
+        assertThat(bulbasaur.increaseExpPts(90)).isTrue();
+        assertThat(bulbasaur.getLevel()).isEqualTo(6);
+        assertThat(bulbasaur.getExPoints()).isEqualTo(0);
+        assertThat(bulbasaur.getCatchCosts()).isEqualTo(7);
+
+        assertThat(bulbasaur.increaseExpPts(450)).isTrue();
+        assertThat(bulbasaur.getLevel()).isEqualTo(10);
+        assertThat(bulbasaur.getExPoints()).isEqualTo(50);
+        assertThat(bulbasaur.getCatchCosts()).isEqualTo(15);
+    }
 }
