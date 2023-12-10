@@ -58,8 +58,7 @@ public class MyCommand implements SlashCommandHandler {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
-            String pokeProfile =
-                    buildPokemonProfile(species, pokemon, pokemonInventoryIndex);
+            String pokeProfile = buildPokemonProfile(species, pokemon, pokemonInventoryIndex);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
             embedBuilder.addField("Your Pokemon Detail\n", pokeProfile, false);
@@ -77,7 +76,8 @@ public class MyCommand implements SlashCommandHandler {
      * @param pokemon the pokemon
      * @return the pokemon profile
      */
-    private String buildPokemonProfile(PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
+    private String buildPokemonProfile(
+            PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
         String pokemonDetails = pokemon.buildPokemonStats(pokemon);
         String speciesDetails = species.buildSpeciesDetails(species);
         String boardLine = "\n----------------------------\n";
