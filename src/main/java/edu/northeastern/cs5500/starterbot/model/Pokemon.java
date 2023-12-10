@@ -177,6 +177,7 @@ public class Pokemon implements Model {
     // Defense : 🛡️ Phys. 51  | 🛡️ Sp. 51
     /**
      * Builds a string representation of the Pokemon's stats.
+     *
      * @param pokemon The Pokemon
      * @return A string containing the Pokemon's stats
      */
@@ -188,7 +189,7 @@ public class Pokemon implements Model {
         pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
         pokemonStatsBuilder.append(
                 String.format(
-                        "%s  : 🗡️  Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "%s  : 🗡️ Phys. %-3d | 🔮 Sp. %-3d\n",
                         "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
         pokemonStatsBuilder.append(
                 String.format(

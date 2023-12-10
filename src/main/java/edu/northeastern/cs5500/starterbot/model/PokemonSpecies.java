@@ -29,6 +29,7 @@ public class PokemonSpecies { // Not implementing Model
     // Types   : 🪨 Rock
     /**
      * Builds a string representation of the Pokemon Species's details.
+     *
      * @param species The pokemon species.
      * @return A string containing pokemon species and types.
      */
