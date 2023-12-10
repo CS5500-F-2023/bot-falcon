@@ -59,7 +59,7 @@ public class MyCommand implements SlashCommandHandler {
                     pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
             String pokeProfile =
-                    buildPokemonProfile(trainerDiscordId, pokemon, pokemonInventoryIndex);
+                    buildPokemonProfile(species, pokemon, pokemonInventoryIndex);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
             embedBuilder.addField("Your Pokemon Detail\n", pokeProfile, false);
@@ -77,24 +77,22 @@ public class MyCommand implements SlashCommandHandler {
      * @param pokemon the pokemon
      * @return the pokemon profile
      */
-    private String buildPokemonProfile(
-            String trainerDiscordId, Pokemon pokemon, Integer inventoryIndex) {
-        String pokemonIdString = pokemon.getId().toString();
-        String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
-        String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
-        String BOARD_LINE = "\n----------------------------\n";
+    private String buildPokemonProfile(PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
+        String pokemonDetails = pokemon.buildPokemonStats(pokemon);
+        String speciesDetails = species.buildSpeciesDetails(species);
+        String boardLine = "\n----------------------------\n";
 
         StringBuilder profileBuilder = new StringBuilder();
         profileBuilder
                 .append(speciesDetails)
                 .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
-                .append(BOARD_LINE)
+                .append(boardLine)
                 .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
-                .append(BOARD_LINE)
+                .append(boardLine)
                 .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
                 .append(String.format(" %d/%d", pokemon.getExPoints(), pokemon.LEVEL_UP_THRESHOLD))
