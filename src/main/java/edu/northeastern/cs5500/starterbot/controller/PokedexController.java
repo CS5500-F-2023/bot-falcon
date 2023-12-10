@@ -78,8 +78,8 @@ public class PokedexController {
                                 "http://www.serebii.net/pokemongo/pokemon/%s.png", formattedNumber))
                 .speciesTypes(types)
                 .types(
-                        -PokemonType.getSingleTypeArray(
-                                -PokemonType.NORMAL)) // TODO placeholder leftover from demo code
+                        PokemonType.getSingleTypeArray(
+                                PokemonType.NORMAL)) // TODO placeholder leftover from demo code
                 .build();
     }
 
