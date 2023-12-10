@@ -83,6 +83,9 @@ public class PokedexController {
                 .build();
     }
 
+    // todo(yhr): move to PokemonSpecies class,
+    // todo(yhr): update all related usage in command
+    // todo(yhr): safely delete this method after test
     /**
      * Builds a string representation of the Pokemon Species's details based on its pokedex number.
      *

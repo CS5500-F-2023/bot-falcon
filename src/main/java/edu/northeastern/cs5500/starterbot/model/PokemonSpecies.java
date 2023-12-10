@@ -25,6 +25,7 @@ public class PokemonSpecies { // Not implementing Model
         return types[idx];
     }
 
+<<<<<<< HEAD
     /** Return the representitive color for a pokemon species. */
     public Integer getSpeciesColor() {
         if (types.length == 1) {
@@ -48,5 +49,22 @@ public class PokemonSpecies { // Not implementing Model
 
         Color newColor = new Color(red, green, blue);
         return newColor.getRed();
+=======
+    // Sample msg:
+    // Species : 🐾 Rockruff
+    // Types   : 🪨 Rock
+    /**
+     * Builds a string representation of the Pokemon Species's details.
+     *
+     * @param species The pokemon species.
+     * @return A string containing pokemon species and types.
+     */
+    public String buildSpeciesDetails(PokemonSpecies species) {
+        String typeString = String.join(", ", species.getSpeciesTypes());
+        StringBuilder speciesDetailBuilder = new StringBuilder();
+        speciesDetailBuilder.append("Species : 🐾 ").append(species.getName()).append("\n");
+        speciesDetailBuilder.append("Types   : ").append(typeString).append("\n");
+        return speciesDetailBuilder.toString();
+>>>>>>> fix-pokemon-string-methods
     }
 }
