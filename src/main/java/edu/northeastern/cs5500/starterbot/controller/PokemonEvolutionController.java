@@ -45,9 +45,9 @@ public class PokemonEvolutionController {
             String speciesName = species.getName();
             if (pokemonEvolutionMap.containsKey(speciesName)) {
                 PokemonEvolution pe = pokemonEvolutionMap.get(speciesName);
-                if (pe.getEvolutionTo().isEmpty()) {
-                    return false; // not evolvable if there is no value in evolutionTo
-                }
+                if (pokemon.getLevel() < (pe.getPrev().size() + 2) * Pokemon.DEFAULT_LEVEL)
+                    return false; // not meeting the level up requirement
+                if (pe.getEvolutionTo().isEmpty()) return false; // no value in evolutionTo
                 return evolvePokemonByName(speciesName, pe.getEvolutionTo(), pokemon);
             }
         }
