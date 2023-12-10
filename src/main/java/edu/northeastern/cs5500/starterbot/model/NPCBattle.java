@@ -48,16 +48,16 @@ public class NPCBattle {
     @Builder.Default int xpGained = 0;
 
     // Messages
-    @Builder.Default List<String> messages = new ArrayList<>();
+    @Builder.Default List<ColoredMessage> messages = new ArrayList<>();
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
-        // Format start message
-        this.messages.add(this.formatStartMsg());
-
         // Set current HP to max HP
         trPokemon.setCurrentHp(trPokemon.getHp());
         npcPokemon.setCurrentHp(npcPokemon.getHp());
+
+        // Format start message
+        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_GENERIC));
 
         // Determine first mover
         Pokemon attackPokemon = this.getFirstAttacker();
@@ -88,7 +88,9 @@ public class NPCBattle {
             // Generate round message
             boolean isBot = attackPokemon.equals(npcPokemon);
             String s = formatRoundMsg(isBot, physical, aType, dType, multiplier, damage);
-            this.messages.add(s);
+            this.messages.add(
+                    new ColoredMessage(
+                            s, isBot ? BotConstants.COLOR_NPC : BotConstants.COLOR_TRAINER));
 
             // Check if the game ends; if so, update final result
             if (trPokemon.getCurrentHp() <= 0 || npcPokemon.getCurrentHp() <= 0) {
@@ -107,7 +109,7 @@ public class NPCBattle {
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
-                this.messages.add(resultMessage);
+                this.messages.add(new ColoredMessage(resultMessage, BotConstants.COLOR_GENERIC));
             } else { // Swith attacker and defenser
                 Pokemon temp = attackPokemon;
                 attackPokemon = defensePokemon;

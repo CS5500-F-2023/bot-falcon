@@ -18,15 +18,15 @@ public enum PokemonType {
     FLYING("Flying", "🕊️", 0x87CEFA), // Light Sky Blue
     ROCK("Rock", "🪨", 0xA52A2A), // Brown
     BUG("Bug", "🐛", 0x6B8E23), // Olive Drab
-    ELECTRIC("Electric", "⚡", 0xFFD700), // Gold
+    ELECTRIC("Electric", "💡", 0xFFD700), // Gold
     GROUND("Ground", "🌍", 0xD2B48C), // Tan
-    POISON("Poison", "☠️", 0x800080), // Purple
+    POISON("Poison", "💀", 0x800080), // Purple
     PSYCHIC("Psychic", "🔮", 0xEE82EE), // Violet
     GHOST("Ghost", "👻", 0x663399), // Rebecca Purple
     DARK("Dark", "🌑", 0x000000), // Black
     FAIRY("Fairy", "🧚", 0xFFB6C1), // Light Pink
     STEEL("Steel", "🛡️", 0x708090), // Slate Gray
-    ICE("Ice", "❄️", 0xADD8E6), // Light Blue
+    ICE("Ice", "🧊", 0xADD8E6), // Light Blue
     DRAGON("Dragon", "🐉", 0xFFA500); // Orange
 
     // Define the Pokemon type advantage system

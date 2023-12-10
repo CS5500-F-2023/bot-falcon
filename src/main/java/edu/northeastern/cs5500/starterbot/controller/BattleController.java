@@ -1,5 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
+import edu.northeastern.cs5500.starterbot.model.ColoredMessage;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle.NPCBattleBuilder;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
@@ -60,9 +62,13 @@ public class BattleController {
         String pokemonId = battle.getTrPokemonIdStr();
         boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonId);
         if (evolved) {
-            String s1 = pokemonEvolutionController.buildEvolveMessage(pokemonId);
-            String s2 = pokemonEvolutionController.buildEvolveStatsMessage(pokemonId);
-            battle.getMessages().add("```" + s1 + "\n\n" + s2 + "```");
+            String s =
+                    "```"
+                            + pokemonEvolutionController.buildEvolveMessage(pokemonId)
+                            + "\n\n"
+                            + pokemonEvolutionController.buildEvolveStatsMessage(pokemonId)
+                            + "```";
+            battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_GENERIC));
         }
     }
 }
