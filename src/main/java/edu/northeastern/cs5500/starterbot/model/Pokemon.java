@@ -167,4 +167,34 @@ public class Pokemon implements Model {
     public int getCatchCosts() {
         return FLOOR_CATCH_COSTS + (this.level - DEFAULT_LEVEL) * COST_ADDON_PER_LEVEL;
     }
+
+    // Sample msg:
+    // Level   : 🌟 5
+    // XP      : 📊 10
+    // Hp      : 🩷 82
+    // Speed   : 🏃‍♂️ 92
+    // Attack  : 🗡️ Phys. 96  | 🔮 Sp. 45
+    // Defense : 🛡️ Phys. 51  | 🛡️ Sp. 51
+    /**
+     * Builds a string representation of the Pokemon's stats.
+     * @param pokemon The Pokemon
+     * @return A string containing the Pokemon's stats
+     */
+    public String buildPokemonStats(Pokemon pokemon) {
+        StringBuilder pokemonStatsBuilder = new StringBuilder();
+        pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
+        pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
+        pokemonStatsBuilder.append("Hp      : 🩷 ").append(pokemon.getHp()).append("\n");
+        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s  : 🗡️  Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
+                        "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
+
+        return pokemonStatsBuilder.toString();
+    }
 }
