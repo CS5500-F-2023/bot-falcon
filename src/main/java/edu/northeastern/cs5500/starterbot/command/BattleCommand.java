@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.ColoredMessage;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
@@ -30,8 +31,6 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
     static final String NAME = "battle";
     static final int WIDTH = 12;
-    protected static final int TR_COLOR = 0x87CEEB; // trainer's color: sky blue
-    protected static final int NPC_COLOR = 0xDC143C; // npc's color: crimson red
 
     @Inject PokemonController pokemonController;
 
@@ -138,16 +137,17 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
         // TODO (zqy): This may be refactor upon the refactor of buildPokemonProfile and
         // buildPokemonStat
-        MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen ", TR_COLOR);
-        MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, TR_COLOR);
+        MessageEmbed trPokeProfile =
+                buildPokemonProfile(trPokemonID, "You have chosen ", BotConstants.COLOR_TRAINER);
+        MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, BotConstants.COLOR_TRAINER);
 
         NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
 
         Pokemon npcPokemon = battle.getNpcPokemon();
         String npcPokemonID = npcPokemon.getId().toString();
         MessageEmbed npcPokeProfile =
-                buildPokemonProfile(npcPokemonID, "Bot has chosen ", NPC_COLOR);
-        MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID, NPC_COLOR);
+                buildPokemonProfile(npcPokemonID, "Bot has chosen ", BotConstants.COLOR_NPC);
+        MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID, BotConstants.COLOR_NPC);
 
         // Run the battle
         battleController.runBattle(battle);
