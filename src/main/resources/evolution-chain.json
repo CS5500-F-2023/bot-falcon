@@ -1,1494 +1,4083 @@
-[
-    {
+{
+    "Bulbasaur": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ivysaur",
+        "prev": []
+    },
+    "Ivysaur": {
         "evolutionFrom": "Bulbasaur",
-        "evolutionTo": "Ivysaur"
+        "evolutionTo": "Venusaur",
+        "prev": [
+            "Bulbasaur"
+        ]
     },
-    {
+    "Venusaur": {
         "evolutionFrom": "Ivysaur",
-        "evolutionTo": "Venusaur"
+        "evolutionTo": "",
+        "prev": [
+            "Bulbasaur",
+            "Ivysaur"
+        ]
     },
-    {
+    "Charmander": {
+        "evolutionFrom": "",
+        "evolutionTo": "Charmeleon",
+        "prev": []
+    },
+    "Charmeleon": {
         "evolutionFrom": "Charmander",
-        "evolutionTo": "Charmeleon"
+        "evolutionTo": "Charizard",
+        "prev": [
+            "Charmander"
+        ]
     },
-    {
+    "Charizard": {
         "evolutionFrom": "Charmeleon",
-        "evolutionTo": "Charizard"
+        "evolutionTo": "",
+        "prev": [
+            "Charmander",
+            "Charmeleon"
+        ]
     },
-    {
+    "Squirtle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wartortle",
+        "prev": []
+    },
+    "Wartortle": {
         "evolutionFrom": "Squirtle",
-        "evolutionTo": "Wartortle"
+        "evolutionTo": "Blastoise",
+        "prev": [
+            "Squirtle"
+        ]
     },
-    {
+    "Blastoise": {
         "evolutionFrom": "Wartortle",
-        "evolutionTo": "Blastoise"
+        "evolutionTo": "",
+        "prev": [
+            "Squirtle",
+            "Wartortle"
+        ]
     },
-    {
+    "Caterpie": {
+        "evolutionFrom": "",
+        "evolutionTo": "Metapod",
+        "prev": []
+    },
+    "Metapod": {
         "evolutionFrom": "Caterpie",
-        "evolutionTo": "Metapod"
+        "evolutionTo": "Butterfree",
+        "prev": [
+            "Caterpie"
+        ]
     },
-    {
+    "Butterfree": {
         "evolutionFrom": "Metapod",
-        "evolutionTo": "Butterfree"
+        "evolutionTo": "",
+        "prev": [
+            "Caterpie",
+            "Metapod"
+        ]
     },
-    {
+    "Weedle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kakuna",
+        "prev": []
+    },
+    "Kakuna": {
         "evolutionFrom": "Weedle",
-        "evolutionTo": "Kakuna"
+        "evolutionTo": "Beedrill",
+        "prev": [
+            "Weedle"
+        ]
     },
-    {
+    "Beedrill": {
         "evolutionFrom": "Kakuna",
-        "evolutionTo": "Beedrill"
+        "evolutionTo": "",
+        "prev": [
+            "Weedle",
+            "Kakuna"
+        ]
     },
-    {
+    "Pidgey": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pidgeotto",
+        "prev": []
+    },
+    "Pidgeotto": {
         "evolutionFrom": "Pidgey",
-        "evolutionTo": "Pidgeotto"
+        "evolutionTo": "Pidgeot",
+        "prev": [
+            "Pidgey"
+        ]
     },
-    {
+    "Pidgeot": {
         "evolutionFrom": "Pidgeotto",
-        "evolutionTo": "Pidgeot"
+        "evolutionTo": "",
+        "prev": [
+            "Pidgey",
+            "Pidgeotto"
+        ]
     },
-    {
+    "Rattata": {
+        "evolutionFrom": "",
+        "evolutionTo": "Raticate",
+        "prev": []
+    },
+    "Raticate": {
         "evolutionFrom": "Rattata",
-        "evolutionTo": "Raticate"
+        "evolutionTo": "",
+        "prev": [
+            "Rattata"
+        ]
     },
-    {
+    "Rattata\n Alolan Rattata": {
+        "evolutionFrom": "",
+        "evolutionTo": "Raticate\n Alolan Raticate",
+        "prev": []
+    },
+    "Raticate\n Alolan Raticate": {
         "evolutionFrom": "Rattata\n Alolan Rattata",
-        "evolutionTo": "Raticate\n Alolan Raticate"
+        "evolutionTo": "",
+        "prev": [
+            "Rattata\n Alolan Rattata"
+        ]
     },
-    {
+    "Spearow": {
+        "evolutionFrom": "",
+        "evolutionTo": "Fearow",
+        "prev": []
+    },
+    "Fearow": {
         "evolutionFrom": "Spearow",
-        "evolutionTo": "Fearow"
+        "evolutionTo": "",
+        "prev": [
+            "Spearow"
+        ]
     },
-    {
+    "Ekans": {
+        "evolutionFrom": "",
+        "evolutionTo": "Arbok",
+        "prev": []
+    },
+    "Arbok": {
         "evolutionFrom": "Ekans",
-        "evolutionTo": "Arbok"
+        "evolutionTo": "",
+        "prev": [
+            "Ekans"
+        ]
     },
-    {
+    "Sandshrew": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sandslash",
+        "prev": []
+    },
+    "Sandslash": {
         "evolutionFrom": "Sandshrew",
-        "evolutionTo": "Sandslash"
+        "evolutionTo": "",
+        "prev": [
+            "Sandshrew"
+        ]
     },
-    {
+    "Nidoran♀": {
+        "evolutionFrom": "",
+        "evolutionTo": "Nidorina",
+        "prev": []
+    },
+    "Nidorina": {
         "evolutionFrom": "Nidoran♀",
-        "evolutionTo": "Nidorina"
+        "evolutionTo": "",
+        "prev": [
+            "Nidoran♀"
+        ]
     },
-    {
+    "Nidoran♂": {
+        "evolutionFrom": "",
+        "evolutionTo": "Nidorino",
+        "prev": []
+    },
+    "Nidorino": {
         "evolutionFrom": "Nidoran♂",
-        "evolutionTo": "Nidorino"
+        "evolutionTo": "",
+        "prev": [
+            "Nidoran♂"
+        ]
     },
-    {
+    "Zubat": {
+        "evolutionFrom": "",
+        "evolutionTo": "Golbat",
+        "prev": []
+    },
+    "Golbat": {
         "evolutionFrom": "Zubat",
-        "evolutionTo": "Golbat"
+        "evolutionTo": "",
+        "prev": [
+            "Zubat"
+        ]
     },
-    {
+    "Oddish": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gloom",
+        "prev": []
+    },
+    "Gloom": {
         "evolutionFrom": "Oddish",
-        "evolutionTo": "Gloom"
+        "evolutionTo": "",
+        "prev": [
+            "Oddish"
+        ]
     },
-    {
+    "Paras": {
+        "evolutionFrom": "",
+        "evolutionTo": "Parasect",
+        "prev": []
+    },
+    "Parasect": {
         "evolutionFrom": "Paras",
-        "evolutionTo": "Parasect"
+        "evolutionTo": "",
+        "prev": [
+            "Paras"
+        ]
     },
-    {
+    "Venonat": {
+        "evolutionFrom": "",
+        "evolutionTo": "Venomoth",
+        "prev": []
+    },
+    "Venomoth": {
         "evolutionFrom": "Venonat",
-        "evolutionTo": "Venomoth"
+        "evolutionTo": "",
+        "prev": [
+            "Venonat"
+        ]
     },
-    {
+    "Diglett": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dugtrio",
+        "prev": []
+    },
+    "Dugtrio": {
         "evolutionFrom": "Diglett",
-        "evolutionTo": "Dugtrio"
+        "evolutionTo": "",
+        "prev": [
+            "Diglett"
+        ]
     },
-    {
+    "Diglett\n Alolan Diglett": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dugtrio\n Alolan Dugtrio",
+        "prev": []
+    },
+    "Dugtrio\n Alolan Dugtrio": {
         "evolutionFrom": "Diglett\n Alolan Diglett",
-        "evolutionTo": "Dugtrio\n Alolan Dugtrio"
+        "evolutionTo": "",
+        "prev": [
+            "Diglett\n Alolan Diglett"
+        ]
     },
-    {
+    "Meowth": {
+        "evolutionFrom": "",
+        "evolutionTo": "Persian",
+        "prev": []
+    },
+    "Persian": {
         "evolutionFrom": "Meowth",
-        "evolutionTo": "Persian"
+        "evolutionTo": "",
+        "prev": [
+            "Meowth"
+        ]
     },
-    {
+    "Meowth\n Galarian Meowth": {
+        "evolutionFrom": "",
+        "evolutionTo": "Perrserker",
+        "prev": []
+    },
+    "Perrserker": {
         "evolutionFrom": "Meowth\n Galarian Meowth",
-        "evolutionTo": "Perrserker"
+        "evolutionTo": "",
+        "prev": [
+            "Meowth\n Galarian Meowth"
+        ]
     },
-    {
+    "Psyduck": {
+        "evolutionFrom": "",
+        "evolutionTo": "Golduck",
+        "prev": []
+    },
+    "Golduck": {
         "evolutionFrom": "Psyduck",
-        "evolutionTo": "Golduck"
+        "evolutionTo": "",
+        "prev": [
+            "Psyduck"
+        ]
     },
-    {
+    "Mankey": {
+        "evolutionFrom": "",
+        "evolutionTo": "Primeape",
+        "prev": []
+    },
+    "Primeape": {
         "evolutionFrom": "Mankey",
-        "evolutionTo": "Primeape"
+        "evolutionTo": "",
+        "prev": [
+            "Mankey"
+        ]
     },
-    {
+    "Poliwag": {
+        "evolutionFrom": "",
+        "evolutionTo": "Poliwhirl",
+        "prev": []
+    },
+    "Poliwhirl": {
         "evolutionFrom": "Poliwag",
-        "evolutionTo": "Poliwhirl"
+        "evolutionTo": "",
+        "prev": [
+            "Poliwag"
+        ]
     },
-    {
+    "Abra": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kadabra",
+        "prev": []
+    },
+    "Kadabra": {
         "evolutionFrom": "Abra",
-        "evolutionTo": "Kadabra"
+        "evolutionTo": "",
+        "prev": [
+            "Abra"
+        ]
     },
-    {
+    "Machop": {
+        "evolutionFrom": "",
+        "evolutionTo": "Machoke",
+        "prev": []
+    },
+    "Machoke": {
         "evolutionFrom": "Machop",
-        "evolutionTo": "Machoke"
+        "evolutionTo": "",
+        "prev": [
+            "Machop"
+        ]
     },
-    {
+    "Bellsprout": {
+        "evolutionFrom": "",
+        "evolutionTo": "Weepinbell",
+        "prev": []
+    },
+    "Weepinbell": {
         "evolutionFrom": "Bellsprout",
-        "evolutionTo": "Weepinbell"
+        "evolutionTo": "",
+        "prev": [
+            "Bellsprout"
+        ]
     },
-    {
+    "Tentacool": {
+        "evolutionFrom": "",
+        "evolutionTo": "Tentacruel",
+        "prev": []
+    },
+    "Tentacruel": {
         "evolutionFrom": "Tentacool",
-        "evolutionTo": "Tentacruel"
+        "evolutionTo": "",
+        "prev": [
+            "Tentacool"
+        ]
     },
-    {
+    "Geodude": {
+        "evolutionFrom": "",
+        "evolutionTo": "Graveler",
+        "prev": []
+    },
+    "Graveler": {
         "evolutionFrom": "Geodude",
-        "evolutionTo": "Graveler"
+        "evolutionTo": "",
+        "prev": [
+            "Geodude"
+        ]
     },
-    {
+    "Geodude\n Alolan Geodude": {
+        "evolutionFrom": "",
+        "evolutionTo": "Graveler\n Alolan Graveler",
+        "prev": []
+    },
+    "Graveler\n Alolan Graveler": {
         "evolutionFrom": "Geodude\n Alolan Geodude",
-        "evolutionTo": "Graveler\n Alolan Graveler"
+        "evolutionTo": "",
+        "prev": [
+            "Geodude\n Alolan Geodude"
+        ]
     },
-    {
+    "Ponyta": {
+        "evolutionFrom": "",
+        "evolutionTo": "Rapidash",
+        "prev": []
+    },
+    "Rapidash": {
         "evolutionFrom": "Ponyta",
-        "evolutionTo": "Rapidash"
+        "evolutionTo": "",
+        "prev": [
+            "Ponyta"
+        ]
     },
-    {
+    "Ponyta\n Galarian Ponyta": {
+        "evolutionFrom": "",
+        "evolutionTo": "Rapidash\n Galarian Rapidash",
+        "prev": []
+    },
+    "Rapidash\n Galarian Rapidash": {
         "evolutionFrom": "Ponyta\n Galarian Ponyta",
-        "evolutionTo": "Rapidash\n Galarian Rapidash"
+        "evolutionTo": "",
+        "prev": [
+            "Ponyta\n Galarian Ponyta"
+        ]
     },
-    {
+    "Slowpoke": {
+        "evolutionFrom": "",
+        "evolutionTo": "Slowbro",
+        "prev": []
+    },
+    "Slowbro": {
         "evolutionFrom": "Slowpoke",
-        "evolutionTo": "Slowbro"
+        "evolutionTo": "",
+        "prev": [
+            "Slowpoke"
+        ]
     },
-    {
+    "Magnemite": {
+        "evolutionFrom": "",
+        "evolutionTo": "Magneton",
+        "prev": []
+    },
+    "Magneton": {
         "evolutionFrom": "Magnemite",
-        "evolutionTo": "Magneton"
+        "evolutionTo": "",
+        "prev": [
+            "Magnemite"
+        ]
     },
-    {
+    "Doduo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dodrio",
+        "prev": []
+    },
+    "Dodrio": {
         "evolutionFrom": "Doduo",
-        "evolutionTo": "Dodrio"
+        "evolutionTo": "",
+        "prev": [
+            "Doduo"
+        ]
     },
-    {
+    "Seel": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dewgong",
+        "prev": []
+    },
+    "Dewgong": {
         "evolutionFrom": "Seel",
-        "evolutionTo": "Dewgong"
+        "evolutionTo": "",
+        "prev": [
+            "Seel"
+        ]
     },
-    {
+    "Grimer": {
+        "evolutionFrom": "",
+        "evolutionTo": "Muk",
+        "prev": []
+    },
+    "Muk": {
         "evolutionFrom": "Grimer",
-        "evolutionTo": "Muk"
+        "evolutionTo": "",
+        "prev": [
+            "Grimer"
+        ]
     },
-    {
+    "Grimer\n Alolan Grimer": {
+        "evolutionFrom": "",
+        "evolutionTo": "Muk\n Alolan Muk",
+        "prev": []
+    },
+    "Muk\n Alolan Muk": {
         "evolutionFrom": "Grimer\n Alolan Grimer",
-        "evolutionTo": "Muk\n Alolan Muk"
+        "evolutionTo": "",
+        "prev": [
+            "Grimer\n Alolan Grimer"
+        ]
     },
-    {
+    "Gastly": {
+        "evolutionFrom": "",
+        "evolutionTo": "Haunter",
+        "prev": []
+    },
+    "Haunter": {
         "evolutionFrom": "Gastly",
-        "evolutionTo": "Haunter"
+        "evolutionTo": "",
+        "prev": [
+            "Gastly"
+        ]
     },
-    {
+    "Drowzee": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hypno",
+        "prev": []
+    },
+    "Hypno": {
         "evolutionFrom": "Drowzee",
-        "evolutionTo": "Hypno"
+        "evolutionTo": "",
+        "prev": [
+            "Drowzee"
+        ]
     },
-    {
+    "Krabby": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kingler",
+        "prev": []
+    },
+    "Kingler": {
         "evolutionFrom": "Krabby",
-        "evolutionTo": "Kingler"
+        "evolutionTo": "",
+        "prev": [
+            "Krabby"
+        ]
     },
-    {
+    "Voltorb": {
+        "evolutionFrom": "",
+        "evolutionTo": "Electrode",
+        "prev": []
+    },
+    "Electrode": {
         "evolutionFrom": "Voltorb",
-        "evolutionTo": "Electrode"
+        "evolutionTo": "",
+        "prev": [
+            "Voltorb"
+        ]
     },
-    {
+    "Cubone": {
+        "evolutionFrom": "",
+        "evolutionTo": "Marowak",
+        "prev": []
+    },
+    "Marowak": {
         "evolutionFrom": "Cubone",
-        "evolutionTo": "Marowak"
+        "evolutionTo": "",
+        "prev": [
+            "Cubone"
+        ]
     },
-    {
+    "Marowak\n Alolan Marowak": {
         "evolutionFrom": "Cubone",
-        "evolutionTo": "Marowak\n Alolan Marowak"
+        "evolutionTo": "",
+        "prev": [
+            "Cubone"
+        ]
     },
-    {
+    "Tyrogue": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hitmonlee",
+        "prev": []
+    },
+    "Hitmonlee": {
         "evolutionFrom": "Tyrogue",
-        "evolutionTo": "Hitmonlee"
+        "evolutionTo": "",
+        "prev": [
+            "Tyrogue"
+        ]
     },
-    {
+    "Hitmonchan": {
         "evolutionFrom": "Tyrogue",
-        "evolutionTo": "Hitmonchan"
+        "evolutionTo": "",
+        "prev": [
+            "Tyrogue"
+        ]
     },
-    {
+    "Hitmontop": {
         "evolutionFrom": "Tyrogue",
-        "evolutionTo": "Hitmontop"
+        "evolutionTo": "",
+        "prev": [
+            "Tyrogue"
+        ]
     },
-    {
+    "Koffing": {
+        "evolutionFrom": "",
+        "evolutionTo": "Weezing",
+        "prev": []
+    },
+    "Weezing": {
         "evolutionFrom": "Koffing",
-        "evolutionTo": "Weezing"
+        "evolutionTo": "",
+        "prev": [
+            "Koffing"
+        ]
     },
-    {
+    "Weezing\n Galarian Weezing": {
         "evolutionFrom": "Koffing",
-        "evolutionTo": "Weezing\n Galarian Weezing"
+        "evolutionTo": "",
+        "prev": [
+            "Koffing"
+        ]
     },
-    {
+    "Rhyhorn": {
+        "evolutionFrom": "",
+        "evolutionTo": "Rhydon",
+        "prev": []
+    },
+    "Rhydon": {
         "evolutionFrom": "Rhyhorn",
-        "evolutionTo": "Rhydon"
+        "evolutionTo": "",
+        "prev": [
+            "Rhyhorn"
+        ]
     },
-    {
+    "Horsea": {
+        "evolutionFrom": "",
+        "evolutionTo": "Seadra",
+        "prev": []
+    },
+    "Seadra": {
         "evolutionFrom": "Horsea",
-        "evolutionTo": "Seadra"
+        "evolutionTo": "",
+        "prev": [
+            "Horsea"
+        ]
     },
-    {
+    "Goldeen": {
+        "evolutionFrom": "",
+        "evolutionTo": "Seaking",
+        "prev": []
+    },
+    "Seaking": {
         "evolutionFrom": "Goldeen",
-        "evolutionTo": "Seaking"
+        "evolutionTo": "",
+        "prev": [
+            "Goldeen"
+        ]
     },
-    {
+    "Mr. Mime\n Galarian Mr. Mime": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mr. Rime",
+        "prev": []
+    },
+    "Mr. Rime": {
         "evolutionFrom": "Mr. Mime\n Galarian Mr. Mime",
-        "evolutionTo": "Mr. Rime"
+        "evolutionTo": "",
+        "prev": [
+            "Mr. Mime\n Galarian Mr. Mime"
+        ]
     },
-    {
+    "Smoochum": {
+        "evolutionFrom": "",
+        "evolutionTo": "Jynx",
+        "prev": []
+    },
+    "Jynx": {
         "evolutionFrom": "Smoochum",
-        "evolutionTo": "Jynx"
+        "evolutionTo": "",
+        "prev": [
+            "Smoochum"
+        ]
     },
-    {
+    "Elekid": {
+        "evolutionFrom": "",
+        "evolutionTo": "Electabuzz",
+        "prev": []
+    },
+    "Electabuzz": {
         "evolutionFrom": "Elekid",
-        "evolutionTo": "Electabuzz"
+        "evolutionTo": "",
+        "prev": [
+            "Elekid"
+        ]
     },
-    {
+    "Magby": {
+        "evolutionFrom": "",
+        "evolutionTo": "Magmar",
+        "prev": []
+    },
+    "Magmar": {
         "evolutionFrom": "Magby",
-        "evolutionTo": "Magmar"
+        "evolutionTo": "",
+        "prev": [
+            "Magby"
+        ]
     },
-    {
+    "Magikarp": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gyarados",
+        "prev": []
+    },
+    "Gyarados": {
         "evolutionFrom": "Magikarp",
-        "evolutionTo": "Gyarados"
+        "evolutionTo": "",
+        "prev": [
+            "Magikarp"
+        ]
     },
-    {
+    "Omanyte": {
+        "evolutionFrom": "",
+        "evolutionTo": "Omastar",
+        "prev": []
+    },
+    "Omastar": {
         "evolutionFrom": "Omanyte",
-        "evolutionTo": "Omastar"
+        "evolutionTo": "",
+        "prev": [
+            "Omanyte"
+        ]
     },
-    {
+    "Kabuto": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kabutops",
+        "prev": []
+    },
+    "Kabutops": {
         "evolutionFrom": "Kabuto",
-        "evolutionTo": "Kabutops"
+        "evolutionTo": "",
+        "prev": [
+            "Kabuto"
+        ]
     },
-    {
+    "Dratini": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dragonair",
+        "prev": []
+    },
+    "Dragonair": {
         "evolutionFrom": "Dratini",
-        "evolutionTo": "Dragonair"
+        "evolutionTo": "Dragonite",
+        "prev": [
+            "Dratini"
+        ]
     },
-    {
+    "Dragonite": {
         "evolutionFrom": "Dragonair",
-        "evolutionTo": "Dragonite"
+        "evolutionTo": "",
+        "prev": [
+            "Dratini",
+            "Dragonair"
+        ]
     },
-    {
+    "Chikorita": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bayleef",
+        "prev": []
+    },
+    "Bayleef": {
         "evolutionFrom": "Chikorita",
-        "evolutionTo": "Bayleef"
+        "evolutionTo": "Meganium",
+        "prev": [
+            "Chikorita"
+        ]
     },
-    {
+    "Meganium": {
         "evolutionFrom": "Bayleef",
-        "evolutionTo": "Meganium"
+        "evolutionTo": "",
+        "prev": [
+            "Chikorita",
+            "Bayleef"
+        ]
     },
-    {
+    "Cyndaquil": {
+        "evolutionFrom": "",
+        "evolutionTo": "Quilava",
+        "prev": []
+    },
+    "Quilava": {
         "evolutionFrom": "Cyndaquil",
-        "evolutionTo": "Quilava"
+        "evolutionTo": "Typhlosion",
+        "prev": [
+            "Cyndaquil"
+        ]
     },
-    {
+    "Typhlosion": {
         "evolutionFrom": "Quilava",
-        "evolutionTo": "Typhlosion"
+        "evolutionTo": "",
+        "prev": [
+            "Cyndaquil",
+            "Quilava"
+        ]
     },
-    {
+    "Typhlosion\n Hisuian Typhlosion": {
         "evolutionFrom": "Quilava",
-        "evolutionTo": "Typhlosion\n Hisuian Typhlosion"
+        "evolutionTo": "",
+        "prev": [
+            "Cyndaquil",
+            "Quilava"
+        ]
     },
-    {
+    "Totodile": {
+        "evolutionFrom": "",
+        "evolutionTo": "Croconaw",
+        "prev": []
+    },
+    "Croconaw": {
         "evolutionFrom": "Totodile",
-        "evolutionTo": "Croconaw"
+        "evolutionTo": "Feraligatr",
+        "prev": [
+            "Totodile"
+        ]
     },
-    {
+    "Feraligatr": {
         "evolutionFrom": "Croconaw",
-        "evolutionTo": "Feraligatr"
+        "evolutionTo": "",
+        "prev": [
+            "Totodile",
+            "Croconaw"
+        ]
     },
-    {
+    "Sentret": {
+        "evolutionFrom": "",
+        "evolutionTo": "Furret",
+        "prev": []
+    },
+    "Furret": {
         "evolutionFrom": "Sentret",
-        "evolutionTo": "Furret"
+        "evolutionTo": "",
+        "prev": [
+            "Sentret"
+        ]
     },
-    {
+    "Hoothoot": {
+        "evolutionFrom": "",
+        "evolutionTo": "Noctowl",
+        "prev": []
+    },
+    "Noctowl": {
         "evolutionFrom": "Hoothoot",
-        "evolutionTo": "Noctowl"
+        "evolutionTo": "",
+        "prev": [
+            "Hoothoot"
+        ]
     },
-    {
+    "Ledyba": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ledian",
+        "prev": []
+    },
+    "Ledian": {
         "evolutionFrom": "Ledyba",
-        "evolutionTo": "Ledian"
+        "evolutionTo": "",
+        "prev": [
+            "Ledyba"
+        ]
     },
-    {
+    "Spinarak": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ariados",
+        "prev": []
+    },
+    "Ariados": {
         "evolutionFrom": "Spinarak",
-        "evolutionTo": "Ariados"
+        "evolutionTo": "",
+        "prev": [
+            "Spinarak"
+        ]
     },
-    {
+    "Chinchou": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lanturn",
+        "prev": []
+    },
+    "Lanturn": {
         "evolutionFrom": "Chinchou",
-        "evolutionTo": "Lanturn"
+        "evolutionTo": "",
+        "prev": [
+            "Chinchou"
+        ]
     },
-    {
+    "Natu": {
+        "evolutionFrom": "",
+        "evolutionTo": "Xatu",
+        "prev": []
+    },
+    "Xatu": {
         "evolutionFrom": "Natu",
-        "evolutionTo": "Xatu"
+        "evolutionTo": "",
+        "prev": [
+            "Natu"
+        ]
     },
-    {
+    "Mareep": {
+        "evolutionFrom": "",
+        "evolutionTo": "Flaaffy",
+        "prev": []
+    },
+    "Flaaffy": {
         "evolutionFrom": "Mareep",
-        "evolutionTo": "Flaaffy"
+        "evolutionTo": "Ampharos",
+        "prev": [
+            "Mareep"
+        ]
     },
-    {
+    "Ampharos": {
         "evolutionFrom": "Flaaffy",
-        "evolutionTo": "Ampharos"
+        "evolutionTo": "",
+        "prev": [
+            "Mareep",
+            "Flaaffy"
+        ]
     },
-    {
+    "Marill": {
+        "evolutionFrom": "",
+        "evolutionTo": "Azumarill",
+        "prev": []
+    },
+    "Azumarill": {
         "evolutionFrom": "Marill",
-        "evolutionTo": "Azumarill"
+        "evolutionTo": "",
+        "prev": [
+            "Marill"
+        ]
     },
-    {
+    "Hoppip": {
+        "evolutionFrom": "",
+        "evolutionTo": "Skiploom",
+        "prev": []
+    },
+    "Skiploom": {
         "evolutionFrom": "Hoppip",
-        "evolutionTo": "Skiploom"
+        "evolutionTo": "Jumpluff",
+        "prev": [
+            "Hoppip"
+        ]
     },
-    {
+    "Jumpluff": {
         "evolutionFrom": "Skiploom",
-        "evolutionTo": "Jumpluff"
+        "evolutionTo": "",
+        "prev": [
+            "Hoppip",
+            "Skiploom"
+        ]
     },
-    {
+    "Wooper": {
+        "evolutionFrom": "",
+        "evolutionTo": "Quagsire",
+        "prev": []
+    },
+    "Quagsire": {
         "evolutionFrom": "Wooper",
-        "evolutionTo": "Quagsire"
+        "evolutionTo": "",
+        "prev": [
+            "Wooper"
+        ]
     },
-    {
+    "Wooper\n Paldean Wooper": {
+        "evolutionFrom": "",
+        "evolutionTo": "Clodsire",
+        "prev": []
+    },
+    "Clodsire": {
         "evolutionFrom": "Wooper\n Paldean Wooper",
-        "evolutionTo": "Clodsire"
+        "evolutionTo": "",
+        "prev": [
+            "Wooper\n Paldean Wooper"
+        ]
     },
-    {
+    "Wynaut": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wobbuffet",
+        "prev": []
+    },
+    "Wobbuffet": {
         "evolutionFrom": "Wynaut",
-        "evolutionTo": "Wobbuffet"
+        "evolutionTo": "",
+        "prev": [
+            "Wynaut"
+        ]
     },
-    {
+    "Pineco": {
+        "evolutionFrom": "",
+        "evolutionTo": "Forretress",
+        "prev": []
+    },
+    "Forretress": {
         "evolutionFrom": "Pineco",
-        "evolutionTo": "Forretress"
+        "evolutionTo": "",
+        "prev": [
+            "Pineco"
+        ]
     },
-    {
+    "Snubbull": {
+        "evolutionFrom": "",
+        "evolutionTo": "Granbull",
+        "prev": []
+    },
+    "Granbull": {
         "evolutionFrom": "Snubbull",
-        "evolutionTo": "Granbull"
+        "evolutionTo": "",
+        "prev": [
+            "Snubbull"
+        ]
     },
-    {
+    "Teddiursa": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ursaring",
+        "prev": []
+    },
+    "Ursaring": {
         "evolutionFrom": "Teddiursa",
-        "evolutionTo": "Ursaring"
+        "evolutionTo": "",
+        "prev": [
+            "Teddiursa"
+        ]
     },
-    {
+    "Slugma": {
+        "evolutionFrom": "",
+        "evolutionTo": "Magcargo",
+        "prev": []
+    },
+    "Magcargo": {
         "evolutionFrom": "Slugma",
-        "evolutionTo": "Magcargo"
+        "evolutionTo": "",
+        "prev": [
+            "Slugma"
+        ]
     },
-    {
+    "Swinub": {
+        "evolutionFrom": "",
+        "evolutionTo": "Piloswine",
+        "prev": []
+    },
+    "Piloswine": {
         "evolutionFrom": "Swinub",
-        "evolutionTo": "Piloswine"
+        "evolutionTo": "",
+        "prev": [
+            "Swinub"
+        ]
     },
-    {
+    "Remoraid": {
+        "evolutionFrom": "",
+        "evolutionTo": "Octillery",
+        "prev": []
+    },
+    "Octillery": {
         "evolutionFrom": "Remoraid",
-        "evolutionTo": "Octillery"
+        "evolutionTo": "",
+        "prev": [
+            "Remoraid"
+        ]
     },
-    {
+    "Houndour": {
+        "evolutionFrom": "",
+        "evolutionTo": "Houndoom",
+        "prev": []
+    },
+    "Houndoom": {
         "evolutionFrom": "Houndour",
-        "evolutionTo": "Houndoom"
+        "evolutionTo": "",
+        "prev": [
+            "Houndour"
+        ]
     },
-    {
+    "Phanpy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Donphan",
+        "prev": []
+    },
+    "Donphan": {
         "evolutionFrom": "Phanpy",
-        "evolutionTo": "Donphan"
+        "evolutionTo": "",
+        "prev": [
+            "Phanpy"
+        ]
     },
-    {
+    "Larvitar": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pupitar",
+        "prev": []
+    },
+    "Pupitar": {
         "evolutionFrom": "Larvitar",
-        "evolutionTo": "Pupitar"
+        "evolutionTo": "Tyranitar",
+        "prev": [
+            "Larvitar"
+        ]
     },
-    {
+    "Tyranitar": {
         "evolutionFrom": "Pupitar",
-        "evolutionTo": "Tyranitar"
+        "evolutionTo": "",
+        "prev": [
+            "Larvitar",
+            "Pupitar"
+        ]
     },
-    {
+    "Treecko": {
+        "evolutionFrom": "",
+        "evolutionTo": "Grovyle",
+        "prev": []
+    },
+    "Grovyle": {
         "evolutionFrom": "Treecko",
-        "evolutionTo": "Grovyle"
+        "evolutionTo": "Sceptile",
+        "prev": [
+            "Treecko"
+        ]
     },
-    {
+    "Sceptile": {
         "evolutionFrom": "Grovyle",
-        "evolutionTo": "Sceptile"
+        "evolutionTo": "",
+        "prev": [
+            "Treecko",
+            "Grovyle"
+        ]
     },
-    {
+    "Torchic": {
+        "evolutionFrom": "",
+        "evolutionTo": "Combusken",
+        "prev": []
+    },
+    "Combusken": {
         "evolutionFrom": "Torchic",
-        "evolutionTo": "Combusken"
+        "evolutionTo": "Blaziken",
+        "prev": [
+            "Torchic"
+        ]
     },
-    {
+    "Blaziken": {
         "evolutionFrom": "Combusken",
-        "evolutionTo": "Blaziken"
+        "evolutionTo": "",
+        "prev": [
+            "Torchic",
+            "Combusken"
+        ]
     },
-    {
+    "Mudkip": {
+        "evolutionFrom": "",
+        "evolutionTo": "Marshtomp",
+        "prev": []
+    },
+    "Marshtomp": {
         "evolutionFrom": "Mudkip",
-        "evolutionTo": "Marshtomp"
+        "evolutionTo": "Swampert",
+        "prev": [
+            "Mudkip"
+        ]
     },
-    {
+    "Swampert": {
         "evolutionFrom": "Marshtomp",
-        "evolutionTo": "Swampert"
+        "evolutionTo": "",
+        "prev": [
+            "Mudkip",
+            "Marshtomp"
+        ]
     },
-    {
+    "Poochyena": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mightyena",
+        "prev": []
+    },
+    "Mightyena": {
         "evolutionFrom": "Poochyena",
-        "evolutionTo": "Mightyena"
+        "evolutionTo": "",
+        "prev": [
+            "Poochyena"
+        ]
     },
-    {
+    "Zigzagoon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Linoone",
+        "prev": []
+    },
+    "Linoone": {
         "evolutionFrom": "Zigzagoon",
-        "evolutionTo": "Linoone"
+        "evolutionTo": "",
+        "prev": [
+            "Zigzagoon"
+        ]
     },
-    {
+    "Zigzagoon\n Galarian Zigzagoon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Linoone\n Galarian Linoone",
+        "prev": []
+    },
+    "Linoone\n Galarian Linoone": {
         "evolutionFrom": "Zigzagoon\n Galarian Zigzagoon",
-        "evolutionTo": "Linoone\n Galarian Linoone"
+        "evolutionTo": "Obstagoon",
+        "prev": [
+            "Zigzagoon\n Galarian Zigzagoon"
+        ]
     },
-    {
+    "Obstagoon": {
         "evolutionFrom": "Linoone\n Galarian Linoone",
-        "evolutionTo": "Obstagoon"
+        "evolutionTo": "",
+        "prev": [
+            "Zigzagoon\n Galarian Zigzagoon",
+            "Linoone\n Galarian Linoone"
+        ]
     },
-    {
+    "Wurmple": {
+        "evolutionFrom": "",
+        "evolutionTo": "Silcoon",
+        "prev": []
+    },
+    "Silcoon": {
         "evolutionFrom": "Wurmple",
-        "evolutionTo": "Silcoon"
+        "evolutionTo": "Beautifly",
+        "prev": [
+            "Wurmple"
+        ]
     },
-    {
+    "Beautifly": {
         "evolutionFrom": "Silcoon",
-        "evolutionTo": "Beautifly"
+        "evolutionTo": "",
+        "prev": [
+            "Wurmple",
+            "Silcoon"
+        ]
     },
-    {
+    "Cascoon": {
         "evolutionFrom": "Wurmple",
-        "evolutionTo": "Cascoon"
+        "evolutionTo": "Dustox",
+        "prev": [
+            "Wurmple"
+        ]
     },
-    {
+    "Dustox": {
         "evolutionFrom": "Cascoon",
-        "evolutionTo": "Dustox"
+        "evolutionTo": "",
+        "prev": [
+            "Wurmple",
+            "Cascoon"
+        ]
     },
-    {
+    "Lotad": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lombre",
+        "prev": []
+    },
+    "Lombre": {
         "evolutionFrom": "Lotad",
-        "evolutionTo": "Lombre"
+        "evolutionTo": "",
+        "prev": [
+            "Lotad"
+        ]
     },
-    {
+    "Seedot": {
+        "evolutionFrom": "",
+        "evolutionTo": "Nuzleaf",
+        "prev": []
+    },
+    "Nuzleaf": {
         "evolutionFrom": "Seedot",
-        "evolutionTo": "Nuzleaf"
+        "evolutionTo": "",
+        "prev": [
+            "Seedot"
+        ]
     },
-    {
+    "Taillow": {
+        "evolutionFrom": "",
+        "evolutionTo": "Swellow",
+        "prev": []
+    },
+    "Swellow": {
         "evolutionFrom": "Taillow",
-        "evolutionTo": "Swellow"
+        "evolutionTo": "",
+        "prev": [
+            "Taillow"
+        ]
     },
-    {
+    "Wingull": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pelipper",
+        "prev": []
+    },
+    "Pelipper": {
         "evolutionFrom": "Wingull",
-        "evolutionTo": "Pelipper"
+        "evolutionTo": "",
+        "prev": [
+            "Wingull"
+        ]
     },
-    {
+    "Ralts": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kirlia",
+        "prev": []
+    },
+    "Kirlia": {
         "evolutionFrom": "Ralts",
-        "evolutionTo": "Kirlia"
+        "evolutionTo": "Gardevoir",
+        "prev": [
+            "Ralts"
+        ]
     },
-    {
+    "Gardevoir": {
         "evolutionFrom": "Kirlia",
-        "evolutionTo": "Gardevoir"
+        "evolutionTo": "",
+        "prev": [
+            "Ralts",
+            "Kirlia"
+        ]
     },
-    {
+    "Surskit": {
+        "evolutionFrom": "",
+        "evolutionTo": "Masquerain",
+        "prev": []
+    },
+    "Masquerain": {
         "evolutionFrom": "Surskit",
-        "evolutionTo": "Masquerain"
+        "evolutionTo": "",
+        "prev": [
+            "Surskit"
+        ]
     },
-    {
+    "Shroomish": {
+        "evolutionFrom": "",
+        "evolutionTo": "Breloom",
+        "prev": []
+    },
+    "Breloom": {
         "evolutionFrom": "Shroomish",
-        "evolutionTo": "Breloom"
+        "evolutionTo": "",
+        "prev": [
+            "Shroomish"
+        ]
     },
-    {
+    "Slakoth": {
+        "evolutionFrom": "",
+        "evolutionTo": "Vigoroth",
+        "prev": []
+    },
+    "Vigoroth": {
         "evolutionFrom": "Slakoth",
-        "evolutionTo": "Vigoroth"
+        "evolutionTo": "Slaking",
+        "prev": [
+            "Slakoth"
+        ]
     },
-    {
+    "Slaking": {
         "evolutionFrom": "Vigoroth",
-        "evolutionTo": "Slaking"
+        "evolutionTo": "",
+        "prev": [
+            "Slakoth",
+            "Vigoroth"
+        ]
     },
-    {
+    "Nincada": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ninjask",
+        "prev": []
+    },
+    "Ninjask": {
         "evolutionFrom": "Nincada",
-        "evolutionTo": "Ninjask"
+        "evolutionTo": "",
+        "prev": [
+            "Nincada"
+        ]
     },
-    {
+    "Shedinja": {
         "evolutionFrom": "Nincada",
-        "evolutionTo": "Shedinja"
+        "evolutionTo": "",
+        "prev": [
+            "Nincada"
+        ]
     },
-    {
+    "Whismur": {
+        "evolutionFrom": "",
+        "evolutionTo": "Loudred",
+        "prev": []
+    },
+    "Loudred": {
         "evolutionFrom": "Whismur",
-        "evolutionTo": "Loudred"
+        "evolutionTo": "Exploud",
+        "prev": [
+            "Whismur"
+        ]
     },
-    {
+    "Exploud": {
         "evolutionFrom": "Loudred",
-        "evolutionTo": "Exploud"
+        "evolutionTo": "",
+        "prev": [
+            "Whismur",
+            "Loudred"
+        ]
     },
-    {
+    "Makuhita": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hariyama",
+        "prev": []
+    },
+    "Hariyama": {
         "evolutionFrom": "Makuhita",
-        "evolutionTo": "Hariyama"
+        "evolutionTo": "",
+        "prev": [
+            "Makuhita"
+        ]
     },
-    {
+    "Aron": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lairon",
+        "prev": []
+    },
+    "Lairon": {
         "evolutionFrom": "Aron",
-        "evolutionTo": "Lairon"
+        "evolutionTo": "Aggron",
+        "prev": [
+            "Aron"
+        ]
     },
-    {
+    "Aggron": {
         "evolutionFrom": "Lairon",
-        "evolutionTo": "Aggron"
+        "evolutionTo": "",
+        "prev": [
+            "Aron",
+            "Lairon"
+        ]
     },
-    {
+    "Meditite": {
+        "evolutionFrom": "",
+        "evolutionTo": "Medicham",
+        "prev": []
+    },
+    "Medicham": {
         "evolutionFrom": "Meditite",
-        "evolutionTo": "Medicham"
+        "evolutionTo": "",
+        "prev": [
+            "Meditite"
+        ]
     },
-    {
+    "Electrike": {
+        "evolutionFrom": "",
+        "evolutionTo": "Manectric",
+        "prev": []
+    },
+    "Manectric": {
         "evolutionFrom": "Electrike",
-        "evolutionTo": "Manectric"
+        "evolutionTo": "",
+        "prev": [
+            "Electrike"
+        ]
     },
-    {
+    "Gulpin": {
+        "evolutionFrom": "",
+        "evolutionTo": "Swalot",
+        "prev": []
+    },
+    "Swalot": {
         "evolutionFrom": "Gulpin",
-        "evolutionTo": "Swalot"
+        "evolutionTo": "",
+        "prev": [
+            "Gulpin"
+        ]
     },
-    {
+    "Carvanha": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sharpedo",
+        "prev": []
+    },
+    "Sharpedo": {
         "evolutionFrom": "Carvanha",
-        "evolutionTo": "Sharpedo"
+        "evolutionTo": "",
+        "prev": [
+            "Carvanha"
+        ]
     },
-    {
+    "Wailmer": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wailord",
+        "prev": []
+    },
+    "Wailord": {
         "evolutionFrom": "Wailmer",
-        "evolutionTo": "Wailord"
+        "evolutionTo": "",
+        "prev": [
+            "Wailmer"
+        ]
     },
-    {
+    "Numel": {
+        "evolutionFrom": "",
+        "evolutionTo": "Camerupt",
+        "prev": []
+    },
+    "Camerupt": {
         "evolutionFrom": "Numel",
-        "evolutionTo": "Camerupt"
+        "evolutionTo": "",
+        "prev": [
+            "Numel"
+        ]
     },
-    {
+    "Spoink": {
+        "evolutionFrom": "",
+        "evolutionTo": "Grumpig",
+        "prev": []
+    },
+    "Grumpig": {
         "evolutionFrom": "Spoink",
-        "evolutionTo": "Grumpig"
+        "evolutionTo": "",
+        "prev": [
+            "Spoink"
+        ]
     },
-    {
+    "Trapinch": {
+        "evolutionFrom": "",
+        "evolutionTo": "Vibrava",
+        "prev": []
+    },
+    "Vibrava": {
         "evolutionFrom": "Trapinch",
-        "evolutionTo": "Vibrava"
+        "evolutionTo": "Flygon",
+        "prev": [
+            "Trapinch"
+        ]
     },
-    {
+    "Flygon": {
         "evolutionFrom": "Vibrava",
-        "evolutionTo": "Flygon"
+        "evolutionTo": "",
+        "prev": [
+            "Trapinch",
+            "Vibrava"
+        ]
     },
-    {
+    "Cacnea": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cacturne",
+        "prev": []
+    },
+    "Cacturne": {
         "evolutionFrom": "Cacnea",
-        "evolutionTo": "Cacturne"
+        "evolutionTo": "",
+        "prev": [
+            "Cacnea"
+        ]
     },
-    {
+    "Swablu": {
+        "evolutionFrom": "",
+        "evolutionTo": "Altaria",
+        "prev": []
+    },
+    "Altaria": {
         "evolutionFrom": "Swablu",
-        "evolutionTo": "Altaria"
+        "evolutionTo": "",
+        "prev": [
+            "Swablu"
+        ]
     },
-    {
+    "Barboach": {
+        "evolutionFrom": "",
+        "evolutionTo": "Whiscash",
+        "prev": []
+    },
+    "Whiscash": {
         "evolutionFrom": "Barboach",
-        "evolutionTo": "Whiscash"
+        "evolutionTo": "",
+        "prev": [
+            "Barboach"
+        ]
     },
-    {
+    "Corphish": {
+        "evolutionFrom": "",
+        "evolutionTo": "Crawdaunt",
+        "prev": []
+    },
+    "Crawdaunt": {
         "evolutionFrom": "Corphish",
-        "evolutionTo": "Crawdaunt"
+        "evolutionTo": "",
+        "prev": [
+            "Corphish"
+        ]
     },
-    {
+    "Baltoy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Claydol",
+        "prev": []
+    },
+    "Claydol": {
         "evolutionFrom": "Baltoy",
-        "evolutionTo": "Claydol"
+        "evolutionTo": "",
+        "prev": [
+            "Baltoy"
+        ]
     },
-    {
+    "Lileep": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cradily",
+        "prev": []
+    },
+    "Cradily": {
         "evolutionFrom": "Lileep",
-        "evolutionTo": "Cradily"
+        "evolutionTo": "",
+        "prev": [
+            "Lileep"
+        ]
     },
-    {
+    "Anorith": {
+        "evolutionFrom": "",
+        "evolutionTo": "Armaldo",
+        "prev": []
+    },
+    "Armaldo": {
         "evolutionFrom": "Anorith",
-        "evolutionTo": "Armaldo"
+        "evolutionTo": "",
+        "prev": [
+            "Anorith"
+        ]
     },
-    {
+    "Shuppet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Banette",
+        "prev": []
+    },
+    "Banette": {
         "evolutionFrom": "Shuppet",
-        "evolutionTo": "Banette"
+        "evolutionTo": "",
+        "prev": [
+            "Shuppet"
+        ]
     },
-    {
+    "Duskull": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dusclops",
+        "prev": []
+    },
+    "Dusclops": {
         "evolutionFrom": "Duskull",
-        "evolutionTo": "Dusclops"
+        "evolutionTo": "",
+        "prev": [
+            "Duskull"
+        ]
     },
-    {
+    "Snorunt": {
+        "evolutionFrom": "",
+        "evolutionTo": "Glalie",
+        "prev": []
+    },
+    "Glalie": {
         "evolutionFrom": "Snorunt",
-        "evolutionTo": "Glalie"
+        "evolutionTo": "",
+        "prev": [
+            "Snorunt"
+        ]
     },
-    {
+    "Spheal": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sealeo",
+        "prev": []
+    },
+    "Sealeo": {
         "evolutionFrom": "Spheal",
-        "evolutionTo": "Sealeo"
+        "evolutionTo": "Walrein",
+        "prev": [
+            "Spheal"
+        ]
     },
-    {
+    "Walrein": {
         "evolutionFrom": "Sealeo",
-        "evolutionTo": "Walrein"
+        "evolutionTo": "",
+        "prev": [
+            "Spheal",
+            "Sealeo"
+        ]
     },
-    {
+    "Bagon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Shelgon",
+        "prev": []
+    },
+    "Shelgon": {
         "evolutionFrom": "Bagon",
-        "evolutionTo": "Shelgon"
+        "evolutionTo": "Salamence",
+        "prev": [
+            "Bagon"
+        ]
     },
-    {
+    "Salamence": {
         "evolutionFrom": "Shelgon",
-        "evolutionTo": "Salamence"
+        "evolutionTo": "",
+        "prev": [
+            "Bagon",
+            "Shelgon"
+        ]
     },
-    {
+    "Beldum": {
+        "evolutionFrom": "",
+        "evolutionTo": "Metang",
+        "prev": []
+    },
+    "Metang": {
         "evolutionFrom": "Beldum",
-        "evolutionTo": "Metang"
+        "evolutionTo": "Metagross",
+        "prev": [
+            "Beldum"
+        ]
     },
-    {
+    "Metagross": {
         "evolutionFrom": "Metang",
-        "evolutionTo": "Metagross"
+        "evolutionTo": "",
+        "prev": [
+            "Beldum",
+            "Metang"
+        ]
     },
-    {
+    "Turtwig": {
+        "evolutionFrom": "",
+        "evolutionTo": "Grotle",
+        "prev": []
+    },
+    "Grotle": {
         "evolutionFrom": "Turtwig",
-        "evolutionTo": "Grotle"
+        "evolutionTo": "Torterra",
+        "prev": [
+            "Turtwig"
+        ]
     },
-    {
+    "Torterra": {
         "evolutionFrom": "Grotle",
-        "evolutionTo": "Torterra"
+        "evolutionTo": "",
+        "prev": [
+            "Turtwig",
+            "Grotle"
+        ]
     },
-    {
+    "Chimchar": {
+        "evolutionFrom": "",
+        "evolutionTo": "Monferno",
+        "prev": []
+    },
+    "Monferno": {
         "evolutionFrom": "Chimchar",
-        "evolutionTo": "Monferno"
+        "evolutionTo": "Infernape",
+        "prev": [
+            "Chimchar"
+        ]
     },
-    {
+    "Infernape": {
         "evolutionFrom": "Monferno",
-        "evolutionTo": "Infernape"
+        "evolutionTo": "",
+        "prev": [
+            "Chimchar",
+            "Monferno"
+        ]
     },
-    {
+    "Piplup": {
+        "evolutionFrom": "",
+        "evolutionTo": "Prinplup",
+        "prev": []
+    },
+    "Prinplup": {
         "evolutionFrom": "Piplup",
-        "evolutionTo": "Prinplup"
+        "evolutionTo": "Empoleon",
+        "prev": [
+            "Piplup"
+        ]
     },
-    {
+    "Empoleon": {
         "evolutionFrom": "Prinplup",
-        "evolutionTo": "Empoleon"
+        "evolutionTo": "",
+        "prev": [
+            "Piplup",
+            "Prinplup"
+        ]
     },
-    {
+    "Starly": {
+        "evolutionFrom": "",
+        "evolutionTo": "Staravia",
+        "prev": []
+    },
+    "Staravia": {
         "evolutionFrom": "Starly",
-        "evolutionTo": "Staravia"
+        "evolutionTo": "Staraptor",
+        "prev": [
+            "Starly"
+        ]
     },
-    {
+    "Staraptor": {
         "evolutionFrom": "Staravia",
-        "evolutionTo": "Staraptor"
+        "evolutionTo": "",
+        "prev": [
+            "Starly",
+            "Staravia"
+        ]
     },
-    {
+    "Bidoof": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bibarel",
+        "prev": []
+    },
+    "Bibarel": {
         "evolutionFrom": "Bidoof",
-        "evolutionTo": "Bibarel"
+        "evolutionTo": "",
+        "prev": [
+            "Bidoof"
+        ]
     },
-    {
+    "Kricketot": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kricketune",
+        "prev": []
+    },
+    "Kricketune": {
         "evolutionFrom": "Kricketot",
-        "evolutionTo": "Kricketune"
+        "evolutionTo": "",
+        "prev": [
+            "Kricketot"
+        ]
     },
-    {
+    "Shinx": {
+        "evolutionFrom": "",
+        "evolutionTo": "Luxio",
+        "prev": []
+    },
+    "Luxio": {
         "evolutionFrom": "Shinx",
-        "evolutionTo": "Luxio"
+        "evolutionTo": "Luxray",
+        "prev": [
+            "Shinx"
+        ]
     },
-    {
+    "Luxray": {
         "evolutionFrom": "Luxio",
-        "evolutionTo": "Luxray"
+        "evolutionTo": "",
+        "prev": [
+            "Shinx",
+            "Luxio"
+        ]
     },
-    {
+    "Cranidos": {
+        "evolutionFrom": "",
+        "evolutionTo": "Rampardos",
+        "prev": []
+    },
+    "Rampardos": {
         "evolutionFrom": "Cranidos",
-        "evolutionTo": "Rampardos"
+        "evolutionTo": "",
+        "prev": [
+            "Cranidos"
+        ]
     },
-    {
+    "Shieldon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bastiodon",
+        "prev": []
+    },
+    "Bastiodon": {
         "evolutionFrom": "Shieldon",
-        "evolutionTo": "Bastiodon"
+        "evolutionTo": "",
+        "prev": [
+            "Shieldon"
+        ]
     },
-    {
+    "Burmy\n Plant Cloak": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mothim",
+        "prev": []
+    },
+    "Mothim": {
         "evolutionFrom": "Burmy\n Plant Cloak",
-        "evolutionTo": "Mothim"
+        "evolutionTo": "",
+        "prev": [
+            "Burmy\n Plant Cloak"
+        ]
     },
-    {
+    "Wormadam\n Plant Cloak": {
         "evolutionFrom": "Burmy\n Plant Cloak",
-        "evolutionTo": "Wormadam\n Plant Cloak"
+        "evolutionTo": "",
+        "prev": [
+            "Burmy\n Plant Cloak"
+        ]
     },
-    {
+    "Burmy\n Sandy Cloak": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wormadam\n Sandy Cloak",
+        "prev": []
+    },
+    "Wormadam\n Sandy Cloak": {
         "evolutionFrom": "Burmy\n Sandy Cloak",
-        "evolutionTo": "Wormadam\n Sandy Cloak"
+        "evolutionTo": "",
+        "prev": [
+            "Burmy\n Sandy Cloak"
+        ]
     },
-    {
+    "Burmy\n Trash Cloak": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wormadam\n Trash Cloak",
+        "prev": []
+    },
+    "Wormadam\n Trash Cloak": {
         "evolutionFrom": "Burmy\n Trash Cloak",
-        "evolutionTo": "Wormadam\n Trash Cloak"
+        "evolutionTo": "",
+        "prev": [
+            "Burmy\n Trash Cloak"
+        ]
     },
-    {
+    "Combee": {
+        "evolutionFrom": "",
+        "evolutionTo": "Vespiquen",
+        "prev": []
+    },
+    "Vespiquen": {
         "evolutionFrom": "Combee",
-        "evolutionTo": "Vespiquen"
+        "evolutionTo": "",
+        "prev": [
+            "Combee"
+        ]
     },
-    {
+    "Buizel": {
+        "evolutionFrom": "",
+        "evolutionTo": "Floatzel",
+        "prev": []
+    },
+    "Floatzel": {
         "evolutionFrom": "Buizel",
-        "evolutionTo": "Floatzel"
+        "evolutionTo": "",
+        "prev": [
+            "Buizel"
+        ]
     },
-    {
+    "Cherubi": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cherrim",
+        "prev": []
+    },
+    "Cherrim": {
         "evolutionFrom": "Cherubi",
-        "evolutionTo": "Cherrim"
+        "evolutionTo": "",
+        "prev": [
+            "Cherubi"
+        ]
     },
-    {
+    "Shellos": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gastrodon",
+        "prev": []
+    },
+    "Gastrodon": {
         "evolutionFrom": "Shellos",
-        "evolutionTo": "Gastrodon"
+        "evolutionTo": "",
+        "prev": [
+            "Shellos"
+        ]
     },
-    {
+    "Drifloon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Drifblim",
+        "prev": []
+    },
+    "Drifblim": {
         "evolutionFrom": "Drifloon",
-        "evolutionTo": "Drifblim"
+        "evolutionTo": "",
+        "prev": [
+            "Drifloon"
+        ]
     },
-    {
+    "Glameow": {
+        "evolutionFrom": "",
+        "evolutionTo": "Purugly",
+        "prev": []
+    },
+    "Purugly": {
         "evolutionFrom": "Glameow",
-        "evolutionTo": "Purugly"
+        "evolutionTo": "",
+        "prev": [
+            "Glameow"
+        ]
     },
-    {
+    "Stunky": {
+        "evolutionFrom": "",
+        "evolutionTo": "Skuntank",
+        "prev": []
+    },
+    "Skuntank": {
         "evolutionFrom": "Stunky",
-        "evolutionTo": "Skuntank"
+        "evolutionTo": "",
+        "prev": [
+            "Stunky"
+        ]
     },
-    {
+    "Bronzor": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bronzong",
+        "prev": []
+    },
+    "Bronzong": {
         "evolutionFrom": "Bronzor",
-        "evolutionTo": "Bronzong"
+        "evolutionTo": "",
+        "prev": [
+            "Bronzor"
+        ]
     },
-    {
+    "Gible": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gabite",
+        "prev": []
+    },
+    "Gabite": {
         "evolutionFrom": "Gible",
-        "evolutionTo": "Gabite"
+        "evolutionTo": "Garchomp",
+        "prev": [
+            "Gible"
+        ]
     },
-    {
+    "Garchomp": {
         "evolutionFrom": "Gabite",
-        "evolutionTo": "Garchomp"
+        "evolutionTo": "",
+        "prev": [
+            "Gible",
+            "Gabite"
+        ]
     },
-    {
+    "Hippopotas": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hippowdon",
+        "prev": []
+    },
+    "Hippowdon": {
         "evolutionFrom": "Hippopotas",
-        "evolutionTo": "Hippowdon"
+        "evolutionTo": "",
+        "prev": [
+            "Hippopotas"
+        ]
     },
-    {
+    "Skorupi": {
+        "evolutionFrom": "",
+        "evolutionTo": "Drapion",
+        "prev": []
+    },
+    "Drapion": {
         "evolutionFrom": "Skorupi",
-        "evolutionTo": "Drapion"
+        "evolutionTo": "",
+        "prev": [
+            "Skorupi"
+        ]
     },
-    {
+    "Croagunk": {
+        "evolutionFrom": "",
+        "evolutionTo": "Toxicroak",
+        "prev": []
+    },
+    "Toxicroak": {
         "evolutionFrom": "Croagunk",
-        "evolutionTo": "Toxicroak"
+        "evolutionTo": "",
+        "prev": [
+            "Croagunk"
+        ]
     },
-    {
+    "Finneon": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lumineon",
+        "prev": []
+    },
+    "Lumineon": {
         "evolutionFrom": "Finneon",
-        "evolutionTo": "Lumineon"
+        "evolutionTo": "",
+        "prev": [
+            "Finneon"
+        ]
     },
-    {
+    "Snover": {
+        "evolutionFrom": "",
+        "evolutionTo": "Abomasnow",
+        "prev": []
+    },
+    "Abomasnow": {
         "evolutionFrom": "Snover",
-        "evolutionTo": "Abomasnow"
+        "evolutionTo": "",
+        "prev": [
+            "Snover"
+        ]
     },
-    {
+    "Snivy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Servine",
+        "prev": []
+    },
+    "Servine": {
         "evolutionFrom": "Snivy",
-        "evolutionTo": "Servine"
+        "evolutionTo": "Serperior",
+        "prev": [
+            "Snivy"
+        ]
     },
-    {
+    "Serperior": {
         "evolutionFrom": "Servine",
-        "evolutionTo": "Serperior"
+        "evolutionTo": "",
+        "prev": [
+            "Snivy",
+            "Servine"
+        ]
     },
-    {
+    "Tepig": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pignite",
+        "prev": []
+    },
+    "Pignite": {
         "evolutionFrom": "Tepig",
-        "evolutionTo": "Pignite"
+        "evolutionTo": "Emboar",
+        "prev": [
+            "Tepig"
+        ]
     },
-    {
+    "Emboar": {
         "evolutionFrom": "Pignite",
-        "evolutionTo": "Emboar"
+        "evolutionTo": "",
+        "prev": [
+            "Tepig",
+            "Pignite"
+        ]
     },
-    {
+    "Oshawott": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dewott",
+        "prev": []
+    },
+    "Dewott": {
         "evolutionFrom": "Oshawott",
-        "evolutionTo": "Dewott"
+        "evolutionTo": "Samurott",
+        "prev": [
+            "Oshawott"
+        ]
     },
-    {
+    "Samurott": {
         "evolutionFrom": "Dewott",
-        "evolutionTo": "Samurott"
+        "evolutionTo": "",
+        "prev": [
+            "Oshawott",
+            "Dewott"
+        ]
     },
-    {
+    "Samurott\n Hisuian Samurott": {
         "evolutionFrom": "Dewott",
-        "evolutionTo": "Samurott\n Hisuian Samurott"
+        "evolutionTo": "",
+        "prev": [
+            "Oshawott",
+            "Dewott"
+        ]
     },
-    {
+    "Patrat": {
+        "evolutionFrom": "",
+        "evolutionTo": "Watchog",
+        "prev": []
+    },
+    "Watchog": {
         "evolutionFrom": "Patrat",
-        "evolutionTo": "Watchog"
+        "evolutionTo": "",
+        "prev": [
+            "Patrat"
+        ]
     },
-    {
+    "Lillipup": {
+        "evolutionFrom": "",
+        "evolutionTo": "Herdier",
+        "prev": []
+    },
+    "Herdier": {
         "evolutionFrom": "Lillipup",
-        "evolutionTo": "Herdier"
+        "evolutionTo": "Stoutland",
+        "prev": [
+            "Lillipup"
+        ]
     },
-    {
+    "Stoutland": {
         "evolutionFrom": "Herdier",
-        "evolutionTo": "Stoutland"
+        "evolutionTo": "",
+        "prev": [
+            "Lillipup",
+            "Herdier"
+        ]
     },
-    {
+    "Purrloin": {
+        "evolutionFrom": "",
+        "evolutionTo": "Liepard",
+        "prev": []
+    },
+    "Liepard": {
         "evolutionFrom": "Purrloin",
-        "evolutionTo": "Liepard"
+        "evolutionTo": "",
+        "prev": [
+            "Purrloin"
+        ]
     },
-    {
+    "Pidove": {
+        "evolutionFrom": "",
+        "evolutionTo": "Tranquill",
+        "prev": []
+    },
+    "Tranquill": {
         "evolutionFrom": "Pidove",
-        "evolutionTo": "Tranquill"
+        "evolutionTo": "Unfezant",
+        "prev": [
+            "Pidove"
+        ]
     },
-    {
+    "Unfezant": {
         "evolutionFrom": "Tranquill",
-        "evolutionTo": "Unfezant"
+        "evolutionTo": "",
+        "prev": [
+            "Pidove",
+            "Tranquill"
+        ]
     },
-    {
+    "Blitzle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Zebstrika",
+        "prev": []
+    },
+    "Zebstrika": {
         "evolutionFrom": "Blitzle",
-        "evolutionTo": "Zebstrika"
+        "evolutionTo": "",
+        "prev": [
+            "Blitzle"
+        ]
     },
-    {
+    "Roggenrola": {
+        "evolutionFrom": "",
+        "evolutionTo": "Boldore",
+        "prev": []
+    },
+    "Boldore": {
         "evolutionFrom": "Roggenrola",
-        "evolutionTo": "Boldore"
+        "evolutionTo": "",
+        "prev": [
+            "Roggenrola"
+        ]
     },
-    {
+    "Drilbur": {
+        "evolutionFrom": "",
+        "evolutionTo": "Excadrill",
+        "prev": []
+    },
+    "Excadrill": {
         "evolutionFrom": "Drilbur",
-        "evolutionTo": "Excadrill"
+        "evolutionTo": "",
+        "prev": [
+            "Drilbur"
+        ]
     },
-    {
+    "Timburr": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gurdurr",
+        "prev": []
+    },
+    "Gurdurr": {
         "evolutionFrom": "Timburr",
-        "evolutionTo": "Gurdurr"
+        "evolutionTo": "",
+        "prev": [
+            "Timburr"
+        ]
     },
-    {
+    "Tympole": {
+        "evolutionFrom": "",
+        "evolutionTo": "Palpitoad",
+        "prev": []
+    },
+    "Palpitoad": {
         "evolutionFrom": "Tympole",
-        "evolutionTo": "Palpitoad"
+        "evolutionTo": "Seismitoad",
+        "prev": [
+            "Tympole"
+        ]
     },
-    {
+    "Seismitoad": {
         "evolutionFrom": "Palpitoad",
-        "evolutionTo": "Seismitoad"
+        "evolutionTo": "",
+        "prev": [
+            "Tympole",
+            "Palpitoad"
+        ]
     },
-    {
+    "Sewaddle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Swadloon",
+        "prev": []
+    },
+    "Swadloon": {
         "evolutionFrom": "Sewaddle",
-        "evolutionTo": "Swadloon"
+        "evolutionTo": "",
+        "prev": [
+            "Sewaddle"
+        ]
     },
-    {
+    "Venipede": {
+        "evolutionFrom": "",
+        "evolutionTo": "Whirlipede",
+        "prev": []
+    },
+    "Whirlipede": {
         "evolutionFrom": "Venipede",
-        "evolutionTo": "Whirlipede"
+        "evolutionTo": "Scolipede",
+        "prev": [
+            "Venipede"
+        ]
     },
-    {
+    "Scolipede": {
         "evolutionFrom": "Whirlipede",
-        "evolutionTo": "Scolipede"
+        "evolutionTo": "",
+        "prev": [
+            "Venipede",
+            "Whirlipede"
+        ]
     },
-    {
+    "Sandile": {
+        "evolutionFrom": "",
+        "evolutionTo": "Krokorok",
+        "prev": []
+    },
+    "Krokorok": {
         "evolutionFrom": "Sandile",
-        "evolutionTo": "Krokorok"
+        "evolutionTo": "Krookodile",
+        "prev": [
+            "Sandile"
+        ]
     },
-    {
+    "Krookodile": {
         "evolutionFrom": "Krokorok",
-        "evolutionTo": "Krookodile"
+        "evolutionTo": "",
+        "prev": [
+            "Sandile",
+            "Krokorok"
+        ]
     },
-    {
+    "Darumaka": {
+        "evolutionFrom": "",
+        "evolutionTo": "Darmanitan\n Standard Mode",
+        "prev": []
+    },
+    "Darmanitan\n Standard Mode": {
         "evolutionFrom": "Darumaka",
-        "evolutionTo": "Darmanitan\n Standard Mode"
+        "evolutionTo": "",
+        "prev": [
+            "Darumaka"
+        ]
     },
-    {
+    "Dwebble": {
+        "evolutionFrom": "",
+        "evolutionTo": "Crustle",
+        "prev": []
+    },
+    "Crustle": {
         "evolutionFrom": "Dwebble",
-        "evolutionTo": "Crustle"
+        "evolutionTo": "",
+        "prev": [
+            "Dwebble"
+        ]
     },
-    {
+    "Scraggy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Scrafty",
+        "prev": []
+    },
+    "Scrafty": {
         "evolutionFrom": "Scraggy",
-        "evolutionTo": "Scrafty"
+        "evolutionTo": "",
+        "prev": [
+            "Scraggy"
+        ]
     },
-    {
+    "Yamask": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cofagrigus",
+        "prev": []
+    },
+    "Cofagrigus": {
         "evolutionFrom": "Yamask",
-        "evolutionTo": "Cofagrigus"
+        "evolutionTo": "",
+        "prev": [
+            "Yamask"
+        ]
     },
-    {
+    "Tirtouga": {
+        "evolutionFrom": "",
+        "evolutionTo": "Carracosta",
+        "prev": []
+    },
+    "Carracosta": {
         "evolutionFrom": "Tirtouga",
-        "evolutionTo": "Carracosta"
+        "evolutionTo": "",
+        "prev": [
+            "Tirtouga"
+        ]
     },
-    {
+    "Archen": {
+        "evolutionFrom": "",
+        "evolutionTo": "Archeops",
+        "prev": []
+    },
+    "Archeops": {
         "evolutionFrom": "Archen",
-        "evolutionTo": "Archeops"
+        "evolutionTo": "",
+        "prev": [
+            "Archen"
+        ]
     },
-    {
+    "Trubbish": {
+        "evolutionFrom": "",
+        "evolutionTo": "Garbodor",
+        "prev": []
+    },
+    "Garbodor": {
         "evolutionFrom": "Trubbish",
-        "evolutionTo": "Garbodor"
+        "evolutionTo": "",
+        "prev": [
+            "Trubbish"
+        ]
     },
-    {
+    "Zorua": {
+        "evolutionFrom": "",
+        "evolutionTo": "Zoroark",
+        "prev": []
+    },
+    "Zoroark": {
         "evolutionFrom": "Zorua",
-        "evolutionTo": "Zoroark"
+        "evolutionTo": "",
+        "prev": [
+            "Zorua"
+        ]
     },
-    {
+    "Zorua\n Hisuian Zorua": {
+        "evolutionFrom": "",
+        "evolutionTo": "Zoroark\n Hisuian Zoroark",
+        "prev": []
+    },
+    "Zoroark\n Hisuian Zoroark": {
         "evolutionFrom": "Zorua\n Hisuian Zorua",
-        "evolutionTo": "Zoroark\n Hisuian Zoroark"
+        "evolutionTo": "",
+        "prev": [
+            "Zorua\n Hisuian Zorua"
+        ]
     },
-    {
+    "Gothita": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gothorita",
+        "prev": []
+    },
+    "Gothorita": {
         "evolutionFrom": "Gothita",
-        "evolutionTo": "Gothorita"
+        "evolutionTo": "Gothitelle",
+        "prev": [
+            "Gothita"
+        ]
     },
-    {
+    "Gothitelle": {
         "evolutionFrom": "Gothorita",
-        "evolutionTo": "Gothitelle"
+        "evolutionTo": "",
+        "prev": [
+            "Gothita",
+            "Gothorita"
+        ]
     },
-    {
+    "Solosis": {
+        "evolutionFrom": "",
+        "evolutionTo": "Duosion",
+        "prev": []
+    },
+    "Duosion": {
         "evolutionFrom": "Solosis",
-        "evolutionTo": "Duosion"
+        "evolutionTo": "Reuniclus",
+        "prev": [
+            "Solosis"
+        ]
     },
-    {
+    "Reuniclus": {
         "evolutionFrom": "Duosion",
-        "evolutionTo": "Reuniclus"
+        "evolutionTo": "",
+        "prev": [
+            "Solosis",
+            "Duosion"
+        ]
     },
-    {
+    "Ducklett": {
+        "evolutionFrom": "",
+        "evolutionTo": "Swanna",
+        "prev": []
+    },
+    "Swanna": {
         "evolutionFrom": "Ducklett",
-        "evolutionTo": "Swanna"
+        "evolutionTo": "",
+        "prev": [
+            "Ducklett"
+        ]
     },
-    {
+    "Vanillite": {
+        "evolutionFrom": "",
+        "evolutionTo": "Vanillish",
+        "prev": []
+    },
+    "Vanillish": {
         "evolutionFrom": "Vanillite",
-        "evolutionTo": "Vanillish"
+        "evolutionTo": "Vanilluxe",
+        "prev": [
+            "Vanillite"
+        ]
     },
-    {
+    "Vanilluxe": {
         "evolutionFrom": "Vanillish",
-        "evolutionTo": "Vanilluxe"
+        "evolutionTo": "",
+        "prev": [
+            "Vanillite",
+            "Vanillish"
+        ]
     },
-    {
+    "Deerling": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sawsbuck",
+        "prev": []
+    },
+    "Sawsbuck": {
         "evolutionFrom": "Deerling",
-        "evolutionTo": "Sawsbuck"
+        "evolutionTo": "",
+        "prev": [
+            "Deerling"
+        ]
     },
-    {
+    "Foongus": {
+        "evolutionFrom": "",
+        "evolutionTo": "Amoonguss",
+        "prev": []
+    },
+    "Amoonguss": {
         "evolutionFrom": "Foongus",
-        "evolutionTo": "Amoonguss"
+        "evolutionTo": "",
+        "prev": [
+            "Foongus"
+        ]
     },
-    {
+    "Frillish": {
+        "evolutionFrom": "",
+        "evolutionTo": "Jellicent",
+        "prev": []
+    },
+    "Jellicent": {
         "evolutionFrom": "Frillish",
-        "evolutionTo": "Jellicent"
+        "evolutionTo": "",
+        "prev": [
+            "Frillish"
+        ]
     },
-    {
+    "Joltik": {
+        "evolutionFrom": "",
+        "evolutionTo": "Galvantula",
+        "prev": []
+    },
+    "Galvantula": {
         "evolutionFrom": "Joltik",
-        "evolutionTo": "Galvantula"
+        "evolutionTo": "",
+        "prev": [
+            "Joltik"
+        ]
     },
-    {
+    "Ferroseed": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ferrothorn",
+        "prev": []
+    },
+    "Ferrothorn": {
         "evolutionFrom": "Ferroseed",
-        "evolutionTo": "Ferrothorn"
+        "evolutionTo": "",
+        "prev": [
+            "Ferroseed"
+        ]
     },
-    {
+    "Klink": {
+        "evolutionFrom": "",
+        "evolutionTo": "Klang",
+        "prev": []
+    },
+    "Klang": {
         "evolutionFrom": "Klink",
-        "evolutionTo": "Klang"
+        "evolutionTo": "Klinklang",
+        "prev": [
+            "Klink"
+        ]
     },
-    {
+    "Klinklang": {
         "evolutionFrom": "Klang",
-        "evolutionTo": "Klinklang"
+        "evolutionTo": "",
+        "prev": [
+            "Klink",
+            "Klang"
+        ]
     },
-    {
+    "Tynamo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Eelektrik",
+        "prev": []
+    },
+    "Eelektrik": {
         "evolutionFrom": "Tynamo",
-        "evolutionTo": "Eelektrik"
+        "evolutionTo": "",
+        "prev": [
+            "Tynamo"
+        ]
     },
-    {
+    "Elgyem": {
+        "evolutionFrom": "",
+        "evolutionTo": "Beheeyem",
+        "prev": []
+    },
+    "Beheeyem": {
         "evolutionFrom": "Elgyem",
-        "evolutionTo": "Beheeyem"
+        "evolutionTo": "",
+        "prev": [
+            "Elgyem"
+        ]
     },
-    {
+    "Litwick": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lampent",
+        "prev": []
+    },
+    "Lampent": {
         "evolutionFrom": "Litwick",
-        "evolutionTo": "Lampent"
+        "evolutionTo": "",
+        "prev": [
+            "Litwick"
+        ]
     },
-    {
+    "Axew": {
+        "evolutionFrom": "",
+        "evolutionTo": "Fraxure",
+        "prev": []
+    },
+    "Fraxure": {
         "evolutionFrom": "Axew",
-        "evolutionTo": "Fraxure"
+        "evolutionTo": "Haxorus",
+        "prev": [
+            "Axew"
+        ]
     },
-    {
+    "Haxorus": {
         "evolutionFrom": "Fraxure",
-        "evolutionTo": "Haxorus"
+        "evolutionTo": "",
+        "prev": [
+            "Axew",
+            "Fraxure"
+        ]
     },
-    {
+    "Cubchoo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Beartic",
+        "prev": []
+    },
+    "Beartic": {
         "evolutionFrom": "Cubchoo",
-        "evolutionTo": "Beartic"
+        "evolutionTo": "",
+        "prev": [
+            "Cubchoo"
+        ]
     },
-    {
+    "Mienfoo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mienshao",
+        "prev": []
+    },
+    "Mienshao": {
         "evolutionFrom": "Mienfoo",
-        "evolutionTo": "Mienshao"
+        "evolutionTo": "",
+        "prev": [
+            "Mienfoo"
+        ]
     },
-    {
+    "Golett": {
+        "evolutionFrom": "",
+        "evolutionTo": "Golurk",
+        "prev": []
+    },
+    "Golurk": {
         "evolutionFrom": "Golett",
-        "evolutionTo": "Golurk"
+        "evolutionTo": "",
+        "prev": [
+            "Golett"
+        ]
     },
-    {
+    "Pawniard": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bisharp",
+        "prev": []
+    },
+    "Bisharp": {
         "evolutionFrom": "Pawniard",
-        "evolutionTo": "Bisharp"
+        "evolutionTo": "",
+        "prev": [
+            "Pawniard"
+        ]
     },
-    {
+    "Rufflet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Braviary",
+        "prev": []
+    },
+    "Braviary": {
         "evolutionFrom": "Rufflet",
-        "evolutionTo": "Braviary"
+        "evolutionTo": "",
+        "prev": [
+            "Rufflet"
+        ]
     },
-    {
+    "Braviary\n Hisuian Braviary": {
         "evolutionFrom": "Rufflet",
-        "evolutionTo": "Braviary\n Hisuian Braviary"
+        "evolutionTo": "",
+        "prev": [
+            "Rufflet"
+        ]
     },
-    {
+    "Vullaby": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mandibuzz",
+        "prev": []
+    },
+    "Mandibuzz": {
         "evolutionFrom": "Vullaby",
-        "evolutionTo": "Mandibuzz"
+        "evolutionTo": "",
+        "prev": [
+            "Vullaby"
+        ]
     },
-    {
+    "Deino": {
+        "evolutionFrom": "",
+        "evolutionTo": "Zweilous",
+        "prev": []
+    },
+    "Zweilous": {
         "evolutionFrom": "Deino",
-        "evolutionTo": "Zweilous"
+        "evolutionTo": "Hydreigon",
+        "prev": [
+            "Deino"
+        ]
     },
-    {
+    "Hydreigon": {
         "evolutionFrom": "Zweilous",
-        "evolutionTo": "Hydreigon"
+        "evolutionTo": "",
+        "prev": [
+            "Deino",
+            "Zweilous"
+        ]
     },
-    {
+    "Larvesta": {
+        "evolutionFrom": "",
+        "evolutionTo": "Volcarona",
+        "prev": []
+    },
+    "Volcarona": {
         "evolutionFrom": "Larvesta",
-        "evolutionTo": "Volcarona"
+        "evolutionTo": "",
+        "prev": [
+            "Larvesta"
+        ]
     },
-    {
+    "Chespin": {
+        "evolutionFrom": "",
+        "evolutionTo": "Quilladin",
+        "prev": []
+    },
+    "Quilladin": {
         "evolutionFrom": "Chespin",
-        "evolutionTo": "Quilladin"
+        "evolutionTo": "Chesnaught",
+        "prev": [
+            "Chespin"
+        ]
     },
-    {
+    "Chesnaught": {
         "evolutionFrom": "Quilladin",
-        "evolutionTo": "Chesnaught"
+        "evolutionTo": "",
+        "prev": [
+            "Chespin",
+            "Quilladin"
+        ]
     },
-    {
+    "Fennekin": {
+        "evolutionFrom": "",
+        "evolutionTo": "Braixen",
+        "prev": []
+    },
+    "Braixen": {
         "evolutionFrom": "Fennekin",
-        "evolutionTo": "Braixen"
+        "evolutionTo": "Delphox",
+        "prev": [
+            "Fennekin"
+        ]
     },
-    {
+    "Delphox": {
         "evolutionFrom": "Braixen",
-        "evolutionTo": "Delphox"
+        "evolutionTo": "",
+        "prev": [
+            "Fennekin",
+            "Braixen"
+        ]
     },
-    {
+    "Froakie": {
+        "evolutionFrom": "",
+        "evolutionTo": "Frogadier",
+        "prev": []
+    },
+    "Frogadier": {
         "evolutionFrom": "Froakie",
-        "evolutionTo": "Frogadier"
+        "evolutionTo": "Greninja",
+        "prev": [
+            "Froakie"
+        ]
     },
-    {
+    "Greninja": {
         "evolutionFrom": "Frogadier",
-        "evolutionTo": "Greninja"
+        "evolutionTo": "",
+        "prev": [
+            "Froakie",
+            "Frogadier"
+        ]
     },
-    {
+    "Bunnelby": {
+        "evolutionFrom": "",
+        "evolutionTo": "Diggersby",
+        "prev": []
+    },
+    "Diggersby": {
         "evolutionFrom": "Bunnelby",
-        "evolutionTo": "Diggersby"
+        "evolutionTo": "",
+        "prev": [
+            "Bunnelby"
+        ]
     },
-    {
+    "Fletchling": {
+        "evolutionFrom": "",
+        "evolutionTo": "Fletchinder",
+        "prev": []
+    },
+    "Fletchinder": {
         "evolutionFrom": "Fletchling",
-        "evolutionTo": "Fletchinder"
+        "evolutionTo": "Talonflame",
+        "prev": [
+            "Fletchling"
+        ]
     },
-    {
+    "Talonflame": {
         "evolutionFrom": "Fletchinder",
-        "evolutionTo": "Talonflame"
+        "evolutionTo": "",
+        "prev": [
+            "Fletchling",
+            "Fletchinder"
+        ]
     },
-    {
+    "Scatterbug": {
+        "evolutionFrom": "",
+        "evolutionTo": "Spewpa",
+        "prev": []
+    },
+    "Spewpa": {
         "evolutionFrom": "Scatterbug",
-        "evolutionTo": "Spewpa"
+        "evolutionTo": "Vivillon",
+        "prev": [
+            "Scatterbug"
+        ]
     },
-    {
+    "Vivillon": {
         "evolutionFrom": "Spewpa",
-        "evolutionTo": "Vivillon"
+        "evolutionTo": "",
+        "prev": [
+            "Scatterbug",
+            "Spewpa"
+        ]
     },
-    {
+    "Litleo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pyroar",
+        "prev": []
+    },
+    "Pyroar": {
         "evolutionFrom": "Litleo",
-        "evolutionTo": "Pyroar"
+        "evolutionTo": "",
+        "prev": [
+            "Litleo"
+        ]
     },
-    {
+    "Flabébé": {
+        "evolutionFrom": "",
+        "evolutionTo": "Floette",
+        "prev": []
+    },
+    "Floette": {
         "evolutionFrom": "Flabébé",
-        "evolutionTo": "Floette"
+        "evolutionTo": "",
+        "prev": [
+            "Flabébé"
+        ]
     },
-    {
+    "Skiddo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gogoat",
+        "prev": []
+    },
+    "Gogoat": {
         "evolutionFrom": "Skiddo",
-        "evolutionTo": "Gogoat"
+        "evolutionTo": "",
+        "prev": [
+            "Skiddo"
+        ]
     },
-    {
+    "Pancham": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pangoro",
+        "prev": []
+    },
+    "Pangoro": {
         "evolutionFrom": "Pancham",
-        "evolutionTo": "Pangoro"
+        "evolutionTo": "",
+        "prev": [
+            "Pancham"
+        ]
     },
-    {
+    "Espurr": {
+        "evolutionFrom": "",
+        "evolutionTo": "Meowstic\n Male",
+        "prev": []
+    },
+    "Meowstic\n Male": {
         "evolutionFrom": "Espurr",
-        "evolutionTo": "Meowstic\n Male"
+        "evolutionTo": "",
+        "prev": [
+            "Espurr"
+        ]
     },
-    {
+    "Meowstic\n Female": {
         "evolutionFrom": "Espurr",
-        "evolutionTo": "Meowstic\n Female"
+        "evolutionTo": "",
+        "prev": [
+            "Espurr"
+        ]
     },
-    {
+    "Honedge": {
+        "evolutionFrom": "",
+        "evolutionTo": "Doublade",
+        "prev": []
+    },
+    "Doublade": {
         "evolutionFrom": "Honedge",
-        "evolutionTo": "Doublade"
+        "evolutionTo": "",
+        "prev": [
+            "Honedge"
+        ]
     },
-    {
+    "Inkay": {
+        "evolutionFrom": "",
+        "evolutionTo": "Malamar",
+        "prev": []
+    },
+    "Malamar": {
         "evolutionFrom": "Inkay",
-        "evolutionTo": "Malamar"
+        "evolutionTo": "",
+        "prev": [
+            "Inkay"
+        ]
     },
-    {
+    "Binacle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Barbaracle",
+        "prev": []
+    },
+    "Barbaracle": {
         "evolutionFrom": "Binacle",
-        "evolutionTo": "Barbaracle"
+        "evolutionTo": "",
+        "prev": [
+            "Binacle"
+        ]
     },
-    {
+    "Skrelp": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dragalge",
+        "prev": []
+    },
+    "Dragalge": {
         "evolutionFrom": "Skrelp",
-        "evolutionTo": "Dragalge"
+        "evolutionTo": "",
+        "prev": [
+            "Skrelp"
+        ]
     },
-    {
+    "Clauncher": {
+        "evolutionFrom": "",
+        "evolutionTo": "Clawitzer",
+        "prev": []
+    },
+    "Clawitzer": {
         "evolutionFrom": "Clauncher",
-        "evolutionTo": "Clawitzer"
+        "evolutionTo": "",
+        "prev": [
+            "Clauncher"
+        ]
     },
-    {
+    "Tyrunt": {
+        "evolutionFrom": "",
+        "evolutionTo": "Tyrantrum",
+        "prev": []
+    },
+    "Tyrantrum": {
         "evolutionFrom": "Tyrunt",
-        "evolutionTo": "Tyrantrum"
+        "evolutionTo": "",
+        "prev": [
+            "Tyrunt"
+        ]
     },
-    {
+    "Amaura": {
+        "evolutionFrom": "",
+        "evolutionTo": "Aurorus",
+        "prev": []
+    },
+    "Aurorus": {
         "evolutionFrom": "Amaura",
-        "evolutionTo": "Aurorus"
+        "evolutionTo": "",
+        "prev": [
+            "Amaura"
+        ]
     },
-    {
+    "Goomy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sliggoo",
+        "prev": []
+    },
+    "Sliggoo": {
         "evolutionFrom": "Goomy",
-        "evolutionTo": "Sliggoo"
+        "evolutionTo": "Goodra",
+        "prev": [
+            "Goomy"
+        ]
     },
-    {
+    "Goodra": {
         "evolutionFrom": "Sliggoo",
-        "evolutionTo": "Goodra"
+        "evolutionTo": "",
+        "prev": [
+            "Goomy",
+            "Sliggoo"
+        ]
     },
-    {
+    "Sliggoo\n Hisuian Sliggoo": {
         "evolutionFrom": "Goomy",
-        "evolutionTo": "Sliggoo\n Hisuian Sliggoo"
+        "evolutionTo": "Goodra\n Hisuian Goodra",
+        "prev": [
+            "Goomy"
+        ]
     },
-    {
+    "Goodra\n Hisuian Goodra": {
         "evolutionFrom": "Sliggoo\n Hisuian Sliggoo",
-        "evolutionTo": "Goodra\n Hisuian Goodra"
+        "evolutionTo": "",
+        "prev": [
+            "Goomy",
+            "Sliggoo\n Hisuian Sliggoo"
+        ]
     },
-    {
+    "Bergmite": {
+        "evolutionFrom": "",
+        "evolutionTo": "Avalugg",
+        "prev": []
+    },
+    "Avalugg": {
         "evolutionFrom": "Bergmite",
-        "evolutionTo": "Avalugg"
+        "evolutionTo": "",
+        "prev": [
+            "Bergmite"
+        ]
     },
-    {
+    "Avalugg\n Hisuian Avalugg": {
         "evolutionFrom": "Bergmite",
-        "evolutionTo": "Avalugg\n Hisuian Avalugg"
+        "evolutionTo": "",
+        "prev": [
+            "Bergmite"
+        ]
     },
-    {
+    "Noibat": {
+        "evolutionFrom": "",
+        "evolutionTo": "Noivern",
+        "prev": []
+    },
+    "Noivern": {
         "evolutionFrom": "Noibat",
-        "evolutionTo": "Noivern"
+        "evolutionTo": "",
+        "prev": [
+            "Noibat"
+        ]
     },
-    {
+    "Rowlet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dartrix",
+        "prev": []
+    },
+    "Dartrix": {
         "evolutionFrom": "Rowlet",
-        "evolutionTo": "Dartrix"
+        "evolutionTo": "Decidueye",
+        "prev": [
+            "Rowlet"
+        ]
     },
-    {
+    "Decidueye": {
         "evolutionFrom": "Dartrix",
-        "evolutionTo": "Decidueye"
+        "evolutionTo": "",
+        "prev": [
+            "Rowlet",
+            "Dartrix"
+        ]
     },
-    {
+    "Decidueye\n Hisuian Decidueye": {
         "evolutionFrom": "Dartrix",
-        "evolutionTo": "Decidueye\n Hisuian Decidueye"
+        "evolutionTo": "",
+        "prev": [
+            "Rowlet",
+            "Dartrix"
+        ]
     },
-    {
+    "Litten": {
+        "evolutionFrom": "",
+        "evolutionTo": "Torracat",
+        "prev": []
+    },
+    "Torracat": {
         "evolutionFrom": "Litten",
-        "evolutionTo": "Torracat"
+        "evolutionTo": "Incineroar",
+        "prev": [
+            "Litten"
+        ]
     },
-    {
+    "Incineroar": {
         "evolutionFrom": "Torracat",
-        "evolutionTo": "Incineroar"
+        "evolutionTo": "",
+        "prev": [
+            "Litten",
+            "Torracat"
+        ]
     },
-    {
+    "Popplio": {
+        "evolutionFrom": "",
+        "evolutionTo": "Brionne",
+        "prev": []
+    },
+    "Brionne": {
         "evolutionFrom": "Popplio",
-        "evolutionTo": "Brionne"
+        "evolutionTo": "Primarina",
+        "prev": [
+            "Popplio"
+        ]
     },
-    {
+    "Primarina": {
         "evolutionFrom": "Brionne",
-        "evolutionTo": "Primarina"
+        "evolutionTo": "",
+        "prev": [
+            "Popplio",
+            "Brionne"
+        ]
     },
-    {
+    "Pikipek": {
+        "evolutionFrom": "",
+        "evolutionTo": "Trumbeak",
+        "prev": []
+    },
+    "Trumbeak": {
         "evolutionFrom": "Pikipek",
-        "evolutionTo": "Trumbeak"
+        "evolutionTo": "Toucannon",
+        "prev": [
+            "Pikipek"
+        ]
     },
-    {
+    "Toucannon": {
         "evolutionFrom": "Trumbeak",
-        "evolutionTo": "Toucannon"
+        "evolutionTo": "",
+        "prev": [
+            "Pikipek",
+            "Trumbeak"
+        ]
     },
-    {
+    "Yungoos": {
+        "evolutionFrom": "",
+        "evolutionTo": "Gumshoos",
+        "prev": []
+    },
+    "Gumshoos": {
         "evolutionFrom": "Yungoos",
-        "evolutionTo": "Gumshoos"
+        "evolutionTo": "",
+        "prev": [
+            "Yungoos"
+        ]
     },
-    {
+    "Grubbin": {
+        "evolutionFrom": "",
+        "evolutionTo": "Charjabug",
+        "prev": []
+    },
+    "Charjabug": {
         "evolutionFrom": "Grubbin",
-        "evolutionTo": "Charjabug"
+        "evolutionTo": "",
+        "prev": [
+            "Grubbin"
+        ]
     },
-    {
+    "Cutiefly": {
+        "evolutionFrom": "",
+        "evolutionTo": "Ribombee",
+        "prev": []
+    },
+    "Ribombee": {
         "evolutionFrom": "Cutiefly",
-        "evolutionTo": "Ribombee"
+        "evolutionTo": "",
+        "prev": [
+            "Cutiefly"
+        ]
     },
-    {
+    "Rockruff": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lycanroc\n Midday Form",
+        "prev": []
+    },
+    "Lycanroc\n Midday Form": {
         "evolutionFrom": "Rockruff",
-        "evolutionTo": "Lycanroc\n Midday Form"
+        "evolutionTo": "",
+        "prev": [
+            "Rockruff"
+        ]
     },
-    {
+    "Lycanroc\n Midnight Form": {
         "evolutionFrom": "Rockruff",
-        "evolutionTo": "Lycanroc\n Midnight Form"
+        "evolutionTo": "",
+        "prev": [
+            "Rockruff"
+        ]
     },
-    {
+    "Rockruff\n Own Tempo Rockruff": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lycanroc\n Dusk Form",
+        "prev": []
+    },
+    "Lycanroc\n Dusk Form": {
         "evolutionFrom": "Rockruff\n Own Tempo Rockruff",
-        "evolutionTo": "Lycanroc\n Dusk Form"
+        "evolutionTo": "",
+        "prev": [
+            "Rockruff\n Own Tempo Rockruff"
+        ]
     },
-    {
+    "Mareanie": {
+        "evolutionFrom": "",
+        "evolutionTo": "Toxapex",
+        "prev": []
+    },
+    "Toxapex": {
         "evolutionFrom": "Mareanie",
-        "evolutionTo": "Toxapex"
+        "evolutionTo": "",
+        "prev": [
+            "Mareanie"
+        ]
     },
-    {
+    "Mudbray": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mudsdale",
+        "prev": []
+    },
+    "Mudsdale": {
         "evolutionFrom": "Mudbray",
-        "evolutionTo": "Mudsdale"
+        "evolutionTo": "",
+        "prev": [
+            "Mudbray"
+        ]
     },
-    {
+    "Dewpider": {
+        "evolutionFrom": "",
+        "evolutionTo": "Araquanid",
+        "prev": []
+    },
+    "Araquanid": {
         "evolutionFrom": "Dewpider",
-        "evolutionTo": "Araquanid"
+        "evolutionTo": "",
+        "prev": [
+            "Dewpider"
+        ]
     },
-    {
+    "Fomantis": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lurantis",
+        "prev": []
+    },
+    "Lurantis": {
         "evolutionFrom": "Fomantis",
-        "evolutionTo": "Lurantis"
+        "evolutionTo": "",
+        "prev": [
+            "Fomantis"
+        ]
     },
-    {
+    "Morelull": {
+        "evolutionFrom": "",
+        "evolutionTo": "Shiinotic",
+        "prev": []
+    },
+    "Shiinotic": {
         "evolutionFrom": "Morelull",
-        "evolutionTo": "Shiinotic"
+        "evolutionTo": "",
+        "prev": [
+            "Morelull"
+        ]
     },
-    {
+    "Salandit": {
+        "evolutionFrom": "",
+        "evolutionTo": "Salazzle",
+        "prev": []
+    },
+    "Salazzle": {
         "evolutionFrom": "Salandit",
-        "evolutionTo": "Salazzle"
+        "evolutionTo": "",
+        "prev": [
+            "Salandit"
+        ]
     },
-    {
+    "Stufful": {
+        "evolutionFrom": "",
+        "evolutionTo": "Bewear",
+        "prev": []
+    },
+    "Bewear": {
         "evolutionFrom": "Stufful",
-        "evolutionTo": "Bewear"
+        "evolutionTo": "",
+        "prev": [
+            "Stufful"
+        ]
     },
-    {
+    "Bounsweet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Steenee",
+        "prev": []
+    },
+    "Steenee": {
         "evolutionFrom": "Bounsweet",
-        "evolutionTo": "Steenee"
+        "evolutionTo": "",
+        "prev": [
+            "Bounsweet"
+        ]
     },
-    {
+    "Wimpod": {
+        "evolutionFrom": "",
+        "evolutionTo": "Golisopod",
+        "prev": []
+    },
+    "Golisopod": {
         "evolutionFrom": "Wimpod",
-        "evolutionTo": "Golisopod"
+        "evolutionTo": "",
+        "prev": [
+            "Wimpod"
+        ]
     },
-    {
+    "Sandygast": {
+        "evolutionFrom": "",
+        "evolutionTo": "Palossand",
+        "prev": []
+    },
+    "Palossand": {
         "evolutionFrom": "Sandygast",
-        "evolutionTo": "Palossand"
+        "evolutionTo": "",
+        "prev": [
+            "Sandygast"
+        ]
     },
-    {
+    "Jangmo-o": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hakamo-o",
+        "prev": []
+    },
+    "Hakamo-o": {
         "evolutionFrom": "Jangmo-o",
-        "evolutionTo": "Hakamo-o"
+        "evolutionTo": "Kommo-o",
+        "prev": [
+            "Jangmo-o"
+        ]
     },
-    {
+    "Kommo-o": {
         "evolutionFrom": "Hakamo-o",
-        "evolutionTo": "Kommo-o"
+        "evolutionTo": "",
+        "prev": [
+            "Jangmo-o",
+            "Hakamo-o"
+        ]
     },
-    {
+    "Cosmog": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cosmoem",
+        "prev": []
+    },
+    "Cosmoem": {
         "evolutionFrom": "Cosmog",
-        "evolutionTo": "Cosmoem"
+        "evolutionTo": "Solgaleo",
+        "prev": [
+            "Cosmog"
+        ]
     },
-    {
+    "Solgaleo": {
         "evolutionFrom": "Cosmoem",
-        "evolutionTo": "Solgaleo"
+        "evolutionTo": "",
+        "prev": [
+            "Cosmog",
+            "Cosmoem"
+        ]
     },
-    {
+    "Lunala": {
         "evolutionFrom": "Cosmoem",
-        "evolutionTo": "Lunala"
+        "evolutionTo": "",
+        "prev": [
+            "Cosmog",
+            "Cosmoem"
+        ]
     },
-    {
+    "Grookey": {
+        "evolutionFrom": "",
+        "evolutionTo": "Thwackey",
+        "prev": []
+    },
+    "Thwackey": {
         "evolutionFrom": "Grookey",
-        "evolutionTo": "Thwackey"
+        "evolutionTo": "Rillaboom",
+        "prev": [
+            "Grookey"
+        ]
     },
-    {
+    "Rillaboom": {
         "evolutionFrom": "Thwackey",
-        "evolutionTo": "Rillaboom"
+        "evolutionTo": "",
+        "prev": [
+            "Grookey",
+            "Thwackey"
+        ]
     },
-    {
+    "Scorbunny": {
+        "evolutionFrom": "",
+        "evolutionTo": "Raboot",
+        "prev": []
+    },
+    "Raboot": {
         "evolutionFrom": "Scorbunny",
-        "evolutionTo": "Raboot"
+        "evolutionTo": "Cinderace",
+        "prev": [
+            "Scorbunny"
+        ]
     },
-    {
+    "Cinderace": {
         "evolutionFrom": "Raboot",
-        "evolutionTo": "Cinderace"
+        "evolutionTo": "",
+        "prev": [
+            "Scorbunny",
+            "Raboot"
+        ]
     },
-    {
+    "Sobble": {
+        "evolutionFrom": "",
+        "evolutionTo": "Drizzile",
+        "prev": []
+    },
+    "Drizzile": {
         "evolutionFrom": "Sobble",
-        "evolutionTo": "Drizzile"
+        "evolutionTo": "Inteleon",
+        "prev": [
+            "Sobble"
+        ]
     },
-    {
+    "Inteleon": {
         "evolutionFrom": "Drizzile",
-        "evolutionTo": "Inteleon"
+        "evolutionTo": "",
+        "prev": [
+            "Sobble",
+            "Drizzile"
+        ]
     },
-    {
+    "Blipbug": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dottler",
+        "prev": []
+    },
+    "Dottler": {
         "evolutionFrom": "Blipbug",
-        "evolutionTo": "Dottler"
+        "evolutionTo": "Orbeetle",
+        "prev": [
+            "Blipbug"
+        ]
     },
-    {
+    "Orbeetle": {
         "evolutionFrom": "Dottler",
-        "evolutionTo": "Orbeetle"
+        "evolutionTo": "",
+        "prev": [
+            "Blipbug",
+            "Dottler"
+        ]
     },
-    {
+    "Rookidee": {
+        "evolutionFrom": "",
+        "evolutionTo": "Corvisquire",
+        "prev": []
+    },
+    "Corvisquire": {
         "evolutionFrom": "Rookidee",
-        "evolutionTo": "Corvisquire"
+        "evolutionTo": "Corviknight",
+        "prev": [
+            "Rookidee"
+        ]
     },
-    {
+    "Corviknight": {
         "evolutionFrom": "Corvisquire",
-        "evolutionTo": "Corviknight"
+        "evolutionTo": "",
+        "prev": [
+            "Rookidee",
+            "Corvisquire"
+        ]
     },
-    {
+    "Skwovet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Greedent",
+        "prev": []
+    },
+    "Greedent": {
         "evolutionFrom": "Skwovet",
-        "evolutionTo": "Greedent"
+        "evolutionTo": "",
+        "prev": [
+            "Skwovet"
+        ]
     },
-    {
+    "Nickit": {
+        "evolutionFrom": "",
+        "evolutionTo": "Thievul",
+        "prev": []
+    },
+    "Thievul": {
         "evolutionFrom": "Nickit",
-        "evolutionTo": "Thievul"
+        "evolutionTo": "",
+        "prev": [
+            "Nickit"
+        ]
     },
-    {
+    "Wooloo": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dubwool",
+        "prev": []
+    },
+    "Dubwool": {
         "evolutionFrom": "Wooloo",
-        "evolutionTo": "Dubwool"
+        "evolutionTo": "",
+        "prev": [
+            "Wooloo"
+        ]
     },
-    {
+    "Chewtle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Drednaw",
+        "prev": []
+    },
+    "Drednaw": {
         "evolutionFrom": "Chewtle",
-        "evolutionTo": "Drednaw"
+        "evolutionTo": "",
+        "prev": [
+            "Chewtle"
+        ]
     },
-    {
+    "Yamper": {
+        "evolutionFrom": "",
+        "evolutionTo": "Boltund",
+        "prev": []
+    },
+    "Boltund": {
         "evolutionFrom": "Yamper",
-        "evolutionTo": "Boltund"
+        "evolutionTo": "",
+        "prev": [
+            "Yamper"
+        ]
     },
-    {
+    "Gossifleur": {
+        "evolutionFrom": "",
+        "evolutionTo": "Eldegoss",
+        "prev": []
+    },
+    "Eldegoss": {
         "evolutionFrom": "Gossifleur",
-        "evolutionTo": "Eldegoss"
+        "evolutionTo": "",
+        "prev": [
+            "Gossifleur"
+        ]
     },
-    {
+    "Sizzlipede": {
+        "evolutionFrom": "",
+        "evolutionTo": "Centiskorch",
+        "prev": []
+    },
+    "Centiskorch": {
         "evolutionFrom": "Sizzlipede",
-        "evolutionTo": "Centiskorch"
+        "evolutionTo": "",
+        "prev": [
+            "Sizzlipede"
+        ]
     },
-    {
+    "Rolycoly": {
+        "evolutionFrom": "",
+        "evolutionTo": "Carkol",
+        "prev": []
+    },
+    "Carkol": {
         "evolutionFrom": "Rolycoly",
-        "evolutionTo": "Carkol"
+        "evolutionTo": "Coalossal",
+        "prev": [
+            "Rolycoly"
+        ]
     },
-    {
+    "Coalossal": {
         "evolutionFrom": "Carkol",
-        "evolutionTo": "Coalossal"
+        "evolutionTo": "",
+        "prev": [
+            "Rolycoly",
+            "Carkol"
+        ]
     },
-    {
+    "Arrokuda": {
+        "evolutionFrom": "",
+        "evolutionTo": "Barraskewda",
+        "prev": []
+    },
+    "Barraskewda": {
         "evolutionFrom": "Arrokuda",
-        "evolutionTo": "Barraskewda"
+        "evolutionTo": "",
+        "prev": [
+            "Arrokuda"
+        ]
     },
-    {
+    "Corsola\n Galarian Corsola": {
+        "evolutionFrom": "",
+        "evolutionTo": "Cursola",
+        "prev": []
+    },
+    "Cursola": {
         "evolutionFrom": "Corsola\n Galarian Corsola",
-        "evolutionTo": "Cursola"
+        "evolutionTo": "",
+        "prev": [
+            "Corsola\n Galarian Corsola"
+        ]
     },
-    {
+    "Impidimp": {
+        "evolutionFrom": "",
+        "evolutionTo": "Morgrem",
+        "prev": []
+    },
+    "Morgrem": {
         "evolutionFrom": "Impidimp",
-        "evolutionTo": "Morgrem"
+        "evolutionTo": "Grimmsnarl",
+        "prev": [
+            "Impidimp"
+        ]
     },
-    {
+    "Grimmsnarl": {
         "evolutionFrom": "Morgrem",
-        "evolutionTo": "Grimmsnarl"
+        "evolutionTo": "",
+        "prev": [
+            "Impidimp",
+            "Morgrem"
+        ]
     },
-    {
+    "Hatenna": {
+        "evolutionFrom": "",
+        "evolutionTo": "Hattrem",
+        "prev": []
+    },
+    "Hattrem": {
         "evolutionFrom": "Hatenna",
-        "evolutionTo": "Hattrem"
+        "evolutionTo": "Hatterene",
+        "prev": [
+            "Hatenna"
+        ]
     },
-    {
+    "Hatterene": {
         "evolutionFrom": "Hattrem",
-        "evolutionTo": "Hatterene"
+        "evolutionTo": "",
+        "prev": [
+            "Hatenna",
+            "Hattrem"
+        ]
     },
-    {
+    "Cufant": {
+        "evolutionFrom": "",
+        "evolutionTo": "Copperajah",
+        "prev": []
+    },
+    "Copperajah": {
         "evolutionFrom": "Cufant",
-        "evolutionTo": "Copperajah"
+        "evolutionTo": "",
+        "prev": [
+            "Cufant"
+        ]
     },
-    {
+    "Toxel": {
+        "evolutionFrom": "",
+        "evolutionTo": "Toxtricity\n Amped Form",
+        "prev": []
+    },
+    "Toxtricity\n Amped Form": {
         "evolutionFrom": "Toxel",
-        "evolutionTo": "Toxtricity\n Amped Form"
+        "evolutionTo": "",
+        "prev": [
+            "Toxel"
+        ]
     },
-    {
+    "Toxtricity\n Low Key Form": {
         "evolutionFrom": "Toxel",
-        "evolutionTo": "Toxtricity\n Low Key Form"
+        "evolutionTo": "",
+        "prev": [
+            "Toxel"
+        ]
     },
-    {
+    "Silicobra": {
+        "evolutionFrom": "",
+        "evolutionTo": "Sandaconda",
+        "prev": []
+    },
+    "Sandaconda": {
         "evolutionFrom": "Silicobra",
-        "evolutionTo": "Sandaconda"
+        "evolutionTo": "",
+        "prev": [
+            "Silicobra"
+        ]
     },
-    {
+    "Dreepy": {
+        "evolutionFrom": "",
+        "evolutionTo": "Drakloak",
+        "prev": []
+    },
+    "Drakloak": {
         "evolutionFrom": "Dreepy",
-        "evolutionTo": "Drakloak"
+        "evolutionTo": "Dragapult",
+        "prev": [
+            "Dreepy"
+        ]
     },
-    {
+    "Dragapult": {
         "evolutionFrom": "Drakloak",
-        "evolutionTo": "Dragapult"
+        "evolutionTo": "",
+        "prev": [
+            "Dreepy",
+            "Drakloak"
+        ]
     },
-    {
+    "Sprigatito": {
+        "evolutionFrom": "",
+        "evolutionTo": "Floragato",
+        "prev": []
+    },
+    "Floragato": {
         "evolutionFrom": "Sprigatito",
-        "evolutionTo": "Floragato"
+        "evolutionTo": "Meowscarada",
+        "prev": [
+            "Sprigatito"
+        ]
     },
-    {
+    "Meowscarada": {
         "evolutionFrom": "Floragato",
-        "evolutionTo": "Meowscarada"
+        "evolutionTo": "",
+        "prev": [
+            "Sprigatito",
+            "Floragato"
+        ]
     },
-    {
+    "Fuecoco": {
+        "evolutionFrom": "",
+        "evolutionTo": "Crocalor",
+        "prev": []
+    },
+    "Crocalor": {
         "evolutionFrom": "Fuecoco",
-        "evolutionTo": "Crocalor"
+        "evolutionTo": "Skeledirge",
+        "prev": [
+            "Fuecoco"
+        ]
     },
-    {
+    "Skeledirge": {
         "evolutionFrom": "Crocalor",
-        "evolutionTo": "Skeledirge"
+        "evolutionTo": "",
+        "prev": [
+            "Fuecoco",
+            "Crocalor"
+        ]
     },
-    {
+    "Quaxly": {
+        "evolutionFrom": "",
+        "evolutionTo": "Quaxwell",
+        "prev": []
+    },
+    "Quaxwell": {
         "evolutionFrom": "Quaxly",
-        "evolutionTo": "Quaxwell"
+        "evolutionTo": "Quaquaval",
+        "prev": [
+            "Quaxly"
+        ]
     },
-    {
+    "Quaquaval": {
         "evolutionFrom": "Quaxwell",
-        "evolutionTo": "Quaquaval"
+        "evolutionTo": "",
+        "prev": [
+            "Quaxly",
+            "Quaxwell"
+        ]
     },
-    {
+    "Lechonk": {
+        "evolutionFrom": "",
+        "evolutionTo": "Oinkologne\n Male",
+        "prev": []
+    },
+    "Oinkologne\n Male": {
         "evolutionFrom": "Lechonk",
-        "evolutionTo": "Oinkologne\n Male"
+        "evolutionTo": "",
+        "prev": [
+            "Lechonk"
+        ]
     },
-    {
+    "Oinkologne\n Female": {
         "evolutionFrom": "Lechonk",
-        "evolutionTo": "Oinkologne\n Female"
+        "evolutionTo": "",
+        "prev": [
+            "Lechonk"
+        ]
     },
-    {
+    "Tarountula": {
+        "evolutionFrom": "",
+        "evolutionTo": "Spidops",
+        "prev": []
+    },
+    "Spidops": {
         "evolutionFrom": "Tarountula",
-        "evolutionTo": "Spidops"
+        "evolutionTo": "",
+        "prev": [
+            "Tarountula"
+        ]
     },
-    {
+    "Nymble": {
+        "evolutionFrom": "",
+        "evolutionTo": "Lokix",
+        "prev": []
+    },
+    "Lokix": {
         "evolutionFrom": "Nymble",
-        "evolutionTo": "Lokix"
+        "evolutionTo": "",
+        "prev": [
+            "Nymble"
+        ]
     },
-    {
+    "Greavard": {
+        "evolutionFrom": "",
+        "evolutionTo": "Houndstone",
+        "prev": []
+    },
+    "Houndstone": {
         "evolutionFrom": "Greavard",
-        "evolutionTo": "Houndstone"
+        "evolutionTo": "",
+        "prev": [
+            "Greavard"
+        ]
     },
-    {
+    "Flittle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Espathra",
+        "prev": []
+    },
+    "Espathra": {
         "evolutionFrom": "Flittle",
-        "evolutionTo": "Espathra"
+        "evolutionTo": "",
+        "prev": [
+            "Flittle"
+        ]
     },
-    {
+    "Wiglett": {
+        "evolutionFrom": "",
+        "evolutionTo": "Wugtrio",
+        "prev": []
+    },
+    "Wugtrio": {
         "evolutionFrom": "Wiglett",
-        "evolutionTo": "Wugtrio"
+        "evolutionTo": "",
+        "prev": [
+            "Wiglett"
+        ]
     },
-    {
+    "Finizen": {
+        "evolutionFrom": "",
+        "evolutionTo": "Palafin\n Zero Form",
+        "prev": []
+    },
+    "Palafin\n Zero Form": {
         "evolutionFrom": "Finizen",
-        "evolutionTo": "Palafin\n Zero Form"
+        "evolutionTo": "",
+        "prev": [
+            "Finizen"
+        ]
     },
-    {
+    "Smoliv": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dolliv",
+        "prev": []
+    },
+    "Dolliv": {
         "evolutionFrom": "Smoliv",
-        "evolutionTo": "Dolliv"
+        "evolutionTo": "Arboliva",
+        "prev": [
+            "Smoliv"
+        ]
     },
-    {
+    "Arboliva": {
         "evolutionFrom": "Dolliv",
-        "evolutionTo": "Arboliva"
+        "evolutionTo": "",
+        "prev": [
+            "Smoliv",
+            "Dolliv"
+        ]
     },
-    {
+    "Varoom": {
+        "evolutionFrom": "",
+        "evolutionTo": "Revavroom",
+        "prev": []
+    },
+    "Revavroom": {
         "evolutionFrom": "Varoom",
-        "evolutionTo": "Revavroom"
+        "evolutionTo": "",
+        "prev": [
+            "Varoom"
+        ]
     },
-    {
+    "Tandemaus": {
+        "evolutionFrom": "",
+        "evolutionTo": "Maushold\n Family of Three",
+        "prev": []
+    },
+    "Maushold\n Family of Three": {
         "evolutionFrom": "Tandemaus",
-        "evolutionTo": "Maushold\n Family of Three"
+        "evolutionTo": "",
+        "prev": [
+            "Tandemaus"
+        ]
     },
-    {
+    "Maushold\n Family of Four": {
         "evolutionFrom": "Tandemaus",
-        "evolutionTo": "Maushold\n Family of Four"
+        "evolutionTo": "",
+        "prev": [
+            "Tandemaus"
+        ]
     },
-    {
+    "Frigibax": {
+        "evolutionFrom": "",
+        "evolutionTo": "Arctibax",
+        "prev": []
+    },
+    "Arctibax": {
         "evolutionFrom": "Frigibax",
-        "evolutionTo": "Arctibax"
+        "evolutionTo": "Baxcalibur",
+        "prev": [
+            "Frigibax"
+        ]
     },
-    {
+    "Baxcalibur": {
         "evolutionFrom": "Arctibax",
-        "evolutionTo": "Baxcalibur"
+        "evolutionTo": "",
+        "prev": [
+            "Frigibax",
+            "Arctibax"
+        ]
     },
-    {
+    "Pawmi": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pawmo",
+        "prev": []
+    },
+    "Pawmo": {
         "evolutionFrom": "Pawmi",
-        "evolutionTo": "Pawmo"
+        "evolutionTo": "",
+        "prev": [
+            "Pawmi"
+        ]
     },
-    {
+    "Wattrel": {
+        "evolutionFrom": "",
+        "evolutionTo": "Kilowattrel",
+        "prev": []
+    },
+    "Kilowattrel": {
         "evolutionFrom": "Wattrel",
-        "evolutionTo": "Kilowattrel"
+        "evolutionTo": "",
+        "prev": [
+            "Wattrel"
+        ]
     },
-    {
+    "Nacli": {
+        "evolutionFrom": "",
+        "evolutionTo": "Naclstack",
+        "prev": []
+    },
+    "Naclstack": {
         "evolutionFrom": "Nacli",
-        "evolutionTo": "Naclstack"
+        "evolutionTo": "Garganacl",
+        "prev": [
+            "Nacli"
+        ]
     },
-    {
+    "Garganacl": {
         "evolutionFrom": "Naclstack",
-        "evolutionTo": "Garganacl"
+        "evolutionTo": "",
+        "prev": [
+            "Nacli",
+            "Naclstack"
+        ]
     },
-    {
+    "Glimmet": {
+        "evolutionFrom": "",
+        "evolutionTo": "Glimmora",
+        "prev": []
+    },
+    "Glimmora": {
         "evolutionFrom": "Glimmet",
-        "evolutionTo": "Glimmora"
+        "evolutionTo": "",
+        "prev": [
+            "Glimmet"
+        ]
     },
-    {
+    "Shroodle": {
+        "evolutionFrom": "",
+        "evolutionTo": "Grafaiai",
+        "prev": []
+    },
+    "Grafaiai": {
         "evolutionFrom": "Shroodle",
-        "evolutionTo": "Grafaiai"
+        "evolutionTo": "",
+        "prev": [
+            "Shroodle"
+        ]
     },
-    {
+    "Fidough": {
+        "evolutionFrom": "",
+        "evolutionTo": "Dachsbun",
+        "prev": []
+    },
+    "Dachsbun": {
         "evolutionFrom": "Fidough",
-        "evolutionTo": "Dachsbun"
+        "evolutionTo": "",
+        "prev": [
+            "Fidough"
+        ]
     },
-    {
+    "Maschiff": {
+        "evolutionFrom": "",
+        "evolutionTo": "Mabosstiff",
+        "prev": []
+    },
+    "Mabosstiff": {
         "evolutionFrom": "Maschiff",
-        "evolutionTo": "Mabosstiff"
+        "evolutionTo": "",
+        "prev": [
+            "Maschiff"
+        ]
     },
-    {
+    "Tinkatink": {
+        "evolutionFrom": "",
+        "evolutionTo": "Tinkatuff",
+        "prev": []
+    },
+    "Tinkatuff": {
         "evolutionFrom": "Tinkatink",
-        "evolutionTo": "Tinkatuff"
+        "evolutionTo": "Tinkaton",
+        "prev": [
+            "Tinkatink"
+        ]
     },
-    {
+    "Tinkaton": {
         "evolutionFrom": "Tinkatuff",
-        "evolutionTo": "Tinkaton"
+        "evolutionTo": "",
+        "prev": [
+            "Tinkatink",
+            "Tinkatuff"
+        ]
     },
-    {
+    "Toedscool": {
+        "evolutionFrom": "",
+        "evolutionTo": "Toedscruel",
+        "prev": []
+    },
+    "Toedscruel": {
         "evolutionFrom": "Toedscool",
-        "evolutionTo": "Toedscruel"
+        "evolutionTo": "",
+        "prev": [
+            "Toedscool"
+        ]
     }
-]
+}

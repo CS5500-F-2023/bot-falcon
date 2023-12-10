@@ -3,8 +3,10 @@ package edu.northeastern.cs5500.starterbot.controller;
 import static com.google.common.truth.Truth.assertThat;
 
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
+import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
+import edu.northeastern.cs5500.starterbot.service.PokemonEvolutionService;
 import org.junit.jupiter.api.Test;
 
 public class PokemonControllerTest {
@@ -17,9 +19,13 @@ public class PokemonControllerTest {
         PokedexController pokedexController = new PokedexController(pokemonDataService);
         PokemonController pokemonController =
                 new PokemonController(new InMemoryRepository<>(), pokemonDataService);
+        PokemonEvolutionService pokemonEvolutionService =
+                new PokemonEvolutionService(
+                        "src/test/java/edu/northeastern/cs5500/starterbot/resources/evolution-chain-Test.json");
 
+        // assign
         pokemonController.pokedexController = pokedexController;
-        pokedexController.pokemonDataList = pokemonDataService.getPokemonDataList();
+        pokemonController.pokemonEvolutionService = pokemonEvolutionService;
 
         return pokemonController;
     }
@@ -29,6 +35,36 @@ public class PokemonControllerTest {
         PokemonController pokemonController = getPokemonController();
         Pokemon p = pokemonController.spawnRandonPokemon();
         assertThat(p).isNotNull();
+    }
+
+    @Test
+    public void buildPrimitivePokemon() {
+        PokemonController pokemonController = getPokemonController();
+        pokemonController.pokemonDataList =
+                pokemonController.pokemonDataService.getPokemonDataList();
+        PokemonData bulData = pokemonController.pokemonDataList.get(0);
+        Pokemon bul = pokemonController.buildPokemon(bulData);
+        assertThat(bul.getLevel()).isEqualTo(Pokemon.DEFAULT_LEVEL);
+    }
+
+    @Test
+    public void buildEvolvedPokemon() {
+        PokemonController pokemonController = getPokemonController();
+        pokemonController.pokemonDataList =
+                pokemonController.pokemonDataService.getPokemonDataList();
+        PokemonData ivyData = pokemonController.pokemonDataList.get(1);
+        Pokemon ivy = pokemonController.buildPokemon(ivyData);
+        assertThat(ivy.getLevel()).isEqualTo(10);
+    }
+
+    @Test
+    public void buildEvolvedPokemon2() {
+        PokemonController pokemonController = getPokemonController();
+        pokemonController.pokemonDataList =
+                pokemonController.pokemonDataService.getPokemonDataList();
+        PokemonData venData = pokemonController.pokemonDataList.get(2);
+        Pokemon ven = pokemonController.buildPokemon(venData);
+        assertThat(ven.getLevel()).isEqualTo(15);
     }
 
     @Test

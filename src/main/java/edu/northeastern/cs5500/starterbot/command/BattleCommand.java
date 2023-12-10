@@ -101,7 +101,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         menuBuilder.addOption("Maybe next time", "maybe-next-time" + ":" + trainerDiscordId);
         for (Pokemon pokemon : pokemonInventory) {
             PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
             menuBuilder.addOption(
                     species.getName(), pokemon.getId().toString() + ":" + trainerDiscordId);
         }
@@ -135,9 +135,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
             return;
         }
 
-        log.error("!!! about ot call buildPokemonProfile");
         MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen ", TR_COLOR);
-        log.error("!!! about ot call buildPokemonStat");
         MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, TR_COLOR);
 
         NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
@@ -148,47 +146,29 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
                 buildPokemonProfile(npcPokemonID, "Bot has chosen ", NPC_COLOR);
         MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID, NPC_COLOR);
 
-        // Start battle and get the battle record
+        // Run the battle
         battleController.runBattle(battle);
 
-        // Build up and send the battle rounds and result messages
+        // Build up and send the battle messages
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder.addEmbeds(trPokeProfile, trPokeStat, npcPokeProfile, npcPokeStat);
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
-                            scheduler.schedule(
-                                    () ->
-                                            interactionHook
-                                                    .sendMessage(battle.getStartMessage())
-                                                    .queue(),
-                                    3,
-                                    TimeUnit.SECONDS);
-
-                            // Send round info
-                            for (String roundMsg : battle.getRoundMessages()) {
+                            for (String msg : battle.getMessages()) {
                                 scheduler.schedule(
-                                        () -> interactionHook.sendMessage(roundMsg).queue(),
-                                        5,
+                                        () -> interactionHook.sendMessage(msg).queue(),
+                                        3,
                                         TimeUnit.SECONDS);
                             }
-
-                            // Send result info
-                            scheduler.schedule(
-                                    () ->
-                                            interactionHook
-                                                    .sendMessage(battle.getResultMessage())
-                                                    .queue(),
-                                    5,
-                                    TimeUnit.SECONDS);
                         });
     }
 
     private MessageEmbed buildPokemonProfile(String pokemonIdStr, String msg, int color) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
-        PokemonSpecies species = pokedexController.getPokemonSpeciesByPokedex(pokedex);
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
 
         StringBuilder sb = new StringBuilder();
         sb.append("```");

@@ -68,7 +68,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     trainerController.getPokemonFromInventory(
                             trainerDiscordId, pokemonInventoryIndex);
             PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
             if (foodInventoryIsEmpty(trainerDiscordId)) {
                 event.reply(
                                 "Oops...your food inventory is empty.\nType `/shop` to buy more berries!")
@@ -143,7 +143,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
         PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByPokedex(pokemon.getPokedexNumber());
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
         FoodType selectedFoodType = null;
 
         for (FoodType foodType : FoodType.values()) {
