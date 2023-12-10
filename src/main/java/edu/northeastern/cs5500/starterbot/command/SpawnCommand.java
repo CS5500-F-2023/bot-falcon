@@ -53,9 +53,9 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
-        String pokemonDetails = pokemonController.buildPokemonStats(pokemon.getId().toString());
-        String pokemonSpeciesDetail =
-                pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
+        // call string methods directly from model class
+        String pokemonDetails = pokemon.buildPokemonStats(pokemon);
+        String pokemonSpeciesDetail = species.buildSpeciesDetails(species);
 
         String trainerDiscordId = event.getMember().getId();
 
