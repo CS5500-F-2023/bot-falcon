@@ -80,8 +80,10 @@ public class PokemonController {
         Pokemon closestNpcPokemon = spawnRandonPokemon();
 
         while (maxAttempt > 0) {
+            System.out.println("!!! Attempt " + maxAttempt);
             maxAttempt--;
             Pokemon npcPokemon = spawnRandonPokemon();
+            System.out.println("!!! NPC Pokemon ID " + npcPokemon.getId().toString());
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
             // TODO (zqy): adjust subject to the evolution impl
@@ -98,8 +100,18 @@ public class PokemonController {
                 closestDistance = absRelStrength;
                 closestNpcPokemon = npcPokemon;
             }
+            System.out.println("!!! Deleting NPC Pokemon with ID " + npcPokemon.getId().toString());
+            deletePokemonFromRepo(npcPokemon.getId().toString());
         }
+        System.out.println(
+                "!!! Adding NPC Pokemon with ID " + closestNpcPokemon.getId().toString());
+        this.pokemonRepository.add(closestNpcPokemon);
         return closestNpcPokemon;
+    }
+
+    /** Delete a Pokemon from the repository. */
+    public void deletePokemonFromRepo(String pokemonID) {
+        this.pokemonRepository.delete(new ObjectId(pokemonID));
     }
 
     /**
@@ -121,7 +133,7 @@ public class PokemonController {
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
      */
-    public String buildPokemonStats(String pokemonIdString) {
+    private String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats

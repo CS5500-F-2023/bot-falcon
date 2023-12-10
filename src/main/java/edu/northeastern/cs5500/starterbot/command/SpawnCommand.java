@@ -131,6 +131,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
             }
         } else if (action.equals("letgo") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
             // Handle the 'Let Go' action
+            pokemonController.deletePokemonFromRepo(pokemonID);
             event.reply(
                             String.format(
                                     "<@%s>, you decide to let %s go!",

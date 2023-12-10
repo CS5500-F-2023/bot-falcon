@@ -152,6 +152,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         // Run the battle
         battleController.runBattle(battle);
 
+        log.error("!!! test if the instance is still accessible after deleting from DB");
+        log.error("!!! NPC pokemon ID = " + battle.getNpcPokemon().getId().toString());
+        log.error("!!! NPC species name = " + battle.getNpcPokeSpecies().getName());
+
         // Build up and send the battle messages
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
