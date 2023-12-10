@@ -24,7 +24,8 @@ public class PokedexControllerTest {
     @Test
     public void testBuildSpeciesDetails() {
         PokedexController pokedexController = getPokedexController();
-        String bulbasaurDetail = pokedexController.buildSpeciesDetails(0);
+        PokemonSpecies bulbasaurSpecies = pokedexController.getPokemonSpeciesByREALPokedex(1);
+        String bulbasaurDetail = bulbasaurSpecies.buildSpeciesDetails();
         String typeString = "🌿 Grass, ☠️ Poison";
         String expected =
                 String.format("Species: %s\nTypes: %s\nPokedex: %d\n", "Bulbasaur", typeString, 1);
