@@ -70,6 +70,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                 String.format("```%s%s```", pokemonSpeciesDetail, pokemonDetails),
                 false);
         embedBuilder.setThumbnail(species.getImageUrl());
+        embedBuilder.setColor(species.getSpeciesColor());
 
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder =
