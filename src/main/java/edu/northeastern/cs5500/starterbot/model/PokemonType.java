@@ -124,4 +124,14 @@ public enum PokemonType {
         }
         return result.toArray(new String[0]);
     }
+
+    /** Build an array of PokemonType. */
+    public static PokemonType[] buildPokemonTypes(String[] resource) {
+        List<PokemonType> result = new ArrayList<>();
+        for (String s : resource) {
+            PokemonType t = PokemonType.valueOf(s.trim().toUpperCase());
+            if (t != null) result.add(t);
+        }
+        return result.toArray(new PokemonType[0]);
+    }
 }
