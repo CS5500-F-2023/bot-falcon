@@ -136,6 +136,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
             return;
         }
 
+        // TODO (zqy): This may be refactor upon the refactor of buildPokemonProfile and
+        // buildPokemonStat
         MessageEmbed trPokeProfile = buildPokemonProfile(trPokemonID, "You have chosen ", TR_COLOR);
         MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, TR_COLOR);
 
@@ -187,7 +189,6 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder.setDescription(sb.toString());
         embedBuilder.setImage(species.getImageUrl());
         embedBuilder.setColor(color);
-        log.error("!!! about to return MessageEmbed in buildPokemonProfile");
         return embedBuilder.build();
     }
 
@@ -200,7 +201,6 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setDescription(String.format("```%s%s```", speciesInfoStr, pokeInfoStr));
         embedBuilder.setColor(color);
-        log.error("!!! about to return MessageEmbed in buildPokemonStat");
         return embedBuilder.build();
     }
 }
