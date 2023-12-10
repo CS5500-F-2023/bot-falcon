@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientBalanceException;
+import edu.northeastern.cs5500.starterbot.model.ColoredMessage;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -29,8 +30,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
     static final String NAME = "battle";
     static final int WIDTH = 12;
-    static final int TR_COLOR = 0x87CEEB; // trainer's color: sky blue
-    static final int NPC_COLOR = 0xDC143C; // npc's color: crimson red
+    protected static final int TR_COLOR = 0x87CEEB; // trainer's color: sky blue
+    protected static final int NPC_COLOR = 0xDC143C; // npc's color: crimson red
 
     @Inject PokemonController pokemonController;
 
@@ -156,9 +157,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         event.reply(messageCreateBuilder.build())
                 .queue(
                         interactionHook -> {
-                            for (String msg : battle.getMessages()) {
+                            for (ColoredMessage cMsg : battle.getMessages()) {
                                 EmbedBuilder eb = new EmbedBuilder();
-                                eb.setDescription(msg);
+                                eb.setDescription(cMsg.getMessage());
+                                eb.setColor(cMsg.getColor());
                                 scheduler.schedule(
                                         () -> interactionHook.sendMessageEmbeds(eb.build()).queue(),
                                         3,
