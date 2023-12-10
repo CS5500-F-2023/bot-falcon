@@ -52,12 +52,12 @@ public class NPCBattle {
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
-        // Format start message
-        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_GENERIC));
-
         // Set current HP to max HP
         trPokemon.setCurrentHp(trPokemon.getHp());
         npcPokemon.setCurrentHp(npcPokemon.getHp());
+
+        // Format start message
+        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_GENERIC));
 
         // Determine first mover
         Pokemon attackPokemon = this.getFirstAttacker();
