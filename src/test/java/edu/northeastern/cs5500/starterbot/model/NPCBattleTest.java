@@ -72,6 +72,7 @@ public class NPCBattleTest {
 
     @Test
     void testSetXpGainedException() {
+        // npcBattle.gameOver is default to be false
         assertThrows(InvalidBattleStatusException.class, () -> npcBattle.setXpGained());
     }
 
