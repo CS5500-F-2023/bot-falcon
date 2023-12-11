@@ -29,12 +29,16 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     static final String NAME = "feed";
     private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
-    String BOARD_LINE = "---------------------------------------------\n";
+    String boardline = "---------------------------------------------\n";
 
-    @Inject TrainerController trainerController;
-    @Inject PokemonController pokemonController;
-    @Inject PokedexController pokedexController;
-    @Inject PokemonEvolutionController pokemonEvolutionController;
+    @Inject
+    TrainerController trainerController;
+    @Inject
+    PokemonController pokemonController;
+    @Inject
+    PokedexController pokedexController;
+    @Inject
+    PokemonEvolutionController pokemonEvolutionController;
 
     @Inject
     public FeedCommand() {
@@ -51,7 +55,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     @Nonnull
     public CommandData getCommandData() {
         return Commands.slash(
-                        getName(), "Choose the Pokemon you want to feed by typing its number!")
+                getName(), "Choose the Pokemon you want to feed by typing its number!")
                 .addOption(
                         OptionType.INTEGER,
                         "pokemon",
@@ -66,14 +70,12 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
             String trainerDiscordId = event.getUser().getId();
             Integer pokemonInventoryIndex = event.getOption("pokemon").getAsInt() - 1;
-            Pokemon pokemon =
-                    trainerController.getPokemonFromInventory(
-                            trainerDiscordId, pokemonInventoryIndex);
-            PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+            Pokemon pokemon = trainerController.getPokemonFromInventory(
+                    trainerDiscordId, pokemonInventoryIndex);
+            PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
             if (foodInventoryIsEmpty(trainerDiscordId)) {
                 event.reply(
-                                "Oops...your food inventory is empty.\nType `/shop` to buy more berries!")
+                        "Oops...your food inventory is empty.\nType `/shop` to buy more berries!")
                         .queue();
             } else {
 
@@ -85,7 +87,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                 "```Your Selected Pokemon's Info:\n Current Level: %s\n Current XP: %s```",
                                 pokemon.getLevel().toString(), pokemon.getExPoints().toString()));
                 embedBuilder.addField(
-                        BOARD_LINE,
+                        boardline,
                         String.format(
                                 "```🎒 Below is your food inventory!\n💡 Not enough berries? Type `/shop` to buy more berries!```"),
                         false);
@@ -125,8 +127,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     }
 
     private Boolean foodInventoryIsEmpty(String trainerDiscordID) {
-        Map<FoodType, Integer> foodInventory =
-                trainerController.getTrainerFoodInventory(trainerDiscordID);
+        Map<FoodType, Integer> foodInventory = trainerController.getTrainerFoodInventory(trainerDiscordID);
         for (Integer count : foodInventory.values()) {
             if (count >= 1) {
                 return false;
@@ -144,8 +145,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         String trainerDiscordId = event.getMember().getId();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
-        PokemonSpecies species =
-                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
         FoodType selectedFoodType = null;
 
         for (FoodType foodType : FoodType.values()) {
@@ -163,66 +163,76 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 int newXP = pokemon.getExPoints();
                 int levelAfter = pokemon.getLevel();
 
-                String levelUpMessage = "";
+                StringBuilder builder = new StringBuilder();
+                builder.append(
+                        String.format(
+                                "%s Yummy! Your %s gained %d experience points!%n",
+                                selectedFoodType.getEmoji(),
+                                species.getName(),
+                                selectedFoodType.getExp()));
+                builder.append(boardline);
                 if (levelAfter > levelBefore) {
-                    levelUpMessage =
+                    builder.append(String.format("LEVEL UP to   📈: %d%n", levelAfter));
+                } else {
+                    builder.append(String.format("Current Level 🌟: %d%n", levelAfter));
+                }
+
+                builder.append(
+                        String.format(
+                                "Current XP    🏆: %s    %d/%d%n",
+                                pokemon.generateXpProgressBar(),
+                                pokemon.getExPoints(),
+                                LEVEL_UP_THRESHOLD));
+                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
+
+                if (evolved) {
+                    int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
+                    PokemonSpecies evolvedSpecies = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    builder.append(
+                            String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
+                }
+                builder.append(boardline);
+                if (levelAfter > levelBefore) {
+                    builder.append(
                             String.format(
-                                    "🎉 Woo-hoo, your %s is leveled up to %d!",
-                                    species.getName(), levelAfter);
+                                    "🎉 Woo-hoo, your %s is leveled up to %d!%n",
+                                    species.getName(), levelAfter));
                 } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
                     int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
-                    levelUpMessage =
+                    builder.append(
                             String.format(
-                                    "💪 Almost there! your %s only need %d more XP to level up!!",
-                                    species.getName(), xpRequiredNextLevel);
+                                    "💪 Almost there! your %s only need %d more XP to level up!%n",
+                                    species.getName(), xpRequiredNextLevel));
                 }
-
-                // Display message if evolution happens
-                String evolutionMessage = "";
-                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
                 if (evolved) {
-                    String s1 = pokemonEvolutionController.buildEvolveMessage(pokemonID);
-                    String s2 = pokemonEvolutionController.buildEvolveStatsMessage(pokemonID);
-                    evolutionMessage = "```🎉 Woo-hoo," + s1 + "\n\n" + s2 + "```";
+                    int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
+                    PokemonSpecies evolvedSpecies = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    builder.append(
+                            String.format(
+                                    "🎉 Woo-hoo, your %s is evolved to %s!%n",
+                                    species.getName(), evolvedSpecies.getName()));
                 }
 
-                event.reply(
-                                String.format(
-                                        "```%s Yummy! Your %s gained %d experience points!\n"
-                                                + BOARD_LINE
-                                                + "Current Level: %d\nCurrent XP: %s    %d/%d\n"
-                                                + BOARD_LINE
-                                                + "%s\n"
-                                                + "%s```",
-                                        selectedFoodType.getEmoji(),
-                                        species.getName(),
-                                        selectedFoodType.getExp(),
-                                        levelAfter,
-                                        pokemon.generateXpProgressBar(),
-                                        pokemon.getExPoints(),
-                                        LEVEL_UP_THRESHOLD,
-                                        levelUpMessage,
-                                        evolutionMessage))
-                        .queue();
+                event.reply("```" + builder.toString() + "```").queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
                         .setComponents()
                         .queue(); // disable button
             } catch (InsufficientFoodException e) {
                 event.reply(
-                                String.format(
-                                        "<@%s>, you don't have enough %s to increase your %s XP",
-                                        trainerDiscordId,
-                                        selectedFoodTypeResponse,
-                                        species.getName()))
+                        String.format(
+                                "<@%s>, you don't have enough %s to increase your %s XP",
+                                trainerDiscordId,
+                                selectedFoodTypeResponse,
+                                species.getName()))
                         .queue();
                 event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();
             }
         } else {
             event.reply(
-                            String.format(
-                                    "Sorry <@%s>, you are not authorized to perform this action.",
-                                    trainerDiscordId))
+                    String.format(
+                            "Sorry <@%s>, you are not authorized to perform this action.",
+                            trainerDiscordId))
                     .queue();
             event.getMessage()
                     .editMessageEmbeds(messageEmbed)
