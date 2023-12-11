@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import javax.annotation.Nonnull;
@@ -90,14 +91,17 @@ public class MyCommand implements SlashCommandHandler {
                 .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
                 .append(boardLine)
-                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex))
+                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
                 .append(boardLine)
                 .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
-                .append(String.format(" %d/%d", pokemon.getExPoints(), pokemon.LEVEL_UP_THRESHOLD))
+                .append(
+                        String.format(
+                                " %d/%d",
+                                pokemon.getExPoints(), BotConstants.POKE_LEVEL_UP_THRESHOLD))
                 .append("\n\n🥣 Boost your pokemon using /feed with PokeID!");
 
         return "```" + profileBuilder.toString() + "```";

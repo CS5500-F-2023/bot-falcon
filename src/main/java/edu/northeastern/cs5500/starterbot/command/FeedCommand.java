@@ -5,6 +5,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -26,7 +27,6 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
     static final String NAME = "feed";
-    private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
     String BOARD_LINE = "---------------------------------------------\n";
 
@@ -168,7 +168,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                     "🎉 Woo-hoo, your %s is leveled up to %d!",
                                     species.getName(), levelAfter);
                 } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
-                    int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
+                    int xpRequiredNextLevel = BotConstants.POKE_LEVEL_UP_THRESHOLD - newXP;
                     levelUpMessage =
                             String.format(
                                     "💪 Almost there! your %s only need %d more XP to level up!!",
@@ -188,7 +188,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                         levelAfter,
                                         pokemon.generateXpProgressBar(),
                                         pokemon.getExPoints(),
-                                        LEVEL_UP_THRESHOLD,
+                                        BotConstants.POKE_LEVEL_UP_THRESHOLD,
                                         levelUpMessage))
                         .queue();
                 event.getMessage()

@@ -135,16 +135,13 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
             return;
         }
 
-        // TODO (zqy): This may be refactor upon the refactor of buildPokemonProfile and
-        // buildPokemonStat
         MessageEmbed trPokeProfile =
                 buildPokemonProfile(trPokemonID, "You have chosen ", BotConstants.COLOR_TRAINER);
         MessageEmbed trPokeStat = buildPokemonStat(trPokemonID, BotConstants.COLOR_TRAINER);
 
         NPCBattle battle = battleController.setUpNewBattle(trDiscordId, trPokemonID);
 
-        Pokemon npcPokemon = battle.getNpcPokemon();
-        String npcPokemonID = npcPokemon.getId().toString();
+        String npcPokemonID = battle.getNpcPokemon().getId().toString();
         MessageEmbed npcPokeProfile =
                 buildPokemonProfile(npcPokemonID, "Bot has chosen ", BotConstants.COLOR_NPC);
         MessageEmbed npcPokeStat = buildPokemonStat(npcPokemonID, BotConstants.COLOR_NPC);

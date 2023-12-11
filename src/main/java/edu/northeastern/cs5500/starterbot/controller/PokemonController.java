@@ -86,13 +86,13 @@ public class PokemonController {
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
             // Adjust level and xp
-            int level_diff = trPokemon.getLevel() - npcPokemon.getLevel();
-            if (level_diff > 0) {
-                npcPokemon.increaseExpPts(level_diff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
+            int levelDiff = trPokemon.getLevel() - npcPokemon.getLevel();
+            if (levelDiff > 0) {
+                npcPokemon.increaseExpPts(levelDiff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
             }
-            int xp_diff = trPokemon.getExPoints() - npcPokemon.getExPoints();
-            if (xp_diff > 0) {
-                npcPokemon.increaseExpPts(xp_diff);
+            int xpDiff = trPokemon.getExPoints() - npcPokemon.getExPoints();
+            if (xpDiff > 0) {
+                npcPokemon.increaseExpPts(xpDiff);
             }
             this.pokemonRepository.update(npcPokemon);
 
@@ -124,34 +124,6 @@ public class PokemonController {
      */
     public Pokemon getPokemonById(String pokemonID) {
         return pokemonRepository.get(new ObjectId(pokemonID));
-    }
-
-    // todo(yhr): remove this method after current PRs merged and no conflicts
-    /**
-     * Builds a string representation of the Pokemon's stats based on its ID.
-     *
-     * @param pokemonIdString The ID of the Pokemon
-     * @return A string containing the Pokemon's stats
-     */
-    private String buildPokemonStats(String pokemonIdString) {
-        Pokemon pokemon = getPokemonById(pokemonIdString);
-
-        // Build the formatted string with the Pokemon's stats
-        StringBuilder pokemonStatsBuilder = new StringBuilder();
-        pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
-        pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
-        pokemonStatsBuilder.append("Hp      : 🩷 ").append(pokemon.getHp()).append("\n");
-        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
-        pokemonStatsBuilder.append(
-                String.format(
-                        "%s  : 🗡️ Phys. %-3d | 🔮 Sp. %-3d\n",
-                        "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
-        pokemonStatsBuilder.append(
-                String.format(
-                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
-                        "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
-
-        return pokemonStatsBuilder.toString();
     }
 
     /**
@@ -203,8 +175,8 @@ public class PokemonController {
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
         if (pokemonEvolutionMap.containsKey(species.getName())) {
             PokemonEvolution evolution = pokemonEvolutionMap.get(species.getName());
-            return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
+            return BotConstants.POKE_DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
         }
-        return Pokemon.DEFAULT_LEVEL;
+        return BotConstants.POKE_DEFAULT_LEVEL;
     }
 }

@@ -2,11 +2,9 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
-import edu.northeastern.cs5500.starterbot.model.PokemonSpecies.PokemonSpeciesBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonType;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,23 +19,6 @@ public class PokedexController {
     @Inject
     PokedexController(PokemonDataService pokemonDataService) {
         this.pokemonDataService = pokemonDataService;
-    }
-
-    /**
-     * Retrieves the Pokemon species info based on the given index number from Pokemon data list.
-     *
-     * @param listIndex The index of the data list.
-     * @return The Pokemon species information.
-     */
-    private PokemonSpecies getPokemonSpeciesByPokedex(int listIndex) {
-        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
-        PokemonSpeciesBuilder builder = PokemonSpecies.builder();
-
-        // find pokemon in the pokemon data list base on list index
-        PokemonData data = this.pokemonDataList.get(listIndex);
-        // build pokedex base on actual pokedex from the Number field
-        PokemonSpecies species = buildPokemonSpecies(data);
-        return Objects.requireNonNull(species);
     }
 
     /**
@@ -80,21 +61,5 @@ public class PokedexController {
                 .speciesTypes(types)
                 .types(pokemonTypes)
                 .build();
-    }
-
-    // todo(yhr): remove this method after current PRs merged and no conflicts
-    /**
-     * Builds a string representation of the Pokemon Species's details based on its pokedex number.
-     *
-     * @param pokedex The index of the pokemon species.
-     * @return A string containing pokemon species and types.
-     */
-    private String buildSpeciesDetails(int pokedex) {
-        PokemonSpecies species = this.getPokemonSpeciesByREALPokedex(pokedex);
-        String typeString = String.join(", ", species.getSpeciesTypes());
-        StringBuilder speciesDetailBuilder = new StringBuilder();
-        speciesDetailBuilder.append("Species : 🐾 ").append(species.getName()).append("\n");
-        speciesDetailBuilder.append("Types   : ").append(typeString).append("\n");
-        return speciesDetailBuilder.toString();
     }
 }
