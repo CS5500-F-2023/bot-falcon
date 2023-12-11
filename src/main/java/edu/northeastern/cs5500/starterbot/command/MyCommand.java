@@ -78,8 +78,10 @@ public class MyCommand implements SlashCommandHandler {
      */
     private String buildPokemonProfile(
             PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
-        String pokemonDetails = pokemon.buildPokemonStats(pokemon);
-        String speciesDetails = species.buildSpeciesDetails(species);
+
+        String pokemonDetails = pokemon.buildPokemonStats();
+        String speciesDetails = species.buildSpeciesDetails();
+
         String boardLine = "\n----------------------------\n";
 
         StringBuilder profileBuilder = new StringBuilder();
