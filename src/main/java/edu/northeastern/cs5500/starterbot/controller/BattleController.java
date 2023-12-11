@@ -71,10 +71,6 @@ public class BattleController {
             battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_GENERIC));
         }
 
-        // TODO: Maybe should not delete this from database in case User want to access this
-        // instance
-        System.out.println(
-                "!!! Deleting NPC Pokemon with ID " + battle.getNpcPokemon().getId().toString());
         pokemonController.deletePokemonFromRepo(battle.getNpcPokemon().getId().toString());
     }
 }
