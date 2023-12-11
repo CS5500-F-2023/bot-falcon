@@ -46,6 +46,8 @@ public class NPCBattle {
     @Builder.Default boolean trainerWins = false;
     @Builder.Default @Nonnegative int coinsEarned = 0;
     @Builder.Default int xpGained = 0;
+    @Builder.Default boolean leveledUp = false;
+    @Builder.Default boolean evolved = false;
 
     // Messages
     @Builder.Default List<ColoredMessage> messages = new ArrayList<>();
@@ -101,11 +103,8 @@ public class NPCBattle {
                     setCoinsEarned();
                     if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
-                    boolean leveledUp = trPokemon.increaseExpPts(xpGained);
-                    resultMessage =
-                            trainerWins
-                                    ? buildVictoryMessage(leveledUp)
-                                    : buildDefeatMessage(leveledUp);
+                    this.leveledUp = trPokemon.increaseExpPts(xpGained);
+                    resultMessage = trainerWins ? buildVictoryMessage("") : buildDefeatMessage("");
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
@@ -268,7 +267,7 @@ public class NPCBattle {
     //    New Balance 💰  :  0
     //
     // 🌟 Every battle is a lesson. Your next victory awaits!
-    private String buildVictoryMessage(boolean leveledUp) throws InvalidBattleStatusException {
+    public String buildVictoryMessage(String evolvedName) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
         }
@@ -284,8 +283,12 @@ public class NPCBattle {
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
         if (leveledUp) {
-            builder.append("   LEVEL UP to  🚀 :  ");
+            builder.append("   LEVEL UP to  📈 :  ");
             builder.append(trPokemon.getLevel()).append("\n");
+        }
+        if (evolved) {
+            builder.append("   EVOLVE to    🚀 :  ");
+            builder.append(evolvedName).append("\n");
         }
         builder.append("\n");
 
@@ -317,7 +320,7 @@ public class NPCBattle {
     //    New Balance  💰 :  96
     //
     // 🌈 Celebrate this victory. The journey to greatness continues!
-    private String buildDefeatMessage(boolean leveledUp) throws InvalidBattleStatusException {
+    public String buildDefeatMessage(String evolvedName) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
         }
@@ -333,8 +336,12 @@ public class NPCBattle {
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
         if (leveledUp) {
-            builder.append("   LEVEL UP to  🚀 :  ");
+            builder.append("   LEVEL UP to  📈 :  ");
             builder.append(trPokemon.getLevel()).append("\n");
+        }
+        if (evolved) {
+            builder.append("   EVOLVE to    🚀 :  ");
+            builder.append(evolvedName).append("\n");
         }
         builder.append("\n");
 
