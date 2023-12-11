@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
@@ -44,7 +45,7 @@ public class PokemonControllerTest {
                 pokemonController.pokemonDataService.getPokemonDataList();
         PokemonData bulData = pokemonController.pokemonDataList.get(0);
         Pokemon bul = pokemonController.buildPokemon(bulData);
-        assertThat(bul.getLevel()).isEqualTo(Pokemon.DEFAULT_LEVEL);
+        assertThat(bul.getLevel()).isEqualTo(BotConstants.POKE_DEFAULT_LEVEL);
     }
 
     @Test

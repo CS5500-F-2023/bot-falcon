@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import javax.annotation.Nonnull;
@@ -58,8 +59,7 @@ public class MyCommand implements SlashCommandHandler {
             PokemonSpecies species =
                     pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
-            String pokeProfile =
-                    buildPokemonProfile(trainerDiscordId, pokemon, pokemonInventoryIndex);
+            String pokeProfile = buildPokemonProfile(species, pokemon, pokemonInventoryIndex);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setThumbnail(species.getImageUrl());
             embedBuilder.addField("Your Pokemon Detail\n", pokeProfile, false);
@@ -78,26 +78,30 @@ public class MyCommand implements SlashCommandHandler {
      * @return the pokemon profile
      */
     private String buildPokemonProfile(
-            String trainerDiscordId, Pokemon pokemon, Integer inventoryIndex) {
-        String pokemonIdString = pokemon.getId().toString();
-        String pokemonDetails = pokemonController.buildPokemonStats(pokemonIdString);
-        String speciesDetails = pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
-        String BOARD_LINE = "\n----------------------------\n";
+            PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
+
+        String pokemonDetails = pokemon.buildPokemonStats();
+        String speciesDetails = species.buildSpeciesDetails();
+
+        String boardLine = "\n----------------------------\n";
 
         StringBuilder profileBuilder = new StringBuilder();
         profileBuilder
                 .append(speciesDetails)
                 .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
-                .append(BOARD_LINE)
-                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex))
+                .append(boardLine)
+                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
-                .append(BOARD_LINE)
+                .append(boardLine)
                 .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
-                .append(String.format(" %d/%d", pokemon.getExPoints(), pokemon.LEVEL_UP_THRESHOLD))
+                .append(
+                        String.format(
+                                " %d/%d",
+                                pokemon.getExPoints(), BotConstants.POKE_LEVEL_UP_THRESHOLD))
                 .append("\n\n🥣 Boost your pokemon using /feed with PokeID!");
 
         return "```" + profileBuilder.toString() + "```";

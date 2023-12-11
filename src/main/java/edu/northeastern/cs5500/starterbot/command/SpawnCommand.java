@@ -53,9 +53,9 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
         PokemonSpecies species =
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
-        String pokemonDetails = pokemonController.buildPokemonStats(pokemon.getId().toString());
-        String pokemonSpeciesDetail =
-                pokedexController.buildSpeciesDetails(pokemon.getPokedexNumber());
+        // call string methods directly from model class
+        String pokemonDetails = pokemon.buildPokemonStats();
+        String pokemonSpeciesDetail = species.buildSpeciesDetails();
 
         String trainerDiscordId = event.getMember().getId();
 
@@ -70,6 +70,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                 String.format("```%s%s```", pokemonSpeciesDetail, pokemonDetails),
                 false);
         embedBuilder.setThumbnail(species.getImageUrl());
+        embedBuilder.setColor(species.getSpeciesColor());
 
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder =
@@ -130,6 +131,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
             }
         } else if (action.equals("letgo") && trainerDiscordId.equals(initiateTrainerDiscordId)) {
             // Handle the 'Let Go' action
+            pokemonController.deletePokemonFromRepo(pokemonID);
             event.reply(
                             String.format(
                                     "<@%s>, you decide to let %s go!",

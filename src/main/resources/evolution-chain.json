@@ -131,18 +131,6 @@
             "Rattata"
         ]
     },
-    "Rattata\n Alolan Rattata": {
-        "evolutionFrom": "",
-        "evolutionTo": "Raticate\n Alolan Raticate",
-        "prev": []
-    },
-    "Raticate\n Alolan Raticate": {
-        "evolutionFrom": "Rattata\n Alolan Rattata",
-        "evolutionTo": "",
-        "prev": [
-            "Rattata\n Alolan Rattata"
-        ]
-    },
     "Spearow": {
         "evolutionFrom": "",
         "evolutionTo": "Fearow",
@@ -263,40 +251,16 @@
             "Diglett"
         ]
     },
-    "Diglett\n Alolan Diglett": {
-        "evolutionFrom": "",
-        "evolutionTo": "Dugtrio\n Alolan Dugtrio",
-        "prev": []
-    },
-    "Dugtrio\n Alolan Dugtrio": {
-        "evolutionFrom": "Diglett\n Alolan Diglett",
-        "evolutionTo": "",
-        "prev": [
-            "Diglett\n Alolan Diglett"
-        ]
-    },
     "Meowth": {
-        "evolutionFrom": "",
-        "evolutionTo": "Persian",
-        "prev": []
-    },
-    "Persian": {
-        "evolutionFrom": "Meowth",
-        "evolutionTo": "",
-        "prev": [
-            "Meowth"
-        ]
-    },
-    "Meowth\n Galarian Meowth": {
         "evolutionFrom": "",
         "evolutionTo": "Perrserker",
         "prev": []
     },
     "Perrserker": {
-        "evolutionFrom": "Meowth\n Galarian Meowth",
+        "evolutionFrom": "Meowth",
         "evolutionTo": "",
         "prev": [
-            "Meowth\n Galarian Meowth"
+            "Meowth"
         ]
     },
     "Psyduck": {
@@ -395,18 +359,6 @@
             "Geodude"
         ]
     },
-    "Geodude\n Alolan Geodude": {
-        "evolutionFrom": "",
-        "evolutionTo": "Graveler\n Alolan Graveler",
-        "prev": []
-    },
-    "Graveler\n Alolan Graveler": {
-        "evolutionFrom": "Geodude\n Alolan Geodude",
-        "evolutionTo": "",
-        "prev": [
-            "Geodude\n Alolan Geodude"
-        ]
-    },
     "Ponyta": {
         "evolutionFrom": "",
         "evolutionTo": "Rapidash",
@@ -417,18 +369,6 @@
         "evolutionTo": "",
         "prev": [
             "Ponyta"
-        ]
-    },
-    "Ponyta\n Galarian Ponyta": {
-        "evolutionFrom": "",
-        "evolutionTo": "Rapidash\n Galarian Rapidash",
-        "prev": []
-    },
-    "Rapidash\n Galarian Rapidash": {
-        "evolutionFrom": "Ponyta\n Galarian Ponyta",
-        "evolutionTo": "",
-        "prev": [
-            "Ponyta\n Galarian Ponyta"
         ]
     },
     "Slowpoke": {
@@ -491,18 +431,6 @@
             "Grimer"
         ]
     },
-    "Grimer\n Alolan Grimer": {
-        "evolutionFrom": "",
-        "evolutionTo": "Muk\n Alolan Muk",
-        "prev": []
-    },
-    "Muk\n Alolan Muk": {
-        "evolutionFrom": "Grimer\n Alolan Grimer",
-        "evolutionTo": "",
-        "prev": [
-            "Grimer\n Alolan Grimer"
-        ]
-    },
     "Gastly": {
         "evolutionFrom": "",
         "evolutionTo": "Haunter",
@@ -563,13 +491,6 @@
             "Cubone"
         ]
     },
-    "Marowak\n Alolan Marowak": {
-        "evolutionFrom": "Cubone",
-        "evolutionTo": "",
-        "prev": [
-            "Cubone"
-        ]
-    },
     "Tyrogue": {
         "evolutionFrom": "",
         "evolutionTo": "Hitmonlee",
@@ -602,13 +523,6 @@
         "prev": []
     },
     "Weezing": {
-        "evolutionFrom": "Koffing",
-        "evolutionTo": "",
-        "prev": [
-            "Koffing"
-        ]
-    },
-    "Weezing\n Galarian Weezing": {
         "evolutionFrom": "Koffing",
         "evolutionTo": "",
         "prev": [
@@ -651,16 +565,16 @@
             "Goldeen"
         ]
     },
-    "Mr. Mime\n Galarian Mr. Mime": {
+    "Mr. Mime": {
         "evolutionFrom": "",
         "evolutionTo": "Mr. Rime",
         "prev": []
     },
     "Mr. Rime": {
-        "evolutionFrom": "Mr. Mime\n Galarian Mr. Mime",
+        "evolutionFrom": "Mr. Mime",
         "evolutionTo": "",
         "prev": [
-            "Mr. Mime\n Galarian Mr. Mime"
+            "Mr. Mime"
         ]
     },
     "Smoochum": {
@@ -788,14 +702,6 @@
         ]
     },
     "Typhlosion": {
-        "evolutionFrom": "Quilava",
-        "evolutionTo": "",
-        "prev": [
-            "Cyndaquil",
-            "Quilava"
-        ]
-    },
-    "Typhlosion\n Hisuian Typhlosion": {
         "evolutionFrom": "Quilava",
         "evolutionTo": "",
         "prev": [
@@ -959,16 +865,11 @@
             "Wooper"
         ]
     },
-    "Wooper\n Paldean Wooper": {
-        "evolutionFrom": "",
-        "evolutionTo": "Clodsire",
-        "prev": []
-    },
     "Clodsire": {
-        "evolutionFrom": "Wooper\n Paldean Wooper",
+        "evolutionFrom": "Wooper",
         "evolutionTo": "",
         "prev": [
-            "Wooper\n Paldean Wooper"
+            "Wooper"
         ]
     },
     "Wynaut": {
@@ -1178,29 +1079,17 @@
     },
     "Linoone": {
         "evolutionFrom": "Zigzagoon",
-        "evolutionTo": "",
+        "evolutionTo": "Obstagoon",
         "prev": [
             "Zigzagoon"
         ]
     },
-    "Zigzagoon\n Galarian Zigzagoon": {
-        "evolutionFrom": "",
-        "evolutionTo": "Linoone\n Galarian Linoone",
-        "prev": []
-    },
-    "Linoone\n Galarian Linoone": {
-        "evolutionFrom": "Zigzagoon\n Galarian Zigzagoon",
-        "evolutionTo": "Obstagoon",
-        "prev": [
-            "Zigzagoon\n Galarian Zigzagoon"
-        ]
-    },
     "Obstagoon": {
-        "evolutionFrom": "Linoone\n Galarian Linoone",
+        "evolutionFrom": "Linoone",
         "evolutionTo": "",
         "prev": [
-            "Zigzagoon\n Galarian Zigzagoon",
-            "Linoone\n Galarian Linoone"
+            "Zigzagoon",
+            "Linoone"
         ]
     },
     "Wurmple": {
@@ -1853,47 +1742,23 @@
             "Shieldon"
         ]
     },
-    "Burmy\n Plant Cloak": {
+    "Burmy": {
         "evolutionFrom": "",
         "evolutionTo": "Mothim",
         "prev": []
     },
     "Mothim": {
-        "evolutionFrom": "Burmy\n Plant Cloak",
+        "evolutionFrom": "Burmy",
         "evolutionTo": "",
         "prev": [
-            "Burmy\n Plant Cloak"
+            "Burmy"
         ]
     },
-    "Wormadam\n Plant Cloak": {
-        "evolutionFrom": "Burmy\n Plant Cloak",
+    "Wormadam": {
+        "evolutionFrom": "Burmy",
         "evolutionTo": "",
         "prev": [
-            "Burmy\n Plant Cloak"
-        ]
-    },
-    "Burmy\n Sandy Cloak": {
-        "evolutionFrom": "",
-        "evolutionTo": "Wormadam\n Sandy Cloak",
-        "prev": []
-    },
-    "Wormadam\n Sandy Cloak": {
-        "evolutionFrom": "Burmy\n Sandy Cloak",
-        "evolutionTo": "",
-        "prev": [
-            "Burmy\n Sandy Cloak"
-        ]
-    },
-    "Burmy\n Trash Cloak": {
-        "evolutionFrom": "",
-        "evolutionTo": "Wormadam\n Trash Cloak",
-        "prev": []
-    },
-    "Wormadam\n Trash Cloak": {
-        "evolutionFrom": "Burmy\n Trash Cloak",
-        "evolutionTo": "",
-        "prev": [
-            "Burmy\n Trash Cloak"
+            "Burmy"
         ]
     },
     "Combee": {
@@ -2132,14 +1997,6 @@
             "Dewott"
         ]
     },
-    "Samurott\n Hisuian Samurott": {
-        "evolutionFrom": "Dewott",
-        "evolutionTo": "",
-        "prev": [
-            "Oshawott",
-            "Dewott"
-        ]
-    },
     "Patrat": {
         "evolutionFrom": "",
         "evolutionTo": "Watchog",
@@ -2326,10 +2183,10 @@
     },
     "Darumaka": {
         "evolutionFrom": "",
-        "evolutionTo": "Darmanitan\n Standard Mode",
+        "evolutionTo": "Darmanitan",
         "prev": []
     },
-    "Darmanitan\n Standard Mode": {
+    "Darmanitan": {
         "evolutionFrom": "Darumaka",
         "evolutionTo": "",
         "prev": [
@@ -2418,18 +2275,6 @@
         "evolutionTo": "",
         "prev": [
             "Zorua"
-        ]
-    },
-    "Zorua\n Hisuian Zorua": {
-        "evolutionFrom": "",
-        "evolutionTo": "Zoroark\n Hisuian Zoroark",
-        "prev": []
-    },
-    "Zoroark\n Hisuian Zoroark": {
-        "evolutionFrom": "Zorua\n Hisuian Zorua",
-        "evolutionTo": "",
-        "prev": [
-            "Zorua\n Hisuian Zorua"
         ]
     },
     "Gothita": {
@@ -2700,13 +2545,6 @@
             "Rufflet"
         ]
     },
-    "Braviary\n Hisuian Braviary": {
-        "evolutionFrom": "Rufflet",
-        "evolutionTo": "",
-        "prev": [
-            "Rufflet"
-        ]
-    },
     "Vullaby": {
         "evolutionFrom": "",
         "evolutionTo": "Mandibuzz",
@@ -2913,17 +2751,10 @@
     },
     "Espurr": {
         "evolutionFrom": "",
-        "evolutionTo": "Meowstic\n Male",
+        "evolutionTo": "Meowstic",
         "prev": []
     },
-    "Meowstic\n Male": {
-        "evolutionFrom": "Espurr",
-        "evolutionTo": "",
-        "prev": [
-            "Espurr"
-        ]
-    },
-    "Meowstic\n Female": {
+    "Meowstic": {
         "evolutionFrom": "Espurr",
         "evolutionTo": "",
         "prev": [
@@ -3034,34 +2865,12 @@
             "Sliggoo"
         ]
     },
-    "Sliggoo\n Hisuian Sliggoo": {
-        "evolutionFrom": "Goomy",
-        "evolutionTo": "Goodra\n Hisuian Goodra",
-        "prev": [
-            "Goomy"
-        ]
-    },
-    "Goodra\n Hisuian Goodra": {
-        "evolutionFrom": "Sliggoo\n Hisuian Sliggoo",
-        "evolutionTo": "",
-        "prev": [
-            "Goomy",
-            "Sliggoo\n Hisuian Sliggoo"
-        ]
-    },
     "Bergmite": {
         "evolutionFrom": "",
         "evolutionTo": "Avalugg",
         "prev": []
     },
     "Avalugg": {
-        "evolutionFrom": "Bergmite",
-        "evolutionTo": "",
-        "prev": [
-            "Bergmite"
-        ]
-    },
-    "Avalugg\n Hisuian Avalugg": {
         "evolutionFrom": "Bergmite",
         "evolutionTo": "",
         "prev": [
@@ -3093,14 +2902,6 @@
         ]
     },
     "Decidueye": {
-        "evolutionFrom": "Dartrix",
-        "evolutionTo": "",
-        "prev": [
-            "Rowlet",
-            "Dartrix"
-        ]
-    },
-    "Decidueye\n Hisuian Decidueye": {
         "evolutionFrom": "Dartrix",
         "evolutionTo": "",
         "prev": [
@@ -3206,33 +3007,14 @@
     },
     "Rockruff": {
         "evolutionFrom": "",
-        "evolutionTo": "Lycanroc\n Midday Form",
+        "evolutionTo": "Lycanroc",
         "prev": []
     },
-    "Lycanroc\n Midday Form": {
+    "Lycanroc": {
         "evolutionFrom": "Rockruff",
         "evolutionTo": "",
         "prev": [
             "Rockruff"
-        ]
-    },
-    "Lycanroc\n Midnight Form": {
-        "evolutionFrom": "Rockruff",
-        "evolutionTo": "",
-        "prev": [
-            "Rockruff"
-        ]
-    },
-    "Rockruff\n Own Tempo Rockruff": {
-        "evolutionFrom": "",
-        "evolutionTo": "Lycanroc\n Dusk Form",
-        "prev": []
-    },
-    "Lycanroc\n Dusk Form": {
-        "evolutionFrom": "Rockruff\n Own Tempo Rockruff",
-        "evolutionTo": "",
-        "prev": [
-            "Rockruff\n Own Tempo Rockruff"
         ]
     },
     "Mareanie": {
@@ -3619,16 +3401,16 @@
             "Arrokuda"
         ]
     },
-    "Corsola\n Galarian Corsola": {
+    "Corsola": {
         "evolutionFrom": "",
         "evolutionTo": "Cursola",
         "prev": []
     },
     "Cursola": {
-        "evolutionFrom": "Corsola\n Galarian Corsola",
+        "evolutionFrom": "Corsola",
         "evolutionTo": "",
         "prev": [
-            "Corsola\n Galarian Corsola"
+            "Corsola"
         ]
     },
     "Impidimp": {
@@ -3685,17 +3467,10 @@
     },
     "Toxel": {
         "evolutionFrom": "",
-        "evolutionTo": "Toxtricity\n Amped Form",
+        "evolutionTo": "Toxtricity",
         "prev": []
     },
-    "Toxtricity\n Amped Form": {
-        "evolutionFrom": "Toxel",
-        "evolutionTo": "",
-        "prev": [
-            "Toxel"
-        ]
-    },
-    "Toxtricity\n Low Key Form": {
+    "Toxtricity": {
         "evolutionFrom": "Toxel",
         "evolutionTo": "",
         "prev": [
@@ -3796,17 +3571,10 @@
     },
     "Lechonk": {
         "evolutionFrom": "",
-        "evolutionTo": "Oinkologne\n Male",
+        "evolutionTo": "Oinkologne",
         "prev": []
     },
-    "Oinkologne\n Male": {
-        "evolutionFrom": "Lechonk",
-        "evolutionTo": "",
-        "prev": [
-            "Lechonk"
-        ]
-    },
-    "Oinkologne\n Female": {
+    "Oinkologne": {
         "evolutionFrom": "Lechonk",
         "evolutionTo": "",
         "prev": [
@@ -3875,10 +3643,10 @@
     },
     "Finizen": {
         "evolutionFrom": "",
-        "evolutionTo": "Palafin\n Zero Form",
+        "evolutionTo": "Palafin",
         "prev": []
     },
-    "Palafin\n Zero Form": {
+    "Palafin": {
         "evolutionFrom": "Finizen",
         "evolutionTo": "",
         "prev": [
@@ -3919,17 +3687,10 @@
     },
     "Tandemaus": {
         "evolutionFrom": "",
-        "evolutionTo": "Maushold\n Family of Three",
+        "evolutionTo": "Maushold",
         "prev": []
     },
-    "Maushold\n Family of Three": {
-        "evolutionFrom": "Tandemaus",
-        "evolutionTo": "",
-        "prev": [
-            "Tandemaus"
-        ]
-    },
-    "Maushold\n Family of Four": {
+    "Maushold": {
         "evolutionFrom": "Tandemaus",
         "evolutionTo": "",
         "prev": [

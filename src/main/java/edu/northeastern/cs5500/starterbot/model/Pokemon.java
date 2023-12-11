@@ -12,11 +12,6 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 public class Pokemon implements Model {
 
-    // Level up constants
-    public static final Integer DEFAULT_LEVEL = 5;
-    public static final Integer DEFAULT_XP = 10;
-    public static final Integer LEVEL_UP_THRESHOLD = 100;
-
     // Spawn cost related
     private static final Integer FLOOR_CATCH_COSTS = 5;
     private static final Integer COST_ADDON_PER_LEVEL = 2;
@@ -35,9 +30,9 @@ public class Pokemon implements Model {
 
     @Nonnull Integer pokedexNumber;
 
-    @Builder.Default Integer level = DEFAULT_LEVEL;
+    @Builder.Default Integer level = BotConstants.POKE_DEFAULT_LEVEL;
 
-    @Builder.Default Integer exPoints = DEFAULT_XP;
+    @Builder.Default Integer exPoints = BotConstants.POKE_DEFAULT_XP;
 
     @Nonnull Integer currentHp; // default: hp
     @Nonnull Integer hp;
@@ -107,9 +102,9 @@ public class Pokemon implements Model {
      */
     private boolean levelUp() {
         int levelUpCount = 0;
-        while (exPoints >= LEVEL_UP_THRESHOLD) {
+        while (exPoints >= BotConstants.POKE_LEVEL_UP_THRESHOLD) {
             this.level += 1;
-            this.exPoints -= LEVEL_UP_THRESHOLD;
+            this.exPoints -= BotConstants.POKE_LEVEL_UP_THRESHOLD;
             levelUpCount++;
         }
         updateStatDueToLevelUp(levelUpCount);
@@ -134,7 +129,8 @@ public class Pokemon implements Model {
      * @return true if the Pokemon can evolve, false otherwise
      */
     public boolean canEvolve() {
-        return !this.level.equals(DEFAULT_LEVEL) && this.level % DEFAULT_LEVEL == 0;
+        return !this.level.equals(BotConstants.POKE_DEFAULT_LEVEL)
+                && this.level % BotConstants.POKE_DEFAULT_LEVEL == 0;
     }
 
     /**
@@ -153,7 +149,7 @@ public class Pokemon implements Model {
      * @return a string representing the XP progress bar
      */
     public String generateXpProgressBar() {
-        double progressPercentage = (exPoints * 1.0 / LEVEL_UP_THRESHOLD) * 100.0;
+        double progressPercentage = (exPoints * 1.0 / BotConstants.POKE_LEVEL_UP_THRESHOLD) * 100.0;
 
         int filledBars = (int) Math.ceil(TOTAL_XP_BARS * (progressPercentage / 100.0));
         return "█".repeat(filledBars) + "░".repeat(TOTAL_XP_BARS - filledBars);
@@ -165,6 +161,36 @@ public class Pokemon implements Model {
      * @return The cost in coins to catch this Pokemon as an integer
      */
     public int getCatchCosts() {
-        return FLOOR_CATCH_COSTS + (this.level - DEFAULT_LEVEL) * COST_ADDON_PER_LEVEL;
+        return FLOOR_CATCH_COSTS
+                + (this.level - BotConstants.POKE_DEFAULT_LEVEL) * COST_ADDON_PER_LEVEL;
+    }
+
+    // Sample msg:
+    // Level   : 🌟 5
+    // XP      : 📊 10
+    // Hp      : 🩷 82
+    // Speed   : 🏃‍♂️ 92
+    // Attack  : 🗡️ Phys. 96  | 🔮 Sp. 45
+    // Defense : 🛡️ Phys. 51  | 🛡️ Sp. 51
+    /**
+     * Builds a string representation of the Pokemon's stats.
+     *
+     * @return A string containing the Pokemon's stats
+     */
+    public String buildPokemonStats() {
+        StringBuilder pokemonStatsBuilder = new StringBuilder();
+        pokemonStatsBuilder.append("Level   : 🌟 ").append(this.getLevel()).append("\n");
+        pokemonStatsBuilder.append("XP      : 📊 ").append(this.getExPoints()).append("\n");
+        pokemonStatsBuilder.append("Hp      : 🩷 ").append(this.getHp()).append("\n");
+        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(this.getSpeed()).append("\n");
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s  : 🗡️ Phys. %-3d | 🔮 Sp. %-3d\n",
+                        "Attack", this.getAttack(), this.getSpecialAttack()));
+        pokemonStatsBuilder.append(
+                String.format(
+                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
+                        "Defense", this.getDefense(), this.getSpecialDefense()));
+        return pokemonStatsBuilder.toString();
     }
 }

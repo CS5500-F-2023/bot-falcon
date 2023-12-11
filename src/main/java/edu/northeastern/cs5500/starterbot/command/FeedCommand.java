@@ -6,6 +6,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokemonEvolutionController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -27,7 +28,6 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
     static final String NAME = "feed";
-    private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
     String boardline = "---------------------------------------------\n";
 
@@ -214,7 +214,6 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                     "🎉 Woo-hoo, your %s is evolved to %s!%n",
                                     species.getName(), evolvedSpecies.getName()));
                 }
-
                 event.reply("```" + builder.toString() + "```").queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)

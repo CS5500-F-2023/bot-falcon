@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.model.PokemonEvolution;
@@ -45,9 +46,10 @@ public class PokemonEvolutionController {
             String speciesName = species.getName();
             if (pokemonEvolutionMap.containsKey(speciesName)) {
                 PokemonEvolution pe = pokemonEvolutionMap.get(speciesName);
-                if (pe.getEvolutionTo().isEmpty()) {
-                    return false; // not evolvable if there is no value in evolutionTo
-                }
+                if (pokemon.getLevel()
+                        < (pe.getPrev().size() + 2) * BotConstants.POKE_DEFAULT_LEVEL)
+                    return false; // not meeting the level up requirement
+                if (pe.getEvolutionTo().isEmpty()) return false; // no value in evolutionTo
                 return evolvePokemonByName(speciesName, pe.getEvolutionTo(), pokemon);
             }
         }

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
@@ -20,7 +21,7 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
-    private static final int RELATIVE_STRENGTH_THRESHOLD = 2;
+    private static final int RELATIVE_STRENGTH_THRESHOLD = 1;
 
     GenericRepository<Pokemon> pokemonRepository;
 
@@ -84,12 +85,18 @@ public class PokemonController {
             Pokemon npcPokemon = spawnRandonPokemon();
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
-            // TODO (zqy): adjust subject to the evolution impl
-            int addedExp =
-                    (trPokemon.getLevel() - Pokemon.DEFAULT_LEVEL) * Pokemon.LEVEL_UP_THRESHOLD
-                            + (trPokemon.getExPoints() - Pokemon.DEFAULT_XP);
-            npcPokemon.increaseExpPts(addedExp);
+            // Adjust level and xp
+            int levelDiff = trPokemon.getLevel() - npcPokemon.getLevel();
+            if (levelDiff > 0) {
+                npcPokemon.increaseExpPts(levelDiff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
+            }
+            int xpDiff = trPokemon.getExPoints() - npcPokemon.getExPoints();
+            if (xpDiff > 0) {
+                npcPokemon.increaseExpPts(xpDiff);
+            }
+            this.pokemonRepository.update(npcPokemon);
 
+            // Check if they are match
             int absRelStrength = Math.abs(Pokemon.getRelStrength(trPokemon, npcPokemon));
             if (absRelStrength <= RELATIVE_STRENGTH_THRESHOLD) {
                 return npcPokemon;
@@ -98,8 +105,15 @@ public class PokemonController {
                 closestDistance = absRelStrength;
                 closestNpcPokemon = npcPokemon;
             }
+            deletePokemonFromRepo(npcPokemon.getId().toString());
         }
+        this.pokemonRepository.add(closestNpcPokemon);
         return closestNpcPokemon;
+    }
+
+    /** Delete a Pokemon from the repository. */
+    public void deletePokemonFromRepo(String pokemonID) {
+        this.pokemonRepository.delete(new ObjectId(pokemonID));
     }
 
     /**
@@ -110,33 +124,6 @@ public class PokemonController {
      */
     public Pokemon getPokemonById(String pokemonID) {
         return pokemonRepository.get(new ObjectId(pokemonID));
-    }
-
-    /**
-     * Builds a string representation of the Pokemon's stats based on its ID.
-     *
-     * @param pokemonIdString The ID of the Pokemon
-     * @return A string containing the Pokemon's stats
-     */
-    public String buildPokemonStats(String pokemonIdString) {
-        Pokemon pokemon = getPokemonById(pokemonIdString);
-
-        // Build the formatted string with the Pokemon's stats
-        StringBuilder pokemonStatsBuilder = new StringBuilder();
-        pokemonStatsBuilder.append("Level   : 🌟 ").append(pokemon.getLevel()).append("\n");
-        pokemonStatsBuilder.append("XP      : 📊 ").append(pokemon.getExPoints()).append("\n");
-        pokemonStatsBuilder.append("Hp      : ❤️ ").append(pokemon.getHp()).append("\n");
-        pokemonStatsBuilder.append("Speed   : 🏃‍♂️ ").append(pokemon.getSpeed()).append("\n");
-        pokemonStatsBuilder.append(
-                String.format(
-                        "%s  : ⚔️ Phys. %-3d | 🔮 Sp. %-3d\n",
-                        "Attack", pokemon.getAttack(), pokemon.getSpecialAttack()));
-        pokemonStatsBuilder.append(
-                String.format(
-                        "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
-                        "Defense", pokemon.getDefense(), pokemon.getSpecialDefense()));
-
-        return pokemonStatsBuilder.toString();
     }
 
     /**
@@ -188,8 +175,8 @@ public class PokemonController {
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
         if (pokemonEvolutionMap.containsKey(species.getName())) {
             PokemonEvolution evolution = pokemonEvolutionMap.get(species.getName());
-            return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
+            return BotConstants.POKE_DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
         }
-        return Pokemon.DEFAULT_LEVEL;
+        return BotConstants.POKE_DEFAULT_LEVEL;
     }
 }

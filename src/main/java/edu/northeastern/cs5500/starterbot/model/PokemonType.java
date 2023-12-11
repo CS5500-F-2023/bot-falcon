@@ -7,26 +7,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import lombok.Getter;
 
 public enum PokemonType {
-    FIRE("Fire", "🔥"),
-    WATER("Water", "💧"),
-    GRASS("Grass", "🌿"),
-    NORMAL("Normal", "🧩"),
-    FIGHTING("Fighting", "🥊"),
-    FLYING("Flying", "🕊️"),
-    ROCK("Rock", "🪨"),
-    BUG("Bug", "🐛"),
-    ELECTRIC("Electric", "⚡"),
-    GROUND("Ground", "🌍"),
-    POISON("Poison", "☠️"),
-    PSYCHIC("Psychic", "🔮"),
-    GHOST("Ghost", "👻"),
-    DARK("Dark", "🌑"),
-    FAIRY("Fairy", "🧚"),
-    STEEL("Steel", "🛡️"),
-    ICE("Ice", "❄️"),
-    DRAGON("Dragon", "🐉");
+    FIRE("Fire", "🔥", 0xFF4500), // Orange Red
+    WATER("Water", "💧", 0x1E90FF), // Dodger Blue
+    GRASS("Grass", "🌿", 0x32CD32), // Lime Green
+    NORMAL("Normal", "🧩", 0xC0C0C0), // Silver
+    FIGHTING("Fighting", "🥊", 0x8B0000), // Dark Red
+    FLYING("Flying", "🕊️", 0x87CEFA), // Light Sky Blue
+    ROCK("Rock", "🪨", 0xA52A2A), // Brown
+    BUG("Bug", "🐛", 0x6B8E23), // Olive Drab
+    ELECTRIC("Electric", "💡", 0xFFD700), // Gold
+    GROUND("Ground", "🌍", 0xD2B48C), // Tan
+    POISON("Poison", "💀", 0x800080), // Purple
+    PSYCHIC("Psychic", "🔮", 0xEE82EE), // Violet
+    GHOST("Ghost", "👻", 0x663399), // Rebecca Purple
+    DARK("Dark", "🌑", 0x000000), // Black
+    FAIRY("Fairy", "🧚", 0xFFB6C1), // Light Pink
+    STEEL("Steel", "🛡️", 0x708090), // Slate Gray
+    ICE("Ice", "🧊", 0xADD8E6), // Light Blue
+    DRAGON("Dragon", "🐉", 0xFFA500); // Orange
 
     // Define the Pokemon type advantage system
     private static EnumMap<PokemonType, ArrayList<PokemonType>> typeAdvantageMap =
@@ -59,21 +60,16 @@ public enum PokemonType {
     private static final double HAVE_TYPE_DISADVANTAGE = 0.7;
     private static final double NO_TYPE_ADVANTAGE = 1.0;
 
-    @Nonnull String name;
+    @Nonnull @Getter String name;
 
-    @Nonnull String emoji;
+    @Nonnull @Getter String emoji;
 
-    PokemonType(@Nonnull String name, @Nonnull String emoji) {
+    @Nonnull @Getter Integer color;
+
+    PokemonType(@Nonnull String name, @Nonnull String emoji, @Nonnull Integer color) {
         this.name = name;
         this.emoji = emoji;
-    }
-
-    public String getEmoji() {
-        return this.emoji;
-    }
-
-    public String getName() {
-        return this.name;
+        this.color = color;
     }
 
     public static PokemonType[] getSingleTypeArray(PokemonType type) {
@@ -93,6 +89,7 @@ public enum PokemonType {
         return typeBuilder.toString();
     }
 
+    /** Determines move effectiveness by the given attacker type and defender type. */
     public static double getMoveMultiplier(PokemonType attackType, PokemonType defenseType) {
         boolean attackAdvantage = typeAdvantageMap.get(attackType).contains(defenseType);
         boolean defenseAdvantage = typeAdvantageMap.get(defenseType).contains(attackType);
@@ -116,10 +113,7 @@ public enum PokemonType {
         return typeNameMap.get(typeName.toLowerCase());
     }
 
-    /**
-     * @param resource
-     * @return
-     */
+    /** Build a string of type name with the corresponding emoji. */
     public static String[] buildTypesWithEmoji(String[] resource) {
         List<String> result = new ArrayList<>();
         for (String s : resource) {
@@ -129,5 +123,15 @@ public enum PokemonType {
             }
         }
         return result.toArray(new String[0]);
+    }
+
+    /** Build an array of PokemonType. */
+    public static PokemonType[] buildPokemonTypes(String[] resource) {
+        List<PokemonType> result = new ArrayList<>();
+        for (String s : resource) {
+            PokemonType t = PokemonType.valueOf(s.trim().toUpperCase());
+            if (t != null) result.add(t);
+        }
+        return result.toArray(new PokemonType[0]);
     }
 }
