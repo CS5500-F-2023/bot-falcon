@@ -62,20 +62,4 @@ public class PokedexController {
                 .types(pokemonTypes)
                 .build();
     }
-
-    // todo(yhr): remove this method after current PRs merged and no conflicts
-    /**
-     * Builds a string representation of the Pokemon Species's details based on its pokedex number.
-     *
-     * @param pokedex The index of the pokemon species.
-     * @return A string containing pokemon species and types.
-     */
-    public String buildSpeciesDetails(int pokedex) {
-        PokemonSpecies species = this.getPokemonSpeciesByREALPokedex(pokedex);
-        String typeString = String.join(", ", species.getSpeciesTypes());
-        StringBuilder speciesDetailBuilder = new StringBuilder();
-        speciesDetailBuilder.append("Species : 🐾 ").append(species.getName()).append("\n");
-        speciesDetailBuilder.append("Types   : ").append(typeString).append("\n");
-        return speciesDetailBuilder.toString();
-    }
 }
