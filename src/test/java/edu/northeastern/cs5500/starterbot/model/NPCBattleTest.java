@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException;
 import org.junit.jupiter.api.Test;
 
-// import static com.google.common.truth.Truth.assertThat;
-
 public class NPCBattleTest {
 
     private Pokemon bulbasaur =
