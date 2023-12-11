@@ -82,7 +82,6 @@ public class PokedexController {
                 .build();
     }
 
-
     // todo(yhr): remove this method after current PRs merged and no conflicts
     /**
      * Builds a string representation of the Pokemon Species's details based on its pokedex number.

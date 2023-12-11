@@ -178,7 +178,6 @@ public class Pokemon implements Model {
     /**
      * Builds a string representation of the Pokemon's stats.
      *
-
      * @return A string containing the Pokemon's stats
      */
     public String buildPokemonStats() {
