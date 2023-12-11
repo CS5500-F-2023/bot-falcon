@@ -24,6 +24,11 @@ public class PokemonSpecies { // Not implementing Model
         return types[idx];
     }
 
+    /** Return the representitive color for a pokemon species. */
+    public Integer getSpeciesColor() {
+        return types[0].getColor();
+    }
+
     // Sample msg:
     // Species : 🐾 Rockruff
     // Types   : 🪨 Rock

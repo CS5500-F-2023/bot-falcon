@@ -54,6 +54,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                 pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
 
         // call string methods directly from model class
+
         String pokemonDetails = pokemon.buildPokemonStats();
         String pokemonSpeciesDetail = species.buildSpeciesDetails();
 
@@ -70,6 +71,7 @@ public class SpawnCommand implements SlashCommandHandler, ButtonHandler {
                 String.format("```%s%s```", pokemonSpeciesDetail, pokemonDetails),
                 false);
         embedBuilder.setThumbnail(species.getImageUrl());
+        embedBuilder.setColor(species.getSpeciesColor());
 
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
         messageCreateBuilder =

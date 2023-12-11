@@ -67,6 +67,7 @@ public class PokedexController {
      */
     private PokemonSpecies buildPokemonSpecies(PokemonData data) {
         String[] types = PokemonType.buildTypesWithEmoji(data.getTypes());
+        PokemonType[] pokemonTypes = PokemonType.buildPokemonTypes(data.getTypes());
         int pokedex = data.getNumber();
         String formatSpecifier = (pokedex < 1000) ? "%03d" : "%d";
         String formattedNumber = String.format(formatSpecifier, pokedex);
@@ -77,9 +78,7 @@ public class PokedexController {
                         String.format(
                                 "http://www.serebii.net/pokemongo/pokemon/%s.png", formattedNumber))
                 .speciesTypes(types)
-                .types(
-                        PokemonType.getSingleTypeArray(
-                                PokemonType.NORMAL)) // TODO placeholder leftover from demo code
+                .types(pokemonTypes)
                 .build();
     }
 
