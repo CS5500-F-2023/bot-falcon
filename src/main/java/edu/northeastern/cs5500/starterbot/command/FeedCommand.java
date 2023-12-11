@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.controller.PokemonEvolutionController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
-import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -28,17 +27,14 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
     static final String NAME = "feed";
+    private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
     String boardline = "---------------------------------------------\n";
 
-    @Inject
-    TrainerController trainerController;
-    @Inject
-    PokemonController pokemonController;
-    @Inject
-    PokedexController pokedexController;
-    @Inject
-    PokemonEvolutionController pokemonEvolutionController;
+    @Inject TrainerController trainerController;
+    @Inject PokemonController pokemonController;
+    @Inject PokedexController pokedexController;
+    @Inject PokemonEvolutionController pokemonEvolutionController;
 
     @Inject
     public FeedCommand() {
@@ -55,7 +51,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     @Nonnull
     public CommandData getCommandData() {
         return Commands.slash(
-                getName(), "Choose the Pokemon you want to feed by typing its number!")
+                        getName(), "Choose the Pokemon you want to feed by typing its number!")
                 .addOption(
                         OptionType.INTEGER,
                         "pokemon",
@@ -70,12 +66,14 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
             String trainerDiscordId = event.getUser().getId();
             Integer pokemonInventoryIndex = event.getOption("pokemon").getAsInt() - 1;
-            Pokemon pokemon = trainerController.getPokemonFromInventory(
-                    trainerDiscordId, pokemonInventoryIndex);
-            PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+            Pokemon pokemon =
+                    trainerController.getPokemonFromInventory(
+                            trainerDiscordId, pokemonInventoryIndex);
+            PokemonSpecies species =
+                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
             if (foodInventoryIsEmpty(trainerDiscordId)) {
                 event.reply(
-                        "Oops...your food inventory is empty.\nType `/shop` to buy more berries!")
+                                "Oops...your food inventory is empty.\nType `/shop` to buy more berries!")
                         .queue();
             } else {
 
@@ -127,7 +125,8 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     }
 
     private Boolean foodInventoryIsEmpty(String trainerDiscordID) {
-        Map<FoodType, Integer> foodInventory = trainerController.getTrainerFoodInventory(trainerDiscordID);
+        Map<FoodType, Integer> foodInventory =
+                trainerController.getTrainerFoodInventory(trainerDiscordID);
         for (Integer count : foodInventory.values()) {
             if (count >= 1) {
                 return false;
@@ -145,7 +144,8 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
         String trainerDiscordId = event.getMember().getId();
         Pokemon pokemon = pokemonController.getPokemonById(pokemonID);
         MessageEmbed messageEmbed = event.getMessage().getEmbeds().get(0);
-        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+        PokemonSpecies species =
+                pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
         FoodType selectedFoodType = null;
 
         for (FoodType foodType : FoodType.values()) {
@@ -187,7 +187,8 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
                 if (evolved) {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
-                    PokemonSpecies evolvedSpecies = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    PokemonSpecies evolvedSpecies =
+                            pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
                     builder.append(
                             String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
                 }
@@ -206,12 +207,14 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 }
                 if (evolved) {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
-                    PokemonSpecies evolvedSpecies = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    PokemonSpecies evolvedSpecies =
+                            pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
                     builder.append(
                             String.format(
                                     "🎉 Woo-hoo, your %s is evolved to %s!%n",
                                     species.getName(), evolvedSpecies.getName()));
                 }
+
                 event.reply("```" + builder.toString() + "```").queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
@@ -219,19 +222,19 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                         .queue(); // disable button
             } catch (InsufficientFoodException e) {
                 event.reply(
-                        String.format(
-                                "<@%s>, you don't have enough %s to increase your %s XP",
-                                trainerDiscordId,
-                                selectedFoodTypeResponse,
-                                species.getName()))
+                                String.format(
+                                        "<@%s>, you don't have enough %s to increase your %s XP",
+                                        trainerDiscordId,
+                                        selectedFoodTypeResponse,
+                                        species.getName()))
                         .queue();
                 event.getMessage().editMessageEmbeds(messageEmbed).setComponents().queue();
             }
         } else {
             event.reply(
-                    String.format(
-                            "Sorry <@%s>, you are not authorized to perform this action.",
-                            trainerDiscordId))
+                            String.format(
+                                    "Sorry <@%s>, you are not authorized to perform this action.",
+                                    trainerDiscordId))
                     .queue();
             event.getMessage()
                     .editMessageEmbeds(messageEmbed)
