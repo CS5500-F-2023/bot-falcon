@@ -98,8 +98,15 @@ public class PokemonController {
                 closestDistance = absRelStrength;
                 closestNpcPokemon = npcPokemon;
             }
+            deletePokemonFromRepo(npcPokemon.getId().toString());
         }
+        this.pokemonRepository.add(closestNpcPokemon);
         return closestNpcPokemon;
+    }
+
+    /** Delete a Pokemon from the repository. */
+    public void deletePokemonFromRepo(String pokemonID) {
+        this.pokemonRepository.delete(new ObjectId(pokemonID));
     }
 
     /**
@@ -119,7 +126,7 @@ public class PokemonController {
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
      */
-    public String buildPokemonStats(String pokemonIdString) {
+    private String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats

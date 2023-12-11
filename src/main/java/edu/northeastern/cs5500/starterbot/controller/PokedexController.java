@@ -89,7 +89,7 @@ public class PokedexController {
      * @param pokedex The index of the pokemon species.
      * @return A string containing pokemon species and types.
      */
-    public String buildSpeciesDetails(int pokedex) {
+    private String buildSpeciesDetails(int pokedex) {
         PokemonSpecies species = this.getPokemonSpeciesByREALPokedex(pokedex);
         String typeString = String.join(", ", species.getSpeciesTypes());
         StringBuilder speciesDetailBuilder = new StringBuilder();

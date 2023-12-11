@@ -70,5 +70,7 @@ public class BattleController {
                             + "```";
             battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_GENERIC));
         }
+
+        pokemonController.deletePokemonFromRepo(battle.getNpcPokemon().getId().toString());
     }
 }

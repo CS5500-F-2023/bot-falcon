@@ -194,7 +194,6 @@ public class Pokemon implements Model {
                 String.format(
                         "%s : 🛡️ Phys. %-3d | 🛡️ Sp. %-3d\n",
                         "Defense", this.getDefense(), this.getSpecialDefense()));
-
         return pokemonStatsBuilder.toString();
     }
 }

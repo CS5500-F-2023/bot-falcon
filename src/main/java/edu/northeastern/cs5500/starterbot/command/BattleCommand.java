@@ -195,11 +195,13 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
     private MessageEmbed buildPokemonStat(String pokemonIdStr, int color) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
-        String speciesInfoStr = pokedexController.buildSpeciesDetails(pokedex);
-        String pokeInfoStr = pokemonController.buildPokemonStats(pokemonIdStr);
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+
+        String speciesInfoStr = species.buildSpeciesDetails();
+        String pokemonStatStr = pokemon.buildPokemonStats();
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setDescription(String.format("```%s%s```", speciesInfoStr, pokeInfoStr));
+        embedBuilder.setDescription(String.format("```%s%s```", speciesInfoStr, pokemonStatStr));
         embedBuilder.setColor(color);
         return embedBuilder.build();
     }
