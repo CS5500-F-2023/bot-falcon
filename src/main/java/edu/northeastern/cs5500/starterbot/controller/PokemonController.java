@@ -135,7 +135,7 @@ public class PokemonController {
      * @param pokemonIdString The ID of the Pokemon
      * @return A string containing the Pokemon's stats
      */
-    private String buildPokemonStats(String pokemonIdString) {
+    public String buildPokemonStats(String pokemonIdString) {
         Pokemon pokemon = getPokemonById(pokemonIdString);
 
         // Build the formatted string with the Pokemon's stats
