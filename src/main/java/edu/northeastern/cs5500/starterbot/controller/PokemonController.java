@@ -126,9 +126,7 @@ public class PokemonController {
         return pokemonRepository.get(new ObjectId(pokemonID));
     }
 
-    // todo(yhr): move to Pokemon class,
-    // todo(yhr): update all related usage in command
-    // todo(yhr): safely delete this method after test
+    // todo(yhr): remove this method after current PRs merged and no conflicts
     /**
      * Builds a string representation of the Pokemon's stats based on its ID.
      *

@@ -38,9 +38,9 @@ public class PokemonSpecies { // Not implementing Model
      * @return A string containing pokemon species and types.
      */
     public String buildSpeciesDetails() {
-        String typeString = String.join(", ", this.speciesTypes);
+        String typeString = String.join(", ", this.getSpeciesTypes());
         StringBuilder speciesDetailBuilder = new StringBuilder();
-        speciesDetailBuilder.append("Species : 🐾 ").append(this.name).append("\n");
+        speciesDetailBuilder.append("Species : 🐾 ").append(this.getName()).append("\n");
         speciesDetailBuilder.append("Types   : ").append(typeString).append("\n");
         return speciesDetailBuilder.toString();
     }
