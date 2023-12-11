@@ -2,11 +2,9 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
-import edu.northeastern.cs5500.starterbot.model.PokemonSpecies.PokemonSpeciesBuilder;
 import edu.northeastern.cs5500.starterbot.model.PokemonType;
 import edu.northeastern.cs5500.starterbot.service.PokemonDataService;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
