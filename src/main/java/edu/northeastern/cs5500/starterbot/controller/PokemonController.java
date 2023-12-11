@@ -86,13 +86,13 @@ public class PokemonController {
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
             // Adjust level and xp
-            int level_diff = trPokemon.getLevel() - npcPokemon.getLevel();
-            if (level_diff > 0) {
-                npcPokemon.increaseExpPts(level_diff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
+            int levelDiff = trPokemon.getLevel() - npcPokemon.getLevel();
+            if (levelDiff > 0) {
+                npcPokemon.increaseExpPts(levelDiff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
             }
-            int xp_diff = trPokemon.getExPoints() - npcPokemon.getExPoints();
-            if (xp_diff > 0) {
-                npcPokemon.increaseExpPts(xp_diff);
+            int xpDiff = trPokemon.getExPoints() - npcPokemon.getExPoints();
+            if (xpDiff > 0) {
+                npcPokemon.increaseExpPts(xpDiff);
             }
             this.pokemonRepository.update(npcPokemon);
 
@@ -205,8 +205,8 @@ public class PokemonController {
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
         if (pokemonEvolutionMap.containsKey(species.getName())) {
             PokemonEvolution evolution = pokemonEvolutionMap.get(species.getName());
-            return Pokemon.DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
+            return BotConstants.POKE_DEFAULT_LEVEL * (evolution.getPrev().size() + 1);
         }
-        return Pokemon.DEFAULT_LEVEL;
+        return BotConstants.POKE_DEFAULT_LEVEL;
     }
 }
