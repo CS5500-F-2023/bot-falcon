@@ -89,7 +89,7 @@ public class MyCommand implements SlashCommandHandler {
                 .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
                 .append(boardLine)
-                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex))
+                .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
