@@ -163,23 +163,24 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 int newXP = pokemon.getExPoints();
                 int levelAfter = pokemon.getLevel();
 
-                StringBuilder builder = new StringBuilder();
-                builder.append(
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setDescription(
                         String.format(
                                 "%s Yummy! Your %s gained %d experience points!%n",
                                 selectedFoodType.getEmoji(),
                                 species.getName(),
                                 selectedFoodType.getExp()));
-                builder.append(boardline);
+                embedBuilder.appendDescription(boardline);
                 if (levelAfter > levelBefore) {
-                    builder.append(String.format("LEVEL UP to   📈: %d%n", levelAfter));
+                    embedBuilder.appendDescription(
+                            String.format("LEVEL UP to 📈: %d%n", levelAfter));
                 } else {
-                    builder.append(String.format("Current Level 🌟: %d%n", levelAfter));
+                    embedBuilder.appendDescription(
+                            String.format("Current Level 🌟: %d%n", levelAfter));
                 }
-
-                builder.append(
+                embedBuilder.appendDescription(
                         String.format(
-                                "Current XP    🏆: %s    %d/%d%n",
+                                "Current XP 🏆: %s %d/%d%n",
                                 pokemon.generateXpProgressBar(),
                                 pokemon.getExPoints(),
                                 LEVEL_UP_THRESHOLD));
@@ -189,18 +190,18 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
                     PokemonSpecies evolvedSpecies =
                             pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
-                    builder.append(
-                            String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
+                    embedBuilder.appendDescription(
+                            String.format("EVOLVED to 🚀: %s%n", evolvedSpecies.getName()));
                 }
-                builder.append(boardline);
+                embedBuilder.appendDescription(boardline);
                 if (levelAfter > levelBefore) {
-                    builder.append(
+                    embedBuilder.appendDescription(
                             String.format(
                                     "🎉 Woo-hoo, your %s is leveled up to %d!%n",
                                     species.getName(), levelAfter));
                 } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
                     int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
-                    builder.append(
+                    embedBuilder.appendDescription(
                             String.format(
                                     "💪 Almost there! your %s only need %d more XP to level up!%n",
                                     species.getName(), xpRequiredNextLevel));
@@ -209,13 +210,13 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
                     PokemonSpecies evolvedSpecies =
                             pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
-                    builder.append(
+                    embedBuilder.appendDescription(
                             String.format(
-                                    "🎉 Woo-hoo, your %s is evolved to %s!%n",
+                                    "🎊 Hooray, your %s is evolved to %s!%n",
                                     species.getName(), evolvedSpecies.getName()));
                 }
 
-                event.reply("```" + builder.toString() + "```").queue();
+                event.replyEmbeds(embedBuilder.build()).queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
                         .setComponents()
