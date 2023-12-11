@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonData;
@@ -20,7 +21,7 @@ import org.bson.types.ObjectId;
 @Singleton
 public class PokemonController {
 
-    private static final int RELATIVE_STRENGTH_THRESHOLD = 2;
+    private static final int RELATIVE_STRENGTH_THRESHOLD = 1;
 
     GenericRepository<Pokemon> pokemonRepository;
 
@@ -84,12 +85,18 @@ public class PokemonController {
             Pokemon npcPokemon = spawnRandonPokemon();
             if (trPokemon.getPokedexNumber().equals(npcPokemon.getPokedexNumber())) continue;
 
-            // TODO (zqy): adjust subject to the evolution impl
-            int addedExp =
-                    (trPokemon.getLevel() - Pokemon.DEFAULT_LEVEL) * Pokemon.LEVEL_UP_THRESHOLD
-                            + (trPokemon.getExPoints() - Pokemon.DEFAULT_XP);
-            npcPokemon.increaseExpPts(addedExp);
+            // Adjust level and xp
+            int level_diff = trPokemon.getLevel() - npcPokemon.getLevel();
+            if (level_diff > 0) {
+                npcPokemon.increaseExpPts(level_diff * BotConstants.POKE_LEVEL_UP_THRESHOLD);
+            }
+            int xp_diff = trPokemon.getExPoints() - npcPokemon.getExPoints();
+            if (xp_diff > 0) {
+                npcPokemon.increaseExpPts(xp_diff);
+            }
+            this.pokemonRepository.update(npcPokemon);
 
+            // Check if they are match
             int absRelStrength = Math.abs(Pokemon.getRelStrength(trPokemon, npcPokemon));
             if (absRelStrength <= RELATIVE_STRENGTH_THRESHOLD) {
                 return npcPokemon;
