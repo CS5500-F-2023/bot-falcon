@@ -23,4 +23,20 @@ public class PokemonSpecies { // Not implementing Model
         int idx = new Random().nextInt(types.length);
         return types[idx];
     }
+
+    // Sample msg:
+    // Species : 🐾 Rockruff
+    // Types   : 🪨 Rock
+    /**
+     * Builds a string representation of the Pokemon Species's details.
+     *
+     * @return A string containing pokemon species and types.
+     */
+    public String buildSpeciesDetails() {
+        String typeString = String.join(", ", this.getSpeciesTypes());
+        StringBuilder speciesDetailBuilder = new StringBuilder();
+        speciesDetailBuilder.append("Species : 🐾 ").append(this.getName()).append("\n");
+        speciesDetailBuilder.append("Types   : ").append(typeString).append("\n");
+        return speciesDetailBuilder.toString();
+    }
 }
