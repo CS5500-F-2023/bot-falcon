@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.command;
 
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
+import edu.northeastern.cs5500.starterbot.controller.PokemonEvolutionController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
@@ -33,6 +34,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
     @Inject PokedexController pokedexController;
+    @Inject PokemonEvolutionController pokemonEvolutionController;
 
     @Inject
     public FeedCommand() {
@@ -175,12 +177,22 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                     species.getName(), xpRequiredNextLevel);
                 }
 
+                // Display message if evolution happens
+                String evolutionMessage = "";
+                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
+                if (evolved) {
+                    String s1 = pokemonEvolutionController.buildEvolveMessage(pokemonID);
+                    String s2 = pokemonEvolutionController.buildEvolveStatsMessage(pokemonID);
+                    evolutionMessage = "```🎉 Woo-hoo," + s1 + "\n\n" + s2 + "```";
+                }
+
                 event.reply(
                                 String.format(
                                         "```%s Yummy! Your %s gained %d experience points!\n"
                                                 + BOARD_LINE
                                                 + "Current Level: %d\nCurrent XP: %s    %d/%d\n"
                                                 + BOARD_LINE
+                                                + "%s\n"
                                                 + "%s```",
                                         selectedFoodType.getEmoji(),
                                         species.getName(),
@@ -189,7 +201,8 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                         pokemon.generateXpProgressBar(),
                                         pokemon.getExPoints(),
                                         LEVEL_UP_THRESHOLD,
-                                        levelUpMessage))
+                                        levelUpMessage,
+                                        evolutionMessage))
                         .queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
