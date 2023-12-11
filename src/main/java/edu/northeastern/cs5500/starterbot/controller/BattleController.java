@@ -68,7 +68,7 @@ public class BattleController {
                             + "\n\n"
                             + pokemonEvolutionController.buildEvolveStatsMessage(pokemonId)
                             + "```";
-            battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_GENERIC));
+            battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_WARNING));
         }
 
         // TODO: Maybe should not delete this from database in case User want to access this

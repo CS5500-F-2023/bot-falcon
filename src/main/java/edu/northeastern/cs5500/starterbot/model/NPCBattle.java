@@ -57,7 +57,7 @@ public class NPCBattle {
         npcPokemon.setCurrentHp(npcPokemon.getHp());
 
         // Format start message
-        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_GENERIC));
+        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_WARNING));
 
         // Determine first mover
         Pokemon attackPokemon = this.getFirstAttacker();
@@ -109,7 +109,7 @@ public class NPCBattle {
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
-                this.messages.add(new ColoredMessage(resultMessage, BotConstants.COLOR_GENERIC));
+                this.messages.add(new ColoredMessage(resultMessage, BotConstants.COLOR_WARNING));
             } else { // Swith attacker and defenser
                 Pokemon temp = attackPokemon;
                 attackPokemon = defensePokemon;
