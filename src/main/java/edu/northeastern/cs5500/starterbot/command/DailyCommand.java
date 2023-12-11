@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InvalidCheckinDayException;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
 import java.time.LocalDate;
@@ -101,7 +102,7 @@ public class DailyCommand implements SlashCommandHandler {
                                 "🌟 Your %s greets you with enthusiasm 🌟", species.getName());
         embedBuilder.setTitle(title);
         embedBuilder.setImage(species.getImageUrl());
-        embedBuilder.setColor(0x5CA266); // Same color as the successful button
+        embedBuilder.setColor(BotConstants.COLOR_SUCCESS);
         embedBuilder.setDescription(
                 String.format(
                         "```%s %s seems thrilled to see you!"
@@ -140,7 +141,7 @@ public class DailyCommand implements SlashCommandHandler {
 
         String statement = String.format(statementFormat, separator, prevBal, randomCoins, newBal);
         embedBuilder.setDescription(statement);
-        embedBuilder.setColor(0x5CA266); // Same color as the successful button
+        embedBuilder.setColor(BotConstants.COLOR_SUCCESS);
 
         return embedBuilder;
     }

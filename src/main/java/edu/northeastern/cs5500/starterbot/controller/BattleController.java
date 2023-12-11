@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
+import edu.northeastern.cs5500.starterbot.exception.InvalidBattleStatusException;
 import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.ColoredMessage;
 import edu.northeastern.cs5500.starterbot.model.NPCBattle;
@@ -62,15 +63,24 @@ public class BattleController {
         String pokemonId = battle.getTrPokemonIdStr();
         boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonId);
         if (evolved) {
-            String s =
-                    "```"
-                            + pokemonEvolutionController.buildEvolveMessage(pokemonId)
-                            + "\n\n"
-                            + pokemonEvolutionController.buildEvolveStatsMessage(pokemonId)
-                            + "```";
-            battle.getMessages().add(new ColoredMessage(s, BotConstants.COLOR_GENERIC));
+            int pokedex = pokemonController.getPokemonById(pokemonId).getPokedexNumber();
+            PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+            battle.setEvolved(true);
+            try {
+                ColoredMessage msg =
+                        battle.getTrainerWins()
+                                ? new ColoredMessage(
+                                        battle.buildVictoryMessage(species.getName()),
+                                        BotConstants.COLOR_WARNING)
+                                : new ColoredMessage(
+                                        battle.buildDefeatMessage(species.getName()),
+                                        BotConstants.COLOR_WARNING);
+                battle.getMessages().set(battle.getMessages().size() - 1, msg);
+            } catch (InvalidBattleStatusException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
-
         pokemonController.deletePokemonFromRepo(battle.getNpcPokemon().getId().toString());
     }
 }

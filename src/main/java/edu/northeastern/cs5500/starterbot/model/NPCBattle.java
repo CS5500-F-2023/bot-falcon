@@ -46,9 +46,15 @@ public class NPCBattle {
     @Builder.Default boolean trainerWins = false;
     @Builder.Default @Nonnegative int coinsEarned = 0;
     @Builder.Default int xpGained = 0;
+    @Builder.Default boolean leveledUp = false;
+    @Builder.Default boolean evolved = false;
 
     // Messages
     @Builder.Default List<ColoredMessage> messages = new ArrayList<>();
+
+    public boolean getTrainerWins() {
+        return this.trainerWins;
+    }
 
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
@@ -57,7 +63,7 @@ public class NPCBattle {
         npcPokemon.setCurrentHp(npcPokemon.getHp());
 
         // Format start message
-        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_GENERIC));
+        this.messages.add(new ColoredMessage(formatStartMsg(), BotConstants.COLOR_WARNING));
 
         // Determine first mover
         Pokemon attackPokemon = this.getFirstAttacker();
@@ -101,15 +107,12 @@ public class NPCBattle {
                     setCoinsEarned();
                     if (trainerWins) trainer.setBalance(trainer.getBalance() + coinsEarned);
                     setXpGained();
-                    boolean leveledUp = trPokemon.increaseExpPts(xpGained);
-                    resultMessage =
-                            trainerWins
-                                    ? buildVictoryMessage(leveledUp)
-                                    : buildDefeatMessage(leveledUp);
+                    this.leveledUp = trPokemon.increaseExpPts(xpGained);
+                    resultMessage = trainerWins ? buildVictoryMessage("") : buildDefeatMessage("");
                 } catch (InvalidBattleStatusException e) {
                     resultMessage = "Error: " + e.getMessage();
                 }
-                this.messages.add(new ColoredMessage(resultMessage, BotConstants.COLOR_GENERIC));
+                this.messages.add(new ColoredMessage(resultMessage, BotConstants.COLOR_WARNING));
             } else { // Swith attacker and defenser
                 Pokemon temp = attackPokemon;
                 attackPokemon = defensePokemon;
@@ -215,10 +218,10 @@ public class NPCBattle {
             double multiplier) {
         String effectiveness =
                 multiplier < EFFECTIVE_THRESHOLD
-                        ? "only"
-                        : (multiplier == EFFECTIVE_THRESHOLD ? "effective" : "very effective");
+                        ? "only "
+                        : (multiplier == EFFECTIVE_THRESHOLD ? "" : "effective ");
         return String.format(
-                "🛡️ %s %s %s took %s %d damage\n",
+                "🛡️ %s %s %s took %s%d damage\n",
                 (attackerIsBot ? "Your" : "Bot's"),
                 defensePokeName,
                 defenseEmoji,
@@ -268,7 +271,7 @@ public class NPCBattle {
     //    New Balance 💰  :  0
     //
     // 🌟 Every battle is a lesson. Your next victory awaits!
-    private String buildVictoryMessage(boolean leveledUp) throws InvalidBattleStatusException {
+    public String buildVictoryMessage(String evolvedName) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
         }
@@ -283,10 +286,7 @@ public class NPCBattle {
         builder.append("   XP Spark     🌟 : +").append(xpGained).append("\n");
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
-        if (leveledUp) {
-            builder.append("   LEVEL UP to  🚀 :  ");
-            builder.append(trPokemon.getLevel()).append("\n");
-        }
+        builder.append(buildStringuildLevelUpAndEvolvedMsg(evolvedName));
         builder.append("\n");
 
         builder.append("💰 Trainer's Bounty 💰\n");
@@ -317,7 +317,7 @@ public class NPCBattle {
     //    New Balance  💰 :  96
     //
     // 🌈 Celebrate this victory. The journey to greatness continues!
-    private String buildDefeatMessage(boolean leveledUp) throws InvalidBattleStatusException {
+    public String buildDefeatMessage(String evolvedName) throws InvalidBattleStatusException {
         if (!gameOver) {
             throw new InvalidBattleStatusException("Build defeat message after game overs.");
         }
@@ -325,17 +325,14 @@ public class NPCBattle {
 
         builder.append("💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥\n\n");
         builder.append("💔 Tough luck, your ");
-        builder.append(trPokeSpecies.getName()).append(" bravely faced the challenge!\n\n");
+        builder.append(trPokeSpecies.getName()).append(" bravely met the challenge!\n\n");
 
         builder.append("🔥 ").append(trPokeSpecies.getName()).append("'s Gains 🔥\n");
         builder.append(BOARD_LINE);
         builder.append("   XP Earned    🌟 : +").append(xpGained).append("\n");
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
-        if (leveledUp) {
-            builder.append("   LEVEL UP to  🚀 :  ");
-            builder.append(trPokemon.getLevel()).append("\n");
-        }
+        builder.append(buildStringuildLevelUpAndEvolvedMsg(evolvedName));
         builder.append("\n");
 
         builder.append("💸 Trainer's Expense 💸\n");
@@ -346,5 +343,22 @@ public class NPCBattle {
         builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");
 
         return "```" + builder.toString() + "```";
+    }
+
+    /** Helper function to format message. */
+    private String buildStringuildLevelUpAndEvolvedMsg(String evolvedName) {
+        StringBuilder builder = new StringBuilder();
+        if (leveledUp) {
+            builder.append("   LEVEL UP to  📈 :  ");
+            builder.append(trPokemon.getLevel()).append("\n");
+        }
+        if (evolved) {
+            builder.append("   EVOLVE to    🚀 :  ");
+            builder.append(evolvedName).append("\n");
+            builder.append("\n📊 Use /pokemon or /my to check ");
+            builder.append(evolvedName);
+            builder.append("'s status!\n");
+        }
+        return builder.toString();
     }
 }
