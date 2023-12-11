@@ -173,14 +173,14 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 embedBuilder.appendDescription(boardline);
                 if (levelAfter > levelBefore) {
                     embedBuilder.appendDescription(
-                            String.format("LEVEL UP to 📈: %d%n", levelAfter));
+                            String.format("LEVEL UP to   📈: %d%n", levelAfter));
                 } else {
                     embedBuilder.appendDescription(
                             String.format("Current Level 🌟: %d%n", levelAfter));
                 }
                 embedBuilder.appendDescription(
                         String.format(
-                                "Current XP 🏆: %s %d/%d%n",
+                                "Current XP    🏆: %s %d/%d%n",
                                 pokemon.generateXpProgressBar(),
                                 pokemon.getExPoints(),
                                 LEVEL_UP_THRESHOLD));
@@ -191,7 +191,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                     PokemonSpecies evolvedSpecies =
                             pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
                     embedBuilder.appendDescription(
-                            String.format("EVOLVED to 🚀: %s%n", evolvedSpecies.getName()));
+                            String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
                 }
                 embedBuilder.appendDescription(boardline);
                 if (levelAfter > levelBefore) {
