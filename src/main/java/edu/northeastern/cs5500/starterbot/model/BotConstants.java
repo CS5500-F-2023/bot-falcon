@@ -14,4 +14,6 @@ public class BotConstants {
     public static final int POKE_DEFAULT_LEVEL = 5;
     public static final int POKE_DEFAULT_XP = 10;
     public static final int POKE_LEVEL_UP_THRESHOLD = 100;
+
+    public static final int COST_PER_BATTLE = 5;
 }
