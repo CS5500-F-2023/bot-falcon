@@ -52,6 +52,10 @@ public class NPCBattle {
     // Messages
     @Builder.Default List<ColoredMessage> messages = new ArrayList<>();
 
+    public boolean getTrainerWins() {
+        return this.trainerWins;
+    }
+
     /** Key battle logic with updates of battle round msgs and battle result. */
     public void runBattle() {
         // Set current HP to max HP
@@ -282,14 +286,7 @@ public class NPCBattle {
         builder.append("   XP Spark     🌟 : +").append(xpGained).append("\n");
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
-        if (leveledUp) {
-            builder.append("   LEVEL UP to  📈 :  ");
-            builder.append(trPokemon.getLevel()).append("\n");
-        }
-        if (evolved) {
-            builder.append("   EVOLVE to    🚀 :  ");
-            builder.append(evolvedName).append("\n");
-        }
+        builder.append(buildStringuildLevelUpAndEvolvedMsg(evolvedName));
         builder.append("\n");
 
         builder.append("💰 Trainer's Bounty 💰\n");
@@ -328,21 +325,14 @@ public class NPCBattle {
 
         builder.append("💥🛡️💥 BATTLE CONCLUDED 💥🛡️💥\n\n");
         builder.append("💔 Tough luck, your ");
-        builder.append(trPokeSpecies.getName()).append(" bravely faced the challenge!\n\n");
+        builder.append(trPokeSpecies.getName()).append(" bravely met the challenge!\n\n");
 
         builder.append("🔥 ").append(trPokeSpecies.getName()).append("'s Gains 🔥\n");
         builder.append(BOARD_LINE);
         builder.append("   XP Earned    🌟 : +").append(xpGained).append("\n");
         builder.append("   Current XP   🏆 :  ").append(trPokemon.getExPoints()).append("\n");
 
-        if (leveledUp) {
-            builder.append("   LEVEL UP to  📈 :  ");
-            builder.append(trPokemon.getLevel()).append("\n");
-        }
-        if (evolved) {
-            builder.append("   EVOLVE to    🚀 :  ");
-            builder.append(evolvedName).append("\n");
-        }
+        builder.append(buildStringuildLevelUpAndEvolvedMsg(evolvedName));
         builder.append("\n");
 
         builder.append("💸 Trainer's Expense 💸\n");
@@ -353,5 +343,22 @@ public class NPCBattle {
         builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");
 
         return "```" + builder.toString() + "```";
+    }
+
+    /** Helper function to format message. */
+    private String buildStringuildLevelUpAndEvolvedMsg(String evolvedName) {
+        StringBuilder builder = new StringBuilder();
+        if (leveledUp) {
+            builder.append("   LEVEL UP to  📈 :  ");
+            builder.append(trPokemon.getLevel()).append("\n");
+        }
+        if (evolved) {
+            builder.append("   EVOLVE to    🚀 :  ");
+            builder.append(evolvedName).append("\n");
+            builder.append("\n📊 Use /pokemon or /my to check ");
+            builder.append(evolvedName);
+            builder.append("'s status!\n");
+        }
+        return builder.toString();
     }
 }
