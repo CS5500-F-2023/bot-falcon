@@ -215,10 +215,10 @@ public class NPCBattle {
             double multiplier) {
         String effectiveness =
                 multiplier < EFFECTIVE_THRESHOLD
-                        ? "only"
-                        : (multiplier == EFFECTIVE_THRESHOLD ? "effective" : "very effective");
+                        ? "only "
+                        : (multiplier == EFFECTIVE_THRESHOLD ? "" : "effective ");
         return String.format(
-                "🛡️ %s %s %s took %s %d damage\n",
+                "🛡️ %s %s %s took %s%d damage\n",
                 (attackerIsBot ? "Your" : "Bot's"),
                 defensePokeName,
                 defenseEmoji,
