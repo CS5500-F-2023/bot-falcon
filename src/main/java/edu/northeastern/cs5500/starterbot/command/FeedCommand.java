@@ -2,10 +2,10 @@ package edu.northeastern.cs5500.starterbot.command;
 
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
+import edu.northeastern.cs5500.starterbot.controller.PokemonEvolutionController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
 import edu.northeastern.cs5500.starterbot.exception.InsufficientFoodException;
 import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
-import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.FoodType;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
@@ -27,12 +27,14 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
     static final String NAME = "feed";
+    private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
-    String BOARD_LINE = "---------------------------------------------\n";
+    String boardline = "---------------------------------------------\n";
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
     @Inject PokedexController pokedexController;
+    @Inject PokemonEvolutionController pokemonEvolutionController;
 
     @Inject
     public FeedCommand() {
@@ -83,7 +85,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                                 "```Your Selected Pokemon's Info:\n Current Level: %s\n Current XP: %s```",
                                 pokemon.getLevel().toString(), pokemon.getExPoints().toString()));
                 embedBuilder.addField(
-                        BOARD_LINE,
+                        boardline,
                         String.format(
                                 "```🎒 Below is your food inventory!\n💡 Not enough berries? Type `/shop` to buy more berries!```"),
                         false);
@@ -161,36 +163,60 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 int newXP = pokemon.getExPoints();
                 int levelAfter = pokemon.getLevel();
 
-                String levelUpMessage = "";
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setDescription(
+                        String.format(
+                                "%s Yummy! Your %s gained %d experience points!%n",
+                                selectedFoodType.getEmoji(),
+                                species.getName(),
+                                selectedFoodType.getExp()));
+                embedBuilder.appendDescription(boardline);
                 if (levelAfter > levelBefore) {
-                    levelUpMessage =
+                    embedBuilder.appendDescription(
+                            String.format("LEVEL UP to   📈: %d%n", levelAfter));
+                } else {
+                    embedBuilder.appendDescription(
+                            String.format("Current Level 🌟: %d%n", levelAfter));
+                }
+                embedBuilder.appendDescription(
+                        String.format(
+                                "Current XP    🏆: %s %d/%d%n",
+                                pokemon.generateXpProgressBar(),
+                                pokemon.getExPoints(),
+                                LEVEL_UP_THRESHOLD));
+                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
+
+                if (evolved) {
+                    int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
+                    PokemonSpecies evolvedSpecies =
+                            pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    embedBuilder.appendDescription(
+                            String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
+                }
+                embedBuilder.appendDescription(boardline);
+                if (levelAfter > levelBefore) {
+                    embedBuilder.appendDescription(
                             String.format(
-                                    "🎉 Woo-hoo, your %s is leveled up to %d!",
-                                    species.getName(), levelAfter);
+                                    "🎉 Woo-hoo, your %s is leveled up to %d!%n",
+                                    species.getName(), levelAfter));
                 } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
-                    int xpRequiredNextLevel = BotConstants.POKE_LEVEL_UP_THRESHOLD - newXP;
-                    levelUpMessage =
+                    int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
+                    embedBuilder.appendDescription(
                             String.format(
-                                    "💪 Almost there! your %s only need %d more XP to level up!!",
-                                    species.getName(), xpRequiredNextLevel);
+                                    "💪 Almost there! your %s only need %d more XP to level up!%n",
+                                    species.getName(), xpRequiredNextLevel));
+                }
+                if (evolved) {
+                    int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
+                    PokemonSpecies evolvedSpecies =
+                            pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+                    embedBuilder.appendDescription(
+                            String.format(
+                                    "🎊 Hooray, your %s is evolved to %s!%n",
+                                    species.getName(), evolvedSpecies.getName()));
                 }
 
-                event.reply(
-                                String.format(
-                                        "```%s Yummy! Your %s gained %d experience points!\n"
-                                                + BOARD_LINE
-                                                + "Current Level: %d\nCurrent XP: %s    %d/%d\n"
-                                                + BOARD_LINE
-                                                + "%s```",
-                                        selectedFoodType.getEmoji(),
-                                        species.getName(),
-                                        selectedFoodType.getExp(),
-                                        levelAfter,
-                                        pokemon.generateXpProgressBar(),
-                                        pokemon.getExPoints(),
-                                        BotConstants.POKE_LEVEL_UP_THRESHOLD,
-                                        levelUpMessage))
-                        .queue();
+                event.replyEmbeds(embedBuilder.build()).queue();
                 event.getMessage()
                         .editMessageEmbeds(messageEmbed)
                         .setComponents()
