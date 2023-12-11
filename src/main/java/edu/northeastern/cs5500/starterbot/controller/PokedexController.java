@@ -24,23 +24,6 @@ public class PokedexController {
     }
 
     /**
-     * Retrieves the Pokemon species info based on the given index number from Pokemon data list.
-     *
-     * @param listIndex The index of the data list.
-     * @return The Pokemon species information.
-     */
-    private PokemonSpecies getPokemonSpeciesByPokedex(int listIndex) {
-        this.pokemonDataList = this.pokemonDataService.getPokemonDataList();
-        PokemonSpeciesBuilder builder = PokemonSpecies.builder();
-
-        // find pokemon in the pokemon data list base on list index
-        PokemonData data = this.pokemonDataList.get(listIndex);
-        // build pokedex base on actual pokedex from the Number field
-        PokemonSpecies species = buildPokemonSpecies(data);
-        return Objects.requireNonNull(species);
-    }
-
-    /**
      * Retrieves the Pokemon species based on the given Pokedex number.
      *
      * @param pokedex The Pokedex number of the Pokemon species to retrieve.
