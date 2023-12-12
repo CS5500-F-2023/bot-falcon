@@ -22,6 +22,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 public class MyCommand implements SlashCommandHandler {
 
     static final String NAME = "my";
+    static final int WIDTH = 19;
+    static final String BOARDLINE = "\n" + "-".repeat(33) + "\n";
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -80,7 +82,10 @@ public class MyCommand implements SlashCommandHandler {
 
         StringBuilder sb = new StringBuilder();
         sb.append("```");
-        sb.append(String.format("🔍 Learn how to grow your %s!```", species.getName()));
+        // sb.append(String.format("🔍 Learn how to grow your %s!```", species.getName()));
+        sb.append(String.format("🔍 Learn how to grow your %s!", species.getName()));
+        sb.append(" ".repeat(WIDTH - species.getName().length()));
+        sb.append("```");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Your Pokemon Handbook");
         embedBuilder.setDescription(sb.toString());
@@ -121,16 +126,15 @@ public class MyCommand implements SlashCommandHandler {
 
         String pokemonDetails = pokemon.buildPokemonStats();
 
-        String boardLine = "\n----------------------------\n";
         StringBuilder profileBuilder = new StringBuilder();
         profileBuilder
                 .append("🌠 Pokemon Stats 🌠")
-                .append(boardLine)
+                .append(BOARDLINE)
                 .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
-                .append(boardLine)
+                .append(BOARDLINE)
                 .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
                 .append(

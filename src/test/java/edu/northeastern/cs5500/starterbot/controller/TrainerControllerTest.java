@@ -134,7 +134,7 @@ class TrainerControllerTest {
         // {MYSTERYBERRY=0, BERRY=0, GOLDBERRY=2}
         Map<String, Integer> expectedInventory = new HashMap<>();
         expectedInventory.put(FoodType.MYSTERYBERRY.getUppercaseName(), 0);
-        expectedInventory.put(FoodType.BERRY.getUppercaseName(), 0);
+        expectedInventory.put(FoodType.BLUEBERRY.getUppercaseName(), 0);
         expectedInventory.put(FoodType.GOLDBERRY.getUppercaseName(), 2);
 
         assertEquals(
