@@ -43,15 +43,15 @@ class PokemonTest {
                     .build();
 
     @Test
-    void increaseExpPts() {
-        // No level up
+    void testIncreaseExpPts() {
+        // Case 1: No level up
         assertThat(bulbasaur.increaseExpPts(0)).isFalse();
-        assertThat(bulbasaur.getExPoints()).isEqualTo(10);
+        assertThat(bulbasaur.getExPoints()).isEqualTo(10); // Default value
         assertThat(bulbasaur.increaseExpPts(89)).isFalse();
         assertThat(bulbasaur.getLevel()).isEqualTo(5);
-        assertThat(bulbasaur.getExPoints()).isEqualTo(99);
+        assertThat(bulbasaur.getExPoints()).isEqualTo(99); // Threshold is 100
 
-        // Just level up
+        // // Case 2: Just level up
         assertThat(bulbasaur.increaseExpPts(1)).isTrue();
         assertThat(bulbasaur.getLevel()).isEqualTo(6);
         assertThat(bulbasaur.getExPoints()).isEqualTo(0);
@@ -62,7 +62,7 @@ class PokemonTest {
         assertThat(bulbasaur.getSpecialDefense()).isEqualTo(65 + 3);
         assertThat(bulbasaur.getSpeed()).isEqualTo(45 + 3);
 
-        // Leveling up twice
+        // // Case 3: Leveling up twice
         assertThat(bulbasaur.increaseExpPts(201)).isTrue();
         assertThat(bulbasaur.getLevel()).isEqualTo(8);
         assertThat(bulbasaur.getExPoints()).isEqualTo(1);
@@ -121,6 +121,7 @@ class PokemonTest {
 
         int relStrength = Pokemon.getRelStrength(bulbasaur, charmander);
         assertThat(relStrength).isEqualTo(round2 - round1);
+        assertThat(relStrength).isEqualTo(3);
     }
 
     @Test

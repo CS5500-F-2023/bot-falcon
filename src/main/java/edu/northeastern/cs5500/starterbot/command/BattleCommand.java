@@ -55,7 +55,10 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
     @Nonnull
     public CommandData getCommandData() {
         return Commands.slash(
-                getName(), "Start a battle with a random Pokémon, with a cost of only 5 coins");
+                getName(),
+                "Start a battle with a random Pokémon, with a cost of only "
+                        + BotConstants.COST_PER_BATTLE
+                        + " coins");
     }
 
     @Override
@@ -79,7 +82,8 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
         // Check if the user have enough coins to start the battle
         try {
-            trainerController.decreaseTrainerBalance(trainerDiscordId, 5);
+            trainerController.decreaseTrainerBalance(
+                    trainerDiscordId, BotConstants.COST_PER_BATTLE);
         } catch (InsufficientBalanceException e) {
             event.reply(
                             String.format(
@@ -130,7 +134,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
 
         // If user chooses not to battle for now
         if (trPokemonID.equals("maybe-next-time")) {
-            trainerController.increaseTrainerBalance(trDiscordId, 5);
+            trainerController.increaseTrainerBalance(trDiscordId, BotConstants.COST_PER_BATTLE);
             event.reply(String.format("<@%s>, you decide not to battle.", trDiscordId)).queue();
             return;
         }
