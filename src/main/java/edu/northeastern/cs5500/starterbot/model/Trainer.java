@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.model;
 
+import edu.northeastern.cs5500.starterbot.exception.InvalidPokemonException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,4 +37,19 @@ public class Trainer implements Model {
     @Builder.Default Map<String, Integer> foodInventory = new HashMap<>();
 
     @Builder.Default Map<String, ObjectId> indexToObjectIDMap = new HashMap<>(); // for mongodb
+
+    /**
+     * Retrieves the ID of the trainer's Pokémon based on the given inventory index.
+     *
+     * @param inventoryIndex the index of the Pokémon in the trainer's inventory
+     * @return the ID of the Pokémon
+     * @throws InvalidPokemonException if the trainer's inventory is empty or the index is invalid
+     */
+    public String getTrainerPokemonIdByIndex(int inventoryIndex) throws InvalidPokemonException {
+        if (this.indexToObjectIDMap.containsKey(Integer.toString(inventoryIndex))) {
+            return this.indexToObjectIDMap.get(Integer.toString(inventoryIndex)).toString();
+        } else {
+            throw new InvalidPokemonException("Invalid index.");
+        }
+    }
 }
