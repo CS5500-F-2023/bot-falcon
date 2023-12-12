@@ -7,12 +7,16 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Trainer implements Model {
     // Model ID e.g. for MongoDB
     ObjectId id;
@@ -29,5 +33,7 @@ public class Trainer implements Model {
 
     @Builder.Default List<ObjectId> pokemonInventory = new ArrayList<>();
 
-    @Builder.Default Map<FoodType, Integer> foodInventory = new HashMap<>();
+    @Builder.Default Map<String, Integer> foodInventory = new HashMap<>();
+
+    @Builder.Default Map<String, ObjectId> indexToObjectIDMap = new HashMap<>(); // for mongodb
 }

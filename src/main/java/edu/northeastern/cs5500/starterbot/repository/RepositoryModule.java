@@ -10,24 +10,52 @@ import edu.northeastern.cs5500.starterbot.model.UserPreference;
 public class RepositoryModule {
     // NOTE: You can use the following lines if you'd like to store objects in memory.
     // NOTE: The presence of commented-out code in your project *will* result in a lowered grade.
+
+    /** Pokemon mongodb */
+    @Provides
+    public GenericRepository<Pokemon> providePokemonRepository(
+            MongoDBRepository<Pokemon> repository) {
+        return repository;
+    }
+
+    @Provides
+    public Class<Pokemon> providePokemon() {
+        return Pokemon.class;
+    }
+
+    /** Trainer mongodb */
+    @Provides
+    public GenericRepository<Trainer> provideTrainerRepository(
+            MongoDBRepository<Trainer> repository) {
+        return repository;
+    }
+
+    @Provides
+    public Class<Trainer> provideTrainer() {
+        return Trainer.class;
+    }
+
     @Provides
     public GenericRepository<UserPreference> provideUserPreferencesRepository(
             InMemoryRepository<UserPreference> repository) {
         return repository;
     }
 
-    @Provides
-    public GenericRepository<Pokemon> providePokemonRepository(
-            InMemoryRepository<Pokemon> repository) {
-        return repository;
-    }
+    /** Pokemon in memeory */
+    // @Provides
+    // public GenericRepository<Pokemon> providePokemonRepository(
+    //         InMemoryRepository<Pokemon> repository) {
+    //     return repository;
+    // }
 
-    @Provides
-    public GenericRepository<Trainer> provideTrainerRepository(
-            InMemoryRepository<Trainer> repository) {
-        return repository;
-    }
+    /** Trainer in memory */
+    // @Provides
+    // public GenericRepository<Trainer> provideTrainerRepository(
+    //         InMemoryRepository<Trainer> repository) {
+    //     return repository;
+    // }
 
+    /** mongodb set up 1-pass mongodb repository, 2-mongodb needs to know which class */
     // @Provides
     // public GenericRepository<UserPreference> provideUserPreferencesRepository(
     //         MongoDBRepository<UserPreference> repository) {

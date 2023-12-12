@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class PokemonEvolutionController {
 
     @Inject PokemonController pokemonController;

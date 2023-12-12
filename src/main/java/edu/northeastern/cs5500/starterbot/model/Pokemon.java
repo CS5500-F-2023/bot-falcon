@@ -5,11 +5,13 @@ import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Pokemon implements Model {
 
     // Spawn cost related
@@ -91,7 +93,7 @@ public class Pokemon implements Model {
     }
 
     /** Private setter: Use `increaseExpPts()` instead. */
-    private void setExPoints(int exPoints) {
+    public void setExPoints(int exPoints) {
         this.exPoints = exPoints;
     }
 
