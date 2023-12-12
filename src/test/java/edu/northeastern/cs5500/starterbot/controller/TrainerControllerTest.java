@@ -83,8 +83,8 @@ class TrainerControllerTest {
         TrainerController trainerController = getTrainerController();
         trainerController.trainerRepository.add(trainer);
         trainerController.addTrainerFood(trainer.getDiscordUserId(), FoodType.MYSTERYBERRY);
-        Map<FoodType, Integer> expectedInventory = new HashMap<>();
-        expectedInventory.put(FoodType.MYSTERYBERRY, 1);
+        Map<String, Integer> expectedInventory = new HashMap<>();
+        expectedInventory.put(FoodType.MYSTERYBERRY.getUppercaseName(), 1);
 
         assertEquals(expectedInventory, trainer.getFoodInventory());
     }
@@ -93,10 +93,10 @@ class TrainerControllerTest {
     void testRemoveTrainerFood() throws InsufficientFoodException {
         TrainerController trainerController = getTrainerController();
         trainerController.trainerRepository.add(trainer);
-        trainer.getFoodInventory().put(FoodType.MYSTERYBERRY, 1);
+        trainer.getFoodInventory().put(FoodType.MYSTERYBERRY.getUppercaseName(), 1);
         trainerController.removeTrainerFood(trainer.getDiscordUserId(), FoodType.MYSTERYBERRY);
-        Map<FoodType, Integer> expectedInventory = new HashMap<>();
-        expectedInventory.put(FoodType.MYSTERYBERRY, 0);
+        Map<String, Integer> expectedInventory = new HashMap<>();
+        expectedInventory.put(FoodType.MYSTERYBERRY.getUppercaseName(), 0);
 
         assertEquals(expectedInventory, trainer.getFoodInventory());
     }
@@ -119,12 +119,14 @@ class TrainerControllerTest {
     void testGetTrainerFoodInventory() {
         TrainerController trainerController = getTrainerController();
         trainerController.trainerRepository.add(trainer);
-        trainer.getFoodInventory().put(FoodType.GOLDBERRY, 2);
 
-        Map<FoodType, Integer> expectedInventory = new HashMap<>();
-        expectedInventory.put(FoodType.MYSTERYBERRY, 0);
-        expectedInventory.put(FoodType.BERRY, 0);
-        expectedInventory.put(FoodType.GOLDBERRY, 2);
+        trainer.getFoodInventory().put(FoodType.GOLDBERRY.getUppercaseName(), 2);
+
+        // {MYSTERYBERRY=0, BERRY=0, GOLDBERRY=2}
+        Map<String, Integer> expectedInventory = new HashMap<>();
+        expectedInventory.put(FoodType.MYSTERYBERRY.getUppercaseName(), 0);
+        expectedInventory.put(FoodType.BERRY.getUppercaseName(), 0);
+        expectedInventory.put(FoodType.GOLDBERRY.getUppercaseName(), 2);
 
         assertEquals(
                 expectedInventory,
@@ -134,17 +136,17 @@ class TrainerControllerTest {
     @Test
     void testBuildFoodDetial() {
         TrainerController trainerController = getTrainerController();
-        Map<FoodType, Integer> example = new HashMap<>();
-        example.put(FoodType.MYSTERYBERRY, 0);
-        example.put(FoodType.BERRY, 0);
-        example.put(FoodType.GOLDBERRY, 0);
+        Map<String, Integer> example = new HashMap<>();
+        example.put(FoodType.MYSTERYBERRY.getUppercaseName(), 0);
+        example.put(FoodType.BERRY.getUppercaseName(), 0);
+        example.put(FoodType.GOLDBERRY.getUppercaseName(), 0);
         String expectedOutput =
                 "   Gold Berry      🌟 : 0\n"
                         + "   Mystery Berry   🍭 : 0\n"
                         + "   Berry           🫐 : 0\n";
 
         String actualOutput = trainerController.buildTrainerBerryStockDetail(example);
-        // assertThat(actualOutput).isEqualTo(expectedOutput);
+        assertThat(actualOutput.length()).isEqualTo(expectedOutput.length());
     }
 
     @Test
