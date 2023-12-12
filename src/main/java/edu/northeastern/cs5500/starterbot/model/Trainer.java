@@ -38,6 +38,9 @@ public class Trainer implements Model {
 
     @Builder.Default Map<String, ObjectId> indexToObjectIDMap = new HashMap<>(); // for mongodb
 
+    private static final String BOARD_LINE = "----------------------------\n";
+    private static final Integer MIN_BALANCE = 10;
+
     /**
      * Retrieves the ID of the trainer's Pokémon based on the given inventory index.
      *
@@ -51,5 +54,59 @@ public class Trainer implements Model {
         } else {
             throw new InvalidPokemonException("Invalid index.");
         }
+    }
+
+    /**
+     * Builds the trainer statistics for a given Discord member ID.
+     *
+     * @return a formatted string containing the trainer statistics
+     */
+    public String buildTrainerStats() {
+        String foodDetail = buildTrainerBerryStockDetail();
+        StringBuilder statsBuilder = new StringBuilder();
+
+        /** build basic stats */
+        statsBuilder.append("📊 Your Stats 📊\n");
+        statsBuilder.append(BOARD_LINE);
+        statsBuilder.append("   Balance         💰 : ").append(this.getBalance()).append("\n");
+        statsBuilder
+                .append("   Pokemon Numbers 🎒 : ")
+                .append(this.getPokemonInventory().size())
+                .append("\n");
+        statsBuilder.append("\n🍇 Your Berry Inventory 🍇\n");
+        statsBuilder.append(BOARD_LINE);
+        statsBuilder.append(foodDetail).append("\n");
+
+        /** customize hint base on stats */
+        if (!this.getPokemonInventory().isEmpty()) {
+            statsBuilder.append("🔍 Explore your Pokemon inventory with /pokemon!\n");
+        } else {
+            statsBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
+        }
+        if (this.getBalance() <= MIN_BALANCE) {
+            statsBuilder.append(
+                    "💵 Boost your balance by claiming your daily rewards with /daily!\n");
+        }
+        statsBuilder.append("😋 Refill your berry stock at the shop using /shop!");
+
+        return "```" + statsBuilder.toString() + "```";
+    }
+
+    /**
+     * Builds a string representation of the trainer's berry stock details.
+     *
+     * @return a string representation of the trainer's berry stock details
+     */
+    private String buildTrainerBerryStockDetail() {
+        StringBuilder sb = new StringBuilder();
+        for (FoodType food : FoodType.values()) {
+            sb.append(
+                    String.format(
+                            "   %-15s %s : %d\n",
+                            food.getName(),
+                            food.getEmoji(),
+                            this.foodInventory.getOrDefault(food.getUppercaseName(), 0)));
+        }
+        return sb.toString();
     }
 }

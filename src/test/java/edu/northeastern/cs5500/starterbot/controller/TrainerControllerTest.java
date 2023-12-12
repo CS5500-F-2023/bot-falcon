@@ -143,22 +143,6 @@ class TrainerControllerTest {
     }
 
     @Test
-    void testBuildFoodDetial() {
-        TrainerController trainerController = getTrainerController();
-        Map<String, Integer> example = new HashMap<>();
-        example.put(FoodType.MYSTERYBERRY.getUppercaseName(), 0);
-        example.put(FoodType.BERRY.getUppercaseName(), 0);
-        example.put(FoodType.GOLDBERRY.getUppercaseName(), 0);
-        String expectedOutput =
-                "   Gold Berry      🌟 : 0\n"
-                        + "   Mystery Berry   🍭 : 0\n"
-                        + "   Berry           🫐 : 0\n";
-
-        String actualOutput = trainerController.buildTrainerBerryStockDetail(example);
-        assertThat(actualOutput.length()).isEqualTo(expectedOutput.length());
-    }
-
-    @Test
     void testBuildPokemonInventory10() {
         TrainerController trainerController = getTrainerController();
         PokemonDataService service =

@@ -40,30 +40,4 @@ public class RepositoryModule {
             InMemoryRepository<UserPreference> repository) {
         return repository;
     }
-
-    /** Pokemon in memeory */
-    // @Provides
-    // public GenericRepository<Pokemon> providePokemonRepository(
-    //         InMemoryRepository<Pokemon> repository) {
-    //     return repository;
-    // }
-
-    /** Trainer in memory */
-    // @Provides
-    // public GenericRepository<Trainer> provideTrainerRepository(
-    //         InMemoryRepository<Trainer> repository) {
-    //     return repository;
-    // }
-
-    /** mongodb set up 1-pass mongodb repository, 2-mongodb needs to know which class */
-    // @Provides
-    // public GenericRepository<UserPreference> provideUserPreferencesRepository(
-    //         MongoDBRepository<UserPreference> repository) {
-    //     return repository;
-    // }
-
-    // @Provides
-    // public Class<UserPreference> provideUserPreference() {
-    //     return UserPreference.class;
-    // }
 }
