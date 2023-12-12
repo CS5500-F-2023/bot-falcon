@@ -3,14 +3,16 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
-import edu.northeastern.cs5500.starterbot.exception.InvalidInventoryIndexException;
+import edu.northeastern.cs5500.starterbot.exception.InvalidPokemonException;
 import edu.northeastern.cs5500.starterbot.model.BotConstants;
 import edu.northeastern.cs5500.starterbot.model.Pokemon;
 import edu.northeastern.cs5500.starterbot.model.PokemonSpecies;
+import edu.northeastern.cs5500.starterbot.model.Trainer;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -53,22 +55,58 @@ public class MyCommand implements SlashCommandHandler {
         try {
             String trainerDiscordId = event.getUser().getId();
             Integer pokemonInventoryIndex = event.getOption("pokemon").getAsInt() - 1;
-            // get trainer pokemon by inventory index display as 1, 2, 3
-            Pokemon pokemon =
-                    trainerController.getPokemonFromInventory(
-                            trainerDiscordId, pokemonInventoryIndex);
-            PokemonSpecies species =
-                    pokedexController.getPokemonSpeciesByREALPokedex(pokemon.getPokedexNumber());
+            Trainer trainer = trainerController.getTrainerForMemberId(trainerDiscordId);
+            String pokemonIdStr = trainer.getTrainerPokemonIdByIndex(pokemonInventoryIndex);
 
-            String pokeProfile = buildPokemonProfile(species, pokemon, pokemonInventoryIndex);
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setThumbnail(species.getImageUrl());
-            embedBuilder.addField("Your Pokemon Detail\n", pokeProfile, false);
-            event.replyEmbeds(embedBuilder.build()).queue();
+            MessageEmbed pokemonProfileEmbed = buildPokemonProfile(pokemonIdStr);
+            MessageEmbed pokemonStatEmbed = buildPokemonStats(pokemonIdStr, pokemonInventoryIndex);
+            event.getChannel().sendMessageEmbeds(pokemonProfileEmbed, pokemonStatEmbed).queue();
 
-        } catch (InvalidInventoryIndexException e) {
+        } catch (InvalidPokemonException e) {
             event.reply("Oops...the pokemon does not exist, try again").queue();
         }
+    }
+
+    /**
+     * Builds a MessageEmbed object for displaying a Pokemon profile.
+     *
+     * @param pokemonIdStr the ID of the Pokemon
+     * @return the MessageEmbed object representing the Pokemon profile
+     */
+    private MessageEmbed buildPokemonProfile(String pokemonIdStr) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
+        Integer pokedex = pokemon.getPokedexNumber();
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("```");
+        sb.append(String.format("🔍 Learn how to grow your %s!```", species.getName()));
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setTitle("Your Pokemon Handbook");
+        embedBuilder.setDescription(sb.toString());
+        embedBuilder.setImage(species.getImageUrl());
+        embedBuilder.setColor(species.getSpeciesColor());
+        return embedBuilder.build();
+    }
+
+    /**
+     * Builds a MessageEmbed object containing the details and stats of a Pokemon.
+     *
+     * @param pokemonIdStr the ID of the Pokemon
+     * @return a MessageEmbed object representing the Pokemon's details and stats
+     */
+    private MessageEmbed buildPokemonStats(String pokemonIdStr, Integer inventoryIndex) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
+        Integer pokedex = pokemon.getPokedexNumber();
+        PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
+
+        String speciesDetail = species.buildSpeciesDetails();
+        String pokemonDetail = buildPokemonStatsString(pokemonIdStr, inventoryIndex);
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setDescription(String.format("```%s\n%s```", speciesDetail, pokemonDetail));
+        embedBuilder.setColor(species.getSpeciesColor());
+        return embedBuilder.build();
     }
 
     /**
@@ -78,18 +116,14 @@ public class MyCommand implements SlashCommandHandler {
      * @param pokemon the pokemon
      * @return the pokemon profile
      */
-    private String buildPokemonProfile(
-            PokemonSpecies species, Pokemon pokemon, Integer inventoryIndex) {
+    private String buildPokemonStatsString(String pokemonIdStr, Integer inventoryIndex) {
+        Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
 
         String pokemonDetails = pokemon.buildPokemonStats();
-        String speciesDetails = species.buildSpeciesDetails();
 
         String boardLine = "\n----------------------------\n";
-
         StringBuilder profileBuilder = new StringBuilder();
         profileBuilder
-                .append(speciesDetails)
-                .append("\n")
                 .append("🌠 Pokemon Stats 🌠")
                 .append(boardLine)
                 .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
@@ -105,6 +139,6 @@ public class MyCommand implements SlashCommandHandler {
                                 pokemon.getExPoints(), BotConstants.POKE_LEVEL_UP_THRESHOLD))
                 .append("\n\n🥣 Boost your pokemon using /feed with PokeID!");
 
-        return "```" + profileBuilder.toString() + "```";
+        return profileBuilder.toString();
     }
 }
