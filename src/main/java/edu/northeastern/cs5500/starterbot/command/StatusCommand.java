@@ -3,9 +3,12 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.PokedexController;
 import edu.northeastern.cs5500.starterbot.controller.PokemonController;
 import edu.northeastern.cs5500.starterbot.controller.TrainerController;
+import edu.northeastern.cs5500.starterbot.model.BotConstants;
+import edu.northeastern.cs5500.starterbot.model.Trainer;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -43,7 +46,12 @@ public class StatusCommand implements SlashCommandHandler {
         log.info("event: /status");
 
         String trainerDiscordId = event.getMember().getId();
+        Trainer trainer = trainerController.getTrainerForMemberId(trainerDiscordId);
 
-        event.reply(trainerController.buildTrainerStats(trainerDiscordId)).queue();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(BotConstants.COLOR_TRAINER);
+        embedBuilder.setDescription(trainer.buildTrainerStats());
+
+        event.replyEmbeds(embedBuilder.build()).queue();
     }
 }
