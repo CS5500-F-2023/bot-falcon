@@ -10,7 +10,9 @@ import io.opentelemetry.context.Scope;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class UserPreferenceController {
 
     GenericRepository<UserPreference> userPreferenceRepository;
