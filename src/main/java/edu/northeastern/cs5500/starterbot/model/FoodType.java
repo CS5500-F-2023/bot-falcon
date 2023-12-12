@@ -41,4 +41,9 @@ public enum FoodType {
     public String getEmoji() {
         return emoji;
     }
+
+    /** e.g "Gold Berry" will be format as "GOLDBERRY" */
+    public String getUppercaseName() {
+        return name.replaceAll("\\s", "").toUpperCase();
+    }
 }
