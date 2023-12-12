@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public enum FoodType {
     MYSTERYBERRY("Mystery Berry", 5, 5, "🍭"),
-    BERRY("Berry", 10, 10, "🫐"),
+    BLUEBERRY("Blue Berry", 10, 10, "🫐"),
     GOLDBERRY("Gold Berry", 30, 30, "🌟");
 
     @Nonnull String name;

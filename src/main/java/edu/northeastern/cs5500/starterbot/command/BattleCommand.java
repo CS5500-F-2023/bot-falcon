@@ -98,6 +98,7 @@ public class BattleCommand implements SlashCommandHandler, StringSelectHandler {
         embedBuilder.setTitle("Select a Pokémon to use in the battle");
         embedBuilder.setDescription(
                 "Hint: Select \"Maybe next time\" from the list if you change your mind");
+        embedBuilder.setColor(BotConstants.COLOR_TRAINER);
 
         // Build the dropdown menu
         StringSelectMenu.Builder menuBuilder = StringSelectMenu.create(NAME);

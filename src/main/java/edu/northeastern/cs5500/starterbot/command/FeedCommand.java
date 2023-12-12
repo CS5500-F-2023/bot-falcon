@@ -29,7 +29,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
     static final String NAME = "feed";
     private static final Integer LEVEL_UP_THRESHOLD = 100;
     private static final Integer LEVEL_UP_HINT_THRESHOLD = 75;
-    String boardline = "---------------------------------------------\n";
+    private static final String BOARDLINE = "-".repeat(41) + " ".repeat(3) + "\n";
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -77,22 +77,30 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                         .queue();
             } else {
 
+                StringBuilder sb = new StringBuilder();
+                sb.append("```");
+                sb.append(String.format("Your %s's Info:%n", species.getName()));
+                sb.append(BOARDLINE);
+                sb.append(String.format("Current Level 🌟: %d", pokemon.getLevel()));
+                sb.append("\n");
+                sb.append(
+                        String.format(
+                                String.format(
+                                        "Current XP    🏆: %s %d/%d%n",
+                                        pokemon.generateXpProgressBar(),
+                                        pokemon.getExPoints(),
+                                        LEVEL_UP_THRESHOLD)));
+                sb.append(BOARDLINE + "\n");
+                sb.append("🎒 Below is your food inventory!\n");
+                sb.append("💡 Want more berries? 🛍️ Try '/shop' 🛍️");
+                sb.append("```");
+
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setThumbnail(species.getImageUrl());
                 embedBuilder.setTitle(
-                        String.format(
-                                "Choose the berry to increse your %s's XP!", species.getName()));
-                embedBuilder.setDescription(
-                        String.format(
-                                "```Your %s's Info:\n-------------------\nCurrent Level 🌟: %s\nCurrent XP    🏆: %s```",
-                                species.getName(),
-                                pokemon.getLevel().toString(),
-                                pokemon.getExPoints().toString()));
-                embedBuilder.addField(
-                        boardline,
-                        String.format(
-                                "```🎒 Below is your food inventory!\n💡 Not enough berries? Type `/shop` to buy more berries!```"),
-                        false);
+                        String.format("Choose the berry to feed your %s!", species.getName()));
+                embedBuilder.setDescription(sb.toString());
+                embedBuilder.setColor(species.getSpeciesColor());
 
                 MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
                 for (FoodType foodType : FoodType.values()) {
@@ -168,56 +176,64 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 int newXP = fedPokemon.getExPoints();
                 int levelAfter = fedPokemon.getLevel();
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setDescription(
+                StringBuilder sb = new StringBuilder();
+                sb.append("```");
+                sb.append(
                         String.format(
-                                "%s Yummy! Your %s gained %d experience points!%n",
+                                "%s Yummy! Your %s gained %d XPs!%n",
                                 selectedFoodType.getEmoji(),
                                 species.getName(),
                                 selectedFoodType.getExp()));
-                embedBuilder.appendDescription(boardline);
+                sb.append(BOARDLINE);
                 if (levelAfter > levelBefore) {
-                    embedBuilder.appendDescription(
-                            String.format("LEVEL UP to   📈: %d%n", levelAfter));
+                    sb.append(String.format("LEVEL UP to   📈: %d%n", levelAfter));
                 } else {
-                    embedBuilder.appendDescription(
-                            String.format("Current Level 🌟: %d%n", levelAfter));
+                    sb.append(String.format("Current Level 🌟: %d%n", levelAfter));
                 }
-                embedBuilder.appendDescription(
+                sb.append(
                         String.format(
                                 "Current XP    🏆: %s %d/%d%n",
                                 fedPokemon.generateXpProgressBar(), newXP, LEVEL_UP_THRESHOLD));
-                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
 
+                boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
                 if (evolved) {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
                     PokemonSpecies evolvedSpecies =
                             pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
-                    embedBuilder.appendDescription(
-                            String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
+                    sb.append(String.format("EVOLVED to    🚀: %s%n", evolvedSpecies.getName()));
                 }
-                embedBuilder.appendDescription(boardline);
+                sb.append(BOARDLINE + "\n");
                 if (levelAfter > levelBefore) {
-                    embedBuilder.appendDescription(
+                    sb.append(
                             String.format(
-                                    "🎉 Woo-hoo, your %s is leveled up to %d!%n",
+                                    "🎉 Woo-hoo, your %s reached Level %d%n",
                                     species.getName(), levelAfter));
                 } else if (newXP >= LEVEL_UP_HINT_THRESHOLD) {
                     int xpRequiredNextLevel = LEVEL_UP_THRESHOLD - newXP;
-                    embedBuilder.appendDescription(
+                    sb.append(
                             String.format(
-                                    "💪 Almost there! your %s only need %d more XP to level up!%n",
-                                    species.getName(), xpRequiredNextLevel));
+                                    "💪 Almost there, your %s is close.%n", species.getName()));
+                    sb.append(
+                            String.format(
+                                    "%s %s: Just %d XPs to level up!%n",
+                                    species.getRandomType().getEmoji(),
+                                    species.getName(),
+                                    xpRequiredNextLevel));
                 }
                 if (evolved) {
                     int pokedex = pokemonController.getPokemonById(pokemonID).getPokedexNumber();
                     PokemonSpecies evolvedSpecies =
                             pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
-                    embedBuilder.appendDescription(
+                    sb.append(
                             String.format(
-                                    "🎊 Hooray, your %s is evolved to %s!%n",
+                                    "🎊 Your %s is evolved to %s!",
                                     species.getName(), evolvedSpecies.getName()));
                 }
+                sb.append("```");
+
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setDescription(sb.toString());
+                embedBuilder.setColor(species.getSpeciesColor());
 
                 event.replyEmbeds(embedBuilder.build()).queue();
                 event.getMessage()
