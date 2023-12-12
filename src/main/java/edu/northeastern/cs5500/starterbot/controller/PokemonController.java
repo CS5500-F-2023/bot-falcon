@@ -136,9 +136,14 @@ public class PokemonController {
     public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
         Pokemon pokemon = getPokemonById(pokemonIdStr);
         boolean levelUp = pokemon.increaseExpPts(expGained);
-        System.out.println("Pokemon " + pokemonIdStr + " gained " + expGained + " exp points."); // for logging
+        System.out.println(
+                "Pokemon " + pokemonIdStr + " gained " + expGained + " exp points."); // for logging
         pokemonRepository.update(pokemon);
-        System.out.println("Pokemon " + pokemonIdStr + "xp after update: " + pokemon.getExPoints()); // for logging
+        System.out.println(
+                "Pokemon "
+                        + pokemonIdStr
+                        + "xp after update: "
+                        + pokemon.getExPoints()); // for logging
         return levelUp;
     }
 
