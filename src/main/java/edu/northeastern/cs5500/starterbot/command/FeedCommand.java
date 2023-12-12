@@ -120,12 +120,12 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                         + ": "
                         + trainerController
                                 .getTrainerFoodInventory(trainerDiscordId)
-                                .get(foodType)
+                                .get(foodType.getUppercaseName())
                                 .toString());
     }
 
     private Boolean foodInventoryIsEmpty(String trainerDiscordID) {
-        Map<FoodType, Integer> foodInventory =
+        Map<String, Integer> foodInventory =
                 trainerController.getTrainerFoodInventory(trainerDiscordID);
         for (Integer count : foodInventory.values()) {
             if (count >= 1) {

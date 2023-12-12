@@ -53,6 +53,7 @@ public class MyCommand implements SlashCommandHandler {
         try {
             String trainerDiscordId = event.getUser().getId();
             Integer pokemonInventoryIndex = event.getOption("pokemon").getAsInt() - 1;
+            // get trainer pokemon by inventory index display as 1, 2, 3
             Pokemon pokemon =
                     trainerController.getPokemonFromInventory(
                             trainerDiscordId, pokemonInventoryIndex);

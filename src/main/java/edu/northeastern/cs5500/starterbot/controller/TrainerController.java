@@ -43,6 +43,14 @@ public class TrainerController {
         this.trainerRepository = trainerRepository;
     }
 
+    /**
+     * Retrieves the Trainer object associated with the given Discord member ID. If a Trainer with
+     * the specified Discord member ID is found, it is returned. Otherwise, a new Trainer object is
+     * created with the given Discord member ID and added to the repository.
+     *
+     * @param discordMemberId The Discord member ID to search for.
+     * @return The Trainer object associated with the given Discord member ID.
+     */
     @Nonnull
     public Trainer getTrainerForMemberId(String discordMemberId) {
         Collection<Trainer> trainers = trainerRepository.getAll();
@@ -56,19 +64,38 @@ public class TrainerController {
         return trainerRepository.add(trainer);
     }
 
+    /**
+     * Adds a Pokemon to the trainer's inventory.
+     *
+     * @param discordMemberId The Discord member ID of the trainer.
+     * @param pokemonIdString The ID of the Pokemon to be added.
+     */
     public void addPokemonToTrainer(String discordMemberId, String pokemonIdString) {
         ObjectId pokemonId = new ObjectId(pokemonIdString);
         Trainer trainer = getTrainerForMemberId(discordMemberId);
         trainer.getPokemonInventory().add(pokemonId);
-        trainerRepository.update(trainer); // now in memory so automatically update
+        trainerRepository.update(trainer);
     }
 
+    /**
+     * Increases the balance of a trainer identified by their Discord member ID.
+     *
+     * @param discordMemberId The Discord member ID of the trainer.
+     * @param amount The amount by which to increase the trainer's balance.
+     */
     public void increaseTrainerBalance(String discordMemberId, @Nonnegative Integer amount) {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
         trainer.setBalance(trainer.getBalance() + amount);
-        trainerRepository.update(trainer); // now in memory so automatically update
+        trainerRepository.update(trainer);
     }
 
+    /**
+     * Decreases the balance of a trainer by the specified amount.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @param amount the amount to decrease the balance by
+     * @throws InsufficientBalanceException if the trainer's balance is insufficient
+     */
     public void decreaseTrainerBalance(String discordMemberId, @Nonnegative Integer amount)
             throws InsufficientBalanceException {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
@@ -78,27 +105,41 @@ public class TrainerController {
         } else {
             throw new InsufficientBalanceException("Insufficient balance");
         }
-        trainerRepository.update(trainer); // now in memory so automatically update
-    }
-
-    public void addTrainerFood(String discordMemberId, FoodType food) {
-        Trainer trainer = getTrainerForMemberId(discordMemberId);
-        if (!trainer.getFoodInventory().containsKey(food)) {
-            trainer.getFoodInventory().put(food, 1);
-        } else {
-            trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) + 1);
-        }
         trainerRepository.update(trainer);
     }
 
+    /**
+     * Adds a food item to the trainer's food inventory. If the food item already exists in the
+     * inventory, its quantity is incremented by 1. If the food item does not exist in the
+     * inventory, it is added with a quantity of 1.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @param food the food item to be added
+     */
+    public void addTrainerFood(String discordMemberId, FoodType food) {
+        Trainer trainer = getTrainerForMemberId(discordMemberId);
+        String foodName = food.getUppercaseName();
+        Map<String, Integer> foodInventory = trainer.getFoodInventory();
+        foodInventory.put(foodName, foodInventory.getOrDefault(foodName, 0) + 1);
+        trainerRepository.update(trainer);
+    }
+
+    /**
+     * Removes a specific food item from the trainer's food inventory.
+     *
+     * @param discordMemberId the Discord member ID of the trainer
+     * @param food the type of food to be removed
+     * @throws InsufficientFoodException if there is not enough food to remove
+     */
     public void removeTrainerFood(String discordMemberId, FoodType food)
             throws InsufficientFoodException {
         Trainer trainer = getTrainerForMemberId(discordMemberId);
-        Integer foodAmount = trainer.getFoodInventory().get(food);
+        Map<String, Integer> foodInventory = trainer.getFoodInventory();
+        Integer foodAmount = foodInventory.get(food.getUppercaseName());
         if (foodAmount == null || foodAmount <= 0) {
             throw new InsufficientFoodException("Not enough food to remove");
         }
-        trainer.getFoodInventory().put(food, trainer.getFoodInventory().get(food) - 1);
+        foodInventory.put(food.getUppercaseName(), foodAmount - 1);
         trainerRepository.update(trainer);
     }
 
@@ -110,7 +151,7 @@ public class TrainerController {
      */
     public String buildTrainerStats(String discordMemberId) {
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
-        Map<FoodType, Integer> food = getTrainerFoodInventory(discordMemberId);
+        Map<String, Integer> food = getTrainerFoodInventory(discordMemberId);
         String foodDetail = buildTrainerBerryStockDetail(food);
         StringBuilder statsBuilder = new StringBuilder();
 
@@ -149,13 +190,16 @@ public class TrainerController {
      * @param food a map containing the quantity of each food type
      * @return a string representation of the trainer's berry stock details
      */
-    protected String buildTrainerBerryStockDetail(Map<FoodType, Integer> food) {
+    protected String buildTrainerBerryStockDetail(Map<String, Integer> food) {
         StringBuilder foodBuilder = new StringBuilder();
-        for (Map.Entry<FoodType, Integer> entry : food.entrySet()) {
+        for (Map.Entry<String, Integer> entry : food.entrySet()) {
+            String foodName = entry.getKey();
+            FoodType foodType = FoodType.valueOf(foodName);
+
             foodBuilder.append(
                     String.format(
                             "   %-15s %s : %d\n",
-                            entry.getKey().getName(), entry.getKey().getEmoji(), entry.getValue()));
+                            foodType.getName(), foodType.getEmoji(), entry.getValue()));
         }
         return foodBuilder.toString();
     }
@@ -167,14 +211,19 @@ public class TrainerController {
      * @return the list of Pokemon in the trainer's inventory
      */
     public List<Pokemon> getTrainerPokemonInventory(String discordMemberId) {
-        List<Pokemon> pokemonInventory = new ArrayList<>(); // TODO, consider potential duplicates
+        List<Pokemon> pokemonInventory = new ArrayList<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
         List<ObjectId> pokemonIds = trainer.getPokemonInventory();
-        for (ObjectId pokemonId : pokemonIds) {
+        Map<String, ObjectId> indexToObjectIdMap = new HashMap<>(); // map for mongo
+        for (int i = 0; i < pokemonIds.size(); i++) {
+            ObjectId pokemonId = pokemonIds.get(i);
             String pokeId = pokemonId.toString();
             Pokemon pokemon = pokemonController.getPokemonById(pokeId);
+            indexToObjectIdMap.put(Integer.toString(i), pokemonId);
             pokemonInventory.add(pokemon);
         }
+        trainer.setIndexToObjectIDMap(indexToObjectIdMap);
+        trainerRepository.update(trainer);
         return pokemonInventory;
     }
 
@@ -238,11 +287,16 @@ public class TrainerController {
      */
     public Pokemon getPokemonFromInventory(String discordMemberId, Integer index)
             throws InvalidInventoryIndexException {
-        List<Pokemon> pokemonInventory = this.getTrainerPokemonInventory(discordMemberId);
+        List<Pokemon> pokemonInventory = getTrainerPokemonInventory(discordMemberId);
         if (pokemonInventory.isEmpty() || index < 0 || index >= pokemonInventory.size()) {
             throw new InvalidInventoryIndexException("Invalid index");
         } else {
-            return pokemonInventory.get(index);
+            ObjectId objectId =
+                    getTrainerForMemberId(discordMemberId)
+                            .getIndexToObjectIDMap()
+                            .get(Integer.toString(index));
+            System.out.println("Pokemon ObjId: " + objectId.toString());
+            return pokemonController.getPokemonById(objectId.toString());
         }
     }
 
@@ -277,15 +331,15 @@ public class TrainerController {
      * @param discordMemberId the Discord member ID of the trainer
      * @return the Map of fodd in the trainer's food inventory
      */
-    public Map<FoodType, Integer> getTrainerFoodInventory(String discordMemberId) {
-        Map<FoodType, Integer> foodInventory = new HashMap<>();
+    public Map<String, Integer> getTrainerFoodInventory(String discordMemberId) {
+        Map<String, Integer> foodInventory = new HashMap<>();
         Trainer trainer = this.getTrainerForMemberId(discordMemberId);
 
-        Map<FoodType, Integer> food = trainer.getFoodInventory();
+        Map<String, Integer> food = trainer.getFoodInventory();
 
         for (FoodType type : FoodType.values()) {
-            int count = food.getOrDefault(type, 0);
-            foodInventory.put(type, count);
+            int count = food.getOrDefault(type.getUppercaseName(), 0);
+            foodInventory.put(type.getUppercaseName(), count);
         }
         return foodInventory;
     }
