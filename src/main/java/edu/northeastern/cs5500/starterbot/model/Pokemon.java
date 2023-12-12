@@ -93,7 +93,7 @@ public class Pokemon implements Model {
     }
 
     /** Private setter: Use `increaseExpPts()` instead. */
-    private void setExPoints(int exPoints) {
+    public void setExPoints(int exPoints) {
         this.exPoints = exPoints;
     }
 
