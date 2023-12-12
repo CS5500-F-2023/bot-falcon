@@ -23,6 +23,7 @@ public class MyCommand implements SlashCommandHandler {
 
     static final String NAME = "my";
     static final int WIDTH = 19;
+    static final String BOARDLINE = "\n" + "-".repeat(33) + "\n";
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -125,16 +126,15 @@ public class MyCommand implements SlashCommandHandler {
 
         String pokemonDetails = pokemon.buildPokemonStats();
 
-        String boardLine = "\n----------------------------\n";
         StringBuilder profileBuilder = new StringBuilder();
         profileBuilder
                 .append("🌠 Pokemon Stats 🌠")
-                .append(boardLine)
+                .append(BOARDLINE)
                 .append(String.format("PokeID. : 🔢 %d\n", inventoryIndex + 1))
                 .append(pokemonDetails)
                 .append("\n")
                 .append("📈 Pokemon XP Progress 📈")
-                .append(boardLine)
+                .append(BOARDLINE)
                 .append("XP      : ")
                 .append(pokemon.generateXpProgressBar())
                 .append(
