@@ -79,11 +79,15 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setThumbnail(species.getImageUrl());
-                embedBuilder.setTitle("Choose the berry to increse your Pokemon's XP!");
+                embedBuilder.setTitle(
+                        String.format(
+                                "Choose the berry to increse your %s's XP!", species.getName()));
                 embedBuilder.setDescription(
                         String.format(
-                                "```Your Selected Pokemon's Info:\n Current Level: %s\n Current XP: %s```",
-                                pokemon.getLevel().toString(), pokemon.getExPoints().toString()));
+                                "```Your %s's Info:\n-------------------\nCurrent Level 🌟: %s\nCurrent XP    🏆: %s```",
+                                species.getName(),
+                                pokemon.getLevel().toString(),
+                                pokemon.getExPoints().toString()));
                 embedBuilder.addField(
                         boardline,
                         String.format(
