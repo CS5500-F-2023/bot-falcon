@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 public class MyCommand implements SlashCommandHandler {
 
     static final String NAME = "my";
+    static final int WIDTH = 19;
 
     @Inject TrainerController trainerController;
     @Inject PokemonController pokemonController;
@@ -80,7 +81,10 @@ public class MyCommand implements SlashCommandHandler {
 
         StringBuilder sb = new StringBuilder();
         sb.append("```");
-        sb.append(String.format("🔍 Learn how to grow your %s!```", species.getName()));
+        // sb.append(String.format("🔍 Learn how to grow your %s!```", species.getName()));
+        sb.append(String.format("🔍 Learn how to grow your %s!", species.getName()));
+        sb.append(" ".repeat(WIDTH - species.getName().length()));
+        sb.append("```");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Your Pokemon Handbook");
         embedBuilder.setDescription(sb.toString());
