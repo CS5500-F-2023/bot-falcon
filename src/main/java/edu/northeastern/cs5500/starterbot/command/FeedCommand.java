@@ -160,8 +160,9 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 trainerController.removeTrainerFood(trainerDiscordId, selectedFoodType);
                 int levelBefore = pokemon.getLevel();
                 pokemonController.increasePokemonExpByFood(pokemonID, selectedFoodType);
-                int newXP = pokemon.getExPoints();
-                int levelAfter = pokemon.getLevel();
+                Pokemon fedPokemon = pokemonController.getPokemonById(pokemonID);
+                int newXP = fedPokemon.getExPoints();
+                int levelAfter = fedPokemon.getLevel();
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setDescription(
@@ -181,9 +182,7 @@ public class FeedCommand implements SlashCommandHandler, ButtonHandler {
                 embedBuilder.appendDescription(
                         String.format(
                                 "Current XP    🏆: %s %d/%d%n",
-                                pokemon.generateXpProgressBar(),
-                                pokemon.getExPoints(),
-                                LEVEL_UP_THRESHOLD));
+                                fedPokemon.generateXpProgressBar(), newXP, LEVEL_UP_THRESHOLD));
                 boolean evolved = pokemonEvolutionController.evolvePokemon(pokemonID);
 
                 if (evolved) {

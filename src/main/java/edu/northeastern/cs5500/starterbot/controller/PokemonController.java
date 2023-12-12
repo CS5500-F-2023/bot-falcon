@@ -136,6 +136,7 @@ public class PokemonController {
     public boolean increasePokemonExp(String pokemonIdStr, Integer expGained) {
         Pokemon pokemon = getPokemonById(pokemonIdStr);
         boolean levelUp = pokemon.increaseExpPts(expGained);
+        pokemonRepository.update(pokemon);
         return levelUp;
     }
 
