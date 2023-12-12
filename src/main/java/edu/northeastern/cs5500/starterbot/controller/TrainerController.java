@@ -295,7 +295,6 @@ public class TrainerController {
                     getTrainerForMemberId(discordMemberId)
                             .getIndexToObjectIDMap()
                             .get(Integer.toString(index));
-            System.out.println("Pokemon ObjId: " + objectId.toString());
             return pokemonController.getPokemonById(objectId.toString());
         }
     }
