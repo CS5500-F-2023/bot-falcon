@@ -107,12 +107,21 @@ class TrainerControllerTest {
         trainerController.trainerRepository.add(trainer);
         String discordId = trainer.getDiscordUserId();
         LocalDate today = LocalDate.now();
+
+        // Before adding any daily reward coins
+        assertThat(trainerController.getTrainerForMemberId(discordId).getBalance()).isEqualTo(10);
+
+        // Attempt 1: After adding the daily reward coins
         assertThat(trainerController.addDailyRewardsToTrainer(discordId, 10, today)).isEqualTo(20);
+        assertThat(trainerController.getTrainerForMemberId(discordId).getBalance()).isEqualTo(20);
+
+        // Attempt 2: Try adding daily reward MORE THAN ONCE in a day
         assertThrows(
                 InvalidCheckinDayException.class,
                 () ->
                         trainerController.addDailyRewardsToTrainer(
                                 trainer.getDiscordUserId(), 30, today));
+        assertThat(trainerController.getTrainerForMemberId(discordId).getBalance()).isEqualTo(20);
     }
 
     @Test

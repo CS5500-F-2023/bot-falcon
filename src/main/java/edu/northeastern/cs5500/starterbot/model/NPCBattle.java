@@ -13,7 +13,6 @@ import lombok.Data;
 @Data
 public class NPCBattle {
 
-    private static final int COST_PER_BATTLE = 5;
     private static final int REL_STRENGTH_ADDON = 2;
 
     private static final double EFFECTIVE_THRESHOLD = 1.0;
@@ -292,7 +291,7 @@ public class NPCBattle {
         builder.append("💰 Trainer's Bounty 💰\n");
         builder.append(BOARD_LINE);
         builder.append("   Coins Earned 🤑 : +").append(coinsEarned).append("\n");
-        builder.append("   Battle Cost  💸 : -").append(COST_PER_BATTLE).append("\n");
+        builder.append("   Battle Cost  💸 : -").append(BotConstants.COST_PER_BATTLE).append("\n");
         builder.append("   New Balance  💰 :  ").append(trainer.getBalance()).append("\n\n");
 
         builder.append("🌈 Celebrate this victory. The journey to greatness continues!\n");
@@ -337,7 +336,7 @@ public class NPCBattle {
 
         builder.append("💸 Trainer's Expense 💸\n");
         builder.append(BOARD_LINE);
-        builder.append("   Battle Cost 💸  : -").append(COST_PER_BATTLE).append("\n");
+        builder.append("   Battle Cost 💸  : -").append(BotConstants.COST_PER_BATTLE).append("\n");
         builder.append("   New Balance 💰  :  ").append(trainer.getBalance()).append("\n\n");
 
         builder.append("🌟 Every battle is a lesson. Your next victory awaits!\n");

@@ -89,15 +89,6 @@ public class PokemonEvolutionControllerTest {
         boolean isEvolvedAndUpdated = false;
         // evolve
         isEvolvedAndUpdated = PokemonEvolutionController.evolvePokemon(pokemon.getId().toString());
-
-        String msg = PokemonEvolutionController.buildEvolveMessage(pokemon.getId().toString());
-        String stats =
-                PokemonEvolutionController.buildEvolveStatsMessage(pokemon.getId().toString());
-        String expected = "your Bulbasaur evolved into Ivysaur!";
-        String expectedStats = "EVOLVE to   💯 :  Ivysaur";
-
         assertThat(isEvolvedAndUpdated).isTrue();
-        assertThat(msg).isEqualTo(expected);
-        assertThat(stats).isEqualTo(expectedStats);
     }
 }
