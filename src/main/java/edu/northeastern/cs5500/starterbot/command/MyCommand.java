@@ -60,9 +60,9 @@ public class MyCommand implements SlashCommandHandler {
             Trainer trainer = trainerController.getTrainerForMemberId(trainerDiscordId);
             String pokemonIdStr = trainer.getTrainerPokemonIdByIndex(pokemonInventoryIndex);
 
-            MessageEmbed pokemonProfileEmbed = buildPokemonProfile(pokemonIdStr);
-            MessageEmbed pokemonStatEmbed = buildPokemonStats(pokemonIdStr, pokemonInventoryIndex);
-            event.getChannel().sendMessageEmbeds(pokemonProfileEmbed, pokemonStatEmbed).queue();
+            EmbedBuilder pokemonProfileEmbed = buildPokemonProfile(pokemonIdStr);
+            EmbedBuilder pokemonStatEmbed = buildPokemonStats(pokemonIdStr, pokemonInventoryIndex);
+            event.replyEmbeds(pokemonProfileEmbed.build(), pokemonStatEmbed.build()).queue();
 
         } catch (InvalidPokemonException e) {
             event.reply("Oops...the pokemon does not exist, try again").queue();
@@ -70,12 +70,12 @@ public class MyCommand implements SlashCommandHandler {
     }
 
     /**
-     * Builds a MessageEmbed object for displaying a Pokemon profile.
+     * Builds a EmbedBuilder object for displaying a Pokemon profile.
      *
      * @param pokemonIdStr the ID of the Pokemon
-     * @return the MessageEmbed object representing the Pokemon profile
+     * @return the EmbedBuilder object representing the Pokemon profile
      */
-    private MessageEmbed buildPokemonProfile(String pokemonIdStr) {
+    private EmbedBuilder buildPokemonProfile(String pokemonIdStr) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
@@ -91,16 +91,16 @@ public class MyCommand implements SlashCommandHandler {
         embedBuilder.setDescription(sb.toString());
         embedBuilder.setImage(species.getImageUrl());
         embedBuilder.setColor(species.getSpeciesColor());
-        return embedBuilder.build();
+        return embedBuilder;
     }
 
     /**
-     * Builds a MessageEmbed object containing the details and stats of a Pokemon.
+     * Builds a EmbedBuilder object containing the details and stats of a Pokemon.
      *
      * @param pokemonIdStr the ID of the Pokemon
-     * @return a MessageEmbed object representing the Pokemon's details and stats
+     * @return a EmbedBuilder object representing the Pokemon's details and stats
      */
-    private MessageEmbed buildPokemonStats(String pokemonIdStr, Integer inventoryIndex) {
+    private EmbedBuilder buildPokemonStats(String pokemonIdStr, Integer inventoryIndex) {
         Pokemon pokemon = pokemonController.getPokemonById(pokemonIdStr);
         Integer pokedex = pokemon.getPokedexNumber();
         PokemonSpecies species = pokedexController.getPokemonSpeciesByREALPokedex(pokedex);
@@ -111,7 +111,7 @@ public class MyCommand implements SlashCommandHandler {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setDescription(String.format("```%s\n%s```", speciesDetail, pokemonDetail));
         embedBuilder.setColor(species.getSpeciesColor());
-        return embedBuilder.build();
+        return embedBuilder;
     }
 
     /**
