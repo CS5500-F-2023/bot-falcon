@@ -26,9 +26,8 @@ public class TrainerController {
 
     static final Integer MIN_FOOD_AMOUNT_REQUIRED = 1;
 
-    private static final Integer POKEMON_THRESHOLD = 10;
-    private static final Integer POKEMON_PER_ROW_TWO = 2;
-    private static final Integer POKEMON_PER_ROW_THREE = 3;
+    private static final Integer POKEMON_PER_ROW = 2;
+    static final String BOARDLINE = "\n" + "-".repeat(40) + "\n";
 
     GenericRepository<Trainer> trainerRepository;
 
@@ -178,10 +177,6 @@ public class TrainerController {
             pokemonInventoryBuilder.append("🐣 Use /spawn to discover and catch new Pokemon!\n");
         } else {
             pokemonInventoryBuilder.append("🎒 Your Pokemon Inventory 🎒\n\n");
-            int pokemonPerRow =
-                    (pokemonInventory.size() <= POKEMON_THRESHOLD)
-                            ? POKEMON_PER_ROW_TWO
-                            : POKEMON_PER_ROW_THREE;
 
             /** find max length pokemon name */
             int maxTextWidth = 0;
@@ -191,7 +186,9 @@ public class TrainerController {
                         pokedexController.getPokemonSpeciesByREALPokedex(
                                 pokemon.getPokedexNumber());
 
-                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                String pokemonText =
+                        String.format(
+                                "* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
                 maxTextWidth = Math.max(maxTextWidth, pokemonText.length());
             }
             /** build single pokemon name string */
@@ -201,12 +198,14 @@ public class TrainerController {
                         pokedexController.getPokemonSpeciesByREALPokedex(
                                 pokemon.getPokedexNumber());
 
-                String pokemonText = String.format("🔘 %d. %s", i + 1, species.getName());
+                String pokemonText =
+                        String.format(
+                                "* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
                 pokemonInventoryBuilder.append(
                         String.format("%-" + maxTextWidth + "s", pokemonText));
 
-                if ((i + 1) % pokemonPerRow == 0 || i == pokemonInventory.size() - 1) {
-                    pokemonInventoryBuilder.append("\n");
+                if ((i + 1) % POKEMON_PER_ROW == 0 || i == pokemonInventory.size() - 1) {
+                    pokemonInventoryBuilder.append(BOARDLINE);
                 }
             }
             pokemonInventoryBuilder.append("\n🔍 Learn more about your Pokemon with /my!");
