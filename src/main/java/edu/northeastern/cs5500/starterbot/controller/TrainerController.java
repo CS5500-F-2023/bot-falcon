@@ -186,7 +186,9 @@ public class TrainerController {
                         pokedexController.getPokemonSpeciesByREALPokedex(
                                 pokemon.getPokedexNumber());
 
-                String pokemonText = String.format("* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
+                String pokemonText =
+                        String.format(
+                                "* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
                 maxTextWidth = Math.max(maxTextWidth, pokemonText.length());
             }
             /** build single pokemon name string */
@@ -196,7 +198,9 @@ public class TrainerController {
                         pokedexController.getPokemonSpeciesByREALPokedex(
                                 pokemon.getPokedexNumber());
 
-                String pokemonText = String.format("* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
+                String pokemonText =
+                        String.format(
+                                "* %d. %s(Lv.%d)", i + 1, species.getName(), pokemon.getLevel());
                 pokemonInventoryBuilder.append(
                         String.format("%-" + maxTextWidth + "s", pokemonText));
 
