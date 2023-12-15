@@ -371,6 +371,18 @@
             "Ponyta"
         ]
     },
+    "Pichu": {
+        "evolutionFrom": "",
+        "evolutionTo": "Pikachu",
+        "prev": []
+    },
+    "Pikachu": {
+        "evolutionFrom": "Pichu",
+        "evolutionTo": "Raichu",
+        "prev": [
+            "Pichu"
+        ]
+    },
     "Slowpoke": {
         "evolutionFrom": "",
         "evolutionTo": "Slowbro",
